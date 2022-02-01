@@ -1,0 +1,22 @@
+
+development:
+  clients:
+    default:
+      database: ish_development
+      hosts:
+        - 127.0.0.1
+
+development_production: 
+  clients:
+    default:
+      database: ish_production
+      hosts:
+        - 127.0.0.1
+
+test:
+  clients:
+    default:
+      database: ish_test
+      hosts:
+        - 127.0.0.1
+
