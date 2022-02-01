@@ -4,16 +4,15 @@ require 'spec_helper'
 
 Mongoid.load!("config/mongoid.yml", :test)
 
-describe IshModels do
+describe IronWarbler do
   describe '#configure' do
 
-    it 'whatever, affects' do
-      photo = Photo.create
-      photo.persisted?.should eql true
+    it 'mongoid sanity' do
+      sw = IronWarbler::StockWatch.create
     end
 
   end
 end
 
-         
-     
+
+

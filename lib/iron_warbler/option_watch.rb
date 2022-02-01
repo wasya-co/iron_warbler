@@ -1,5 +1,5 @@
 
-class Warbler::OptionWatch
+class IronWarbler::OptionWatch
   include Mongoid::Document
   include Mongoid::Timestamps
   store_in collection: 'ish_option_watches'

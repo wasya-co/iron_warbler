@@ -11,7 +11,7 @@ require_relative '../lib/iron_warbler.rb'
 Mongoid.load!("config/mongoid.yml", :test)
 
 DatabaseCleaner.clean
-Ish::UserProfile.unscoped.destroy_all
+# Ish::UserProfile.unscoped.destroy_all
 
 class User
   include ::Mongoid::Document

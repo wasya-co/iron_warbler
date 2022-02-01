@@ -11,11 +11,13 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://wasya.co'
   s.license     = 'Proprietary'
 
-  # s.add_runtime_dependency 'mongoid', '~> 7.0.5'
-  # s.add_runtime_dependency 'mongoid_paranoia'
-  # s.add_runtime_dependency 'mongoid-autoinc', '~> 6.0'
-  # s.add_runtime_dependency 'mongoid-paperclip'
-  # s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.1'
+  s.add_runtime_dependency 'httparty', '~> 0.20.0'
+  s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.2'
+  s.add_runtime_dependency 'mongoid', '~> 7.3.3'
+  s.add_runtime_dependency 'mongoid-autoinc', '~> 6.0.3'
+  s.add_runtime_dependency 'mongoid_paranoia'
+  s.add_runtime_dependency 'mongoid-paperclip'
+
   # s.add_runtime_dependency 'devise', '> 0'
   # s.add_runtime_dependency 'aws-sdk'
 

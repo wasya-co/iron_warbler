@@ -3,7 +3,7 @@ FactoryBot.define do
 
   # alphabetized : )
 
-  factory :option_watch, class: Warbler::OptionWatch do
+  factory :option_watch, class: IronWarbler::OptionWatch do
     contractType { 'PUT' }
     date { '2021-01-01' }
     price { 55 }

@@ -1,22 +1,21 @@
-
-development:
+development: &id1
   clients:
     default:
-      database: ish_development
+      database: iron_warbler_development
       hosts:
         - 127.0.0.1
-
-development_production: 
+development_cached: *id1
+development_production:
   clients:
     default:
-      database: ish_production
+      database: iron_warbler_production
       hosts:
         - 127.0.0.1
 
 test:
   clients:
     default:
-      database: ish_test
+      database: iron_warbler_test
       hosts:
         - 127.0.0.1
 

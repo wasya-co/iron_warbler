@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Warbler::OptionWatch do
+describe IronWarbler::OptionWatch do
   before do
     @fields = %i| contractType date strike price ticker |
   end
