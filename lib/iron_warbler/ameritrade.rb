@@ -36,7 +36,7 @@ module IronWarbler::Ameritrade
 
 end
 
-class ::Warbler::Ameritrade::Api
+class ::IronWarbler::Ameritrade::Api
   include ::HTTParty
   base_uri 'https://api.tdameritrade.com'
   PUT = 'PUT'

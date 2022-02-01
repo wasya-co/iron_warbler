@@ -6,6 +6,7 @@ require 'factory_bot'
 require 'byebug'
 require 'mongoid-rspec'
 require 'database_cleaner-mongoid'
+require 'ish_models'
 require_relative '../lib/iron_warbler.rb'
 
 Mongoid.load!("config/mongoid.yml", :test)

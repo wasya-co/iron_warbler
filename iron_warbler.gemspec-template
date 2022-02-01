@@ -13,10 +13,12 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'httparty', '~> 0.20.0'
   s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.2'
-  s.add_runtime_dependency 'mongoid', '~> 7.3.3'
+  s.add_runtime_dependency 'mongoid', '~> 7.3.0'
   s.add_runtime_dependency 'mongoid-autoinc', '~> 6.0.3'
   s.add_runtime_dependency 'mongoid_paranoia'
   s.add_runtime_dependency 'mongoid-paperclip'
+
+  s.add_runtime_dependency 'ish_models', '~> 0.0.33.156'
 
   # s.add_runtime_dependency 'devise', '> 0'
   # s.add_runtime_dependency 'aws-sdk'

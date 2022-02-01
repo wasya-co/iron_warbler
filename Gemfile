@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'ish_models',  :github => 'wasyaco/ish_models',  :branch => '1.5.0'
+
 group :development, :test do
   gem 'byebug'
 end

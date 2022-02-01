@@ -1,5 +1,5 @@
 
-class Warbler::StockWatch
+class IronWarbler::StockWatch
   include Mongoid::Document
   include Mongoid::Timestamps
   store_in collection: 'ish_stock_watches'
@@ -22,6 +22,8 @@ class Warbler::StockWatch
   DIRECTION_BELOW = :BELOW
   field :direction, :type => Symbol
 
-  belongs_to :profile, :class_name => 'Ish::UserProfile'
+  # @TODO: email, sms would be fields here?
+
+  # belongs_to :profile, :class_name => 'Ish::UserProfile'
 
 end
