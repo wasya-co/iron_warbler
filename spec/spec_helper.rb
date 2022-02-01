@@ -6,7 +6,7 @@ require 'factory_bot'
 require 'byebug'
 require 'mongoid-rspec'
 require 'database_cleaner-mongoid'
-require_relative '../lib/ish_models.rb'
+require_relative '../lib/iron_warbler.rb'
 
 Mongoid.load!("config/mongoid.yml", :test)
 
@@ -36,17 +36,3 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers, type: :model
   config.include Mongoid::Matchers
 end
-
-def do_setup
-  User.unscoped.destroy
-  Ish::UserProfile.unscoped.destroy
-  @user_profile = FactoryBot.create :user_profile, :user => User.new, :name => 'some-name'
-
-  # C
-  City.unscoped.destroy_all
-  @city = FactoryBot.create :city
-
-  # V
-  Venue.unscoped.destroy_all
-end
-

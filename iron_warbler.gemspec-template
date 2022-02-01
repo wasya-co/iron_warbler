@@ -1,0 +1,22 @@
+
+Gem::Specification.new do |s|
+  s.name        = 'iron_warbler'
+  s.version     = '$version'
+  s.date        = '2022-02-02'
+  s.summary     = 'Stocks and Options Trading Bot'
+  s.description = 'Stocks and Options Trading Bot'
+  s.authors     = [ 'piousbox' ]
+  s.email       = 'victor@wasya.co'
+  s.files       = Dir[ "lib/*", "lib/**/*" ]
+  s.homepage    = 'https://wasya.co'
+  s.license     = 'Proprietary'
+
+  # s.add_runtime_dependency 'mongoid', '~> 7.0.5'
+  # s.add_runtime_dependency 'mongoid_paranoia'
+  # s.add_runtime_dependency 'mongoid-autoinc', '~> 6.0'
+  # s.add_runtime_dependency 'mongoid-paperclip'
+  # s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.1'
+  # s.add_runtime_dependency 'devise', '> 0'
+  # s.add_runtime_dependency 'aws-sdk'
+
+end

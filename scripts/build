@@ -10,16 +10,16 @@ fi
 
 ./scripts/version_bump &&
 version=`cat VERSION`
-cat ish_models.gemspec-template | \
-  sed -e "s/\$version/$version/g" > ish_models.gemspec
+cat iron_warbler.gemspec-template | \
+  sed -e "s/\$version/$version/g" > iron_warbler.gemspec
 
 bundle &&
 
-gem build ish_models.gemspec &&
-gem push ish_models-`cat VERSION`.gem &&
+gem build iron_warbler.gemspec &&
+gem push iron_warbler-`cat VERSION`.gem &&
 
 git add . &&
 git commit -m 'autobuild `date "+%Y%m%d"`' ;
 git push &&
 
-echo "ish_models build ok"
+echo "iron_warbler build ok"
