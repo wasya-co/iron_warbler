@@ -1,0 +1,28 @@
+
+- if stock_watch.persisted?
+  .float-left= button_to '[X]', stock_watch_path(stock_watch.id), method: :delete, data: { confirm: 'Are you sure?' }
+
+
+- url = stock_watches_path if !stock_watch.persisted?
+- url = stock_watch_path( stock_watch ) if stock_watch.persisted?
+
+= form_for stock_watch, :url => url, :html => { :class => 'form-inline well' } do |f|
+  .flex-row
+    .form-group
+      = f.label :action
+      = f.select :action, options_for_select( Warbler::StockWatch::ACTIONS.map{|a|[a,a]}, :selected => stock_watch.action )
+    .form-group
+      = f.label :profile
+      = f.select :profile, options_for_select( [[nil,nil]]+@profiles.map{|p|[p.email,p.id]}, :selected => stock_watch.profile ? stock_watch.profile.id : nil )
+    .form-group
+      %label.control-label When
+      = f.text_field :ticker, :class => 'form-control', :placeholder => 'ticker'
+    .form-group
+      %label.control-label Price
+      = f.select :direction, options_for_select( Warbler::StockWatch::DIRECTIONS.map{|d|[d,d]}, :selected => stock_watch.direction )
+    .form-group
+      %label.control-label $
+      = f.number_field :price, :step => 0.01, :placeholder => "0.01"
+    .form-group
+      = f.submit ">", :class => %w(btn blue)
+

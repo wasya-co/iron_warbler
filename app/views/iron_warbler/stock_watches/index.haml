@@ -1,0 +1,24 @@
+
+%h4 Stock Watches
+
+- @stock_watches.each do |stock|
+  %hr
+  = render 'form', :stock_watch => stock
+
+%hr
+%h5 New
+= render 'form', :stock_watch => @stock_watch
+
+
+%hr
+%hr
+
+%h4 Option Watches
+
+- @option_watches.each do |option|
+  %hr
+  = render 'ish_manager/option_watches/form', option_watch: option
+
+%hr
+%h5 New
+= render 'ish_manager/option_watches/form', option_watch: @option_watch
