@@ -2,4 +2,8 @@
 .DS_Store
 *trash
 vendor/bundle
+test/dummy/vendor/bundle
+test/dummy/public/assets
+test/dummy/tmp
+tmp
 

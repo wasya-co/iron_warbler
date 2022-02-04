@@ -1,0 +1,28 @@
+source 'https://rubygems.org'
+
+gem 'rails'
+gem 'rake'
+gem 'devise'
+gem 'haml'
+gem 'sassc'
+gem 'aws-sdk-s3'
+gem 'aws-sdk'
+
+gem 'mongoid' # @TODO: I tried removing this dependency from here but could not.
+gem 'mongoid-paperclip'
+gem 'mongoid_paranoia'
+gem 'kaminari'
+gem 'kaminari-mongoid'
+gem 'cancancan'
+
+gem 'ish_models',   :github => 'wasyaco/ish_models',   :branch => '1.5.0'
+gem 'iron_warbler', :github => 'wasyaco/iron_warbler', :branch => '0.0.0'
+
+group :test, :development do
+  gem 'byebug'
+  gem 'capybara' # @TODO: remove?
+  gem 'database_cleaner-mongoid'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+end

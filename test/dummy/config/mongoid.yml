@@ -1,0 +1,15 @@
+
+
+development:
+  clients:
+    default:
+      database: ish_development
+      hosts:
+        - 127.0.0.1
+
+test:
+  clients:
+    default:
+      database: ish_test
+      hosts:
+        - 127.0.0.1

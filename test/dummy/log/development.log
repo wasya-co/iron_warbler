@@ -1,0 +1,32 @@
+Started GET "/" for ::1 at 2022-02-04 08:33:18 -0600
+Processing by ApplicationController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering application/home.haml within layouts/application
+  Rendered application/home.haml within layouts/application (Duration: 3.5ms | Allocations: 2553)
+  Rendered layout layouts/application.html.erb (Duration: 35.9ms | Allocations: 15428)
+Completed 500 Internal Server Error in 43ms (MongoDB: 0.0ms | Allocations: 17229)
+
+
+  
+ActionView::Template::Error (couldn't find file 'ish_manager_manifest.js'
+Checked in these paths: 
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/app/assets/config
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/app/assets/images
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/app/assets/javascripts
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/app/assets/stylesheets
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/app/assets/images
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/app/assets/javascripts
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/app/assets/stylesheets
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/vendor/bundle/ruby/2.7.0/gems/actionview-6.1.4.4/lib/assets/compiled
+  /Users/piousbox/projects/ruby/microsites3/iron_warbler/test/dummy/node_modules):
+  
+app/assets/config/manifest.js:5
+Started GET "/" for ::1 at 2022-02-04 08:34:56 -0600
+Processing by ApplicationController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering application/home.haml within layouts/application
+  Rendered application/home.haml within layouts/application (Duration: 3.5ms | Allocations: 2553)
+  Rendered layout layouts/application.html.erb (Duration: 40.5ms | Allocations: 19428)
+Completed 200 OK in 47ms (Views: 44.3ms | MongoDB: 0.0ms | Allocations: 21019)
+
+
