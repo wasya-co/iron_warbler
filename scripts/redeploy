@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cat $(date) > redeploy ; git add . ; git commit -m 'redeploy' ; git push
