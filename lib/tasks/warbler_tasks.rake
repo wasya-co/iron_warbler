@@ -7,12 +7,12 @@ end
 namespace :warbler do
 
   desc 'test placing orders for stock' do
-  task place_order_stock: :environment do
+  task :place_order_stock => :environment do
     opts = {
       "instruction": "BUY",
       "price": "1.10",
       "quantity": 1,
-      "symbol": "BAC",
+      "symbol": "BAC"
     }
     out = Warbler::Ameritrade::Api.place_stock_limit_order opts
     puts! out, 'out'
@@ -20,7 +20,7 @@ namespace :warbler do
 
   ## @TODO: this is still in ish_manager namespace, need to actually move it here.
   desc 'watch the stocks, and trigger actions - not alphavantage, tda now. 2021-08-08'
-  task watch_stocks: :environment do
+  task :watch_stocks => :environment do
     while true
       stocks = Warbler::StockWatch.where( notification_type: :EMAIL )
       stocks.each do |stock|
@@ -43,7 +43,7 @@ namespace :warbler do
   end
 
   desc 'watch option: contractType=PUT|CALL strike symbol date=yyyy-mm-dd'
-  task watch_options: :environment do
+  task :watch_options => :environment do
     while true
       option_watches = Warbler::OptionWatch.where( notification_type: :EMAIL )
       option_watches.each do |option|
@@ -66,4 +66,5 @@ namespace :warbler do
     end
   end
 
+end
 end

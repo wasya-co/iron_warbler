@@ -10,10 +10,10 @@
   .flex-row
     .form-group
       = f.label :action
-      = f.select :action, options_for_select( Warbler::StockWatch::ACTIONS.map{|a|[a,a]}, :selected => option_watch.action )
+      = f.select :action, options_for_select( IronWarbler::StockWatch::ACTIONS.map{|a|[a,a]}, :selected => option_watch.action )
     .form-group
       = f.label :profile
-      = f.select :profile, options_for_select( [[nil,nil]]+@profiles.map{|p|[p.email,p.id]}, :selected => option_watch.profile ? option_watch.profile.id : nil )
+      = f.select :profile, options_for_select( [[nil,nil]]+@profiles.map{|p|[p[:email],p[:id]]}, :selected => option_watch.profile ? option_watch.profile.id : nil )
     .form-group
       %label.control-label When
       = f.text_field :ticker, :class => 'form-control', :placeholder => 'ticker'
@@ -28,7 +28,7 @@
       = f.number_field :strike, :step => 0.01, :placeholder => "0.01"
     .form-group
       %label.control-label Is
-      = f.select :direction, options_for_select( Warbler::StockWatch::DIRECTIONS.map{|d|[d,d]}, :selected => option_watch.direction )
+      = f.select :direction, options_for_select( IronWarbler::StockWatch::DIRECTIONS.map{|d|[d,d]}, :selected => option_watch.direction )
     .form-group
       %label.control-label Price
       = f.number_field :price, :step => 0.01, :placeholder => "0.01"

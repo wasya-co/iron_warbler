@@ -25,5 +25,6 @@ class IronWarbler::StockWatch
   # @TODO: email, sms would be fields here?
 
   # belongs_to :profile, :class_name => 'Ish::UserProfile'
+  field :profile
 
 end

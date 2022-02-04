@@ -1,12 +1,10 @@
 
-class IshManager::StockWatchesController < IshManager::ApplicationController
-
-  layout 'ish_manager/application2'
+class IronWarbler::StockWatchesController < IronWarbler::ApplicationController
 
   ## alphabetized : )
 
   def create
-    @stock_watch = Warbler::StockWatch.new permitted_params
+    @stock_watch = IronWarbler::StockWatch.new permitted_params
     authorize! :create, @stock_watch
     flag = @stock_watch.save
     if flag
@@ -18,7 +16,7 @@ class IshManager::StockWatchesController < IshManager::ApplicationController
   end
 
   def destroy
-    @w = Warbler::StockWatch.find params[:id]
+    @w = IronWarbler::StockWatch.find params[:id]
     authorize! :destroy, @w
     flag = @w.destroy
     if flag
@@ -30,17 +28,19 @@ class IshManager::StockWatchesController < IshManager::ApplicationController
   end
 
   def index
-    authorize! :index, Warbler::StockWatch
-    @profiles = Ish::UserProfile.all
-    @stock_watches = Warbler::StockWatch.order_by( ticker: :asc, direction: :asc, price: :desc
-      ).includes( :profile )
-    @stock_watch = Warbler::StockWatch.new
-    @option_watches = Warbler::OptionWatch.order_by( ticker: :asc, direction: :asc, price: :desc ).includes( :profile )
-    @option_watch = Warbler::OptionWatch.new
+    authorize! :index, IronWarbler::StockWatch
+    @stock_watches = IronWarbler::StockWatch.order_by( ticker: :asc, direction: :asc, price: :desc
+      ).includes()
+    @stock_watch = IronWarbler::StockWatch.new
+    @option_watches = IronWarbler::OptionWatch.order_by( ticker: :asc, direction: :asc, price: :desc ).includes()
+    @option_watch = IronWarbler::OptionWatch.new
+    @profiles = [
+      { email: 'piousbox@gmail.com', id: 'piousbox@gmail.com' }.with_indifferent_access
+    ]
   end
 
   def update
-    @stock_watch = Warbler::StockWatch.find params[:id]
+    @stock_watch = IronWarbler::StockWatch.find params[:id]
     authorize! :update, @stock_watch
     flag = @stock_watch.update_attributes permitted_params
     if flag

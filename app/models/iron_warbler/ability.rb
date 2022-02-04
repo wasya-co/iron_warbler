@@ -9,6 +9,14 @@ class IronWarbler::Ability
     #
     if !user.blank?
 
+
+      #
+      # role admin
+      #
+      if user.profile && [ :admin ].include?( user.profile.role_name )
+        can [ :manage ], ::IronWarbler::StockWatch
+      end
+
     end
 
     #
