@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@ionic/react": "^6.0.5",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
@@ -28,9 +31,11 @@
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
+    "ionicons": "^6.0.1",
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "link-module-alias": "^1.2.0",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -43,12 +48,14 @@
     "react-dev-utils": "^12.0.0",
     "react-dom": "^17.0.2",
     "react-refresh": "^0.11.0",
+    "react-router-dom": "^6.2.1",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
+    "styled-components": "^5.3.3",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "web-vitals": "^2.1.4",
@@ -57,10 +64,8 @@
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
   },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+  "_moduleAliases": {
+    "$shared": "app-js/shared"
   },
   "eslintConfig": {
     "extends": [
@@ -82,19 +87,19 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/app-js"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "app-js/**/*.{js,jsx,ts,tsx}",
+      "!app-js/**/*.d.ts"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/app-js/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/app-js/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
     "transform": {
@@ -133,5 +138,11 @@
     "presets": [
       "react-app"
     ]
+  },
+  "scripts": {
+    "start": "HTTPS=true HOST=iron_warbler.mac PORT=3009 NODE_PATH=./config/environments/development_web node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "postinstall": "link-module-alias"
   }
 }
