@@ -27,4 +27,8 @@ class IronWarbler::StockWatch
   # belongs_to :profile, :class_name => 'Ish::UserProfile'
   field :profile
 
+  def self.active
+    self.all
+  end
+
 end

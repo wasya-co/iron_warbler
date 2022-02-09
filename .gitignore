@@ -10,3 +10,5 @@ test/dummy/tmp
 test/dummy/log
 tmp
 
+yarn-error.log
+shared_modules

@@ -2,36 +2,58 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { logg } from "$shared"
+import config from 'config'
+import { jwtManager } from "ishjs"
+import { logg, useApi, } from "$shared"
 import { StockWatch, StockWatchForm, } from './stock_watches'
+import './App.css'
 
-console.log(logg, 'ze logg')
+const { JwtContextProvider, SimpleJwtRow, } = jwtManager
 
-const W = styled.div``
+const Header = styled.div``;
+
+const WOuter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+`;
+
+const WInner = styled.div`
+  border: 1px solid gray;
+  width: 900px;
+`;
 
 function App() {
+  const api = useApi()
 
   const [ stockWatches, setStockWatches ] = useState([])
 
   useEffect(() => {
-    fetch("/api/stock_watches").then((r) => {
-      logg(r, 'response')
-    })
+    api.getStockWatches().then((r) => {
+      setStockWatches(r.data)
+    }) // @TODO: catch here
   }, [])
 
-  return <W>
-    <ul>
-      <li><a href="/manager">Back to manager</a></li>
-      <li><a hrerf="/iron_warbler/stock_watches">Stock Watches</a></li>
-    </ul>
+  return <WOuter><WInner>
+    <JwtContextProvider config={config} >
 
-    <h1>Welcome home</h1>
+      <Header>
+        <SimpleJwtRow />
+        <ul>
+          <li><a href="/manager">Back to manager</a></li>
+          <li><a hrerf="/iron_warbler/stock_watches">Stock Watches</a></li>
+        </ul>
+      </Header>
 
-    { stockWatches.map((sw, idx) => <StockWatch key={idx} {...sw} />) }
+      <h1>Welcome home</h1>
 
-    <StockWatchForm />
+      { stockWatches.map((sw, idx) => <StockWatchForm key={idx} {...sw} />) }
 
-  </W>
+      <StockWatchForm />
+
+    </JwtContextProvider>
+  </WInner></WOuter>
 }
 
 export default App

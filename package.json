@@ -1,4 +1,24 @@
 {
+  "_moduleAliases": {
+    "$shared": "app-js/shared"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "name": "iron_warbler",
   "version": "0.0.0",
   "private": true,
@@ -12,6 +32,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.25.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
@@ -64,27 +85,13 @@
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
   },
-  "_moduleAliases": {
-    "$shared": "app-js/shared"
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "homepage": "iron_warbler",
   "jest": {
     "roots": [
       "<rootDir>/app-js"
@@ -96,7 +103,9 @@
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
-    "setupFilesAfterEnv": [],
+    "setupFilesAfterEnv": [
+      "./app-js/setupTests"
+    ],
     "testMatch": [
       "<rootDir>/app-js/**/__tests__/**/*.{js,jsx,ts,tsx}",
       "<rootDir>/app-js/**/*.{spec,test}.{js,jsx,ts,tsx}"
@@ -108,8 +117,8 @@
       "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
+      "/node_modules/(?!(@ionic|@stencil|ionicons)/)",
+      "\\.pnp\\.[^\\\/]+$"
     ],
     "modulePaths": [],
     "moduleNameMapper": {
@@ -134,15 +143,11 @@
     ],
     "resetMocks": true
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
+  "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "HTTPS=true HOST=iron_warbler.mac PORT=3009 NODE_PATH=./config/environments/development_web node scripts/start.js",
+    "start": "NODE_PATH=config/environments/development_web:/Users/piousbox/projects/node/shared_modules HTTPS=false PORT=3009 node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
+    "test": "NODE_PATH=config/environments/development_web:shared_modules node scripts/test.js",
     "postinstall": "link-module-alias"
   }
 }

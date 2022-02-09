@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This is trash, post-install hook does the aliasing
+ */
 module.exports = {
   additionalModulePaths: [ 'app-js' ],
   webpackAliases: {

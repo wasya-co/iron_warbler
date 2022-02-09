@@ -2,6 +2,8 @@
 import { Fragment as F } from 'react'
 import styled from 'styled-components'
 
+import { logg } from '$shared'
+
 const Cell = styled.div`
   display: inline;
 `;
@@ -21,6 +23,9 @@ const W = styled.div`
 
 
 const StockWatchForm = (props) => {
+  logg(props, 'StockWatchForm')
+  const { price, ticker } = props
+
   return <W>
     <F>
       <label>Action</label>
@@ -37,7 +42,7 @@ const StockWatchForm = (props) => {
     </Cell>
     <Cell>
       <label>When</label>
-      <input name="ticker" />
+      <input name="ticker" value={ticker} />
     </Cell>
     <Cell>
       <label>Price</label>
@@ -48,7 +53,7 @@ const StockWatchForm = (props) => {
     </Cell>
     <Cell>
       <label>$</label>
-      <input name="price" />
+      <input name="price" value={price} />
     </Cell>
     <Cell>
       <button>Go</button>

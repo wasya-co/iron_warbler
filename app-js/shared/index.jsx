@@ -16,7 +16,13 @@ import styled from 'styled-components'
 import config from 'config'
 import C from "./C"
 
+/* A */
+export { default as useApi } from './Api'
 
+/* C */
+export { C }
+
+/* L */
 /**
  * Usage: logg(someObject, 'label')
  *
@@ -43,4 +49,5 @@ const logg2 = (a, b="", c=null) => {
 };
 export { logg, logg2 };
 
-
+/* R */
+export { default as request } from './request'
