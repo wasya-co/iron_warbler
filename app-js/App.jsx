@@ -15,14 +15,12 @@ const Header = styled.div``;
 
 const WOuter = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: stretch;
-  height: 100%;
 `;
 
 const WInner = styled.div`
   border: 1px solid gray;
-  width: 900px;
 `;
 
 function App() {
@@ -31,12 +29,13 @@ function App() {
   const [ stockWatches, setStockWatches ] = useState([])
 
   useEffect(() => {
-    api.getStockWatches().then((r) => {
-      setStockWatches(r.data)
+    api.getStockWatches().then((r) => r.data).then((r) => {
+      logg(r, 'rrr')
+      setStockWatches(r)
     }) // @TODO: catch here
   }, [])
 
-  return <WOuter><WInner>
+  return <WOuter className="WOuter"><WInner className="WInner" >
     <JwtContextProvider api={api} >
 
       <Header>
@@ -44,11 +43,11 @@ function App() {
         <SimpleJwtRow />
       </Header>
 
-      <h1>Welcome home</h1>
+      <h1>Welcome home 2</h1>
 
-      { stockWatches.map((sw, idx) => <StockWatchForm key={idx} {...sw} />) }
+      { stockWatches.map((sw, idx) => <StockWatchForm key={idx} item={sw} />) }
 
-      <StockWatchForm item={StockWatchItem} />
+      New: <StockWatchForm item={StockWatchItem} />
 
     </JwtContextProvider>
   </WInner></WOuter>

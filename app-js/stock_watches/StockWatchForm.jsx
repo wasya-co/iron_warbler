@@ -10,8 +10,11 @@ const Cell = styled.div`
 `;
 
 const W = styled.div`
-  display: flex;
+
   border: 1px solid gray;
+
+  display: flex;
+  flex-wrap: wrap;
 
   .form-group {
     display: inline;

@@ -1,9 +1,45 @@
 
 ## copy-pasted from ish_api
-class IronWarbler::Api::ApiController < ActionController::Base
+class IronWarbler::ApiController < ActionController::Base
+
+  skip_authorization_check only: %i| fb_sign_in login |
+
+  before_action :check_profile_auth, only: %i| account |
+
+  ## @TODO: this is not test-driven
+  def account
+    @profile = current_user&.profile
+    authorize! :show, @profile
+    render 'iron_warbler/api/account'
+  rescue CanCan::AccessDenied
+    render json: {
+      status: :not_ok,
+    }, status: 401
+  end
+
+  def fb_sign_in
+    authorize! :fb_sign_in, Ishapi
+    # render :json => { :status => :ok }
+    render :action => 'show'
+  end
 
   def home
     render json: { status: :ok }, status: :ok
+  end
+
+  def login
+    @current_user = User.where( email: params[:email] ).first
+    if !@current_user
+      render json: { status: :not_ok }, status: 401
+      return
+    end
+    if @current_user.valid_password?(params[:password])
+      # from: application_controller#long_term_token
+
+      # send the jwt to client
+      @jwt_token = encode(user_id: @current_user.id.to_s)
+      @profile = @current_user.profile
+    end
   end
 
   ## POST /api/users/long_term_token , a FB login flow
@@ -88,4 +124,5 @@ class IronWarbler::Api::ApiController < ActionController::Base
 
 
 end
+
 

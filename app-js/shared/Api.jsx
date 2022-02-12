@@ -16,7 +16,7 @@ const useApi = () => {
     },
 
     getMyAccount: () => {
-      return request.get(`/api/my/account?jwt_token=${jwt_token}`).then(r => r.data)
+      return request.get(`/api/users/me?jwt_token=${jwt_token}`).then(r => r.data)
     },
     getStockWatches: () => {
       return request.get(`/api/stock_watches?jwt_token=${jwt_token}`)

@@ -1,7 +1,7 @@
 
-require_dependency "iron_warbler/api/api_controller"
+require_dependency "iron_warbler/api_controller"
 
-class IronWarbler::Api::StockWatchesController < IronWarbler::Api::ApiController
+class IronWarbler::Api::StockWatchesController < IronWarbler::ApiController
 
   before_action :check_profile_auth
 

@@ -22,6 +22,10 @@ class IronWarbler::Ability
       #
       can [ :index ], ::IronWarbler::StockWatch
 
+      can [ :show ], Ish::UserProfile do |p|
+        user.profile == p
+      end
+
     end
 
     #
