@@ -64,12 +64,12 @@
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
-    "react": "^17.0.2",
+    "react": "=16.13.1",
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.0",
-    "react-dom": "^17.0.2",
+    "react-dom": "^16.3.1",
     "react-refresh": "^0.11.0",
-    "react-router-dom": "^6.2.1",
+    "react-router-dom": "^5.2.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -97,8 +97,7 @@
       "<rootDir>/app-js"
     ],
     "collectCoverageFrom": [
-      "app-js/**/*.{js,jsx,ts,tsx}",
-      "!app-js/**/*.d.ts"
+      "app-js/**/*.{js,jsx}"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
@@ -107,14 +106,14 @@
       "./app-js/setupTests"
     ],
     "testMatch": [
-      "<rootDir>/app-js/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/app-js/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/app-js/**/__tests__/**/*.{js,jsx}",
+      "<rootDir>/app-js/**/*.{spec,test}.{js,jsx}"
     ],
     "testEnvironment": "jsdom",
     "transform": {
-      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.(js|jsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/(?!(@ionic|@stencil|ionicons)/)",
@@ -126,16 +125,9 @@
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
-      "web.js",
       "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
       "json",
-      "web.jsx",
-      "jsx",
-      "node"
+      "jsx"
     ],
     "watchPlugins": [
       "jest-watch-typeahead/filename",
@@ -145,7 +137,7 @@
   },
   "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "NODE_PATH=config/environments/development_web:/Users/piousbox/projects/node/shared_modules HTTPS=false PORT=3009 node scripts/start.js",
+    "start": "NODE_PATH=config/environments/development_web:shared_modules HTTPS=false PORT=3009 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "NODE_PATH=config/environments/development_web:shared_modules node scripts/test.js",
     "postinstall": "link-module-alias"

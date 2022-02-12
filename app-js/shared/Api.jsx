@@ -16,9 +16,7 @@ const useApi = () => {
     },
 
     getMyAccount: () => {
-      return request.post(`/api/my/account`, {
-        jwt_token,
-      })
+      return request.get(`/api/my/account?jwt_token=${jwt_token}`).then(r => r.data)
     },
     getStockWatches: () => {
       return request.get(`/api/stock_watches?jwt_token=${jwt_token}`)
@@ -27,10 +25,13 @@ const useApi = () => {
     // loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token', // @TODO: move to... a config that's injected into JwtManager
 
-    myAccount: () => "/api/my/account",
     myVideosPath: "/api/my/videos",
 
     paymentsPath: "/api/payments2",
+
+    postLoginWithPassword: ({ email, password }) => {
+      return request.post("/api/users/login.json", { email, password, }).then(r => r.data)
+    },
 
     reportsGet: (a) => {
       const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};

@@ -1,11 +1,12 @@
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import config from 'config'
 import { jwtManager } from "ishjs"
 import { logg, useApi, } from "$shared"
-import { StockWatch, StockWatchForm, } from './stock_watches'
+import MainMenu from "./application/MainMenu"
+import { StockWatch, StockWatchForm, StockWatchItem, } from './stock_watches'
 import './App.css'
 
 const { JwtContextProvider, SimpleJwtRow, } = jwtManager
@@ -36,21 +37,18 @@ function App() {
   }, [])
 
   return <WOuter><WInner>
-    <JwtContextProvider config={config} >
+    <JwtContextProvider api={api} >
 
       <Header>
+        <MainMenu />
         <SimpleJwtRow />
-        <ul>
-          <li><a href="/manager">Back to manager</a></li>
-          <li><a hrerf="/iron_warbler/stock_watches">Stock Watches</a></li>
-        </ul>
       </Header>
 
       <h1>Welcome home</h1>
 
       { stockWatches.map((sw, idx) => <StockWatchForm key={idx} {...sw} />) }
 
-      <StockWatchForm />
+      <StockWatchForm item={StockWatchItem} />
 
     </JwtContextProvider>
   </WInner></WOuter>

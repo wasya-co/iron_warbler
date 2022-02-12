@@ -1,4 +1,6 @@
 
+import React from 'react'
+
 import { logg, } from "$shared"
 
 const StockWatch = (props) => {

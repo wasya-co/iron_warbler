@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/wasyaco/iron_warbler.git
-  revision: 982dfe1622983517be4efaf5547b59d51a39fa28
-  branch: 0.0.0
+  revision: 279fd1ad8f60eb84c92bc0e8987a4d2bcb575e48
+  branch: 0.1.0
   specs:
     iron_warbler (0.0.0)
       httparty (~> 0.20.0)
@@ -14,10 +14,10 @@ GIT
 
 GIT
   remote: https://github.com/wasyaco/ish_models.git
-  revision: 22b9c161664261aa6974c15473dc52253b31469c
+  revision: 8067401e2788e4b07dc55a4bccfc332436911fa9
   branch: 1.5.0
   specs:
-    ish_models (0.0.33.157)
+    ish_models (0.0.33.158)
       aws-sdk
       devise (> 0)
       kaminari-mongoid (~> 1.0.1)

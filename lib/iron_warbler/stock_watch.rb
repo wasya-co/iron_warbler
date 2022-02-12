@@ -22,10 +22,8 @@ class IronWarbler::StockWatch
   DIRECTION_BELOW = :BELOW
   field :direction, :type => Symbol
 
-  # @TODO: email, sms would be fields here?
-
-  # belongs_to :profile, :class_name => 'Ish::UserProfile'
-  field :profile
+  ## profile_id is the username/handle
+  belongs_to :profile, :class_name => 'Ish::UserProfile'
 
   def self.active
     self.all

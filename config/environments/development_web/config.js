@@ -15,8 +15,4 @@ module.exports = {
   "homeLocation": "/en/locations/show/construct0",
 
   "requireLogin": false,
-
-  routes: {
-    loginWithPasswordPath: "/api/users/login.json",
-  },
 };

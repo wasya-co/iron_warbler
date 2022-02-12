@@ -1,8 +1,9 @@
 
-import { Fragment as F } from 'react'
+import PropTypes from 'prop-types'
+import React, { Fragment as F } from 'react'
 import styled from 'styled-components'
 
-import { logg } from '$shared'
+import { useApi, logg, } from '$shared'
 
 const Cell = styled.div`
   display: inline;
@@ -23,42 +24,59 @@ const W = styled.div`
 
 
 const StockWatchForm = (props) => {
-  logg(props, 'StockWatchForm')
-  const { price, ticker } = props
+  // logg(props, 'StockWatchForm')
+  const { item } = props
+
+  const api = useApi()
+
+  const doSubmit = () => {
+    api.postStockWatch(item).then(resp => {
+      // toast('Success.') // @TODO: wire toast
+    }).catch(err => {
+      logg(err, 'e-544 cannot create stockWatch')
+    })
+  }
 
   return <W>
-    <F>
-      <label>Action</label>
-      <select>
-        <option>none</option>
-        <option>email</option>
-      </select>
-    </F>
     <Cell>
-      <label>Profile</label>
-      <select>
-        <option>piousbox@gmail.com</option>
+      <label>Notify by</label>
+      <select name="stock_watch[action]">
+        <option value="NONE">NONE</option>
+        <option value="EMAIL">EMAIL</option>
+        <option value="SMS">SMS</option>
+      </select>
+    </Cell>
+    <Cell>
+      <label>Email</label>
+      <select name="stock_watch[email]">
+        <option value="piousbox@gmail.com">piousbox@gmail.com</option>
       </select>
     </Cell>
     <Cell>
       <label>When</label>
-      <input name="ticker" value={ticker} />
+      <input name="stock_watch[ticker]" value={item.ticker} />
     </Cell>
     <Cell>
       <label>Price</label>
-      <select>
-        <option>above</option>
-        <option>below</option>
+      <select name="stock_watch[direction]">
+        <option value="ABOVE">ABOVE</option>
+        <option value="BELOW">BELOW</option>
       </select>
     </Cell>
     <Cell>
       <label>$</label>
-      <input name="price" value={price} />
+      <input name="stock_watch[price]" value={item.price} />
     </Cell>
     <Cell>
-      <button>Go</button>
+      <button onCLick={doSubmit} >Go</button>
     </Cell>
   </W>
+}
+StockWatchForm.props = {
+  item: PropTypes.shape({
+    price: PropTypes.number.required,
+    ticker: PropTypes.string.required,
+  })
 }
 
 export default StockWatchForm

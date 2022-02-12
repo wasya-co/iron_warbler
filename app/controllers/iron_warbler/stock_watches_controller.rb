@@ -10,7 +10,7 @@ class IronWarbler::StockWatchesController < IronWarbler::ApplicationController
     if flag
       flash[:notice] = 'Created stock watch.'
     else
-      flash[:alert] = "Cannot create stock watch: #{@stock_watch.errors.messages}"
+      flash[:alert] = "Cannot create stock watch: #{@stock_watch.errors.full_messages}"
     end
     redirect_to :action => 'index'
   end
@@ -22,7 +22,7 @@ class IronWarbler::StockWatchesController < IronWarbler::ApplicationController
     if flag
       flash[:notice] = 'Success.'
     else
-      flash[:alert] = @w.errors.messages
+      flash[:alert] = @w.errors.full_messages
     end
     redirect_to action: 'index'
   end
@@ -46,7 +46,7 @@ class IronWarbler::StockWatchesController < IronWarbler::ApplicationController
     if flag
       flash[:notice] = 'Updated stock watch.'
     else
-      flash[:alert] = "Cannot update stock watch: #{@stock_watch.errors.messages}"
+      flash[:alert] = "Cannot update stock watch: #{@stock_watch.errors.full_messages}"
     end
     redirect_to :action => 'index'
   end
@@ -54,7 +54,7 @@ class IronWarbler::StockWatchesController < IronWarbler::ApplicationController
   private
 
   def permitted_params
-    params[:warbler_stock_watch].permit!
+    params[:stock_watch].permit!
   end
 
 end
