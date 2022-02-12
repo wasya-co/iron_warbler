@@ -67,19 +67,23 @@ class IronWarbler::Api::ApiController < ActionController::Base
   end
 
   def current_ability
-    @current_ability ||= IronWarbler::Ability.new( @current_user )
+    @current_ability ||= IronWarbler::Ability.new(current_user)
+  end
+
+  def current_user
+    @current_user
   end
 
   # jwt
   def decode(token)
-    decoded = JWT.decode(token, Rails.application.secrets.secret_key_base.to_s)[0]
+    decoded = ::JWT.decode(token, Rails.application.secrets.secret_key_base.to_s)[0]
     HashWithIndifferentAccess.new decoded
   end
 
   # jwt
   def encode(payload, exp = 48.hours.from_now) # @TODO: definitely change, right now I expire once in 2 days.
     payload[:exp] = exp.to_i
-    JWT.encode(payload, Rails.application.secrets.secret_key_base.to_s)
+    ::JWT.encode(payload, Rails.application.secrets.secret_key_base.to_s)
   end
 
 

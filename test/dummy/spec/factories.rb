@@ -9,7 +9,7 @@ FactoryBot.define do
 
   # alphabetized : )
 
-  factory :admin do
+  factory :admin, class: User do
     email { 'piousbox@gmail.com' }
     password { '1234567890' }
     after :build do |u|

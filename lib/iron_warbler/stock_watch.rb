@@ -25,8 +25,8 @@ class IronWarbler::StockWatch
   ## profile_id is the username/handle
   belongs_to :profile, :class_name => 'Ish::UserProfile'
 
-  def self.active
-    self.all
+  def self.active_for profile
+    self.where( profile: profile )
   end
 
 end
