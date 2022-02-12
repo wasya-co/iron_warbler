@@ -18,10 +18,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'mongoid_paranoia'
   s.add_runtime_dependency 'mongoid-paperclip'
   s.add_runtime_dependency 'jwt', '~> 2.3.0'
+  s.add_runtime_dependency 'jbuilder'
 
-  s.add_runtime_dependency 'ish_models', '~> 0.0.33.156'
+  # s.add_runtime_dependency 'ish_models', '~> 0.0.33.156'
 
-  # s.add_runtime_dependency 'devise', '> 0'
+  # s.add_runtime_dependency 'devise'
   # s.add_runtime_dependency 'aws-sdk'
 
 end

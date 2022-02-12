@@ -93,8 +93,6 @@ def setup_tags
 end
 
 def setup_users
-  DatabaseCleaner.clean
-
   # @TODO: both of these should be in factory
   @admin = @user = create(:user, :email => 'piousbox@gmail.com')
   @profile = create :user_profile, :email => 'piousbox@gmail.com', role_name: 'manager', user: @user

@@ -18,6 +18,11 @@ gem 'cancancan'
 gem 'ish_models',   :github => 'wasyaco/ish_models',   :branch => '1.5.0'
 gem 'iron_warbler', :github => 'wasyaco/iron_warbler', :branch => '0.1.0'
 
+## somehow I need it, even if specified in iron_warbler gemspec
+## This would be test-only, except I may run test/dummy as an app anyway
+gem 'jbuilder'
+gem 'jwt'
+
 group :test, :development do
   gem 'byebug'
   gem 'capybara' # @TODO: remove?
@@ -25,6 +30,4 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
-
-  gem 'jwt' # somehow I need it, even if specified in iron_warbler gemspec
 end

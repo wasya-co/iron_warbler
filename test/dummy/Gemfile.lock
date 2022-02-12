@@ -1,11 +1,11 @@
 GIT
   remote: https://github.com/wasyaco/iron_warbler.git
-  revision: 4f58ffea24ebaea1ada1e2cfafd6d7c615472cbc
+  revision: ab5f71a50e5e238709c1758fad1f3bb0956cfcc1
   branch: 0.1.0
   specs:
     iron_warbler (0.0.0)
       httparty (~> 0.20.0)
-      ish_models (~> 0.0.33.156)
+      jbuilder
       jwt (~> 2.3.0)
       kaminari-mongoid (~> 1.0.2)
       mongoid (~> 7.3.0)
@@ -1346,6 +1346,9 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
+    jbuilder (2.11.5)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     jmespath (1.5.0)
     jwt (2.3.0)
     kaminari (1.2.2)
@@ -1500,6 +1503,7 @@ DEPENDENCIES
   haml
   iron_warbler!
   ish_models!
+  jbuilder
   jwt
   kaminari
   kaminari-mongoid

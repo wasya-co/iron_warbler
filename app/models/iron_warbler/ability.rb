@@ -17,6 +17,11 @@ class IronWarbler::Ability
         can [ :manage ], ::IronWarbler::StockWatch
       end
 
+      #
+      # every logged in user
+      #
+      can [ :index ], ::IronWarbler::StockWatch
+
     end
 
     #
