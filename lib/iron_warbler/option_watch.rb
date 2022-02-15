@@ -1,9 +1,12 @@
+require 'mongoid'
 
 class IronWarbler::OptionWatch
   include Mongoid::Document
   include Mongoid::Timestamps
   store_in collection: 'ish_option_watches'
 
+  CALL = :CALL
+  PUT = :PUT
   SLEEP_TIME_SECONDS = 60
 
   field :ticker # like NVDA
@@ -39,5 +42,6 @@ class IronWarbler::OptionWatch
   # @TODO: email, sms would be fields here?
   # belongs_to :profile, :class_name => 'Ish::UserProfile'
   field :profile
+  field :profile_id
 
 end

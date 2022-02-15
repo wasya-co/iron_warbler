@@ -1,6 +1,7 @@
 {
   "_moduleAliases": {
-    "$shared": "app-js/shared"
+    "$shared": "app-js/shared",
+    "$data": "data"
   },
   "babel": {
     "presets": [
@@ -70,6 +71,7 @@
     "react-dom": "^16.3.1",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^5.2.0",
+    "recharts": "^2.1.9",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -117,7 +119,7 @@
     },
     "transformIgnorePatterns": [
       "/node_modules/(?!(@ionic|@stencil|ionicons)/)",
-      "\\.pnp\\.[^\\\/]+$"
+      "\\.pnp\\.[^\\/]+$"
     ],
     "modulePaths": [],
     "moduleNameMapper": {

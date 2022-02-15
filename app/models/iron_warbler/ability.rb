@@ -15,11 +15,14 @@ class IronWarbler::Ability
       #
       if user.profile && [ :admin ].include?( user.profile.role_name )
         can [ :manage ], ::IronWarbler::StockWatch
+        can [ :manage ], ::IronWarbler::OptionWatch
       end
 
       #
       # every logged in user
       #
+      can [ :create ], ::IronWarbler::OptionWatch
+
       can [ :index ], ::IronWarbler::StockWatch
 
       can [ :show ], Ish::UserProfile do |p|

@@ -6,7 +6,10 @@ import config from 'config'
 import { jwtManager } from "ishjs"
 import { logg, useApi, } from "$shared"
 import MainMenu from "./application/MainMenu"
-import { StockWatch, StockWatchForm, StockWatchItem, } from './stock_watches'
+import {
+  Msft200,
+  StockWatch, StockWatchForm, StockWatchItem,
+} from './stock_watches'
 import './App.css'
 
 const { JwtContextProvider, SimpleJwtRow, } = jwtManager
@@ -48,6 +51,9 @@ function App() {
       { stockWatches.map((sw, idx) => <StockWatchForm key={idx} item={sw} />) }
 
       New: <StockWatchForm item={StockWatchItem} />
+
+      <hr />
+      <Msft200 />
 
     </JwtContextProvider>
   </WInner></WOuter>

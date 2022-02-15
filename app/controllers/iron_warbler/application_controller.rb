@@ -16,6 +16,10 @@ module IronWarbler
     #
     private
 
+    def current_user
+      @current_user
+    end
+
     def set_changelog
       @version = Gem.loaded_specs['iron_warbler'].version.to_s
     end
