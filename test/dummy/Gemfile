@@ -1,33 +1,80 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails'
-gem 'rake'
+ruby "2.7.5"
+
+gem "bootsnap", require: false
+gem 'cancancan', '~> 2.3.0'
 gem 'devise'
-gem 'haml'
-gem 'sassc'
-gem 'aws-sdk-s3'
-gem 'aws-sdk'
-
-gem 'mongoid' # @TODO: I tried removing this dependency from here but could not.
-gem 'mongoid-paperclip'
+gem 'haml', '~> 5.2.0'
+gem 'mongoid', '~> 7.3.0'
 gem 'mongoid_paranoia'
-gem 'kaminari'
-gem 'kaminari-mongoid'
-gem 'cancancan'
+gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem "mongoid-autoinc", "~> 6.0"
+gem "mongo_session_store"
+
+gem "rails", "~> 6.0.0"
+gem "sprockets-rails"
+gem "pg", "~> 1.1"
+gem "puma", "~> 5.0"
+gem "jsbundling-rails" ## Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem "cssbundling-rails" ## Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "jbuilder"
+gem "sassc-rails"
+gem 'jwt'
 
 gem 'ish_models',   :github => 'wasyaco/ish_models',   :branch => '1.5.0'
 gem 'iron_warbler', :github => 'wasyaco/iron_warbler', :branch => '0.1.0'
 
-## somehow I need it, even if specified in iron_warbler gemspec
-## This would be test-only, except I may run test/dummy as an app anyway
-gem 'jbuilder'
-gem 'jwt'
-
-group :test, :development do
+group :development, :test do
   gem 'byebug'
-  gem 'capybara' # @TODO: remove?
+end
+
+group :test do
+  ## Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+
   gem 'database_cleaner-mongoid'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
 end
+
+
+
+
+
+
+
+
+
+
+
+
+## Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
+## Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+# gem "turbo-rails"
+## Use Redis adapter to run Action Cable in production
+# gem "redis", "~> 4.0"
+## Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
+# gem "kredis"
+## Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# gem "bcrypt", "~> 3.1.7"
+
+
+
+##
+## for development, test:
+##
+
+## Use console on exceptions pages [https://github.com/rails/web-console]
+# gem "web-console"
+
+## Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+# gem "rack-mini-profiler"
+
+## Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+# gem "spring"

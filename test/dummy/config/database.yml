@@ -1,1 +1,34 @@
 
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  ## From: https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: ish_development
+  username: local_role
+  password: test1234
+
+  # Schema search path. The server defaults to $user,public
+  #schema_search_path: myapp,sharedapp,public
+
+  # Minimum log levels, in increasing order:
+  #   debug5, debug4, debug3, debug2, debug1,
+  #   log, notice, warning, error, fatal, and panic
+  # Defaults to warning.
+  #min_messages: notice
+
+
+development_production:
+  <<: *default
+  database: ish_production
+  username: local_role
+  password: test1234
+
+test:
+  <<: *default
+  database: ish_test
+
+

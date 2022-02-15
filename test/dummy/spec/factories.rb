@@ -9,29 +9,26 @@ FactoryBot.define do
 
   # alphabetized : )
 
-  ## @TODO: I should not have this... use factor(:user)
-=begin
   factory :admin, class: User do
     email { 'piousbox@gmail.com' }
     password { '1234567890' }
     after :build do |u|
-      p = Ish::UserProfile.find_or_initialize_by email: 'piousbox@gmail.com'
+      p = Ish::UserProfile.find_or_initialize_by email: u.email
       p.user = u
+      p.role_name = :admin
       p.save
+      u.profile = p
+      u.save
     end
   end
-=end
 
-  ## these aren't generated without a user.
-=begin
-  factory :profile, :class => Ish::UserProfile do
-    email { generate(:email) }
-    name { 'some-name' }
-    after :build do |doc|
-      doc.user = create(:user)
-    end
+  factory :option_watch, class: IronWarbler::OptionWatch do
+    contractType { IronWarbler::OptionWatch::CALL }
+    date { '2022-02-22' }
+    price { 1 }
+    strike { 100.0 }
+    ticker { 'XXX' }
   end
-=end
 
   factory :stock_watch, class: IronWarbler::StockWatch do
     ticker { 'QQQ' }
@@ -45,27 +42,13 @@ FactoryBot.define do
     after :build do |u|
       p = Ish::UserProfile.find_or_initialize_by email: u.email
       p.user = u
+      if 'piousbox@gmail.com' == u.email
+        p.role_name = :admin
+      end
       p.save
       u.profile = p
       u.save
     end
   end
-
-  ## these aren't generated without a user.
-=begin
-  factory :user_profile, :class => Ish::UserProfile do
-    email { generate(:email) }
-    name { 'some-name' }
-    after :build do |doc|
-      doc.user = create(:user)
-    end
-  end
-=end
-
-  factory :video do
-    name { 'some-name' }
-    youtube_id { 'some-youtube-id' }
-  end
-
 
 end

@@ -1,16 +1,17 @@
 require "spec_helper"
 
-RSpec.describe IshManager::ApplicationMailer, :type => :mailer do
+=begin
+
+RSpec.describe IronWarbler::ApplicationMailer, :type => :mailer do
   describe "#shared_galleries" do
     before do
       DatabaseCleaner.clean
     end
 
-    let(:profile) {
-      create(:user_profile) }
-    let(:gallery) { create(:gallery) }
+    let(:profile) { create(:user_profile) }
+
     let(:mail) do
-      IshManager::ApplicationMailer.shared_galleries([profile], gallery)
+      IronWarbler::ApplicationMailer.shared_galleries([profile], gallery)
     end
 
     it "renders the headers" do
@@ -24,3 +25,5 @@ RSpec.describe IshManager::ApplicationMailer, :type => :mailer do
     end
   end
 end
+
+=end

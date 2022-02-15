@@ -20,7 +20,11 @@ module IronWarbler
   end
 end
 
+
 require 'iron_warbler/ameritrade'
+require 'iron_warbler/asset_price_item'
+
 require 'iron_warbler/option_watch'
+
 require 'iron_warbler/stock_watch'
 

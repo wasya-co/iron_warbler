@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'mongoid_paranoia'
   s.add_runtime_dependency 'mongoid-paperclip'
   s.add_runtime_dependency 'jwt', '~> 2.3.0'
-  s.add_runtime_dependency 'jbuilder'
+  s.add_runtime_dependency 'jbuilder', '~> 2.11.0'
+  s.add_runtime_dependency 'pg', '~> 1.3.1'
 
   # s.add_runtime_dependency 'ish_models', '~> 0.0.33.156'
 

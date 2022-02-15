@@ -56,6 +56,7 @@ class ::IronWarbler::Ameritrade::Api
     out
   end
 
+  ## opts: contractType, strike, date, ticker
   def self.get_option _opts
     opts = {}
 
