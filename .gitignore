@@ -4,6 +4,7 @@ test/dummy/log
 test/dummy/tmp
 test/dummy/.byebug_history
 test/dummy/public/assets
+test/dummy/config/initializers/07_ameritrade.rb
 
 vendor/bundle
 node_modules

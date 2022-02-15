@@ -11,6 +11,10 @@ require 'httparty'
 # https://developer.tdameritrade.com/option-chains/apis/get/marketdata/chains
 # FVRR_082021P200
 
+def puts! a, b=''
+  puts "+++ +++ #{b}:"
+  puts a.inspect
+end
 
 module IronWarbler::Ameritrade
 
@@ -39,8 +43,9 @@ end
 class ::IronWarbler::Ameritrade::Api
   include ::HTTParty
   base_uri 'https://api.tdameritrade.com'
-  PUT = 'PUT'
-  CALL = 'CALL'
+
+  CALL = :CALL
+  PUT  = :PUT
 
   def self.get_quote opts
     # validate input
@@ -80,13 +85,25 @@ class ::IronWarbler::Ameritrade::Api
       raise Ish::InputError.new("Invalid input, missing 'ticker'.")
     end
 
-    query = { apikey: ::TD_AME[:apiKey], strikeCount: 1 }.merge opts
+    query = { apikey: ::TD_AME[:apiKey] }.merge opts
+    # puts! query, 'input opts'
     path = "/v1/marketdata/chains"
     out = self.get path, { query: query }
+    timestamp = DateTime.parse out.headers['date']
     ## out = HTTParty.get "https://api.tdameritrade.com#{path}", { query: query }
     out = out.parsed_response.deep_symbolize_keys
+    # pp_puts! out, 'outputs'
     tmp_sym = "#{opts[:contractType].to_s.downcase}ExpDateMap".to_sym
-    out[tmp_sym].first[1].first[1][0]
+    out = out[tmp_sym].first[1].first[1][0]
+    out[:timestamp] = timestamp
+
+    opi = IronWarbler::OptionPriceItem.create out.except( :lastSize, :optionDeliverablesList, :settlementType,
+      :deliverableNote, :pennyPilot, :mini )
+    if !opi.persisted?
+      puts! opi.errors.full_messages, "Cannot create OptionPriceItem"
+    end
+
+    out
   end
 
   def self.place_stock_limit_order _opts
@@ -118,8 +135,6 @@ class ::IronWarbler::Ameritrade::Api
     path = "/v1/accounts/#{account_id}/orders"
     out = self.post path, { query: query }
     out = out.parsed_response.deep_symbolize_keys
-    puts! out, 'ze out'
-
     out
   end
 

@@ -48,14 +48,14 @@ namespace :iron_warbler do
   end
 
 
-  desc 'OptionWatch: contractType=PUT|CALL strike symbol date=yyyy-mm-dd'
+  desc 'OptionWatch: contractType=PUT|CALL strike ticker date=yyyy-mm-dd'
   task :watch_options => :environment do
     while true
       option_watches = IronWarbler::OptionWatch.where( notification_type: :EMAIL )
       option_watches.each do |option|
         begin
           Timeout::timeout( 10 ) do
-            ## opts = { contractType: 'PUT', strike: 355.0, symbol: 'NVDA', date: '2022-02-18' }
+            ## option = { contractType: 'PUT', strike: 355.0, ticker: 'NVDA', date: '2022-03-20' }
             out = IronWarbler::Ameritrade::Api.get_option( option )
             r = out[:last]
             if  option.direction == :ABOVE && r >= option.price ||
