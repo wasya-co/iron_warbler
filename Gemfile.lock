@@ -17,7 +17,7 @@ PATH
   specs:
     iron_warbler (0.0.0)
       cancancan (~> 2.3.0)
-      haml
+      haml (~> 5.2.0)
       httparty (~> 0.20.0)
       jbuilder (~> 2.11.0)
       jwt (~> 2.3.0)

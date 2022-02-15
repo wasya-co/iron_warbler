@@ -21,8 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'jbuilder', '~> 2.11.0'
   s.add_runtime_dependency 'pg', '~> 1.3.1'
   s.add_runtime_dependency 'cancancan', '~> 2.3.0'
-  s.add_runtime_dependency 'haml'
-  s.add_runtime_dependency 'jwt'
+  s.add_runtime_dependency 'haml', '~> 5.2.0'
 
   # s.add_runtime_dependency 'ish_models', '~> 0.0.33.156'
 
