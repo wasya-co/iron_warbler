@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasyaco/iron_warbler.git
-  revision: a8a8da81d8706846e8a4331bd76e9fe98a11f37c
+  revision: 56454d408dc993f44b925ede3949a97e104d103c
   branch: 0.1.0
   specs:
-    iron_warbler (0.0.1)
+    iron_warbler (0.0.2)
       cancancan (~> 2.3.0)
       haml (~> 5.2.0)
       httparty (~> 0.20.0)
