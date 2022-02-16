@@ -15,7 +15,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (0.0.0)
+    iron_warbler (0.0.1)
       cancancan (~> 2.3.0)
       haml (~> 5.2.0)
       httparty (~> 0.20.0)
