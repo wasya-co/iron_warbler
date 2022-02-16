@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'iron_warbler'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2022-02-02'
   s.summary     = 'Stocks and Options Trading Bot'
   s.description = 'Stocks and Options Trading Bot'

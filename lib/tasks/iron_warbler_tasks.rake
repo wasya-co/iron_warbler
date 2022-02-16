@@ -60,7 +60,8 @@ namespace :iron_warbler do
             r = out[:last]
             if  option.direction == :ABOVE && r >= option.price ||
                 option.direction == :BELOW && r <= option.price
-              IshManager::ApplicationMailer.option_alert( option ).deliver
+              ## @TODO: this is broken...
+              # IshManager::ApplicationMailer.option_alert( option ).deliver
             end
           end
         rescue Exception => e

@@ -1,5 +1,5 @@
-require "iron_warbler/engine"
 
+require "iron_warbler/engine"
 require 'iron_warbler/railtie' if defined?(Rails)
 require 'iron_warbler/configuration'
 
