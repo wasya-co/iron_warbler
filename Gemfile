@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
+=begin
 gem 'ish_models',  :github => 'wasyaco/ish_models',  :branch => '1.5.0'
 
 group :development, :test do
@@ -14,3 +15,4 @@ group :test do
   gem 'mongoid-rspec'
   gem 'database_cleaner-mongoid'
 end
+=end

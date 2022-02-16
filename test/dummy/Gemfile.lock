@@ -1,14 +1,13 @@
 GIT
   remote: https://github.com/wasyaco/iron_warbler.git
-  revision: a10277189baa79eb66385453c22c5656f782e57f
+  revision: a8a8da81d8706846e8a4331bd76e9fe98a11f37c
   branch: 0.1.0
   specs:
-    iron_warbler (0.0.0)
+    iron_warbler (0.0.1)
       cancancan (~> 2.3.0)
-      haml
+      haml (~> 5.2.0)
       httparty (~> 0.20.0)
       jbuilder (~> 2.11.0)
-      jwt
       jwt (~> 2.3.0)
       kaminari-mongoid (~> 1.0.2)
       mongoid (~> 7.3.0)
@@ -16,6 +15,7 @@ GIT
       mongoid-paperclip
       mongoid_paranoia
       pg (~> 1.3.1)
+      rails (~> 6.0.0)
 
 GIT
   remote: https://github.com/wasyaco/ish_models.git

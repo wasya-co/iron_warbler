@@ -1,4 +1,11 @@
 
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: ish_development
+  username: local_role
+  password: test1234
+
 default: &default
   adapter: postgresql
   encoding: unicode
