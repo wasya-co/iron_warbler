@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://wasya.co'
   s.license     = 'Proprietary'
 
+  s.add_runtime_dependency 'rails', '~> 6.0.0'
   s.add_runtime_dependency 'httparty', '~> 0.20.0'
   s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.2'
   s.add_runtime_dependency 'mongoid', '~> 7.3.0'
