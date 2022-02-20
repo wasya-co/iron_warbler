@@ -25,7 +25,9 @@ const W = styled.div`
   }
 `;
 
-
+//
+// @TODO: rename to StockWatch
+//
 const StockWatchForm = (props) => {
   logg(props, 'StockWatchForm')
   const { item } = props

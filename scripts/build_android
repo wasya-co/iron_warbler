@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -ex
+cp android/app/build/outputs/apk/debug/app-debug.apk ~/Dropbox
+
+set +e
+echo 'ok'
+
+# From: https://stackoverflow.com/questions/56014715/cant-complete-ionic-capacitor-add-android-command
+ npm install @capacitor/core @capacitor/cli
+ npx cap init
+
+#  1983  git add package-lock.json scripts/build_android
+#  1984  git sattus
+#  1985  git status
+#  1986  git commit -m 'cleanup, building android'
+#  1987  yarn
+#  1988  git status
+#  1989  ionic capacitor
+#  1990  ionic capacitor add
+#  1991  ionic capacitor
+#  1992  ionic capacitor copy
+#  1993  git status
+#  1994  git add android
+#  1995  git status
+#  1996  git commit -m 're-added android'
+#  1997  ionic capacitor update
+#  1998  git status
+#  1999  ionic capacitor
+#  2000  ag "AndroidManifest.xml"
+#  2001  find . | grep AndroidManifest.xml
+#  2002  ag "facebook_app" src/
+#  2003  ag "facebook_app" android
+#  2004  ag "facebook_app" src/
+#  2005  ionic capacitor
+#  2006  git status
+#  2007  git add .
+#  2008  git status
+#  2009  git commit -m 'wiring FB config'
+#  2010  ll android/app/build/outputs/apk/debug/app-debug.apk
+#  2011  cp android/app/build/outputs/apk/debug/app-debug.apk ~/Dropbox
+#  2012  history|tail -n 30

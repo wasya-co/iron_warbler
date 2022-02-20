@@ -22,6 +22,54 @@ FactoryBot.define do
     end
   end
 
+  factory :opi, class: IronWarbler::OptionPriceItem do
+    putCall { 'PUT' }
+    symbol { 'QQQ_041422C355' }
+    bid { 1 }
+    ask { 1.01 }
+=begin
+    t.float "last"
+    t.float "mark"
+    t.float "lastPrice"
+    t.float "highPrice"
+    t.float "lowPrice"
+    t.float "openPrice"
+    t.float "closePrice"
+    t.float "netChange"
+    t.float "volatility"
+    t.float "delta"
+    t.float "gamma"
+    t.float "theta"
+    t.float "vega"
+    t.float "rho"
+    t.float "timeValue"
+    t.float "theoreticalOptionValue"
+    t.float "theoreticalVolatility"
+    t.float "strikePrice"
+    t.float "percentChange"
+    t.float "markChange"
+    t.float "markPercentChange"
+    t.float "intrinsicValue"
+    t.float "multiplier"
+    t.integer "bidSize"
+    t.integer "askSize"
+    t.bigint "totalVolume"
+    t.integer "openInterest"
+    t.integer "daysToExpiration"
+    t.bigint "tradeTimeInLong"
+    t.bigint "quoteTimeInLong"
+    t.bigint "expirationDate"
+    t.bigint "lastTradingDay"
+    t.boolean "inTheMoney"
+    t.boolean "nonStandard"
+    t.boolean "isIndexOption"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "timestamp"
+    t.date "tradeDate"
+=end
+  end
+
   factory :option_watch, class: IronWarbler::OptionWatch do
     contractType { IronWarbler::OptionWatch::CALL }
     date { '2022-02-22' }

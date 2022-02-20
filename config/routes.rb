@@ -6,6 +6,12 @@ IronWarbler::Engine.routes.draw do
 
   namespace :api do
     resources :stock_watches
+
+    get "option_price_items/:symbol",      to: "option_price_items#index"
+    get "option_price_items/meta/:symbol", to: 'option_price_items#meta_by_symbol'
+    get "option_price_items/search/:q",    to: 'option_price_items#search'
+    resources :option_price_items
+
     resources :option_watches
   end
 

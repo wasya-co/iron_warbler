@@ -18,6 +18,11 @@ const useApi = () => {
     getMyAccount: () => {
       return request.get(`/api/users/me?jwt_token=${jwt_token}`).then(r => r.data)
     },
+    getOptionPriceItems: ({ symbol, fromDate, toDate }) => {
+      return request.get(`/api/option_price_items/${symbol}?from_date=${fromDate}&` +
+        `to_date=${toDate}&jwt_token=${jwt_token}`
+      ).then(r => r.data)
+    },
     getStockWatches: () => {
       return request.get(`/api/stock_watches?jwt_token=${jwt_token}`)
     },
