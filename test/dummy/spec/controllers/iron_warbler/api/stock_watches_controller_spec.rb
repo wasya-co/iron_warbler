@@ -4,13 +4,13 @@ describe IronWarbler::Api::StockWatchesController, type: :controller do
   render_views
   routes { IronWarbler::Engine.routes }
 
-  let('cu') { create(:user, email: 'piousbox@gmail.com') }
+  let('current_user') { create(:user, email: 'piousbox@gmail.com') }
   let('user_1') { create(:user) }
 
   before do
     ## Not using devise b/c this uses JWT
-    IronWarbler::Api::StockWatchesController.any_instance.stub(:current_user).and_return(cu)
-    @sw_mine = create(:stock_watch, profile: cu.profile )
+    IronWarbler::Api::StockWatchesController.any_instance.stub(:current_user).and_return(current_user)
+    @sw_mine = create(:stock_watch, profile: current_user.profile )
     @sw_1 = create(:stock_watch, profile: user_1.profile )
   end
 

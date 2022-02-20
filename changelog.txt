@@ -2,3 +2,5 @@
 0.1.0 - 2022-02-04 - Let's add JXS here
         2022-02-11 - jest across all the repos
         There are gemspec versions, not branches.
+        2022-02-19 - API endpoint for reading stock_watch'es
+

@@ -7,6 +7,7 @@ class IronWarbler::StockWatch
   SLEEP_TIME_SECONDS = 60
 
   field :ticker
+  field :email # @TODO: move this back into profile
 
   NOTIFICATION_TYPES = [ :NONE, :EMAIL, :SMS ]
   ACTIONS            = NOTIFICATION_TYPES

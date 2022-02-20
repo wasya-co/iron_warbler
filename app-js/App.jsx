@@ -46,7 +46,7 @@ function App() {
         <SimpleJwtRow />
       </Header>
 
-      <h1>Welcome home 2</h1>
+      <h1>Welcome home</h1>
 
       { stockWatches.map((sw, idx) => <StockWatchForm key={idx} item={sw} />) }
 

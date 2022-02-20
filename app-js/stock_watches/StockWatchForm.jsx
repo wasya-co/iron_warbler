@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types'
-import React, { Fragment as F } from 'react'
+import React, { Fragment as F, useEffect, useState, } from 'react'
 import styled from 'styled-components'
 
 import { useApi, logg, } from '$shared'
@@ -27,8 +27,29 @@ const W = styled.div`
 
 
 const StockWatchForm = (props) => {
-  // logg(props, 'StockWatchForm')
+  logg(props, 'StockWatchForm')
   const { item } = props
+  const {
+    direction: _d,
+    email: _e,
+    price: _p,
+    ticker: _t,
+  } = item
+
+
+  const [direction, setDirection] = useState(_d)
+
+  logg(direction, 'dir')
+
+  const changeDirection = (inn) => {
+    logg(inn, 'changeDirection')
+  }
+
+  const [email, setEmail] = useState(_e)
+
+  const [ price, setPrice ] = useState(_p)
+
+  const [ ticker, setTicker ] = useState(_t)
 
   const api = useApi()
 
@@ -42,7 +63,7 @@ const StockWatchForm = (props) => {
 
   return <W>
     <Cell>
-      <label>Notify by</label>
+      { /* <label>Notify by</label> */ }
       <select name="stock_watch[action]">
         <option value="NONE">NONE</option>
         <option value="EMAIL">EMAIL</option>
@@ -50,25 +71,26 @@ const StockWatchForm = (props) => {
       </select>
     </Cell>
     <Cell>
-      <label>Email</label>
+      { /* <label>Email</label>
       <select name="stock_watch[email]">
         <option value="piousbox@gmail.com">piousbox@gmail.com</option>
-      </select>
+      </select> */ }
+      <input name="stock_watch[email]" value={email} onChange={e => setEmail(e.target.value)} />
     </Cell>
     <Cell>
       <label>When</label>
-      <input name="stock_watch[ticker]" value={item.ticker} />
+      <input name="stock_watch[ticker]" value={ticker} onChange={e => setTicker(e.target.value)} />
     </Cell>
     <Cell>
       <label>Price</label>
-      <select name="stock_watch[direction]">
-        <option value="ABOVE">ABOVE</option>
-        <option value="BELOW">BELOW</option>
+      <select value={direction} name="stock_watch[direction]" onChange={changeDirection} >
+        <option value="ABOVE" >ABOVE</option>
+        <option value="BELOW" >BELOW</option>
       </select>
     </Cell>
     <Cell>
       <label>$</label>
-      <input name="stock_watch[price]" value={item.price} />
+      <input name="stock_watch[price]" value={price} onChange={e => setPrice(e.target.value)} />
     </Cell>
     <Cell>
       <button onCLick={doSubmit} >Go</button>
