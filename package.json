@@ -25,6 +25,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@capacitor/android": "^3.4.1",
     "@capacitor/cli": "^3.4.1",
     "@capacitor/core": "^3.4.1",
     "@ionic/react": "^6.0.8",
@@ -141,7 +142,7 @@
   },
   "proxy": "http://localhost:8080",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "NODE_PATH=config/environments/development_web:shared_modules node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test jest -t current",
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test jest -t current2",
     "postinstall": "link-module-alias",

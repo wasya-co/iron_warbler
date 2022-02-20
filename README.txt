@@ -10,3 +10,9 @@ sw = IronWarbler::StockWatch.new({ ticker: 'QQQ', notification_type: 'EMAIL', pr
 
 = Test =
 = Run =
+
+= Deploy =
+
+== Android ==
+
+From: https://capacitorjs.com/docs/android#adding-the-android-platform

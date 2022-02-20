@@ -1,0 +1,6 @@
+{
+  "appId": "co.wasya.ironwarbler",
+  "appName": "iron_warbler",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
