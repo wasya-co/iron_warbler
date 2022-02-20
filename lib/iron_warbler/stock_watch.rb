@@ -7,21 +7,19 @@ class IronWarbler::StockWatch
   SLEEP_TIME_SECONDS = 60
 
   field :ticker
-  field :email # @TODO: move this back into profile
+  validates_presence_of :ticker
 
   NOTIFICATION_TYPES = [ :NONE, :EMAIL, :SMS ]
   ACTIONS            = NOTIFICATION_TYPES
-  NOTIFICATION_NONE  = :NONE
-  NOTIFICATION_EMAIL = :EMAIL
-  NOTIFICATION_SMS   = :SMS
   field :notification_type, :type => Symbol, :as => :action
+  validates_presence_of :action
 
   field :price, :type => Float
+  validates_presence_of :price
 
   DIRECTIONS      = [ :ABOVE, :BELOW ]
-  DIRECTION_ABOVE = :ABOVE
-  DIRECTION_BELOW = :BELOW
   field :direction, :type => Symbol
+  validates_presence_of :direction
 
   ## profile_id is the username/handle
   belongs_to :profile, :class_name => 'Ish::UserProfile'

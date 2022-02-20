@@ -32,14 +32,9 @@ class IronWarbler::OptionWatch
 
   NOTIFICATION_TYPES = [ :NONE, :EMAIL, :SMS ]
   ACTIONS            = NOTIFICATION_TYPES
-  NOTIFICATION_NONE  = :NONE
-  NOTIFICATION_EMAIL = :EMAIL
-  NOTIFICATION_SMS   = :SMS
   field :notification_type, :type => Symbol, :as => :action
 
   DIRECTIONS      = [ :ABOVE, :BELOW ]
-  DIRECTION_ABOVE = :ABOVE
-  DIRECTION_BELOW = :BELOW
   field :direction, :type => Symbol
 
   # @TODO: email, sms would be fields here?

@@ -31,8 +31,9 @@ FactoryBot.define do
   end
 
   factory :stock_watch, class: IronWarbler::StockWatch do
+    action { :EMAIL }
     ticker { 'QQQ' }
-    direction { 'ABOVE' }
+    direction { :ABOVE }
     price { 1000 }
   end
 

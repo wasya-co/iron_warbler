@@ -28,10 +28,12 @@ describe IronWarbler::Api::StockWatchesController, type: :controller do
     results.include?(@sw_1).should eql false
     results.include?(@sw_mine).should eql true
 
-    assigns(:option_watches).should_not eql nil
     assigns(:stock_watches).should_not eql nil
-    assigns(:option_watch).should_not eql nil
-    assigns(:stock_watch).should_not eql nil
+    sw = assigns(:stock_watches)[0]
+    fields = %i| action direction price profile_id ticker |
+    fields.each do |field|
+      sw[field].should_not eql(nil), "#{field} missing from response"
+    end
   end
 
   it '#update' do
