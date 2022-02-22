@@ -5,13 +5,6 @@ class IronWarbler::OptionWatch
   include Mongoid::Timestamps
   store_in collection: 'ish_option_watches'
 
-  # @deprecated, do not use
-  CALL = ::IronWarbler::Ameritrade::Api::CALL
-  # @deprecated, do not use
-  PUT  = ::IronWarbler::Ameritrade::Api::PUT
-
-  SLEEP_TIME_SECONDS = 60
-
   field :ticker # like NVDA
   validates :ticker, presence: true
   # field :symbol # like NVDA_021822C230

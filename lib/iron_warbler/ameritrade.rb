@@ -18,6 +18,7 @@ end
 
 module IronWarbler::Ameritrade
 
+=begin
   CONFIG = {
     underlying_downprice_tolerance: 0.14,
   }
@@ -37,15 +38,13 @@ module IronWarbler::Ameritrade
       puts! 'LIMIT TRIGGERED, LETS EXIT' # @TODO: send an email
     end
   end
+=end
 
 end
 
 class ::IronWarbler::Ameritrade::Api
   include ::HTTParty
   base_uri 'https://api.tdameritrade.com'
-
-  CALL = :CALL
-  PUT  = :PUT
 
   def self.get_quote opts
     # validate input
@@ -104,6 +103,41 @@ class ::IronWarbler::Ameritrade::Api
     end
 
     out
+  end
+
+
+  def self.get_options _opts
+    opts = { symbol: _opts[:ticker] }
+    query = { apikey: ::TD_AME[:apiKey] }.merge opts
+    path = "/v1/marketdata/chains"
+    outs = self.get path, { query: query }
+    outs = outs.parsed_response # .deep_symbolize_keys
+    %w| putExpDateMap callExpDateMap |.each do |exp_date_map|
+      outs[exp_date_map].each do |k, vs|
+        date = k.split(':')[0]
+        puts "#{date} "
+
+        vs.each do |strike, _hash|
+          _hash = _hash[0]
+          # print "s[#{strike}] $[#{_hash['last']}] :: "
+
+          opi_attrs = _hash.select { |_k, _v| %w|
+            putCall symbol bid ask last mark
+            quoteTimeInLong
+            volatility delta gamma theta
+            openInterest timevalue
+          |.include?(_k) }
+          opi_attrs[:timestamp] = Time.at(opi_attrs['quoteTimeInLong']/1000)
+          opi_attrs[:interval] = _opts[:interval]
+          opi = IronWarbler::OptionPriceItem.create opi_attrs
+          if opi.persisted?
+            print '.'
+          else
+            puts! opi.errors.full_messages, "Cannot create OptionPriceItem"
+          end
+        end
+      end
+    end
   end
 
   def self.place_stock_limit_order _opts

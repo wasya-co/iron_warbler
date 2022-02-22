@@ -47,6 +47,23 @@ namespace :iron_warbler do
     end
   end
 
+  desc 'the runner that populates my db for graphing'
+  task :get_option_price_items => :environment do
+    while true
+      tickers = IronWarbler::Ticker.active
+      tickers.each do |ticker|
+        begin
+          Timeout::timeout( 30 ) do
+            out = IronWarbler::Ameritrade::Api.get_options({ ticker: ticker.ticker, interval: IronWarbler::INTERVAL_5_MINUTES })
+          end
+        rescue Exception => e
+          puts! e, 'Error in ish_manager:watch_options :'
+        end
+      end
+      print '^'
+      sleep IronWarbler::INTERVAL_5_MINUTES_SECONDS
+    end
+  end
 
   desc 'OptionWatch: contractType=PUT|CALL strike ticker date=yyyy-mm-dd'
   task :watch_options => :environment do
@@ -69,7 +86,7 @@ namespace :iron_warbler do
         end
       end
       print '.'
-      sleep IronWarbler::OptionWatch::SLEEP_TIME_SECONDS
+      sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
     end
   end
 
@@ -94,7 +111,7 @@ namespace :iron_warbler do
         end
       end
       print '.'
-      sleep IronWarbler::StockWatch::SLEEP_TIME_SECONDS
+      sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
     end
   end
 
