@@ -11,8 +11,14 @@ sw = IronWarbler::StockWatch.new({ ticker: 'QQQ', notification_type: 'EMAIL', pr
 = Test =
 = Run =
 
-= Deploy =
+= Build =
 
 == Android ==
 
 From: https://capacitorjs.com/docs/android#adding-the-android-platform
+
+ ionic build --prod --source-map
+
+=== Troubleshoot ===
+
+From: https://stackoverflow.com/questions/68440676/unable-to-open-asset-url-ionic-capacitor

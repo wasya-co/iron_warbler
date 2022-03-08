@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import { jwtManager } from "ishjs"
+
 import { logg, useApi, } from "$shared"
 import MainMenu from "./application/MainMenu"
 import {
@@ -28,6 +29,8 @@ const WInner = styled.div`
 `;
 
 const App = () => {
+  logg('Hello, World!')
+
   const api = useApi()
 
   const [ stockWatches, setStockWatches ] = useState([])

@@ -4,4 +4,5 @@
     <string name="title_activity_main">iron_warbler</string>
     <string name="package_name">co.wasya.ironwarbler</string>
     <string name="custom_url_scheme">co.wasya.ironwarbler</string>
+    <string name="facebook_app_id">3016949928380365</string>
 </resources>
