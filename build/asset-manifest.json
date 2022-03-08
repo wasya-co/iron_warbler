@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/iron_warbler/static/css/main.b595ae18.css",
-    "main.js": "/iron_warbler/static/js/main.6c63f584.js",
+    "main.js": "/iron_warbler/static/js/main.aa0f23a6.js",
     "static/js/787.99b49a0b.chunk.js": "/iron_warbler/static/js/787.99b49a0b.chunk.js",
     "index.html": "/iron_warbler/index.html",
     "main.b595ae18.css.map": "/iron_warbler/static/css/main.b595ae18.css.map",
-    "main.6c63f584.js.map": "/iron_warbler/static/js/main.6c63f584.js.map",
+    "main.aa0f23a6.js.map": "/iron_warbler/static/js/main.aa0f23a6.js.map",
     "787.99b49a0b.chunk.js.map": "/iron_warbler/static/js/787.99b49a0b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b595ae18.css",
-    "static/js/main.6c63f584.js"
+    "static/js/main.aa0f23a6.js"
   ]
 }

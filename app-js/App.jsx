@@ -27,14 +27,14 @@ const WInner = styled.div`
   max-width: 100%;
 `;
 
-function App() {
+const App = () => {
   const api = useApi()
 
   const [ stockWatches, setStockWatches ] = useState([])
 
   useEffect(() => {
     api.getStockWatches().then((r) => r.data).then((r) => {
-      logg(r, 'rrr')
+      logg(r, 'r1r')
       setStockWatches(r)
     }) // @TODO: catch here
   }, [])

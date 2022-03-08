@@ -34,6 +34,11 @@ const useApi = () => {
 
     paymentsPath: "/api/payments2",
 
+    postStockWatch: (props) => {
+      throw 'not implemented'
+      logg(props, 'api.postStockWatch')
+    },
+
     postLoginWithPassword: ({ email, password }) => {
       return request.post("/api/users/login.json", { email, password, }).then(r => r.data)
     },

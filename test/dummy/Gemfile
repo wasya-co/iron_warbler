@@ -23,7 +23,7 @@ gem "jbuilder"
 gem "sassc-rails"
 gem 'jwt'
 
-gem 'ish_models',   :github => 'wasyaco/ish_models',   :branch => '1.5.0'
+gem 'ish_models',   :github => 'wasyaco/ish_models',   :branch => 'master'
 gem 'iron_warbler', :github => 'wasyaco/iron_warbler', :branch => '0.1.0'
 
 group :development, :test do

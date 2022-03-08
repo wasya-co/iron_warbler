@@ -1,9 +1,13 @@
 
 import PropTypes from 'prop-types'
-import React, { Fragment as F, useEffect, useState, } from 'react'
+import React, { Fragment as F, useContext, useEffect, useState, } from 'react'
 import styled from 'styled-components'
 
-import { useApi, logg, } from '$shared'
+import { jwtManager } from 'ishjs'
+
+import { logg, } from '$shared'
+
+const { JwtContext } = jwtManager
 
 const Cell = styled.div`
   display: inline;
@@ -29,7 +33,7 @@ const W = styled.div`
 // @TODO: rename to StockWatch
 //
 const StockWatchForm = (props) => {
-  logg(props, 'StockWatchForm')
+  // logg(props, 'StockWatchForm')
   const { item } = props
   const {
     action: _a,
@@ -39,6 +43,8 @@ const StockWatchForm = (props) => {
     profile_id: _profile_id,
     ticker: _t,
   } = item
+
+  const { api } = useContext(JwtContext)
 
   const [action, setAction] = useState(_a)
   const [direction, setDirection] = useState(_d)
@@ -54,8 +60,6 @@ const StockWatchForm = (props) => {
 
   const [ ticker, setTicker ] = useState(_t)
 
-  const api = useApi()
-
   const doSubmit = () => {
     api.postStockWatch(item).then(resp => {
       // toast('Success.') // @TODO: wire toast
@@ -67,7 +71,7 @@ const StockWatchForm = (props) => {
   return <W>
     <Cell>
       { /* <label>Notify by</label> */ }
-      <select value={action} name="stock_watch[action]">
+      <select value={action} name="stock_watch[action]" onChange={(e) => setAction(e.target.value) } >
         <option value="NONE"  >NONE</option>
         <option value="EMAIL" >EMAIL</option>
         <option value="SMS"   >SMS</option>
@@ -98,7 +102,7 @@ const StockWatchForm = (props) => {
       <input name="stock_watch[price]" value={price} onChange={e => setPrice(e.target.value)} />
     </Cell>
     <Cell>
-      <button onCLick={doSubmit} >Go</button>
+      <button onClick={doSubmit} >Go</button>
     </Cell>
   </W>
 }
