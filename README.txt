@@ -17,7 +17,11 @@ sw = IronWarbler::StockWatch.new({ ticker: 'QQQ', notification_type: 'EMAIL', pr
 
 From: https://capacitorjs.com/docs/android#adding-the-android-platform
 
+From: https://wiki.wasya.co/index.php/Ionic
+
+ ionic init
  ionic build --prod --source-map
+ npx cap copy
 
 === Troubleshoot ===
 

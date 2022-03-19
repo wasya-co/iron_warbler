@@ -11,13 +11,14 @@ const useApi = () => {
   const jwt_token = localStorage.getItem(C.jwt_token);
 
   return {
-    doUnlock: ({ kind, id }) => {
-      return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
-    },
+    // doUnlock: ({ kind, id }) => {
+    //   return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
+    // },
 
-    getMyAccount: () => {
-      return request.get(`/api/users/me?jwt_token=${jwt_token}`).then(r => r.data)
-    },
+    // getMyAccount: () => {
+    //   return request.get(`/api/users/me?jwt_token=${jwt_token}`).then(r => r.data)
+    // },
+
     getOptionPriceItems: ({ symbol, fromDate, toDate }) => {
       return request.get(`/api/option_price_items/${symbol}?from_date=${fromDate}&` +
         `to_date=${toDate}&jwt_token=${jwt_token}`
@@ -30,9 +31,8 @@ const useApi = () => {
     // loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token', // @TODO: move to... a config that's injected into JwtManager
 
-    myVideosPath: "/api/my/videos",
-
-    paymentsPath: "/api/payments2",
+    // myVideosPath: "/api/my/videos",
+    // paymentsPath: "/api/payments2",
 
     postStockWatch: (props) => {
       throw 'not implemented'
@@ -43,23 +43,23 @@ const useApi = () => {
       return request.post("/api/users/login.json", { email, password, }).then(r => r.data)
     },
 
-    reportsGet: (a) => {
-      const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-      let jwt = "";
-      if (currentUser) {
-        jwt = `jwt_token=${currentUser.jwt_token}`
-      }
-      return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
-    },
+    // reportsGet: (a) => {
+    //   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
+    //   let jwt = "";
+    //   if (currentUser) {
+    //     jwt = `jwt_token=${currentUser.jwt_token}`
+    //   }
+    //   return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
+    // },
 
-    getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
-    getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
-    getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
+    // getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
+    // getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
+    // getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
-    applicationHome: async () => {
-      const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token, } })
-      return out.data
-    }
+    // applicationHome: async () => {
+    //   const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token, } })
+    //   return out.data
+    // }
   }
 
 }

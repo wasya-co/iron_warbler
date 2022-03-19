@@ -40,16 +40,18 @@ export { C }
 const logg = (a, b="", c=null) => {
   c = "string" === typeof c ? c : b.replace(/\W/g, "");
   if (c.length > 0) {
-    window[c] = a;
+    if (typeof window !== 'undefined') {
+      window[c] = a;
+    }
   }
 
   console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
 };
-// optimized for Android (e.g. it inspects and doesn't use window)
-const logg2 = (a, b="", c=null) => {
+// optimized Android logger (i.e. it inspects and doesn't use window)
+const logga = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
 };
-export { logg, logg2 };
+export { logg, logga };
 
 /* R */
 export { default as request } from './request'
