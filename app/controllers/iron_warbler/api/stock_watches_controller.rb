@@ -35,6 +35,9 @@ class IronWarbler::Api::StockWatchesController < IronWarbler::ApiController
     return
   end
 
+  def update
+  end
+
   private
 
   def permitted_params

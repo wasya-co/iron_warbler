@@ -9,22 +9,18 @@ describe IronWarbler::Api::OptionWatchesController, :type => :controller do
   let('cu') { create(:user, email: 'piousbox@gmail.com') }
   let('user_1') { create(:user) }
 
-  before :each do
-    IronWarbler::Api::OptionWatchesController.any_instance.stub(:current_user).and_return(cu)
-  end
-
   it '#index' do
     get :index
     response.should redirect_to( controller: 'stock_watches' )
   end
 
-  it '#create' do
+  skip '#create' do
     expect do
       post :create, params: { warbler_option_watch: build(:option_watch).attributes }
     end.to change { IronWarbler::OptionWatch.count }.by( 1 )
   end
 
-  it '#update' do
+  skip '#update' do
     a = create(:option_watch, price: 100 )
     post :update, params: { id: a.id, warbler_option_watch: { price: 99 } }
     a.reload.price.should eql 99.0
