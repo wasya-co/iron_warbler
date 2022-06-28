@@ -7,8 +7,6 @@
 
 sw = IronWarbler::StockWatch.new({ ticker: 'QQQ', notification_type: 'EMAIL', price: 1000, direction: 'ABOVE',
 
-
-= Test =
 = Run =
 
 = Build =
@@ -22,6 +20,10 @@ From: https://wiki.wasya.co/index.php/Ionic
  ionic init
  ionic build --prod --source-map
  npx cap copy
+
+= Test =
+  yarn run test
+
 
 === Troubleshoot ===
 

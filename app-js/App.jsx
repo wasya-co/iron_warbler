@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import config from 'config'
-import { jwtManager } from "ishjs"
+import { jwtManager } from "ishlibjs"
 
 import { logg, useApi, } from "$shared"
 import MainMenu from "./application/MainMenu"

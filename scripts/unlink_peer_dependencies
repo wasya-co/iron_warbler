@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+def puts! a, b=''
+  puts "+++ +++ #{b}:"
+  puts a.inspect
+end
+
+
+json = JSON.parse(File.read('package.json'))
+if json['peerDependencies']
+  json['peerDependencies'].each do |d|
+    d = d[0]
+    cmd = "rm -rfv node_modules/#{d}"
+    puts! cmd, 'cmd'
+    `#{cmd}`
+  end
+end
+
+`yarn`

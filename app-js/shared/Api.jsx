@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import config from 'config'
 import {
-  C, // @TODO: this is replicated in ishjs and iron_warbler - should be in one place only, maybe?
+  C, // @TODO: this is replicated in ishlibjs and iron_warbler - should be in one place only, maybe?
   logg, // eslint-disable-line no-unused-vars
   request,
 } from "$shared"

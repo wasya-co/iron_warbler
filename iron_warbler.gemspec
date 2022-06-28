@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rails', '~> 6.0.0'
   s.add_runtime_dependency 'httparty', '~> 0.20.0'
-  s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.2'
+  s.add_runtime_dependency 'kaminari-mongoid', '~> 1.0.2' # @TODO: iron_warbler should not depend on mongo!
   s.add_runtime_dependency 'mongoid', '~> 7.3.0'
   s.add_runtime_dependency 'mongoid-autoinc', '~> 6.0.3'
   s.add_runtime_dependency 'mongoid_paranoia'
