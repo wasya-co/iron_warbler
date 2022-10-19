@@ -3,4 +3,4 @@
         2022-02-11 - jest across all the repos
         There are gemspec versions, not branches.
         2022-02-19 - API endpoint for reading stock_watch'es
-
+0.2.0 - 2022-10-19 - replaced pg with mysql2, moved to rails 6.1.0
