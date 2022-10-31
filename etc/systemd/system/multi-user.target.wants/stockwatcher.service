@@ -1,0 +1,16 @@
+[Unit]
+Description=watch stocks
+
+[Service]
+Type=forking
+WorkingDirectory=/home/ubuntu/projects/microsites3a/current
+ExecStart=/home/ubuntu/.rbenv/shims/bundle exec rake ish_manager:stockwatcher
+ExecStop=/bin/echo nothing
+Restart=on-failure
+Environment=RAILS_ENV=production
+Environment=GMAIL_DOMAIN=gmail.com
+Environment=GMAIL_USERNAME=<numeric-email>
+Environment=GMAIL_PASSWORD=<password>
+
+[Install]
+WantedBy=multi-user.target

@@ -1,9 +1,9 @@
-require 'mongoid'
+# require 'mongoid'
 
-class IronWarbler::OptionWatch
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  store_in collection: 'ish_option_watches'
+class IronWarbler::OptionWatch < ActiveRecord::Base
+  # include Mongoid::Document
+  # include Mongoid::Timestamps
+  # store_in collection: 'ish_option_watches'
 
   field :ticker # like NVDA
   validates :ticker, presence: true

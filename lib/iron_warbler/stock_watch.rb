@@ -1,8 +1,8 @@
 
-class IronWarbler::StockWatch
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  store_in collection: 'ish_stock_watches'
+class IronWarbler::StockWatch < ActiveRecord::Base
+  # include Mongoid::Document
+  # include Mongoid::Timestamps
+  # store_in collection: 'ish_stock_watches'
 
   SLEEP_TIME_SECONDS = 60
 

@@ -1,8 +1,8 @@
 
-class IronWarbler::Ticker
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  store_in collection: 'ish_tickers'
+class IronWarbler::Ticker < ActiveRecord::Base
+  # include Mongoid::Document
+  # include Mongoid::Timestamps
+  # store_in collection: 'ish_tickers'
 
   field :ticker
   validates_presence_of :ticker
