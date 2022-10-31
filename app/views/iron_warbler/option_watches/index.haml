@@ -1,0 +1,10 @@
+
+%h1 OptionWatches#Index
+
+= render 'form', option_watch: @new_option_watch
+
+%hr
+
+%ul
+  - @option_watches.each do |ow|
+    %li= render 'form', option_watch: ow

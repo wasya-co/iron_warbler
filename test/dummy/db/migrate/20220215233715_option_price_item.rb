@@ -1,5 +1,5 @@
-class OptionPriceItem < ActiveRecord::Migration[6.0]
 
+class OptionPriceItem < ActiveRecord::Migration[6.0]
 
   def down
     drop_table :option_price_items

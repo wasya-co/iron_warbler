@@ -1,10 +1,12 @@
 module IronWarbler
   class ApplicationController < ActionController::Base
     # protect_from_forgery :with => :exception, :prepend => true
-    before_action :set_current_ability
+
     before_action :set_changelog
-    check_authorization
-    rescue_from ::CanCan::AccessDenied, :with => :access_denied
+
+    # before_action :set_current_ability
+    # check_authorization
+    # rescue_from ::CanCan::AccessDenied, :with => :access_denied
 
     def home
       # authorize! :home, IronWarbler::Ability
@@ -16,17 +18,21 @@ module IronWarbler
     #
     private
 
-    def current_user
-      @current_user
+    def authorize! *args
+      true
     end
+
+    # def current_user
+    #   @current_user
+    # end
 
     def set_changelog
       @version = Gem.loaded_specs['iron_warbler'].version.to_s
     end
 
-    def set_current_ability
-      @current_ability ||= ::IronWarbler::Ability.new( current_user )
-    end
+    # def set_current_ability
+    #   @current_ability ||= ::IronWarbler::Ability.new( current_user )
+    # end
 
     def access_denied exception
       store_location_for :user, request.path
