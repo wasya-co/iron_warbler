@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const W = styled.div`
+const W0 = styled.div`
   > ul {
     > li {
       border: 1px solid red;
@@ -17,7 +17,7 @@ const W = styled.div`
 `;
 
 const MainMenu = () => {
-  return (<W>
+  return (<W0>
     <ul>
       <li>
         <a href="/manager/gameui/maps">Maps</a>
@@ -69,7 +69,7 @@ const MainMenu = () => {
       <li><a href="/iron_warbler/stock_watches">Stock Watches</a></li>
       <li><a href="/manager/user_profiles">Profiles</a></li>
     </ul>
-  </W>)
+  </W0>)
 }
 
 export default MainMenu

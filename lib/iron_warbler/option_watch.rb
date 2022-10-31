@@ -20,5 +20,10 @@ class IronWarbler::OptionWatch < ActiveRecord::Base
 
   ## @TODO: validate uniqueness of these based on all the fields. _vp_ 2022-10-31
 
+  ## @TODO: this should exclude the ones marked inactive, and the ones in the past.
+  def self.active
+    self.all.to_a
+  end
+
 end
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/wasya-co/iron_warbler.git
-  revision: 48d49a37852a43d0b33787fcfdba62e7042ee857
+  revision: 71959dcd4d0cccf8b5216177b3650009b120ddb2
   branch: 1.0.0
   specs:
     iron_warbler (0.0.3)

@@ -68,25 +68,26 @@ namespace :iron_warbler do
   desc 'OptionWatch: contractType=PUT|CALL strike ticker date=yyyy-mm-dd'
   task :watch_options => :environment do
     while true
-      option_watches = IronWarbler::OptionWatch.where( notification_type: :EMAIL )
-      option_watches.each do |option|
+      option_watches = IronWarbler::OptionWatch.active
+      puts! option_watches, 'Option Watches are'
+
+      option_watches.each do |_ow|
         begin
           Timeout::timeout( 10 ) do
-            ## option = { contractType: 'PUT', strike: 355.0, ticker: 'NVDA', date: '2022-03-20' }
-            out = IronWarbler::Ameritrade::Api.get_option( option )
+            ow = { contractType: _ow.contractType, strike: _ow.strike, ticker: _ow.ticker, date: _ow.date }
+            out = IronWarbler::Ameritrade::Api.get_option( ow )
+
             r = out[:last]
-            if  option.direction == :ABOVE && r >= option.price ||
-                option.direction == :BELOW && r <= option.price
-              ## @TODO: this is broken...
-              # IshManager::ApplicationMailer.option_alert( option ).deliver
-            end
+            puts! r, 'last'
+
           end
         rescue Exception => e
-          puts! e, 'Error in ish_manager:watch_options :'
+          puts! e, 'Error in iron_warbler:watch_options :'
         end
       end
       print '.'
       sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
+      # sleep IronWarbler::INTERVAL_5_SECONDS
     end
   end
 
