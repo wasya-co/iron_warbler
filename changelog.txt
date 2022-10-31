@@ -6,3 +6,5 @@
 0.2.0 - 2022-10-19 - replaced pg with mysql2, moved to rails 6.1.0
 1.0.0 - 2022-10-31 - LFG. No mongoid here.
                      many changes. I want my own view into options pricing.
+1.1.0 - 2022-10-31 - wiring CRA again
+

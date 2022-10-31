@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import config from 'config'
-import { jwtManager } from "ishlibjs"
+// import { jwtManager } from "ishlibjs"
 
 import { logg, useApi, } from "$shared"
 import MainMenu from "./application/MainMenu"
@@ -13,7 +13,7 @@ import {
 import OptionPriceGraph from './option_price_items/OptionPriceGraph'
 import './App.css'
 
-const { JwtContextProvider, SimpleJwtRow, } = jwtManager
+// const { JwtContextProvider, SimpleJwtRow, } = jwtManager
 
 const Header = styled.div``;
 
@@ -43,11 +43,11 @@ const App = () => {
   }, [])
 
   return <WOuter className="WOuter"><WInner className="WInner" >
-    <JwtContextProvider api={api} >
+    {/* <JwtContextProvider api={api} > */}
 
       <Header>
         <MainMenu />
-        <SimpleJwtRow />
+        {/* <SimpleJwtRow /> */}
       </Header>
 
       <h1>Welcome home</h1>
@@ -58,7 +58,7 @@ const App = () => {
       <hr />
       <OptionPriceGraph symbol="GME_031822P75" fromDate="2022-02-15" toDate="2022-02-17" />
 
-    </JwtContextProvider>
+    {/* </JwtContextProvider> */}
   </WInner></WOuter>
 }
 

@@ -2,9 +2,13 @@
 ## copy-pasted from ish_api
 class IronWarbler::ApiController < ActionController::Base
 
-  skip_authorization_check only: %i| fb_sign_in login |
+  # skip_authorization_check only: %i| fb_sign_in login |
 
   before_action :check_profile_auth, only: %i| account |
+
+  def authorize! *args
+    true
+  end
 
   ## @TODO: this is not test-driven
   def account

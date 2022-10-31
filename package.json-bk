@@ -1,73 +1,11 @@
 {
-  "name": "iron_warbler",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@babel/core": "^7.16.0",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
-    "@svgr/webpack": "^5.5.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.1.3",
-    "babel-jest": "^27.4.2",
-    "babel-loader": "^8.2.3",
-    "babel-plugin-named-asset-import": "^0.3.8",
-    "babel-preset-react-app": "^10.0.1",
-    "bfj": "^7.0.2",
-    "browserslist": "^4.18.1",
-    "camelcase": "^6.2.1",
-    "case-sensitive-paths-webpack-plugin": "^2.4.0",
-    "css-loader": "^6.5.1",
-    "css-minimizer-webpack-plugin": "^3.2.0",
-    "dotenv": "^10.0.0",
-    "dotenv-expand": "^5.1.0",
-    "eslint": "^8.3.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-webpack-plugin": "^3.1.1",
-    "file-loader": "^6.2.0",
-    "fs-extra": "^10.0.0",
-    "html-webpack-plugin": "^5.5.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.4.3",
-    "jest-resolve": "^27.4.2",
-    "jest-watch-typeahead": "^1.0.0",
-    "link-module-alias": "^1.2.0",
-    "mini-css-extract-plugin": "^2.4.5",
-    "postcss": "^8.4.4",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-loader": "^6.2.1",
-    "postcss-normalize": "^10.0.1",
-    "postcss-preset-env": "^7.0.1",
-    "prompts": "^2.4.2",
-    "react": "^18.2.0",
-    "react-app-polyfill": "^3.0.0",
-    "react-dev-utils": "^12.0.1",
-    "react-dom": "^18.2.0",
-    "react-refresh": "^0.11.0",
-    "react-router-dom": "^6.4.2",
-    "recharts": "^2.1.16",
-    "resolve": "^1.20.0",
-    "resolve-url-loader": "^4.0.0",
-    "sass-loader": "^12.3.0",
-    "semver": "^7.3.5",
-    "source-map-loader": "^3.0.0",
-    "style-loader": "^3.3.1",
-    "styled-components": "^5.3.6",
-    "tailwindcss": "^3.0.2",
-    "terser-webpack-plugin": "^5.2.5",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.64.4",
-    "webpack-dev-server": "^4.6.0",
-    "webpack-manifest-plugin": "^4.0.2",
-    "workbox-webpack-plugin": "^6.4.1"
+  "_moduleAliases": {
+    "$shared": "src/shared",
+    "$data": "data"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+  "babel": {
+    "presets": [
+      "react-app", "es2015"
     ]
   },
   "browserslist": {
@@ -82,50 +20,125 @@
       "last 1 safari version"
     ]
   },
+  "name": "iron_warbler",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "7.16.0",
+    "@capacitor-community/facebook-login": "^3.1.1",
+    "@capacitor/android": "^3.4.1",
+    "@capacitor/cli": "^3.4.1",
+    "@capacitor/core": "^3.4.1",
+    "@ionic/react": "^6.0.8",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@svgr/webpack": "^5.5.0",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.25.0",
+    "babel-jest": "27.4.2",
+    "babel-loader": "8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-preset-es2015": "^7",
+    "@babel/preset-react": "7.16.0",
+    "bfj": "^7.0.2",
+    "browserslist": "^4.18.1",
+    "camelcase": "^6.2.1",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
+    "fs-extra": "^10.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "ionic": "^5.4.16",
+    "ionicons": "^6.0.1",
+    "jest": "^27.4.3",
+    "jest-resolve": "^27.4.2",
+    "jest-watch-typeahead": "^1.0.0",
+    "link-module-alias": "^1.2.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
+    "prompts": "^2.4.2",
+    "react": "=16.13.1",
+    "react-app-polyfill": "^3.0.0",
+    "react-dev-utils": "^12.0.0",
+    "react-dom": "^16.3.1",
+    "react-facebook-login": "^4.1.1",
+    "react-refresh": "^0.11.0",
+    "react-router-dom": "^5.2.0",
+    "recharts": "^2.1.9",
+    "resolve": "^1.20.0",
+    "resolve-url-loader": "^4.0.0",
+    "sass-loader": "^12.3.0",
+    "semver": "^7.3.5",
+    "source-map-loader": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "styled-components": "^5.3.3",
+    "tailwindcss": "^3.0.2",
+    "terser-webpack-plugin": "^5.2.5",
+    "web-vitals": "^2.1.4",
+    "webpack": "5.64.4",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "workbox-webpack-plugin": "^6.4.1"
+  },
+  "devDependencies": {
+    "react-scripts": "4.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "homepage": "https://wasya.co",
   "jest": {
     "roots": [
       "<rootDir>/src"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "src/**/*.{js,jsx}"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
+      "./src/setupTests"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx}"
     ],
     "testEnvironment": "jsdom",
     "transform": {
-      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.(js|jsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
+      "/node_modules/(?!(@ionic|@stencil|ionicons)/)",
+      "\\.pnp\\.[^\\/]+$"
     ],
     "modulePaths": [],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
-      "web.js",
       "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
       "json",
-      "web.jsx",
-      "jsx",
-      "node"
+      "jsx"
     ],
     "watchPlugins": [
       "jest-watch-typeahead/filename",
@@ -133,15 +146,7 @@
     ],
     "resetMocks": true
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "_moduleAliases": {
-    "$shared": "src/shared",
-    "$data": "data"
-  },
+  "proxy": "http://localhost:8080",
   "scripts": {
     "build": "NODE_PATH=config/environments/development_web:shared_modules node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test jest -t current",
@@ -150,4 +155,5 @@
     "start": "NODE_PATH=config/environments/development_web:shared_modules HTTPS=false PORT=3009 node scripts/start.js",
     "test": "NODE_PATH=config/environments/development_web:shared_modules node scripts/test.js"
   }
+
 }

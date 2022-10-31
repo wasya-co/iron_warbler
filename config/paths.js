@@ -24,8 +24,16 @@ const publicUrlOrPath = getPublicUrlOrPath(
 const buildPath = process.env.BUILD_PATH || 'build';
 
 const moduleFileExtensions = [
+  'web.mjs',
+  'mjs',
+  'web.js',
   'js',
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx',
   'json',
+  'web.jsx',
   'jsx',
 ];
 
@@ -49,15 +57,18 @@ module.exports = {
   appBuild: resolveApp(buildPath),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveModule(resolveApp, 'app-js/index'),
+  appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('app-js'),
+  appSrc: resolveApp('src'),
+  appTsConfig: resolveApp('tsconfig.json'),
+  appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveModule(resolveApp, 'app-js/setupTests'),
-  proxySetup: resolveApp('app-js/setupProxy.js'),
+  testsSetup: resolveModule(resolveApp, 'src/setupTests'),
+  proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
-  swSrc: resolveModule(resolveApp, 'app-js/service-worker'),
+  appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
+  swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
 };
 
