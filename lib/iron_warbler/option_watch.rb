@@ -1,38 +1,40 @@
 # require 'mongoid'
 
 class IronWarbler::OptionWatch < ActiveRecord::Base
-  # include Mongoid::Document
-  # include Mongoid::Timestamps
-  # store_in collection: 'ish_option_watches'
-
-  field :ticker # like NVDA
-  validates :ticker, presence: true
-  # field :symbol # like NVDA_021822C230
-
-  ## Strike isn't the same as price!
-  field :strike, :type => Float
-  validates :strike, presence: true
-
-  ## What is the price of the option at some strike?
-  field :price, type: Float
-  validates :price, presence: true
-
-  field :contractType
-  validates :contractType, presence: true
-
-  field :date
-  validates :date, presence: true
-
-  NOTIFICATION_TYPES = [ :NONE, :EMAIL, :SMS ]
-  ACTIONS            = NOTIFICATION_TYPES
-  field :notification_type, :type => Symbol, :as => :action
-
-  DIRECTIONS      = [ :ABOVE, :BELOW ]
-  field :direction, :type => Symbol
-
-  # @TODO: email, sms would be fields here?
-  # belongs_to :profile, :class_name => 'Ish::UserProfile'
-  field :profile
-  field :profile_id
-
 end
+
+#   # include Mongoid::Document
+#   # include Mongoid::Timestamps
+#   # store_in collection: 'ish_option_watches'
+#
+#   field :ticker # like NVDA
+#   validates :ticker, presence: true
+#   # field :symbol # like NVDA_021822C230
+#
+#   ## Strike isn't the same as price!
+#   field :strike, :type => Float
+#   validates :strike, presence: true
+#
+#   ## What is the price of the option at some strike?
+#   field :price, type: Float
+#   validates :price, presence: true
+#
+#   field :contractType
+#   validates :contractType, presence: true
+#
+#   field :date
+#   validates :date, presence: true
+#
+#   NOTIFICATION_TYPES = [ :NONE, :EMAIL, :SMS ]
+#   ACTIONS            = NOTIFICATION_TYPES
+#   field :notification_type, :type => Symbol, :as => :action
+#
+#   DIRECTIONS      = [ :ABOVE, :BELOW ]
+#   field :direction, :type => Symbol
+#
+#   # @TODO: email, sms would be fields here?
+#   # belongs_to :profile, :class_name => 'Ish::UserProfile'
+#   field :profile
+#   field :profile_id
+#
+# end
