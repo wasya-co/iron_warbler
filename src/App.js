@@ -29,7 +29,6 @@ const WInner = styled.div`
 `;
 
 const App = () => {
-  logg('Hello, World!')
 
   const api = useApi()
 
@@ -56,7 +55,7 @@ const App = () => {
       New: <StockWatchForm item={StockWatchItem} />
 
       <hr />
-      <OptionPriceGraph symbol="GME_031822P75" fromDate="2022-02-15" toDate="2022-02-17" />
+      <OptionPriceGraph symbol="GME_111122C30" fromDate="2022-10-31" toDate="2022-10-31" />
 
     {/* </JwtContextProvider> */}
   </WInner></WOuter>

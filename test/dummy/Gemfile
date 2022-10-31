@@ -19,7 +19,7 @@ gem "jbuilder"
 gem "sassc-rails"
 gem 'jwt'
 
-gem 'iron_warbler', :github => 'wasya-co/iron_warbler', :branch => '1.0.0'
+gem 'iron_warbler', :github => 'wasya-co/iron_warbler', :branch => '1.1.0'
 
 group :test do
   gem 'byebug'

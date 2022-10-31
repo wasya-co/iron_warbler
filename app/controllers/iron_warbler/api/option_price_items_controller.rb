@@ -8,10 +8,11 @@ class IronWarbler::Api::OptionPriceItemsController < IronWarbler::ApiController
     from_date = params[:from_date]
     to_date   = params[:to_date]
     symbol    = params[:symbol]
-    @opis = IronWarbler::OptionPriceItem.where(
-      IronWarbler::OptionPriceItem.arel_table[:timestamp].gt(from_date)
+    @opis = IronWarbler::OptionPriceItem.all(
     ).where(
-      IronWarbler::OptionPriceItem.arel_table[:timestamp].lt(to_date)
+      'timestamp >= ?', from_date
+    ).where(
+      'timestamp <= ?', 1.day.after(Date.parse(to_date))
     ).where(
       symbol: symbol
     ).limit(1000) # @TODO: remove the limit

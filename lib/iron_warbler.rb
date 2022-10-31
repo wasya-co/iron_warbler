@@ -13,7 +13,7 @@ module IronWarbler
   INTERVAL_5_MINUTES_SECONDS = 300
 
   class << self
-    attr_accessor :configuration
+    attr_accessor :configurationx
   end
 
   def self.configure
@@ -30,5 +30,11 @@ require 'iron_warbler/ameritrade'
 
 require 'iron_warbler/option_price_item'
 require 'iron_warbler/option_watch'
+
+# require 'app/controllers/iron_warbler/application_controller'
+# require 'app/controllers/iron_warbler/option_watches_controller'
+# require 'app/controllers/iron_warbler/api_controller'
+# require 'app/controllers/iron_warbler/api/option_price_items_controller'
+# require 'app/controllers/iron_warbler/api/option_watches_controller'
 
 
