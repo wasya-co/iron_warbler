@@ -16,6 +16,13 @@ module Dummy
       g.orm :active_record
     end
 
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:delete, :get, :post, :put, :patch, :options]
+      end
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
