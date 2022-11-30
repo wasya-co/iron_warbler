@@ -1,7 +1,7 @@
 class OptionWatches < ActiveRecord::Migration[6.1]
   def change
 
-    create_table :option_watches do |t|
+    create_table :iwa_option_watches do |t|
 
       t.column :ticker, :string
       t.column :symbol, :string

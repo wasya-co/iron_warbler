@@ -2,11 +2,11 @@
 class OptionPriceItem < ActiveRecord::Migration[6.0]
 
   def down
-    drop_table :option_price_items
+    drop_table :iwa_option_price_items
   end
 
   def up
-    create_table :option_price_items do |t|
+    create_table :iwa_option_price_items do |t|
       t.column :putCall, :string
       t.column :symbol, :string
       t.column :description, :string
@@ -57,6 +57,7 @@ class OptionPriceItem < ActiveRecord::Migration[6.0]
       t.timestamps
       t.column :timestamp, :timestamp
       t.column :tradeDate, :date
+      t.column :interval, :string
     end
   end
 end

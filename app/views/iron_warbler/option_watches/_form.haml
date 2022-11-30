@@ -1,37 +1,31 @@
 
-- if option_watch.persisted?
-  .inline= button_to '[X]', option_watch_path(option_watch.id), method: :delete, data: { confirm: 'Are you sure?' }
+- url = %w| new create |.include?( params[:action] ) ? option_watches_path : option_watche_path(option_watch)
 
+= form_with model: option_watch, url: url do |f|
+  - if option_watch.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(option_watch.errors.count, "error")
+        prohibited this option_watch from being saved:
+      %ul
+        - option_watch.errors.each do |error|
+          %li= error.full_message
 
-- url = option_watches_path if !option_watch.persisted?
-- url = option_watch_path( option_watch ) if option_watch.persisted?
+  .field
+    = f.label :ticker
+    = f.text_field :ticker
+  -# .field
+  -#   = f.label :symbol
+  -#   = f.text_field :symbol
+  .field
+    = f.label :contractType
+    = f.text_field :contractType
+  .field
+    = f.label :strike
+    = f.text_field :strike
+  .field
+    = f.label :date
+    = f.text_field :date
 
-.inline
-  = form_for option_watch, :url => url, :html => { :class => 'form-inline well' } do |f|
-    .flex-row
-      -# .form-group
-      -#   = f.label :action
-      -#   = f.select :action, options_for_select( IronWarbler::OptionWatch::ACTIONS.map{|a|[a,a]}, :selected => option_watch.action )
-
-      -# .form-group
-      -#   = f.label :profile
-      -#   = f.select :profile, options_for_select( [[nil,nil]]+@profiles.map{|p|[p[:email],p[:id]]}, :selected => option_watch.profile ? option_watch.profile.id : nil )
-      .form-group
-        %label.control-label Ticker
-        = f.text_field :ticker, :class => 'form-control', :placeholder => 'ticker'
-      .form-group
-        %label.control-label Type
-        = f.select :contractType, options_for_select( [['none',nil],['PUT', 'PUT'], ['CALL', 'CALL']], :selected => option_watch.contractType )
-      .form-group
-        %label.control-label Date
-        = f.text_field :date, :class => 'form-control', :placeholder => 'date'
-      .form-group
-        %label.control-label Strike
-        = f.number_field :strike, :step => 0.01, :placeholder => "0.01"
-      -# .form-group
-      -#   %label.control-label Is
-      -#   = f.select :direction, options_for_select( IronWarbler::OptionWatch::DIRECTIONS.map{|d|[d,d]}, :selected => option_watch.direction )
-
-      .form-group
-        = f.submit ">", :class => %w(btn blue)
-
+  .actions
+    = f.submit

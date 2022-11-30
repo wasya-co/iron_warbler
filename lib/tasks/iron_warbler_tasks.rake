@@ -1,12 +1,6 @@
 
 require 'csv'
 
-def puts! a, b=''
-  puts "+++ +++ #{b}"
-  puts a.inspect
-end
-
-
 namespace :iron_warbler do
 
   ## 2022-02-13 prep for recharts, only transform existing data/*.json
@@ -34,17 +28,16 @@ namespace :iron_warbler do
     puts 'ok'
   end
 
-  desc 'test placing orders for stock' do
-    task :place_order_stock => :environment do
-      opts = {
-        "instruction": "BUY",
-        "price": "1.10",
-        "quantity": 1,
-        "symbol": "BAC"
-      }
-      out = Warbler::Ameritrade::Api.place_stock_limit_order opts
-      puts! out, 'out'
-    end
+  desc 'test placing orders for stock'
+  task :place_order_stock => :environment do
+    opts = {
+      "instruction": "BUY",
+      "price": "1.10",
+      "quantity": 1,
+      "symbol": "BAC"
+    }
+    out = Warbler::Ameritrade::Api.place_stock_limit_order opts
+    puts! out, 'out'
   end
 
   desc 'the runner that populates my db for graphing'
@@ -82,12 +75,12 @@ namespace :iron_warbler do
 
           end
         rescue Exception => e
-          puts! e, 'Error in iron_warbler:watch_options :'
+          puts! e, 'Error in iron_warbler:watch_options'
         end
       end
       print '.'
-      sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
-      # sleep IronWarbler::INTERVAL_5_SECONDS
+      # sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
+      sleep IronWarbler::INTERVAL_5_SECONDS
     end
   end
 
@@ -115,6 +108,5 @@ namespace :iron_warbler do
       sleep IronWarbler::INTERVAL_1_MINUTE_SECONDS
     end
   end
-
 
 end

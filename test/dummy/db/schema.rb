@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_31_191945) do
+ActiveRecord::Schema.define(version: 2022_11_22_233715) do
+
+  create_table "active_admin_comments", charset: "latin1", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -27,126 +41,20 @@ ActiveRecord::Schema.define(version: 2022_10_31_191945) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
+    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "m3_active_admin_comments", charset: "latin1", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "index_m3_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_m3_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_m3_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
-  create_table "m3_active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_m3_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "m3_active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_m3_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "m3_active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "m3_ar_internal_metadata", primary_key: "key", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "m3_leads", charset: "latin1", force: :cascade do |t|
-    t.string "company_name"
-    t.string "company_url"
-    t.string "yelp_url"
-    t.string "email"
-    t.string "comment"
-    t.string "location"
-    t.string "phone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "m3_m3_active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "my_idx_2"
-    t.index ["namespace"], name: "aadmin_comments_idx"
-    t.index ["resource_type", "resource_id"], name: "my_idx_1"
-  end
-
-  create_table "m3_m3_leads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "company_name"
-    t.string "company_url"
-    t.string "yelp_url"
-    t.string "email"
-    t.string "comment"
-    t.string "location"
-    t.string "phone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "m3_m3_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.index ["email"], name: "index_m3_m3_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_m3_m3_users_on_reset_password_token", unique: true
-  end
-
-  create_table "m3_schema_migrations", primary_key: "version", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-  end
-
-  create_table "m3_users", charset: "latin1", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.index ["email"], name: "index_m3_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_m3_users_on_reset_password_token", unique: true
-  end
-
-  create_table "option_price_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "iwa_option_price_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "putCall"
     t.string "symbol"
     t.string "description"
@@ -197,7 +105,7 @@ ActiveRecord::Schema.define(version: 2022_10_31_191945) do
     t.string "interval"
   end
 
-  create_table "option_watches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "iwa_option_watches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "ticker"
     t.string "symbol"
     t.string "description"
@@ -211,551 +119,49 @@ ActiveRecord::Schema.define(version: 2022_10_31_191945) do
     t.string "profile_id"
   end
 
-  create_table "spree_activators", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "description"
-    t.datetime "expires_at"
-    t.datetime "starts_at"
-    t.string "name"
-    t.string "event_name"
-    t.string "type"
-    t.integer "usage_limit"
-    t.string "match_policy", default: "all"
-    t.string "code"
-    t.boolean "advertise", default: false
-    t.string "path"
+  create_table "m3_email_campaign_leads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "lead_id", null: false
+    t.string "email_campaign_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "rendered_str"
+    t.timestamp "sent_at"
   end
 
-  create_table "spree_addresses", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "firstname"
-    t.string "lastname"
-    t.string "address1"
-    t.string "address2"
-    t.string "city"
-    t.string "zipcode"
+  create_table "m3_leads", charset: "latin1", force: :cascade do |t|
+    t.string "email"
+    t.string "comment"
     t.string "phone"
-    t.string "state_name"
-    t.string "alternative_phone"
-    t.string "company"
-    t.integer "state_id"
-    t.integer "country_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["firstname"], name: "index_addresses_on_firstname"
-    t.index ["lastname"], name: "index_addresses_on_lastname"
-  end
-
-  create_table "spree_adjustments", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "source_type"
-    t.integer "source_id"
-    t.string "adjustable_type"
-    t.integer "adjustable_id"
-    t.string "originator_type"
-    t.integer "originator_id"
-    t.decimal "amount", precision: 8, scale: 2
-    t.string "label"
-    t.boolean "mandatory"
-    t.boolean "locked"
-    t.boolean "eligible", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["adjustable_id"], name: "index_adjustments_on_order_id"
-  end
-
-  create_table "spree_assets", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "viewable_type"
-    t.integer "viewable_id"
-    t.integer "attachment_width"
-    t.integer "attachment_height"
-    t.integer "attachment_file_size"
-    t.integer "position"
-    t.string "attachment_content_type"
-    t.string "attachment_file_name"
-    t.string "type", limit: 75
-    t.datetime "attachment_updated_at"
-    t.text "alt"
-    t.index ["viewable_id"], name: "index_assets_on_viewable_id"
-    t.index ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"
-  end
-
-  create_table "spree_calculators", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type"
-    t.string "calculable_type"
-    t.integer "calculable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_configurations", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "m3_leadset_id"
+    t.string "tag"
     t.string "name"
-    t.string "type", limit: 50
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name", "type"], name: "index_spree_configurations_on_name_and_type"
+    t.string "full_name"
+    t.index ["m3_leadset_id"], name: "index_m3_leads_on_m3_leadset_id"
   end
 
-  create_table "spree_countries", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "iso_name"
-    t.string "iso"
-    t.string "iso3"
-    t.string "name"
-    t.integer "numcode"
-    t.boolean "states_required", default: true
-  end
-
-  create_table "spree_credit_cards", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "month"
-    t.string "year"
-    t.string "cc_type"
-    t.string "last_digits"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "start_month"
-    t.string "start_year"
-    t.string "issue_number"
-    t.integer "address_id"
-    t.string "gateway_customer_profile_id"
-    t.string "gateway_payment_profile_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_gateways", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type"
-    t.string "name"
-    t.text "description"
-    t.boolean "active", default: true
-    t.string "environment", default: "development"
-    t.string "server", default: "test"
-    t.boolean "test_mode", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_inventory_units", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "lock_version", default: 0
-    t.string "state"
-    t.integer "variant_id"
-    t.integer "order_id"
-    t.integer "shipment_id"
-    t.integer "return_authorization_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["order_id"], name: "index_inventory_units_on_order_id"
-    t.index ["shipment_id"], name: "index_inventory_units_on_shipment_id"
-    t.index ["variant_id"], name: "index_inventory_units_on_variant_id"
-  end
-
-  create_table "spree_line_items", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "variant_id"
-    t.integer "order_id"
-    t.integer "quantity", null: false
-    t.decimal "price", precision: 8, scale: 2, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["order_id"], name: "index_spree_line_items_on_order_id"
-    t.index ["variant_id"], name: "index_spree_line_items_on_variant_id"
-  end
-
-  create_table "spree_log_entries", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "source_type"
-    t.integer "source_id"
-    t.text "details"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_mail_methods", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "environment"
-    t.boolean "active", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_option_types", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", limit: 100
-    t.string "presentation", limit: 100
-    t.integer "position", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_option_types_prototypes", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "prototype_id"
-    t.integer "option_type_id"
-  end
-
-  create_table "spree_option_values", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "position"
-    t.string "name"
-    t.string "presentation"
-    t.integer "option_type_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_option_values_variants", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "variant_id"
-    t.integer "option_value_id"
-    t.index ["variant_id", "option_value_id"], name: "index_option_values_variants_on_variant_id_and_option_value_id"
-    t.index ["variant_id"], name: "index_spree_option_values_variants_on_variant_id"
-  end
-
-  create_table "spree_orders", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "number", limit: 15
-    t.decimal "item_total", precision: 8, scale: 2, default: "0.0", null: false
-    t.decimal "total", precision: 8, scale: 2, default: "0.0", null: false
-    t.string "state"
-    t.decimal "adjustment_total", precision: 8, scale: 2, default: "0.0", null: false
-    t.integer "user_id"
-    t.datetime "completed_at"
-    t.integer "bill_address_id"
-    t.integer "ship_address_id"
-    t.decimal "payment_total", precision: 8, scale: 2, default: "0.0"
-    t.integer "shipping_method_id"
-    t.string "shipment_state"
-    t.string "payment_state"
-    t.string "email"
-    t.text "special_instructions"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["number"], name: "index_spree_orders_on_number"
-  end
-
-  create_table "spree_payment_methods", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type"
-    t.string "name"
-    t.text "description"
-    t.boolean "active", default: true
-    t.string "environment", default: "development"
-    t.datetime "deleted_at"
-    t.string "display_on"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_payments", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.decimal "amount", precision: 8, scale: 2, default: "0.0", null: false
-    t.integer "order_id"
-    t.string "source_type"
-    t.integer "source_id"
-    t.integer "payment_method_id"
-    t.string "state"
-    t.string "response_code"
-    t.string "avs_response"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_preferences", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "value"
-    t.string "key"
-    t.string "value_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["key"], name: "index_spree_preferences_on_key", unique: true
-  end
-
-  create_table "spree_prices", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "variant_id", null: false
-    t.decimal "amount", precision: 8, scale: 2, null: false
-    t.string "currency"
-  end
-
-  create_table "spree_product_option_types", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "position"
-    t.integer "product_id"
-    t.integer "option_type_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_product_properties", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "value"
-    t.integer "product_id"
-    t.integer "property_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id"], name: "index_product_properties_on_product_id"
-  end
-
-  create_table "spree_products", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.text "description"
-    t.datetime "available_on"
-    t.datetime "deleted_at"
-    t.string "permalink"
-    t.string "meta_description"
-    t.string "meta_keywords"
-    t.integer "tax_category_id"
-    t.integer "shipping_category_id"
-    t.integer "count_on_hand", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "on_demand", default: false
-    t.index ["available_on"], name: "index_spree_products_on_available_on"
-    t.index ["deleted_at"], name: "index_spree_products_on_deleted_at"
-    t.index ["name"], name: "index_spree_products_on_name"
-    t.index ["permalink"], name: "index_spree_products_on_permalink"
-  end
-
-  create_table "spree_products_promotion_rules", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "promotion_rule_id"
-    t.index ["product_id"], name: "index_products_promotion_rules_on_product_id"
-    t.index ["promotion_rule_id"], name: "index_products_promotion_rules_on_promotion_rule_id"
-  end
-
-  create_table "spree_products_taxons", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "taxon_id"
-    t.index ["product_id"], name: "index_spree_products_taxons_on_product_id"
-    t.index ["taxon_id"], name: "index_spree_products_taxons_on_taxon_id"
-  end
-
-  create_table "spree_promotion_action_line_items", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "promotion_action_id"
-    t.integer "variant_id"
-    t.integer "quantity", default: 1
-  end
-
-  create_table "spree_promotion_actions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "activator_id"
-    t.integer "position"
-    t.string "type"
-  end
-
-  create_table "spree_promotion_rules", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "activator_id"
-    t.integer "user_id"
-    t.integer "product_group_id"
-    t.string "type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_group_id"], name: "index_promotion_rules_on_product_group_id"
-    t.index ["user_id"], name: "index_promotion_rules_on_user_id"
-  end
-
-  create_table "spree_promotion_rules_users", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "promotion_rule_id"
-    t.index ["promotion_rule_id"], name: "index_promotion_rules_users_on_promotion_rule_id"
-    t.index ["user_id"], name: "index_promotion_rules_users_on_user_id"
-  end
-
-  create_table "spree_properties", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "presentation", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_properties_prototypes", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "prototype_id"
-    t.integer "property_id"
-  end
-
-  create_table "spree_prototypes", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "m3_leadsets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "company_url"
+    t.string "extra_url"
+    t.string "comment"
+    t.string "location"
+    t.string "tag"
   end
 
-  create_table "spree_return_authorizations", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "number"
-    t.string "state"
-    t.decimal "amount", precision: 8, scale: 2, default: "0.0", null: false
-    t.integer "order_id"
-    t.text "reason"
+  create_table "m3_users", charset: "latin1", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_roles", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-  end
-
-  create_table "spree_roles_users", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-    t.index ["role_id"], name: "index_spree_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_spree_roles_users_on_user_id"
-  end
-
-  create_table "spree_shipments", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "tracking"
-    t.string "number"
-    t.decimal "cost", precision: 8, scale: 2
-    t.datetime "shipped_at"
-    t.integer "order_id"
-    t.integer "shipping_method_id"
-    t.integer "address_id"
-    t.string "state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["number"], name: "index_shipments_on_number"
-  end
-
-  create_table "spree_shipping_categories", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_shipping_methods", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.integer "zone_id"
-    t.string "display_on"
-    t.integer "shipping_category_id"
-    t.boolean "match_none"
-    t.boolean "match_all"
-    t.boolean "match_one"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_state_changes", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "previous_state"
-    t.integer "stateful_id"
-    t.integer "user_id"
-    t.string "stateful_type"
-    t.string "next_state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_states", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "abbr"
-    t.integer "country_id"
-  end
-
-  create_table "spree_tax_categories", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.boolean "is_default", default: false
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_tax_rates", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.decimal "amount", precision: 8, scale: 5
-    t.integer "zone_id"
-    t.integer "tax_category_id"
-    t.boolean "included_in_price", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
-    t.boolean "show_rate_in_label", default: true
-  end
-
-  create_table "spree_taxonomies", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_taxons", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "parent_id"
-    t.integer "position", default: 0
-    t.string "name", null: false
-    t.string "permalink"
-    t.integer "taxonomy_id"
-    t.integer "lft"
-    t.integer "rgt"
-    t.string "icon_file_name"
-    t.string "icon_content_type"
-    t.integer "icon_file_size"
-    t.datetime "icon_updated_at"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["parent_id"], name: "index_taxons_on_parent_id"
-    t.index ["permalink"], name: "index_taxons_on_permalink"
-    t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
-  end
-
-  create_table "spree_tokenized_permissions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "permissable_type"
-    t.integer "permissable_id"
-    t.string "token"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["permissable_id", "permissable_type"], name: "index_tokenized_name_and_type"
-  end
-
-  create_table "spree_trackers", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "environment"
-    t.string "analytics_id"
-    t.boolean "active", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_users", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "encrypted_password", limit: 128
-    t.string "password_salt", limit: 128
-    t.string "email"
-    t.string "remember_token"
-    t.string "persistence_token"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.string "perishable_token"
-    t.integer "sign_in_count", default: 0, null: false
-    t.integer "failed_attempts", default: 0, null: false
-    t.datetime "last_request_at"
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.string "login"
-    t.integer "ship_address_id"
-    t.integer "bill_address_id"
-    t.string "authentication_token"
-    t.string "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_variants", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "sku", default: "", null: false
-    t.decimal "price", precision: 8, scale: 2, null: false
-    t.decimal "weight", precision: 8, scale: 2
-    t.decimal "height", precision: 8, scale: 2
-    t.decimal "width", precision: 8, scale: 2
-    t.decimal "depth", precision: 8, scale: 2
-    t.datetime "deleted_at"
-    t.boolean "is_master", default: false
-    t.integer "product_id"
-    t.integer "count_on_hand", default: 0
-    t.decimal "cost_price", precision: 8, scale: 2
-    t.integer "position"
-    t.integer "lock_version", default: 0
-    t.boolean "on_demand", default: false
-    t.index ["product_id"], name: "index_spree_variants_on_product_id"
-  end
-
-  create_table "spree_zone_members", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "zoneable_type"
-    t.integer "zoneable_id"
-    t.integer "zone_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "spree_zones", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.boolean "default_tax", default: false
-    t.integer "zone_members_count", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_m3_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_m3_users_on_reset_password_token", unique: true
   end
 
   create_table "wp_actionscheduler_actions", primary_key: "action_id", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_unicode_520_ci", force: :cascade do |t|
@@ -797,6 +203,29 @@ ActiveRecord::Schema.define(version: 2022_10_31_191945) do
     t.datetime "log_date_local"
     t.index ["action_id"], name: "action_id"
     t.index ["log_date_gmt"], name: "log_date_gmt"
+  end
+
+  create_table "wp_as3cf_items", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_unicode_520_ci", force: :cascade do |t|
+    t.string "provider", limit: 18, null: false
+    t.string "region", null: false
+    t.string "bucket", null: false
+    t.string "path", limit: 1024, null: false
+    t.string "original_path", limit: 1024, null: false
+    t.boolean "is_private", default: false, null: false
+    t.string "source_type", limit: 18, null: false
+    t.bigint "source_id", null: false, unsigned: true
+    t.string "source_path", limit: 1024, null: false
+    t.string "original_source_path", limit: 1024, null: false
+    t.text "extra_info", size: :long
+    t.integer "originator", limit: 1, default: 0, null: false, unsigned: true
+    t.boolean "is_verified", default: true, null: false
+    t.index ["is_verified", "originator", "id"], name: "uidx_is_verified_originator", unique: true
+    t.index ["original_path", "id"], name: "uidx_original_path", unique: true, length: { original_path: 190 }
+    t.index ["original_source_path", "id"], name: "uidx_original_source_path", unique: true, length: { original_source_path: 190 }
+    t.index ["path", "id"], name: "uidx_path", unique: true, length: { path: 190 }
+    t.index ["provider", "bucket", "id"], name: "uidx_provider_bucket", unique: true, length: { bucket: 190 }
+    t.index ["source_path", "id"], name: "uidx_source_path", unique: true, length: { source_path: 190 }
+    t.index ["source_type", "source_id"], name: "uidx_source", unique: true
   end
 
   create_table "wp_commentmeta", primary_key: "meta_id", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -1074,6 +503,6 @@ ActiveRecord::Schema.define(version: 2022_10_31_191945) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "m3_active_storage_attachments", "m3_active_storage_blobs", column: "blob_id"
-  add_foreign_key "m3_active_storage_variant_records", "m3_active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "m3_leads", "m3_leadsets"
 end

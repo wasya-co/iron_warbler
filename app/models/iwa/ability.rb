@@ -1,5 +1,5 @@
 
-class IronWarbler::Ability
+class Iwa::Ability
 end
 
 #   include ::CanCan::Ability

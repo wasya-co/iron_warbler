@@ -1,8 +1,11 @@
+
 IronWarbler::Engine.routes.draw do
-  root :to => 'application#home'
+  root to: 'application#home'
+
 
   resources :option_watches
   resources :stock_watches
+
 
   namespace :api do
     resources :stock_watches
@@ -29,7 +32,6 @@ IronWarbler::Engine.routes.draw do
 
   end
 
-
-
-
 end
+
+

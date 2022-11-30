@@ -3,6 +3,12 @@ require "iron_warbler/engine"
 require 'iron_warbler/railtie' if defined?(Rails)
 require 'iron_warbler/configuration'
 
+module Iwa
+end
+
+module Tda
+end
+
 module IronWarbler
 
   CALL = :CALL
@@ -25,16 +31,16 @@ module IronWarbler
   end
 end
 
-
-require 'iron_warbler/ameritrade'
-
-require 'iron_warbler/option_price_item'
-require 'iron_warbler/option_watch'
-
-# require 'app/controllers/iron_warbler/application_controller'
-# require 'app/controllers/iron_warbler/option_watches_controller'
-# require 'app/controllers/iron_warbler/api_controller'
-# require 'app/controllers/iron_warbler/api/option_price_items_controller'
-# require 'app/controllers/iron_warbler/api/option_watches_controller'
-
+##
+## Must come after above module definitions
+##
+require 'tda/option_criteria'
+require 'tda/option'
+require 'tda/trade'
+# require 'iwa'
+require 'iwa/input_error'
+require 'iwa/purse'
+# require 'iwa/option_watch'
+require 'iwa/runner'
+# require 'app/models/iron_warbler/option_price_item'
 
