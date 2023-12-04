@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.license     = 'Proprietary'
 
   s.add_runtime_dependency 'rails', '~> 6.1.0'
-  s.add_runtime_dependency 'httparty', '~> 0.20.0'
+  s.add_runtime_dependency 'httparty', '~> 0.21.0'
   s.add_runtime_dependency 'jwt', '~> 2.3.0'
   s.add_runtime_dependency 'jbuilder', '~> 2.11.0'
   s.add_runtime_dependency 'mysql2', '~> 0.5.4'
