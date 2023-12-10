@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+echo ""
+echo "+++ +++"
+echo "+++ +++ I would not build it... it's not registered with rubygems.org"
+echo "+++ +++"
+echo ""
+
+exit 444
+
+set -ex
+
+if ssh-add -L | grep macpc ; then
+  echo ok # nothing
+else
+  ssh-add ~/.ssh/mac_id_rsa_2
+fi
+
+./scripts/version_bump &&
+version=`cat VERSION`
+cat iron_warbler.gemspec-template | \
+  sed -e "s/\$version/$version/g" > iron_warbler.gemspec
+
+bundle &&
+
+gem build iron_warbler.gemspec &&
+gem push iron_warbler-`cat VERSION`.gem &&
+
+git add . &&
+git commit -m 'autobuild `date "+%Y%m%d"`' ;
+git push &&
+
+echo "iron_warbler build ok"

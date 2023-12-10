@@ -1,5 +1,4 @@
-module Iro
-  class ApplicationRecord < ActiveRecord::Base
-    self.abstract_class = true
-  end
+
+class Iro::ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
 end

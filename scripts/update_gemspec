@@ -1,0 +1,6 @@
+#!/bin/bash
+
+version=`cat VERSION`
+cat iron_warbler.gemspec-template | \
+  sed -e "s/\$version/$version/g" > iron_warbler.gemspec
+
