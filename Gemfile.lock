@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.1)
+    iron_warbler (2.0.2)
       cancancan (~> 3.4.0)
       haml (~> 5.2.0)
       httparty (~> 0.21.0)
