@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Iro::Engine => "/iro"
+  mount IronWarbler::Engine => "/iro"
 end
