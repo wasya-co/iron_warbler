@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'iron_warbler'
-  spec.version     = '0.0.0'
+  spec.version     = '2.0.1'
   spec.authors     = [ 'Victor Pudeyev' ]
   spec.email       = 'victor@wasya.co'
   spec.homepage    = 'https://wasya.co'
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty', '~> 0.21.0'
   spec.add_dependency 'jwt', '~> 2.3.0'
   spec.add_dependency 'jbuilder', '~> 2.11.0'
-  spec.add_dependency 'mysql2', '~> 0.5.4'
+  spec.add_dependency 'mysql2', '~> 0.5.5'
   spec.add_dependency 'cancancan', '~> 3.4.0'
   spec.add_dependency 'haml', '~> 5.2.0'
 

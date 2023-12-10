@@ -1,13 +1,12 @@
 #!/bin/bash
 
 
-echo ""
-echo "+++ +++"
-echo "+++ +++ I would not build it... it's not registered with rubygems.org"
-echo "+++ +++"
-echo ""
-
-exit 444
+# echo ""
+# echo "+++ +++"
+# echo "+++ +++ I would not build it... it's not registered with rubygems.org"
+# echo "+++ +++"
+# echo ""
+# exit 444
 
 set -ex
 
@@ -18,9 +17,7 @@ else
 fi
 
 ./scripts/version_bump &&
-version=`cat VERSION`
-cat iron_warbler.gemspec-template | \
-  sed -e "s/\$version/$version/g" > iron_warbler.gemspec
+./scripts/update_gemspec
 
 bundle &&
 

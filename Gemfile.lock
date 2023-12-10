@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    iron_warbler (0.0.0)
+    iron_warbler (2.0.1)
       cancancan (~> 3.4.0)
       haml (~> 5.2.0)
       httparty (~> 0.21.0)
       jbuilder (~> 2.11.0)
       jwt (~> 2.3.0)
-      mysql2 (~> 0.5.4)
+      mysql2 (~> 0.5.5)
       rails (~> 6.1.0)
 
 GEM
