@@ -1,3 +1,6 @@
+
+require 'haml'
+
 require "iro/version"
 require "iro/engine"
 

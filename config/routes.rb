@@ -1,6 +1,10 @@
 IronWarbler::Engine.routes.draw do
-  resources :alerts
+
   root to: 'application#home'
 
+  resources :alerts
+  resources :option_watches
   resources :profiles
+  resources :stock_watches
+
 end

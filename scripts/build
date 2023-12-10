@@ -23,9 +23,12 @@ bundle &&
 
 gem build iron_warbler.gemspec &&
 gem push iron_warbler-`cat VERSION`.gem &&
+rm iron_warbler-`cat VERSION`.gem
 
 git add . &&
 git commit -m 'autobuild `date "+%Y%m%d"`' ;
 git push &&
+
+
 
 echo "iron_warbler build ok"
