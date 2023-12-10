@@ -11,7 +11,7 @@ require 'haml'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-require "iro"
+require "iron_warbler"
 
 module Dummy
   class Application < Rails::Application
