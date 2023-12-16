@@ -1,8 +1,8 @@
+module IronWarbler; end
+module Iro; end
 
-require 'iro/engine'
-
-module IronWarbler
-  class Engine < ::Rails::Engine
-    isolate_namespace Iro
-  end
+class IronWarbler::Engine < ::Rails::Engine
+  isolate_namespace Iro
+  isolate_namespace IronWarbler
 end
+

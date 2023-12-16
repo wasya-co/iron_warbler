@@ -1,6 +1,6 @@
 IronWarbler::Engine.routes.draw do
 
-  root to: 'application#home'
+  root to: '/iro/application#home'
 
   resources :alerts
   resources :option_watches
