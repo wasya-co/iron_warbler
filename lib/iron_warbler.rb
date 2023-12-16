@@ -1,11 +1,7 @@
 
 require 'haml'
 
-require "iro/version"
-require "iro/engine"
+require "iron_warbler/engine"
 
-module Iro
-end
-
-module IronWarbler
-end
+module Iro; end
+module IronWarbler; end

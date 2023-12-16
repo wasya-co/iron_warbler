@@ -1,13 +1,6 @@
 #!/bin/bash
 
 
-# echo ""
-# echo "+++ +++"
-# echo "+++ +++ I would not build it... it's not registered with rubygems.org"
-# echo "+++ +++"
-# echo ""
-# exit 444
-
 set -ex
 
 if ssh-add -L | grep macpc ; then

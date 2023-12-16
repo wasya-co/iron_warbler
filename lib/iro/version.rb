@@ -1,3 +1,0 @@
-module Iro
-  VERSION = '0.1.0'
-end
