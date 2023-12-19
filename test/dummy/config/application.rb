@@ -25,3 +25,8 @@ module Dummy
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
+
+def puts! a, b=''
+  puts "+++ +++ #{b}:"
+  puts a.inspect
+end
