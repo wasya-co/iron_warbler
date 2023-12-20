@@ -1,5 +1,5 @@
 
-class Iro::Alert < ApplicationRecord
+class Iro::Alert < Iro::ApplicationRecord
   self.table_name = 'iro_alerts'
 
   DIRECTION_ABOVE = 'ABOVE'

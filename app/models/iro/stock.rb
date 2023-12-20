@@ -2,7 +2,7 @@
 ##
 ## SQL
 ##
-class Iro::Stock < ApplicationRecord
+class Iro::Stock < Iro::ApplicationRecord
   self.table_name = 'iro_stocks'
 
   STATUS_ACTIVE   = 'active'

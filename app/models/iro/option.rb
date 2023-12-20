@@ -2,6 +2,6 @@
 ##
 ## SQL
 ##
-class Iro::Option # < ApplicationRecord
+class Iro::Option # < Iro::ApplicationRecord
   # self.table_name = 'iro_options'
 end

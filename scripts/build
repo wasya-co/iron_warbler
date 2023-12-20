@@ -1,13 +1,12 @@
 #!/bin/bash
 
-
-set -ex
-
 if ssh-add -L | grep macpc ; then
   echo ok # nothing
 else
   ssh-add ~/.ssh/mac_id_rsa_2
 fi
+
+set -ex
 
 ./scripts/version_bump &&
 ./scripts/update_gemspec

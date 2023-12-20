@@ -7,6 +7,7 @@ group :development, :test do
   gem 'byebug'
   gem "rspec-rails"
   gem 'sqlite3'
+  gem 'mocha'
 
   gem 'rack-cors'
 end
