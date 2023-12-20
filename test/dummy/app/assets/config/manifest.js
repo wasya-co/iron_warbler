@@ -1,3 +1,3 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
-//= link iro_manifest.js
+//= link iron_warbler_manifest.js

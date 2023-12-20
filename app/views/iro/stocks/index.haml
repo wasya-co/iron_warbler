@@ -1,0 +1,9 @@
+
+.stocks--index
+  %h5 Stocks [+]
+
+  %ul
+    - @stocks.each do |stock|
+      %li
+        = render 'iro/stocks/form', stock: stock
+    %li= render 'iro/stocks/form', stock: Iro::Stock.new

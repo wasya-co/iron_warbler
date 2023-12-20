@@ -1,0 +1,13 @@
+[Unit]
+Description=Iron Warbler Watch Stocks
+
+[Service]
+Type=forking
+WorkingDirectory=/home/ubuntu/projects/microsites3/current
+ExecStart=/usr/bin/bundle exec rake iro:watch_stocks
+ExecStop=/bin/echo nothing
+Restart=on-failure
+Environment=RAILS_ENV=development
+
+[Install]
+WantedBy=multi-user.target

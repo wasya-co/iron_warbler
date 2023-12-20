@@ -1,0 +1,15 @@
+
+.iro-stocks--form
+  = form_for stock do |f|
+    .flex-row
+
+      .field
+        - if stock.new_record?
+          %label New
+        - else
+          = f.select :status, options_for_select([ Iro::Stock::STATUS_ACTIVE, Iro::Stock::STATUS_INACTIVE ], selected: stock.status)
+      .field
+        = f.label :ticker
+        = f.text_field :ticker
+      .actions
+        = f.submit

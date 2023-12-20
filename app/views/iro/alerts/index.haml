@@ -1,0 +1,9 @@
+
+.iro-alerts--index
+  %h5 Iro Alerts
+
+  %ul
+    - @alerts.each do |alert|
+      %li
+        = render 'iro/alerts/form', alert: alert
+    %li= render 'iro/alerts/form', alert: Iro::Alert.new

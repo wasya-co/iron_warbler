@@ -8,6 +8,7 @@ PATH
       jbuilder (~> 2.11.0)
       mysql2 (~> 0.5.5)
       rails (~> 6.1.0)
+      sass-rails (~> 6.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -79,6 +80,7 @@ GEM
     date (3.3.4)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
     haml (5.2.2)
@@ -170,6 +172,16 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
+    sass-rails (6.0.0)
+      sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)

@@ -1,0 +1,35 @@
+
+.iro-alerts--form.flex-row
+  .w-min-50px
+    - if !alert.new_record?
+      = button_to '[x]', alert_path( alert ), method: :delete, data: { confirm: 'Are you sure?' }
+    - else
+      &nbsp;
+  = form_for alert do |f|
+    .flex-row
+      .field
+        - if alert.new_record?
+          %label New
+        - else
+          = f.select :status, options_for_select([ 'active', 'inactive' ], selected: alert.status )
+      -# .field
+      -#   %label Notify
+      -#   = f.select :profile_id, options_for_select( @profiles_list, selected: alert.profile_id )
+      .field
+        %label When
+        = f.select :class_name, options_for_select([ nil, 'Iro::Stock', 'Iro::Option' ])
+      -# .field
+      -#   = f.label :kind
+      -#   = f.text_field :kind
+      .field
+        = f.label :symbol
+        = f.select :symbol, options_for_select( @stocks_list, selected: alert.symbol )
+      .field
+        = f.label :direction
+        = f.select :direction, options_for_select([ :ABOVE, :BELOW ], selected: alert.direction)
+      .field
+        = f.label :strike
+        = f.text_field :strike
+
+      .actions
+        = f.submit

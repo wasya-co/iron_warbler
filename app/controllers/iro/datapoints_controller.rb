@@ -1,11 +1,12 @@
-require_dependency "iro/application_controller"
 
-class Iro::DatapointsController < ApplicationController
+# require_dependency "iro/application_controller"
 
-  ## params: key, time, value
+class Iro::DatapointsController < Iro::ApplicationController
+
+  ## params: d, k, v
   def create
     begin
-      Iro::Datapoint.create( key: params[:key], value: params[:value], created_at: params[:time] )
+      Iro::Datapoint.create( k: params[:k], v: params[:v], created_at: params[:time] )
       render json: { status: :ok }
     rescue ActiveRecord::NotNullViolation => exception
       render json: { status: :unauthorized }, status: :unauthorized
@@ -15,7 +16,7 @@ class Iro::DatapointsController < ApplicationController
   def index
     # from = '2023-12-20'
     # to = '2023-12-01'
-    # points = Iro::Datapoint.where( key: params[:key] ).joins( :dates )
+    # points = Iro::Datapoint.where( k: params[:k] ).joins( :dates )
 
     sql = "SELECT
       dps.k, dps.v, d.date

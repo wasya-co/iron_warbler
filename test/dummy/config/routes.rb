@@ -1,6 +1,7 @@
 
 Rails.application.routes.draw do
+  root to: redirect('/iro')
 
-  mount IronWarbler::Engine => "/iro"
+  mount Iro::Engine => "/iro"
 
 end

@@ -1,0 +1,13 @@
+[Unit]
+Description=Iron Warbler (Stock) Alerts
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/projects/micros_hosting/current
+ExecStart=/usr/bin/bundle exec rake iro:alerts
+ExecStop=/bin/echo nothing
+Restart=on-failure
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target

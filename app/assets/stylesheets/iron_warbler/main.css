@@ -1,0 +1,13 @@
+
+.flex-row {
+  display: flex;
+  margin-bottom: 0.4em;
+}
+.field {
+  min-width: 100px;
+  margin-right: 1em;
+}
+.w-min-50px {
+  min-width: 50px;
+}
+
