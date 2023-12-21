@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.5)
+    iron_warbler (2.0.7.6)
       cancancan (~> 3.4.0)
+      exception_notification (~> 4.5.0)
       haml (~> 5.2.0)
       httparty (~> 0.21.0)
       jbuilder (~> 2.11.0)
@@ -80,6 +81,9 @@ GEM
     date (3.3.4)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    exception_notification (4.5.0)
+      actionmailer (>= 5.2, < 8)
+      activesupport (>= 5.2, < 8)
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)

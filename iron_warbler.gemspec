@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'iron_warbler'
-  spec.version     = '2.0.7.5'
+  spec.version     = '2.0.7.6'
   spec.authors     = [ 'Victor Pudeyev' ]
   spec.email       = 'victor@wasya.co'
   spec.homepage    = 'https://wasya.co'
@@ -18,14 +18,15 @@ Gem::Specification.new do |spec|
   ##
   ## Edit the template, not the gemspec!
   ##
-  spec.add_dependency 'rails',      '~> 6.1.0'
-  spec.add_dependency 'httparty',   '~> 0.21.0'
-  # spec.add_dependency 'jwt',        '~> 2.3.0'
-  spec.add_dependency 'jbuilder',   '~> 2.11.0'
-  spec.add_dependency 'mysql2',     '~> 0.5.5'
-  spec.add_dependency 'cancancan',  '~> 3.4.0'
-  spec.add_dependency 'haml',       '~> 5.2.0'
-  spec.add_dependency 'sass-rails', '~> 6.0.0'
+  spec.add_dependency 'rails',                  '~> 6.1.0'
+  spec.add_dependency 'httparty',               '~> 0.21.0'
+  # spec.add_dependency 'jwt',                    '~> 2.3.0'
+  spec.add_dependency 'jbuilder',               '~> 2.11.0'
+  spec.add_dependency 'mysql2',                 '~> 0.5.5'
+  spec.add_dependency 'cancancan',              '~> 3.4.0'
+  spec.add_dependency 'haml',                   '~> 5.2.0'
+  spec.add_dependency 'sass-rails',             '~> 6.0.0'
+  spec.add_dependency 'exception_notification', "~> 4.5.0"
 
   # spec.add_dependency 'ish_models', '~> 3.1.0.14'
 
