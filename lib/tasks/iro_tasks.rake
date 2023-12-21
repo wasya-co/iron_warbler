@@ -20,15 +20,24 @@ namespace :iro do
 
   desc 'alerts'
   task alerts: :environment do
+    print 'iro:alerts'
     while true
       Iro::Alert.active.each do |alert|
+
         # price = Iro::Stock.latest( alert.ticker ).price
         price = Tda::Api.get_quote( alert.symbol ).last
+
         if  alert.direction == Iro::Alert::DIRECTION_ABOVE && price >= alert.strike ||
             alert.direction == Iro::Alert::DIRECTION_BELOW && price <= alert.strike
+
           Iro::AlertMailer.stock_alert( alert ).deliver_later
+          alert.update_attributes({ status: Iro::Alert::STATUS_INACTIVE })
+          print '^'
+
         end
       end
+
+      print '.'
       sleep Iro::Alert::SLEEP_TIME_SECONDS
     end
   end

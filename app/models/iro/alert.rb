@@ -2,6 +2,7 @@
 class Iro::Alert < Iro::ApplicationRecord
   self.table_name = 'iro_alerts'
 
+  SLEEP_TIME_SECONDS = Rails.env.production? ? 60 : 15
 
   DIRECTION_ABOVE = 'ABOVE'
   DIRECTION_BELOW = 'BELOW'
