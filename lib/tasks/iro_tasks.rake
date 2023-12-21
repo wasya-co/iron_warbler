@@ -31,7 +31,7 @@ namespace :iro do
             alert.direction == Iro::Alert::DIRECTION_BELOW && price <= alert.strike
 
           Iro::AlertMailer.stock_alert( alert ).deliver_later
-          alert.update_attributes({ status: Iro::Alert::STATUS_INACTIVE })
+          alert.update({ status: Iro::Alert::STATUS_INACTIVE })
           print '^'
 
         end
