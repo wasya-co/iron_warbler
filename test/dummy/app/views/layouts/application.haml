@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %title Iro Wor Dummy
+    %meta{content: "width=device-width,initial-scale=1", name: "viewport"}
+    = csrf_meta_tags
+    = csp_meta_tag
+    -# = javascript_include_tag 'application'
+    = stylesheet_link_tag 'application', media: 'all'
+  %body
+    Wco Email Dummy. Main app: #{link_to 'Trading (Iron Warbler)', '/trading'}
+    = render '/wco/alerts_notices'
+
+    %hr
+    = yield
+    %hr
+
+    - if current_user
+      = current_user.email
+      = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }
+    - else
+      = button_to 'Login', "/users/auth/keycloakopenid", method: :post

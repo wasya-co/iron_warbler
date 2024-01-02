@@ -1,6 +1,8 @@
 
-class Iro::Alert < Iro::ApplicationRecord
-  self.table_name = 'iro_alerts'
+class Iro::Alert
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  store_in collection: 'iro_alerts'
 
   SLEEP_TIME_SECONDS = Rails.env.production? ? 60 : 15
 
@@ -13,11 +15,20 @@ class Iro::Alert < Iro::ApplicationRecord
   STATUS_ACTIVE   = 'active'
   STATUS_INACTIVE = 'inactive'
   STATUSES        = [ 'active', 'inactive' ]
-
-
   def self.active
     where( status: STATUS_ACTIVE )
   end
 
+  field :class_name
+  validates :class_name, presence: true
+
+  field :symbol
+  validates :symbol, presence: true
+
+  field :direction
+  validates :direction, presence: true
+
+  field :strike
+  validates :strike, presence: true
 
 end

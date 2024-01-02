@@ -1,4 +1,7 @@
 
-class Iro::PriceItem < Iro::ApplicationRecord
-  self.table_name = 'iro_price_items'
+class Iro::PriceItem
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  store_in collection: 'iro_price_items'
+
 end

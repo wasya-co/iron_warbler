@@ -18,16 +18,19 @@ Gem::Specification.new do |spec|
   ##
   ## Edit the template, not the gemspec!
   ##
-  spec.add_dependency 'rails',                  '~> 6.1.0'
-  spec.add_dependency 'httparty',               '~> 0.21.0'
-  # spec.add_dependency 'jwt',                    '~> 2.3.0'
-  spec.add_dependency 'jbuilder',               '~> 2.11.0'
-  spec.add_dependency 'mysql2',                 '~> 0.5.5'
-  spec.add_dependency 'cancancan',              '~> 3.4.0'
-  spec.add_dependency 'haml',                   '~> 5.2.0'
-  spec.add_dependency 'sass-rails',             '~> 6.0.0'
+  spec.add_dependency "cancancan",  "~> 3.5.0"
+  spec.add_dependency 'devise',     "~> 4.9.3"
   spec.add_dependency 'exception_notification', "~> 4.5.0"
+  spec.add_dependency 'haml',                   '~> 6.3.0'
+  spec.add_dependency 'httparty',               '~> 0.21.0'
+  spec.add_dependency 'jbuilder',               '~> 2.11.0'
+  spec.add_dependency 'mongoid',                '~> 7.3.0'
+  spec.add_dependency 'rails',                  '~> 6.1.0'
 
-  # spec.add_dependency 'ish_models', '~> 3.1.0.14'
+  spec.add_dependency 'wco_models', '~> 3.1.0'
+
+  spec.add_dependency 'omniauth',                       '~> 2.1.1'
+  spec.add_dependency "omniauth-keycloak",              "~> 1.5.1"
+  spec.add_dependency "omniauth-rails_csrf_protection", "~> 1.0.1"
 
 end

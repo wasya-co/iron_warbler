@@ -1,5 +1,4 @@
 
-require "active_record/railtie"
 require 'haml'
-
+require 'mongoid'
 require "iro/engine"

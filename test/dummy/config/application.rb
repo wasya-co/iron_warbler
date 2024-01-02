@@ -1,15 +1,12 @@
 require_relative "boot"
 
-# require "rails/all"
-require "active_record/railtie"
-require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
 
-Bundler.require(*Rails.groups)
+require 'devise'
 
-# require "ish_models"
+Bundler.require(*Rails.groups)
 
 require "iron_warbler"
 
@@ -17,14 +14,6 @@ require "iron_warbler"
 module Dummy
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
   end
 end
 

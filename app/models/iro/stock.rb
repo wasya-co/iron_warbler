@@ -1,18 +1,19 @@
 
-##
-## SQL
-##
-class Iro::Stock < Iro::ApplicationRecord
-  self.table_name = 'iro_stocks'
+
+class Iro::Stock
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  store_in collection: 'iro_stocks'
 
   STATUS_ACTIVE   = 'active'
   STATUS_INACTIVE = 'inactive'
   STATUSES        = [ 'active', 'inactive' ]
-
-  validates :ticker, uniqueness: true, presence: true
-
   def self.active
     where( status: STATUS_ACTIVE )
   end
+
+  field :ticker
+  validates :ticker, uniqueness: true, presence: true
+
 
 end

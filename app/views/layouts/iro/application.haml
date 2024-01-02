@@ -7,6 +7,7 @@
     = csp_meta_tag
     = stylesheet_link_tag    "iron_warbler/application", media: "all"
   %body
+    = render '/wco/main_header'
     .main-menu
       %h5 Main Menu
       %ul
@@ -15,4 +16,5 @@
         -# %li= link_to 'Options', options_path
         %li Max Pain
         %li= link_to 'Alerts', alerts_path
+    %hr
     = yield
