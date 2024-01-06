@@ -4,6 +4,7 @@ class Iro::StocksController < Iro::ApplicationController
 
   def index
     @stocks = Iro::Stock.all
+    authorize! :index, Iro::Stock
   end
 
   def show

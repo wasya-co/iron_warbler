@@ -2,14 +2,14 @@
 %html
   %head
     %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
-    %title Iro Wor Dummy
+    %title Iron Warbler Dummy
     %meta{content: "width=device-width,initial-scale=1", name: "viewport"}
     = csrf_meta_tags
     = csp_meta_tag
     -# = javascript_include_tag 'application'
     = stylesheet_link_tag 'application', media: 'all'
   %body
-    Wco Email Dummy. Main app: #{link_to 'Trading (Iron Warbler)', '/trading'}
+    Iron Warbler Dummy. Main app: #{link_to 'Trading (Iron Warbler)', '/trading'}
     = render '/wco/alerts_notices'
 
     %hr

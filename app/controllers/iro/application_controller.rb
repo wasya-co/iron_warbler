@@ -1,9 +1,10 @@
 
 
-class Iro::ApplicationController < ActionController::Base
-  # layout 'iro/application'
+class Iro::ApplicationController < Wco::ApplicationController
+  layout 'iro/application'
 
   def home
+    authorize! :home, Iro
   end
 
 end

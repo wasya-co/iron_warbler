@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 9ea5fe9d3157b979385c7efa5d353f8de85b66bf
+  revision: 9438631c6744d42c5529ea03017e62c18c50a6c6
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.43)
+    wco_models (3.1.0.44)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -31,7 +31,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.7)
+    iron_warbler (2.0.7.8)
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
       exception_notification (~> 4.5.0)
@@ -206,9 +206,10 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
-    json-jwt (1.16.4)
+    json-jwt (1.16.5)
       activesupport (>= 4.2)
       aes_key_wrap
+      base64
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
@@ -259,7 +260,7 @@ GEM
     mongoid_paranoia (0.6.0)
       mongoid (>= 7.3)
     multi_xml (0.6.0)
-    net-imap (0.4.8)
+    net-imap (0.4.9.1)
       date
       net-protocol
     net-pop (0.1.2)
@@ -268,7 +269,7 @@ GEM
       timeout
     net-scp (4.0.0)
       net-ssh (>= 2.6.5, < 8.0.0)
-    net-smtp (0.4.0)
+    net-smtp (0.4.0.1)
       net-protocol
     net-ssh (7.2.1)
     nio4r (2.7.0)

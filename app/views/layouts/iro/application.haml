@@ -1,20 +1,53 @@
 !!!
 %html
   %head
-    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Iron Warbler
+    %title #{@page_title} | Iron Warbler
+    %link{ :rel => 'icon', :href => "/favicon_#{ENV['RAILS_ENV']}.gif" }
+    %meta{ :name => :viewport, :content => 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2' }
+    %meta{ :charset => 'UTF-8' }
+    %meta{ :description => @page_description }
+
+    = javascript_include_tag "//code.jquery.com/jquery-3.3.1.min.js"
+
+    %script{ :src => "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" }
+    = stylesheet_link_tag "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", :media => 'all'
+    = stylesheet_link_tag "//fonts.googleapis.com/icon?family=Material+Icons"
+
+    = stylesheet_link_tag "//cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    = javascript_include_tag "//cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    = javascript_include_tag "//cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+
+    = stylesheet_link_tag "//cdn.jsdelivr.net/npm/select2@4.0.0/dist/css/select2.min.css"
+    = javascript_include_tag "//cdn.jsdelivr.net/npm/select2@4.0.0/dist/js/select2.min.js"
+
+    = stylesheet_link_tag "//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
+    = javascript_include_tag "//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"
+
+    = javascript_include_tag "wco/application"
+    = stylesheet_link_tag    "wco/application", media: "all"
+
+    = javascript_include_tag "iron_warbler/application"
+    = stylesheet_link_tag    "iron_warbler/application", media: "all"
+
+    -# %script{crossorigin: "", src: "https://unpkg.com/react@18/umd/react.development.js"}
+    -# %script{crossorigin: "", src: "https://unpkg.com/react-dom@18/umd/react-dom.development.js"}
+    -# %script{src: "https://unpkg.com/prop-types@15.6/prop-types.min.js"}
+    -# %script{src: "https://unpkg.com/axios/dist/axios.min.js"}
+    -# %script{src: "https://unpkg.com/recharts/umd/Recharts.js"}
+
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag    "iron_warbler/application", media: "all"
-  %body
-    = render '/wco/main_header'
-    .main-menu
-      %h5 Main Menu
-      %ul
-        %li= link_to 'Home - Dashboard', root_path
-        %li= link_to 'Stocks', stocks_path
-        -# %li= link_to 'Options', options_path
-        %li Max Pain
-        %li= link_to 'Alerts', alerts_path
+  %body{ class: [ params[:controller].gsub("wco_email/",""), "#{params[:controller].gsub("wco_email/","")}-#{params[:action]}", params[:action], "application-fullwidth" ] }
+
+    = render "/wco/main_header"
+    = render "/iro/main_header"
+    = render '/wco/alerts_notices' if notice || alert
     %hr
+
+    %span.absolute.collapse-expand#mainW
     = yield
+
+    = render '/wco/main_footer'
+    = render '/iro/analytics' if Rails.env.production?
