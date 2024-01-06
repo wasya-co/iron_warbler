@@ -2,16 +2,12 @@
 .bundle
 .byebug_history
 
-config/initializers/00_s3.rb
-config/initializers/08_integrations.rb
-config/master.key
+/config/initializers/0*
+/config/initializers/action_mailer.rb
+/config/master.key
 
 /db/*.sqlite3
 /db/*.sqlite3-*
-/test/dummy/db/*.sqlite3
-/test/dummy/db/*.sqlite3-*
-/test/dummy/config/initializers/00_s3.rb
-/test/dummy/config/initializers/08_integrations.rb
 
 .env*
 
@@ -30,6 +26,11 @@ config/master.key
 !/storage/.keep
 
 
+/test/dummy/db/*.sqlite3
+/test/dummy/db/*.sqlite3-*
+/test/dummy/config/initializers/0*
+/test/dummy/config/initializers/action_mailer.rb
+
 /tmp/*
 !/tmp/.keep
 /test/dummy/tmp/*
@@ -44,6 +45,5 @@ config/master.key
 yarn-debug.log*
 .yarn-integrity
 
-vendor
+/vendor/bundle
 
-w-*
