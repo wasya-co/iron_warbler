@@ -1,0 +1,59 @@
+
+.positions--form
+  = form_for position do |f|
+    .actions
+      = f.submit
+
+    .field
+      %label Purse
+      -# = f.select :purse_id, options_for_select( @
+      = f.text_field :purse_id
+
+      %label Status
+      = f.select :status, options_for_select( Iro::Position::STATUSES, selected: position.status )
+
+    %br
+    %br
+
+    .field
+      %label Ticker
+      = f.select :ticker, options_for_select( @tickers_list, selected: position.ticker )
+
+
+      %label Kind
+      = f.select :kind, options_for_select( Iro::Position::KINDS, selected: position.kind )
+      %label Strategy
+      = f.select :strategy_id, options_for_select( @strategies_list, selected: position.strategy_id )
+
+
+      %label Strike
+      = f.text_field :strike
+
+    .field
+      %label Expires on
+      = f.text_field :expires_on
+
+
+      %label Quantity
+      = f.text_field :quantity
+
+    %br
+    %br
+
+    .flex-row
+      %label Begin on
+      = f.text_field :begin_on
+      %label Begin price
+      = f.text_field :begin_price
+      %label Begin delta
+      = f.text_field :begin_delta
+    .flex-row
+      %label End on
+      = f.text_field :end_on
+      %label End price
+      = f.text_field :end_price
+      %label End delta
+      = f.text_field :end_delta
+
+    .actions
+      = f.submit

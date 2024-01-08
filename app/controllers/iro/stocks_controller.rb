@@ -12,6 +12,7 @@ class Iro::StocksController < Iro::ApplicationController
 
   def new
     @stock = Iro::Stock.new
+    authorize! :new, @stock
   end
 
   def edit
@@ -19,20 +20,25 @@ class Iro::StocksController < Iro::ApplicationController
 
   def create
     @stock = Iro::Stock.new(stock_params)
+    authorize! :create, @stock
 
     if @stock.save
-      redirect_to action: :index, notice: 'Stock was successfully created.'
+      flash_notice @stock
     else
-      render :new
+      flash_alert @stock
     end
+    redirect_to action: :index
   end
 
   def update
+    @stock = Iro::Stock.find params[:id]
+    authorize! :update, @stock
     if @stock.update(stock_params)
-      redirect_to @stock, notice: 'Stock was successfully updated.'
+      flash_notice @stock
     else
-      render :edit
+      flash_alert @stock
     end
+    redirect_to request.referrer
   end
 
   def destroy

@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   ##
   ## Edit the template, not the gemspec!
   ##
+  spec.add_dependency "business_time"
   spec.add_dependency "cancancan",  "~> 3.5.0"
   spec.add_dependency 'devise',     "~> 4.9.3"
   spec.add_dependency 'exception_notification', "~> 4.5.0"

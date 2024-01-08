@@ -1,13 +1,23 @@
 
+.main-header.maxwidth
 
+  %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
+    Iron Warbler
 
-.main-menu
-  %h5 Main Menu
+  -# .header.collapse-expand#IroMenu
+  -#   %h5.title Iron Warbler
+
   %ul
-    %li= link_to 'Home - Dashboard', root_path
-    %li= link_to 'Stocks', stocks_path
+    %li= link_to 'ROOT', root_path
+    %li
+      = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
     -# %li= link_to 'Options', options_path
-    %li Max Pain
-    %li= link_to 'Alerts', alerts_path
+    -# %li Max Pain
+    %li
+      = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
+    %li
+      = link_to "Purses (#{Iro::Purse.all.length})", purses_path
+    %li
+      = render '/iro/strategies/header'
 
 

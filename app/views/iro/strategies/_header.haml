@@ -1,0 +1,8 @@
+
+= link_to "Strategies (#{Iro::Strategy.all.length})", strategies_path
+.inline-search
+  = form_tag strategies_path, method: :get do
+    = text_field_tag :q
+= link_to '[+]', new_strategy_path
+
+

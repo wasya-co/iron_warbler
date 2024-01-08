@@ -1,0 +1,47 @@
+
+.positions--table {
+
+  table {
+    td {
+      text-align: center;
+    }
+    td.actions,
+    td.next_position,
+    td.strategy,
+    ._ {
+      text-align: left;
+    }
+    th {
+      border: 1px solid red;
+
+      > * {
+        border: 1px solid yellow;
+        // background: #ddd;
+
+        transform-origin: 0 0;
+        rotate: -40deg;
+
+        padding: .4em 0;
+        width: 120px;
+
+      }
+
+    }
+
+    th.begin_price {
+      > div {
+        background: cyan;
+      }
+    }
+
+    th.end_delta {
+      width: 50px;
+    }
+    th.next_position {
+      width: 160px;
+    }
+    th.next_symbol {
+      width: 120px;
+    }
+  }
+}

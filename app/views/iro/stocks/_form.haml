@@ -11,5 +11,9 @@
       .field
         = f.label :ticker
         = f.text_field :ticker
+
+      .field
+        %label Last
+        = f.number_field :last, placeholder: '80.0', step: 0.01
       .actions
         = f.submit

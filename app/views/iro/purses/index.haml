@@ -1,0 +1,11 @@
+
+.iro-purses--index.maxwidth
+  %h5 Iro Purses
+
+  %ul
+    - @purses.each do |purse|
+      %li
+        = link_to '[~]', edit_purse_path(purse)
+        = link_to purse.slug, purse_path(purse)
+
+    %li= render 'iro/purses/form', purse: Iro::Purse.new

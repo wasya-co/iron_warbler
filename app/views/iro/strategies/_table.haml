@@ -1,0 +1,18 @@
+
+- strategies ||= @strategies
+
+.strategies--table
+
+  %table.bordered
+    %tr
+      %th &nbsp;
+      %th ticker
+      %th slug
+      %th next_max_delta
+    - strategies.each do |sss|
+      %tr
+        %td= link_to '[~]', edit_strategy_path(sss)
+        %td= sss.ticker
+        %td= sss.slug
+        %td= sss.next_max_delta
+

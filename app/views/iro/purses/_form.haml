@@ -1,0 +1,9 @@
+
+.iro-purses--form
+  = form_for purse do |f|
+    .flex-row
+      .field
+        %label Slug
+        = f.text_field :slug
+    .actions
+      = f.submit

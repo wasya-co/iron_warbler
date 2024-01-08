@@ -4,7 +4,8 @@ class Iro::AlertsController < Iro::ApplicationController
   before_action :set_lists
 
   def create
-    @alert = Iro::Alert.new(alert_params)
+    @alert = Iro::Alert.new params[:alert].permit!
+    authorize! :create, @alert
     if @alert.save
       redirect_to action: :index, notice: 'Alert was successfully created.'
     else
@@ -14,17 +15,20 @@ class Iro::AlertsController < Iro::ApplicationController
 
   def destroy
     @alert = Iro::Alert.find(params[:id])
+    authorize! :destroy, @alert
     @alert.destroy
     redirect_to action: :index, notice: 'Alert was successfully destroyed.'
   end
 
   def index
     @alerts = Iro::Alert.all
+    authorize! :index, Iro::Alert
   end
 
   def update
     @alert = Iro::Alert.find(params[:id])
-    if @alert.update(alert_params)
+    authorize! :update, @alert
+    if @alert.update params[:alert].permit!
       redirect_to action: :index, notice: 'Alert was successfully updated.'
     else
       render :edit
@@ -35,10 +39,6 @@ class Iro::AlertsController < Iro::ApplicationController
   ## private
   ##
   private
-
-  def alert_params
-    params.require(:alert).permit(:class_name, :kind, :symbol, :direction, :strike, :profile_id)
-  end
 
   def set_lists
     # @profiles_list = Wco::Profile.list

@@ -1,0 +1,18 @@
+
+.strategies--show.modal-absolute.hide
+  .header
+    Strategy
+    = link_to '[~]', edit_strategy_path(strategy)
+    = strategy
+  %ul
+    %li <b>ticker:</b> #{strategy.ticker}
+    %li <b>slug:</b> #{strategy.slug}
+
+    %li <b>buffer_above_water:</b> #{strategy.buffer_above_water}
+
+    %li <b>next_max_delta:</b> #{strategy.next_max_delta}
+    %li <b>next_min_strike:</b> #{strategy.next_min_strike}
+
+    %li <b>threshold_delta:</b> #{strategy.threshold_delta}
+    %li <b>threshold_netp:</b> #{strategy.threshold_netp}
+

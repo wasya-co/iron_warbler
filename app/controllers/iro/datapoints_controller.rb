@@ -1,6 +1,4 @@
 
-# require_dependency "iro/application_controller"
-
 class Iro::DatapointsController < Iro::ApplicationController
 
   ## params: d, k, v

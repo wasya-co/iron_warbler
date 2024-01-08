@@ -1,6 +1,4 @@
 
-# require_dependency "iro/application_controller"
-
 class Iro::ProfilesController < Iro::ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
