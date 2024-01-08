@@ -1,7 +1,7 @@
 
 require 'httparty'
 
-class Tda::Api
+class Tda::Stock
   include ::HTTParty
   base_uri 'https://api.tdameritrade.com'
 
