@@ -30,6 +30,7 @@
 /test/dummy/db/*.sqlite3-*
 /test/dummy/config/initializers/0*
 /test/dummy/config/initializers/action_mailer.rb
+/test/dummy/spec/factories/wco_factories.rb
 
 /tmp/*
 !/tmp/.keep
