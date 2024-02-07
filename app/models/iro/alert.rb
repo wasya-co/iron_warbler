@@ -32,4 +32,28 @@ class Iro::Alert
   field :strike
   validates :strike, presence: true
 
+  def do_run
+    alert = self
+    begin
+      price = Tda::Stock.get_quote( alert.symbol ).last
+
+      if  alert.direction == self.class::DIRECTION_ABOVE && price >= alert.strike ||
+          alert.direction == self.class::DIRECTION_BELOW && price <= alert.strike
+
+
+
+        Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_later
+        alert.update({ status: self.class::STATUS_INACTIVE })
+        print '^'
+
+      end
+    rescue => err
+      puts! err, 'err'
+      ::ExceptionNotifier.notify_exception(
+        err,
+        data: { alert: alert }
+      )
+    end
+  end
+
 end

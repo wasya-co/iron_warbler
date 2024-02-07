@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.15)
+    iron_warbler (2.0.7.16)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
@@ -449,6 +449,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  exception_notification
   factory_bot_rails
   irb (>= 1.2.8)
   iron_warbler!

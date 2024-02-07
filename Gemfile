@@ -3,8 +3,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
+gem 'exception_notification'
+
 group :development, :test do
   gem 'byebug'
+
+
 
   gem 'factory_bot_rails'
 
