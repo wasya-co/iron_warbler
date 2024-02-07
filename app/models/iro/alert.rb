@@ -23,13 +23,13 @@ class Iro::Alert
   field :class_name, default: 'Iro::Stock'
   validates :class_name, presence: true
 
-  field :symbol
+  field :symbol, type: String
   validates :symbol, presence: true
 
-  field :direction
+  field :direction, type: String
   validates :direction, presence: true
 
-  field :strike
+  field :strike, type: Float
   validates :strike, presence: true
 
   def do_run
@@ -37,10 +37,8 @@ class Iro::Alert
     begin
       price = Tda::Stock.get_quote( alert.symbol ).last
 
-      if  alert.direction == alert.class::DIRECTION_ABOVE && price >= alert.strike ||
-          alert.direction == alert.class::DIRECTION_BELOW && price <= alert.strike
-
-
+      if ( alert.direction == alert.class::DIRECTION_ABOVE && price >= alert.strike ) ||
+         ( alert.direction == alert.class::DIRECTION_BELOW && price <= alert.strike )
 
         Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_later
         alert.update({ status: alert.class::STATUS_INACTIVE })
