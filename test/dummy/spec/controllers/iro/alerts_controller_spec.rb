@@ -4,8 +4,10 @@ RSpec.describe Iro::AlertsController do
   routes { Iro::Engine.routes }
 
   before do
-    destroy_every( Iro::Alert )
+    destroy_every( Iro::Alert, Iro::Stock )
+    qqq = create( :iro_stock )
     setup_users
+
     @alert = create( :iro_alert )
   end
 
