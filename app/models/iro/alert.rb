@@ -37,13 +37,13 @@ class Iro::Alert
     begin
       price = Tda::Stock.get_quote( alert.symbol ).last
 
-      if  alert.direction == self.class::DIRECTION_ABOVE && price >= alert.strike ||
-          alert.direction == self.class::DIRECTION_BELOW && price <= alert.strike
+      if  alert.direction == alert.class::DIRECTION_ABOVE && price >= alert.strike ||
+          alert.direction == alert.class::DIRECTION_BELOW && price <= alert.strike
 
 
 
         Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_later
-        alert.update({ status: self.class::STATUS_INACTIVE })
+        alert.update({ status: alert.class::STATUS_INACTIVE })
         print '^'
 
       end
