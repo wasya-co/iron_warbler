@@ -1,6 +1,38 @@
 
 namespace :iro do
 
+  desc 'alerts'
+  task alerts: :environment do
+    print 'iro:alerts'
+    while true
+      Iro::Alert.active.each do |alert|
+        begin
+
+          # price = Iro::Stock.latest( alert.ticker ).price
+          price = Tda::Api.get_quote( alert.symbol ).last
+
+          if  alert.direction == Iro::Alert::DIRECTION_ABOVE && price >= alert.strike ||
+              alert.direction == Iro::Alert::DIRECTION_BELOW && price <= alert.strike
+
+            Iro::AlertMailer.stock_alert( alert ).deliver_later
+            alert.update({ status: Iro::Alert::STATUS_INACTIVE })
+            print '^'
+
+          end
+
+        rescue => err
+          ::ExceptionNotifier.notify_exception(
+            err,
+            data: { alert: alert }
+          )
+        end
+      end
+
+      print '.'
+      sleep Rails.env.production? ? 60 : 15
+    end
+  end
+
   desc 'recommend position actions'
   task recommend_position_actions: :environment do
     Iro::Position.active.where({ kind: 'covered_call' }).map &:should_roll?
@@ -50,30 +82,6 @@ namespace :iro do
       end
 
       sleep Iro::Stock::SLEEP_TIME_SECONDS
-    end
-  end
-
-  desc 'alerts'
-  task alerts: :environment do
-    print 'iro:alerts'
-    while true
-      Iro::Alert.active.each do |alert|
-
-        # price = Iro::Stock.latest( alert.ticker ).price
-        price = Tda::Api.get_quote( alert.symbol ).last
-
-        if  alert.direction == Iro::Alert::DIRECTION_ABOVE && price >= alert.strike ||
-            alert.direction == Iro::Alert::DIRECTION_BELOW && price <= alert.strike
-
-          Iro::AlertMailer.stock_alert( alert ).deliver_later
-          alert.update({ status: Iro::Alert::STATUS_INACTIVE })
-          print '^'
-
-        end
-      end
-
-      print '.'
-      sleep Iro::Alert::SLEEP_TIME_SECONDS
     end
   end
 

@@ -4,7 +4,7 @@ class Iro::Alert
   include Mongoid::Timestamps
   store_in collection: 'iro_alerts'
 
-  SLEEP_TIME_SECONDS = Rails.env.production? ? 60 : 15
+  # SLEEP_TIME_SECONDS = Rails.env.production? ? 60 : 15
 
   DIRECTION_ABOVE = 'ABOVE'
   DIRECTION_BELOW = 'BELOW'
