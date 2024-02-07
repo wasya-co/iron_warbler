@@ -3,11 +3,16 @@ class Iro::DatapointsController < Iro::ApplicationController
 
   ## params: d, k, v
   def create
+    authorize! :create, Iro::Datapoint
     begin
-      Iro::Datapoint.create( k: params[:k], v: params[:v], created_at: params[:time] )
+      Iro::Datapoint.create!(
+        date:  params[:d],
+        kind:  params[:k],
+        value: params[:v],
+      )
       render json: { status: :ok }
-    rescue ActiveRecord::NotNullViolation => exception
-      render json: { status: :unauthorized }, status: :unauthorized
+    rescue Mongoid::Errors::Validations => e
+      render json: { status: 401 }, status: 401
     end
   end
 
@@ -24,8 +29,8 @@ class Iro::DatapointsController < Iro::ApplicationController
     ORDER BY
       d.date;"
 
-    outs = ActiveRecord::Base.connection.execute(sql)
-    puts! outs, 'outs'
+    # outs = ActiveRecord::Base.connection.execute(sql)
+    # puts! outs, 'outs'
 
     render json: outs
 

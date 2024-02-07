@@ -6,8 +6,14 @@ class Iro::Datapoint
   store_in collection: 'iro_datapoints'
 
   field :date
+  index({ kind: -1, date: -1 })
+
   field :value, type: Float
+  validates :value, presence: true
+
   field :kind
+  validates :kind, presence: true
+  index({ kind: -1 })
 
   def self.test_0trash
     add_fields = { '$addFields':  {

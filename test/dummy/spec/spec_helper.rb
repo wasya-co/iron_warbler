@@ -19,5 +19,23 @@ RSpec.configure do |config|
   config.mock_with :mocha
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+  config.include Devise::TestHelpers, type: :controller
+  config.include FactoryBot::Syntax::Methods
 
 end
+
+def destroy_every *args
+  args.each do |arg|
+    arg.unscoped.map &:destroy!
+  end
+end
+
+def setup_users
+  User.all.destroy_all
+  user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
+  Wco::Profile.unscoped.map &:destroy!
+  p = Wco::Profile.create!( email: user.email )
+  sign_in user
+end
+
+

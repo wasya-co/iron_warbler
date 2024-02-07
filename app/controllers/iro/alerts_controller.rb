@@ -29,10 +29,11 @@ class Iro::AlertsController < Iro::ApplicationController
     @alert = Iro::Alert.find(params[:id])
     authorize! :update, @alert
     if @alert.update params[:alert].permit!
-      redirect_to action: :index, notice: 'Alert was successfully updated.'
+      flash_notice 'ok'
     else
-      render :edit
+      flash_alert @alert
     end
+    redirect_to action: :index, notice: 'Alert was successfully updated.'
   end
 
   ##
@@ -42,7 +43,8 @@ class Iro::AlertsController < Iro::ApplicationController
 
   def set_lists
     # @profiles_list = Wco::Profile.list
-    @stocks_list = [[nil,nil]] + Iro::Stock.active.map { |s| [ s.ticker, s.ticker ] }
+    @stocks_list = Iro::Stock.list
+    puts! @stocks_list, '@stocks_list'
   end
 
 

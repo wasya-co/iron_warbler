@@ -11,13 +11,14 @@
         - if alert.new_record?
           %label New
         - else
-          = f.select :status, options_for_select([ 'active', 'inactive' ], selected: alert.status )
+          %label Status
+          = f.select :status, options_for_select(Iro::Alert::STATUSES, selected: alert.status )
       -# .field
       -#   %label Notify
       -#   = f.select :profile_id, options_for_select( @profiles_list, selected: alert.profile_id )
       .field
         %label When
-        = f.select :class_name, options_for_select([ nil, 'Iro::Stock', 'Iro::Option' ])
+        = f.select :class_name, options_for_select([ nil, 'Iro::Stock', 'Iro::Option' ], selected: alert.class_name )
       -# .field
       -#   = f.label :kind
       -#   = f.text_field :kind

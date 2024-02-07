@@ -10,20 +10,21 @@ class Iro::Stock
   def self.active
     where( status: STATUS_ACTIVE )
   end
-  field :status
+  field :status, default: STATUS_ACTIVE
 
   field :ticker
   validates :ticker, uniqueness: true, presence: true
+  index({ ticker: -1 }, { unique: true })
 
   field :last, type: :float
 
-  def self.list
-  end
-
-  def self.tickers_list
-    [nil] + all.map( &:ticker )
-  end
 
   # has_many :strategies, class_name: 'Iro::Strategy', inverse_of: :stock
 
+  def to_s
+    ticker
+  end
+  def self.list
+    [[nil,nil]] + all.map { |sss| [ sss.ticker, sss.ticker ] }
+  end
 end

@@ -14,12 +14,13 @@ class Iro::Alert
 
   STATUS_ACTIVE   = 'active'
   STATUS_INACTIVE = 'inactive'
-  STATUSES        = [ 'active', 'inactive' ]
+  STATUSES        = [ nil, 'active', 'inactive' ]
+  field :status, default: STATUS_ACTIVE
   def self.active
     where( status: STATUS_ACTIVE )
   end
 
-  field :class_name
+  field :class_name, default: 'Iro::Stock'
   validates :class_name, presence: true
 
   field :symbol

@@ -1,8 +1,11 @@
 
-RSpec.describe Iro::DatapointsController, type: :controller do
+RSpec.describe Iro::DatapointsController do
   render_views
   routes { Iro::Engine.routes }
-  # include Devise::Test::ControllerHelpers
+
+  before do
+    setup_users
+  end
 
   describe 'positive' do
     it '#create' do

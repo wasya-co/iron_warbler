@@ -2,7 +2,10 @@
 RSpec.describe Iro::StocksController, type: :controller do
   render_views
   routes { Iro::Engine.routes }
-  # include Devise::Test::ControllerHelpers
+
+  before do
+    setup_users
+  end
 
   describe 'positive' do
     it '#index' do
