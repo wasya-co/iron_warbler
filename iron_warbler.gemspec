@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'iron_warbler'
-  spec.version     = '2.0.7.18'
+  spec.version     = '2.0.7.19'
   spec.authors     = [ 'Victor Pudeyev' ]
   spec.email       = 'victor@wasya.co'
   spec.homepage    = 'https://wasya.co'

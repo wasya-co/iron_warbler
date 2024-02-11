@@ -2,7 +2,10 @@
 RSpec.describe Iro::Alert do
 
   before do
-    destroy_every( Iro::Alert, Iro::Stock )
+    destroy_every(
+      Iro::Alert,
+      Iro::Stock,
+    )
     @stock = create( :iro_stock )
   end
 
@@ -11,11 +14,29 @@ RSpec.describe Iro::Alert do
     a.persisted?.should eql true
   end
 
-  it '#do_run' do
-    @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+  describe '#do_run' do
+    it 'sanity' do
+      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
 
-    expect( Iro::AlertMailer ).to receive( :stock_alert ).exactly( 1 ).times
-    @alert.do_run
+      expect( Iro::AlertMailer ).to receive( :stock_alert ).exactly( 1 ).times
+      @alert.do_run
+    end
+
+    it 'incorrectly retirns string' do
+      expect( Tda::Stock ).to receive( :get ).and_return(OpenStruct.new( parsed_response: "" ))
+      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+
+      expect( ::ExceptionNotifier ).to_not receive( :notify_exception )
+      @alert.do_run
+    end
+
+    it 'incorrectly returns nil' do
+      expect( Tda::Stock ).to receive( :get ).and_return(OpenStruct.new( parsed_response: nil ))
+      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+
+      expect( ::ExceptionNotifier ).to_not receive( :notify_exception )
+      @alert.do_run
+    end
   end
-
 end
+

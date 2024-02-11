@@ -35,7 +35,8 @@ class Iro::Alert
   def do_run
     alert = self
     begin
-      price = Tda::Stock.get_quote( alert.symbol ).last
+      price = Tda::Stock.get_quote( alert.symbol )&.last
+      return if !price
 
       if ( alert.direction == alert.class::DIRECTION_ABOVE && price >= alert.strike ) ||
          ( alert.direction == alert.class::DIRECTION_BELOW && price <= alert.strike )

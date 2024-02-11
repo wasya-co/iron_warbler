@@ -16,6 +16,9 @@ class Tda::Stock
     path = "/v1/marketdata/quotes"
     inns = self.get path, { query: { apikey: ::TD_AMERITRADE[:apiKey], symbol: tickers } }
     inns = inns.parsed_response
+    if [ NilClass, String ].include?( inns.class )
+      return []
+    end
     inns.each do |k, v|
       inns[k] = v.deep_symbolize_keys
     end
