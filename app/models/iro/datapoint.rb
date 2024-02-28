@@ -5,15 +5,34 @@ class Iro::Datapoint
   include Mongoid::Timestamps
   store_in collection: 'iro_datapoints'
 
-  field :date
+  field :kind ## PUT, CALL, STOCK, CURRENCY, CRYPTO
+  validates :kind, presence: true
+  index({ kind: -1 })
+
+  field :symbol ## ticker, but use 'symbol' ONLY
+
+  field :date, type: Date ## @obsolete, use quote_at
   index({ kind: -1, date: -1 })
+
+  field :quote_at, type: DateTime
+  index({ kind: -1, quote_at: -1 })
+  validates :quote_at, uniqueness: { scope: [ :kind, :symbol ] }
+
+  field :open, type: Float
+  field :high, type: Float
+  field :low, type: Float
 
   field :value, type: Float
   validates :value, presence: true
+  def close
+    value
+  end
+  def close= a
+    value= a
+  end
 
-  field :kind
-  validates :kind, presence: true
-  index({ kind: -1 })
+  field :volume, type: Integer
+
 
   def self.test_0trash
     add_fields = { '$addFields':  {
@@ -21,10 +40,10 @@ class Iro::Datapoint
         '$dateToString': { 'format': "%Y-%m-%d", 'date': "$created_at" }
       }
     } }
-    group = { '$group': {
-      '_id': "$date_string",
-      'my_doc': { '$first': "$$ROOT" }
-    } }
+    # group = { '$group': {
+    #   '_id': "$date_string",
+    #   'my_doc': { '$first': "$$ROOT" }
+    # } }
     group = { '$group': {
       '_id': "$date",
       'my_doc': { '$first': "$$ROOT" }
@@ -111,6 +130,27 @@ class Iro::Datapoint
     puts! 'result'
     pp outs.to_a
     # puts! outs.to_a, 'result'
+  end
+
+  def self.import_stock symbol:, path:
+    csv = CSV.read(path, headers: true)
+    csv.each do |row|
+      flag = create({
+        kind:    'STOCK',
+        symbol:   symbol,
+        date:     row['date'],
+        quote_at: row['date'],
+
+        volume: row['volume'],
+
+        open:  row['open'],
+        high:  row['high'],
+        low:   row['low'],
+        value: row['close'],
+      })
+      print '.' if flag.persisted?
+    end
+    puts 'ok'
   end
 
 end

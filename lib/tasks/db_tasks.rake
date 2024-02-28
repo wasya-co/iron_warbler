@@ -1,9 +1,10 @@
 
 namespace :db do
 
-  desc 'test'
-  task test: :environment do
-    Iro::Datapoint.test
+  ## date, volume, open, high, low, close
+  desc 'import_stock symbol=GME path=./data/GME-test.csv'
+  task import_stock: :environment do
+    Iro::Datapoint.import_stock( symbol: ENV['symbol'], path: ENV['path'] )
   end
 
   desc 'create calendar mdb'
@@ -75,6 +76,11 @@ namespace :db do
       kind: 'some-type',
       value: 118,
     })
+  end
+
+  desc 'test'
+  task test: :environment do
+    Iro::Datapoint.test
   end
 
 end
