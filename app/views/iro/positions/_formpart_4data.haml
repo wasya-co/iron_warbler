@@ -1,0 +1,43 @@
+.field
+  %label Begin on
+  = f.text_field :begin_on
+
+.d-flex
+  .a
+    .field
+      %label Outer Strike
+      = f.number_field :outer_strike, step: 0.01
+    .field
+      %label Inner Strike
+      = f.number_field :inner_strike, step: 0.01
+  .a
+    .d-flex
+      %label Begin outer price
+      = f.text_field :begin_outer_price
+      %label Begin outer delta
+      = f.text_field :begin_outer_delta
+    .d-flex
+      %label Begin inner price
+      = f.text_field :begin_inner_price
+      %label Begin inner delta
+      = f.text_field :begin_inner_delta
+
+%br
+.flex-row
+  %label End on
+  = f.text_field :end_on
+.d-flex
+  .a
+    .field
+      %label End outer price
+      = f.text_field :end_outer_price
+    .field
+      %label End outer delta
+      = f.text_field :end_outer_delta
+  .a
+    .field
+      %label End inner price
+      = f.text_field :end_inner_price
+    .field
+      %label End inner delta
+      = f.text_field :end_inner_delta

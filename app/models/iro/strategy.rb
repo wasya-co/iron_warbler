@@ -7,17 +7,26 @@ class Iro::Strategy
   field :slug
   validates :slug, presence: true, uniqueness: true
 
+  field :description
+
   has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
 
   ## multiple strategies per ticker
-  field :ticker
-  validates :ticker, presence: true
-  index({ ticker: 1 })
+  # field :ticker
+  # validates :ticker, presence: true
+  # index({ ticker: 1 })
   # belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
 
+  KINDS = [ nil,
+    'covered-call', 'credit-put-spread', 'credit-call-spread',
+    'long-inverted-call-spread',
+    'short-inverted-put-spread',
+  ]
+  field :kind
 
   field :buffer_above_water, type: :float
-  field :next_max_delta, type: :float
+  field :next_max_inner_delta, type: :float
+  field :next_max_outer_delta, type: :float
   field :next_min_strike, type: :float
   field :threshold_delta, type: :float
   field :threshold_netp, type: :float
@@ -26,13 +35,10 @@ class Iro::Strategy
     where( ticker: ticker )
   end
 
-
   def to_s
     slug
   end
-
   def self.list
     [[nil,nil]] + all.map { |ttt| [ ttt.slug, ttt.id ] }
   end
-
 end

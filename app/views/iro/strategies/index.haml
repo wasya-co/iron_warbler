@@ -1,0 +1,8 @@
+
+.maxwidth
+  .header
+    %h5.title
+      Strategies
+      = link_to '[+]', iro.new_strategy_path
+
+  = render '/iro/strategies/table', strategies: @strategies

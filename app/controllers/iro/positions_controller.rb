@@ -1,6 +1,5 @@
 
 class Iro::PositionsController < Iro::ApplicationController
-
   before_action :set_lists
 
   def new
@@ -32,8 +31,6 @@ class Iro::PositionsController < Iro::ApplicationController
   def edit
     @position = Iro::Position.find params[:id]
     authorize! :edit, @position
-
-    @strategies_list = Iro::Strategy.for_ticker( @position.ticker ).list
   end
 
   def update
@@ -56,7 +53,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def set_lists
     @strategies_list = Iro::Strategy.list
-    @tickers_list = Iro::Stock.tickers_list
+    @stocks_list    = Iro::Stock.list
   end
 
 end

@@ -3,131 +3,134 @@
 
   %h5 Positions
   %table.bordered
-    %tr
-      %th &nbsp;
-      %th
-        .status
-          Status
-          %br
-          Strategy
-      %th.ticker
-        .a Ticker
-      %th
-        .kind
-          Kind
-          -# covered call (mounted elephant),
-          -# reckless defence (credit put spread) (spearman)
-          -# reckless re-defence (soaring eagle)
-      %th.strike
-        .a Strike
-      %th
-        .expires_on Expires On
-      %th
-        .end_n_days End N Days
-      %th
-        .quantity Q
-
-      %th
-        .begin_on begin_on
-      %th.begin_price
-        .a Begin price
-      %th.to_open
-        .a To open
-      %th
-        .begin_delta begin_delta
-
-      %th
-        .end_price End Price
-      %th
-        .net_amount Net Amount
-      %th
-        .net_percent Net %
-      %th.end_delta
-        .a end_delta
-      -# %th
-      -#   .end_n_days End n days
-      -# %th
-      -#   .end_on End on
-      %th.should_rollp
-        .a should_rollp
-      %th.next_position
-        .a
-          next_symbol
-          %br
-          next_delta
-          %br
-          next_outcome
-
-    - positions.each_with_index do |position, idx|
-      - if idx > 0
-        - prev_position = positions[idx-1]
-      - if prev_position && position[:expires_on] != prev_position[:expires_on]
-        %tr
-          %td{ colspan: 18 }
-            %hr
-
+    %thead
       %tr
-        %td.actions
-          .flex-row
-            = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
-            = link_to '[~]', edit_position_path(position)
-            - if position.next_reasons.present? && position.should_rollp && position.should_rollp > 0.5
-              = button_to 'Roll', roll_position_path(position)
-          - if position.next_reasons.present?
-            .collapse-expand{ id: "ce-p-#{position.id}" } [Reasons]
-            = render '/iro/positions/reasons', reasons: position.next_reasons
+        %th &nbsp;
+        %th
+          .status
+            Status
+            %br
+            Expires on
+            %br
+            Strategy
+        %th.ticker
+          .a Stock
+        %th.strike
+          .a Strikes
+        %th
+          .quantity Q
 
+        %th
+          .begin_on begin_on
+        %th.begin_price
+          .a Begin price
+        %th.max_loss
+          .a Max Loss
+        %th
+          .begin_delta begin_delta
 
-        %td.status.strategy
-          = position.status
-          -# %br
-          -# = link_to "[~ #{position.strategy}]", edit_strategy_path(position.strategy)
-          .collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
-            [#{position.strategy}]
-          = render '/iro/strategies/show', strategy: position.strategy
-
-        %td.ticker
-          = position.ticker
-          %br
-          = pp_amount position.current_underlying_strike
-        %td.kind.mini
-          = position.kind
-        %td.strike
-          = pp_amount position.strike
-        %td.expires_on.mini
-          = position.expires_on rescue nil
-        %td.end_n_days
-          -# = ( position.expires_on.to_date - position.begin_on.to_date ).to_i
-          %b= ( position.expires_on.to_date - Time.now.to_date ).to_i
-        %td= position.quantity
-
-        %td.begin_on.mini
-          = position.begin_on rescue nil
-        %td.begin_price
-          = pp_amount position.begin_price
-        %td.to_open
-          = pp_amount( position.begin_price * 100 * position.quantity )
-        %td= position.begin_delta
-
-        %td.end_price
-          = pp_amount position.end_price
-        %td.net_amount
-          = pp_amount ( position.begin_price - position.end_price ) * 100 * position.quantity rescue nil
-        %td.net_percent
-          = pp_percent( ( position.begin_price - position.end_price ) / position.begin_price ) rescue nil
-        %td.end_delta= position.end_delta
-        -# %td.end_n_days &nbsp;
-        -# %td.end_on &nbsp;
-
-        %td.should_rollp
-          = pp_percent position.should_rollp rescue nil
-        %td.next_position.mini
-          .a= position.next_symbol
-          .a= position.next_delta
+        %th
+          .end_price End Price
+        %th
+          max gain
+        %th
+          .net Net Amount (%)
+        %th.end_delta
+          .a end_delta
+        -# %th
+        -#   .end_n_days End n days
+        -# %th
+        -#   .end_on End on
+        %th.should_rollp
+          .a should_rollp
+        %th.next_position
           .a
-            = pp_amount position.next_mark
-            \=>
-            = pp_amount position.next_outcome * 100 * position.quantity rescue nil
+            next_symbol
+            %br
+            next_delta
+            %br
+            next_outcome
+    %tbody
+      - positions.each_with_index do |position, idx|
+        - if idx > 0
+          - prev_position = positions[idx-1]
+        - if prev_position && position[:expires_on] != prev_position[:expires_on]
+          %tr
+            %td{ colspan: 18 }
+              %hr
+
+        %tr
+          %td.actions
+            .flex-row
+              = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
+              = link_to '[~]', edit_position_path(position)
+              - if position.next_reasons.present? && position.should_rollp && position.should_rollp > 0.5
+                = button_to 'Roll', roll_position_path(position)
+            - if position.next_reasons.present?
+              .collapse-expand{ id: "ce-p-#{position.id}" } [Reasons]
+              = render '/iro/positions/reasons', reasons: position.next_reasons
+
+
+          %td.status.strategy.w-200px
+            = position.status
+            %br
+            = position.expires_on.to_datetime.strftime("%b %d") rescue '-'
+            [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
+            %br
+            %i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
+              #{position.strategy}
+            = render '/iro/strategies/show', strategy: position.strategy
+
+          %td.ticker
+            = position.stock.ticker
+            %br
+            = pp_amount position.stock.last
+          %td.strike
+            = pp_amount position.outer_strike
+            %br
+            = pp_amount position.inner_strike
+          %td= position.quantity
+
+          %td.begin_on.mini
+            = position.begin_on rescue nil
+          %td.begin_price
+            = pp_amount position.begin_outer_price
+            %br
+            = pp_amount position.begin_inner_price
+          %td.to_open
+            = pp_amount position.max_loss
+          %td
+            = position.begin_outer_delta
+            %br
+            = position.begin_inner_delta
+
+          %td.end_price
+            = pp_amount position.end_outer_price
+            %br
+            = pp_amount position.end_inner_price
+          %td.max-gain
+            = pp_amount position.max_gain
+            %br
+            = pp_percent( -1 * position.max_gain / position.max_loss )
+
+          %td.net
+            = pp_amount position.net_amount
+            %br
+            = pp_percent position.net_amount / position.max_gain
+          %td.end_delta
+            #{'%.2f' % position.end_outer_delta}
+            %br
+            #{'%.2f' % position.end_inner_delta}
+
+          %td.should_rollp
+            = pp_percent position.should_rollp rescue nil
+          %td.next_position.mini
+            .a= position.next_symbol
+            .a= position.next_delta
+            .a
+              = pp_amount position.next_mark
+              \=>
+              = pp_amount position.next_outcome * 100 * position.quantity rescue nil
 
 
 

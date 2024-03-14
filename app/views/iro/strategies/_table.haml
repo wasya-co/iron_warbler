@@ -4,15 +4,21 @@
 .strategies--table
 
   %table.bordered
-    %tr
-      %th &nbsp;
-      %th ticker
-      %th slug
-      %th next_max_delta
-    - strategies.each do |sss|
+    %thead
       %tr
-        %td= link_to '[~]', edit_strategy_path(sss)
-        %td= sss.ticker
-        %td= sss.slug
-        %td= sss.next_max_delta
+        %th.actions &nbsp;
+        %th kind
+        %th slug
+        %th next_max_inner_delta
+    %tbody
+      - strategies.each do |sss|
+        %tr
+          %td.actions.d-flex
+            = link_to '[~]', edit_strategy_path(sss)
+            = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
+          %td= sss.kind
+          %td= sss.slug
+          %td= sss.next_max_inner_delta
+
+  .h-50px
 

@@ -1,23 +1,24 @@
 
-.main-header.maxwidth
+.application-main-header.main-header
+  .maxwidth
 
-  %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
-    Iron Warbler
+    %i.fa.fa-compress.collapse-expand#collapseHeaderTrading
+      Iron Warbler
 
-  -# .header.collapse-expand#IroMenu
-  -#   %h5.title Iron Warbler
+    -# .header.collapse-expand#IroMenu
+    -#   %h5.title Iron Warbler
 
-  %ul
-    %li= link_to 'ROOT', root_path
-    %li
-      = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
-    -# %li= link_to 'Options', options_path
-    -# %li Max Pain
-    %li
-      = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
-    %li
-      = link_to "Purses (#{Iro::Purse.all.length})", purses_path
-    %li
-      = render '/iro/strategies/header'
+    %ul
+      %li= link_to 'ROOT', root_path
+      %li
+        = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
+      -# %li= link_to 'Options', options_path
+      -# %li Max Pain
+      %li
+        = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
+      %li
+        = link_to "Purses (#{Iro::Purse.all.length})", purses_path
+      %li
+        = render '/iro/strategies/header'
 
 

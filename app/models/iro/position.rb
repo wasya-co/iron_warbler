@@ -12,17 +12,23 @@ class Iro::Position
   scope :active, ->{ where( status: 'active' ) }
 
   belongs_to :purse,    class_name: 'Iro::Purse',    inverse_of: :positions
-  belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
-
-  field :ticker
-  validates :ticker, presence: true
   index({ purse_id: 1, ticker: 1 })
 
-  KINDS = [ nil, 'covered_call', 'credit_put_spread', 'credit_call_spread' ]
-  field :kind
+  belongs_to :stock,   class_name: 'Iro::Stock',    inverse_of: :positions
+  def ticker
+    stock&.ticker || '-'
+  end
 
-  field :strike, type: :float
-  validates :strike, presence: true
+  belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
+
+  # field :ticker
+  # validates :ticker, presence: true
+
+  field     :outer_strike, type: :float
+  validates :outer_strike, presence: true
+
+  field     :inner_strike, type: :float
+  validates :inner_strike, presence: true
 
   field :expires_on
   validates :expires_on, presence: true
@@ -31,12 +37,18 @@ class Iro::Position
   validates :quantity, presence: true
 
   field :begin_on
-  field :begin_price, type: :float
-  field :begin_delta, type: :float
+  field :begin_outer_price, type: :float
+  field :begin_outer_delta, type: :float
+
+  field :begin_inner_price, type: :float
+  field :begin_inner_delta, type: :float
 
   field :end_on
-  field :end_price, type: :float
-  field :end_delta, type: :float
+  field :end_outer_price, type: :float
+  field :end_outer_delta, type: :float
+
+  field :end_inner_price, type: :float
+  field :end_inner_delta, type: :float
 
   field :net_amount
   field :net_percent
@@ -59,6 +71,18 @@ class Iro::Position
     print '_'
   end
 
+  def net_amount # total
+    outer = 0 - begin_outer_price + end_outer_price
+    inner = begin_inner_price - end_inner_price
+    return ( outer + inner ) * 100 * quantity
+  end
+  def max_gain # total
+    100 * ( begin_outer_price - begin_inner_price ) * quantity
+  end
+  def max_loss
+    100 * ( outer_strike - inner_strike ) * quantity
+  end
+
 
   field :next_delta, type: :float
   field :next_outcome, type: :float
@@ -66,6 +90,10 @@ class Iro::Position
   field :next_mark
   field :next_reasons, type: :array, default: []
   field :should_rollp, type: :float
+
+  ##
+  ## decisions
+  ##
 
   def should_roll?
     puts! 'shold_roll?'
@@ -83,7 +111,7 @@ class Iro::Position
       if end_delta < strategy.threshold_delta
         next_reasons.push "delta is lower than threshold"
         out = 0.91
-      elsif 1 - end_price/begin_price > strategy.threshold_netp
+      elsif 1 - end_outer_price/begin_outer_price > strategy.threshold_netp
         next_reasons.push "made enough percent profit (dubious)"
         out = 0.61
       else

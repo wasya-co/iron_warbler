@@ -3,11 +3,6 @@ class Iro::StrategiesController < Iro::ApplicationController
 
   before_action :set_lists
 
-  def new
-    @strategy = Iro::Strategy.new
-    authorize! :new, @posision
-  end
-
   def create
     @strategy = Iro::Strategy.new params[:strategy].permit!
     authorize! :create, @strategy
@@ -37,7 +32,12 @@ class Iro::StrategiesController < Iro::ApplicationController
   def index
     authorize! :index, Iro::Strategy
     @strategies = Iro::Strategy.all
-    render '_table'
+    # render '_table'
+  end
+
+  def new
+    @strategy = Iro::Strategy.new
+    authorize! :new, @posision
   end
 
   def update
@@ -60,7 +60,7 @@ class Iro::StrategiesController < Iro::ApplicationController
 
   def set_lists
     @strategies_list = Iro::Strategy.list
-    @tickers_list = Iro::Stock.tickers_list
+    @tickers_list    = Iro::Stock.list
   end
 
 end
