@@ -7,6 +7,11 @@ class Iro::Strategy
   field :slug
   validates :slug, presence: true, uniqueness: true
 
+  LONG = 'is-long'
+  SHORT = 'is-short'
+  field     :long_or_short, type: :string
+  validates :long_or_short, presence: true
+
   field :description
 
   has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
@@ -38,7 +43,8 @@ class Iro::Strategy
   def to_s
     slug
   end
-  def self.list
-    [[nil,nil]] + all.map { |ttt| [ ttt.slug, ttt.id ] }
+  def self.list long_or_short = nil
+    these = long_or_short ? where( long_or_short: long_or_short ) : all
+    [[nil,nil]] + these.map { |ttt| [ ttt.slug, ttt.id ] }
   end
 end

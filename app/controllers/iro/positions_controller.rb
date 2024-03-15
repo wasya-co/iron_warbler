@@ -52,7 +52,7 @@ class Iro::PositionsController < Iro::ApplicationController
   private
 
   def set_lists
-    @strategies_list = Iro::Strategy.list
+    @strategies_list = Iro::Strategy.list(params[:long_or_short])
     @stocks_list    = Iro::Stock.list
   end
 

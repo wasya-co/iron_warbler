@@ -15,7 +15,7 @@
             Strategy
         %th.ticker
           .a Stock
-        %th.strike
+        %th.strikes
           .a Strikes
         %th
           .quantity Q
@@ -59,7 +59,7 @@
             %td{ colspan: 18 }
               %hr
 
-        %tr
+        %tr{ class: position.strategy.long_or_short }
           %td.actions
             .flex-row
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
@@ -85,29 +85,28 @@
             = position.stock.ticker
             %br
             = pp_amount position.stock.last
-          %td.strike
-            = pp_amount position.outer_strike
-            %br
-            = pp_amount position.inner_strike
+          %td.strikes
+            .long-or-short-item
+              .a= pp_amount position.outer_strike
+              .a= pp_amount position.inner_strike
           %td= position.quantity
 
           %td.begin_on.mini
             = position.begin_on rescue nil
           %td.begin_price
-            = pp_amount position.begin_outer_price
-            %br
-            = pp_amount position.begin_inner_price
+            .long-or-short-item
+              .a= pp_amount position.begin_outer_price
+              .a= pp_amount position.begin_inner_price
           %td.to_open
             = pp_amount position.max_loss
           %td
-            = position.begin_outer_delta
-            %br
-            = position.begin_inner_delta
-
+            .long-or-short-item
+              .a= pp_delta position.begin_outer_delta
+              .a= pp_delta position.begin_inner_delta
           %td.end_price
-            = pp_amount position.end_outer_price
-            %br
-            = pp_amount position.end_inner_price
+            .long-or-short-item
+              .a= pp_amount position.end_outer_price
+              .a= pp_amount position.end_inner_price
           %td.max-gain
             = pp_amount position.max_gain
             %br
@@ -118,9 +117,9 @@
             %br
             = pp_percent position.net_amount / position.max_gain
           %td.end_delta
-            #{'%.2f' % position.end_outer_delta}
-            %br
-            #{'%.2f' % position.end_inner_delta}
+            .long-or-short-item
+              .a= pp_delta position.end_outer_delta
+              .a= pp_delta position.end_inner_delta
 
           %td.should_rollp
             = pp_percent position.should_rollp rescue nil

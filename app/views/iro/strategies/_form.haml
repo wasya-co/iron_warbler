@@ -11,6 +11,9 @@
     .field
       %label slug
       = f.text_field :slug
+    .field
+      %label long or short?
+      = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
 
 
     .field

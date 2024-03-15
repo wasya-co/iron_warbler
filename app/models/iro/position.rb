@@ -74,13 +74,17 @@ class Iro::Position
   def net_amount # total
     outer = 0 - begin_outer_price + end_outer_price
     inner = begin_inner_price - end_inner_price
-    return ( outer + inner ) * 100 * quantity
+    out = ( outer + inner ) * 100 * quantity
   end
   def max_gain # total
     100 * ( begin_outer_price - begin_inner_price ) * quantity
   end
   def max_loss
-    100 * ( outer_strike - inner_strike ) * quantity
+    out = 100 * ( outer_strike - inner_strike ) * quantity
+    if strategy.long_or_short == Iro::Strategy::SHORT
+      out = out * -1
+    end
+    return out
   end
 
 

@@ -43,5 +43,13 @@
     th.next_symbol {
       width: 120px;
     }
+
+    tr.is-long {
+      border-left: 5px solid var(--iro-color-long);
+    }
+    tr.is-short {
+      border-left: 5px solid var(--iro-color-short);
+    }
+
   }
 }

@@ -23,8 +23,6 @@ class Iro::PursesController < Iro::ApplicationController
   def edit
     @purse = Iro::Purse.find(params[:id])
     authorize! :edit, @purse
-
-
   end
 
   def index
@@ -36,7 +34,7 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
-    @positions = Iro::Position.all
+    @positions = Iro::Position.all.includes( :strategy )
   end
 
   def update
