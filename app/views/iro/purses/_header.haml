@@ -1,0 +1,13 @@
+
+- purse ||= @purse
+.maxwidth
+  .header
+    %h5.title Purse `#{purse.slug}` (#{purse.positions.length})
+
+    = link_to '[view GameUI]', gameui_purse_path(purse)
+    = link_to '[view]', purse_path(purse)
+
+    = link_to '[+position]', new_position_path({ purse_id: purse.id })
+    = link_to '[+long]',     new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::LONG })
+    = link_to '[+short]',    new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::SHORT })
+

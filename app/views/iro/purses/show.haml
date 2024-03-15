@@ -1,11 +1,4 @@
 
 .purses-show.padded
-
-  .maxwidth
-    .header
-      %h5.title Purse `#{@purse.slug}` (#{@purse.positions.length})
-
-      = link_to '[+long]',  new_position_path({ purse_id: @purse.id, long_or_short: Iro::Strategy::LONG })
-      = link_to '[+short]', new_position_path({ purse_id: @purse.id, long_or_short: Iro::Strategy::SHORT })
-
+  = render '/iro/purses/header', purse: @purse
   = render '/iro/positions/table', positions: @purse.positions

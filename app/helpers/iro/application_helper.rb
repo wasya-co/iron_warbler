@@ -1,7 +1,7 @@
 module Iro::ApplicationHelper
 
   def pp_delta delta
-    return '%.2f' % delta
+    '%.2f' % delta rescue '-'
   end
 
 end

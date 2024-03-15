@@ -34,7 +34,10 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
-    @positions = Iro::Position.all.includes( :strategy )
+    @positions = @purse.positions.includes( :strategy
+      ).order({ expires_on: :desc })
+
+    render params[:template]
   end
 
   def update

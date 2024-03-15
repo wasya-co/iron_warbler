@@ -12,13 +12,18 @@
  *
  *= require_tree .
  *= require_self
- */
+**/
 
- html {
+html {
   --iro-color-long: lightseagreen;
   --iro-color-short: orange;
+
+  --iro-color-grid1: black;
+  --iro-color-grid2: gray;
+  --iro-color-bg1: #efefef;
+  --iro-color-bg2: #fefefe;
 }
 
- body {
-  colod: red !important;
-}
+/* body {
+  color: red !important;
+} */

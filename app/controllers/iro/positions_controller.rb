@@ -33,6 +33,21 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
+  def roll
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+
+    stock = @position.stock
+
+    @positions = [
+      Iro::Position.new({ stock: stock, begin_inner_price: 5.21, inner_strike: 91, expires_on: '2024-04-05', gain_loss_amount: -1.25 }),
+      Iro::Position.new({ stock: stock, begin_inner_price: 5.77, inner_strike: 90, expires_on: '2024-04-05', gain_loss_amount: -0.7 }),
+      Iro::Position.new({ stock: stock, begin_inner_price: 6.4, inner_strike: 89, expires_on: '2024-04-05', gain_loss_amount: -0.03 }),
+      Iro::Position.new({ stock: stock, begin_inner_price: 6.85, inner_strike: 88, expires_on: '2024-04-05', gain_loss_amount: 0.6 }),
+      Iro::Position.new({ stock: stock, begin_inner_price: 7.07, inner_strike: 87, expires_on: '2024-04-05', gain_loss_amount: 1.22 }),
+    ]
+  end
+
   def update
     @position = Iro::Position.find params[:id]
     authorize! :update, @position

@@ -1,0 +1,146 @@
+
+.purses-gameui {
+
+  .Origin::before {
+    content: "";
+    margin-left: -1em;
+    border: 1em solid transparent;
+    border-top: 1em solid black;
+  }
+  .Origin {
+    position: absolute;
+    top: 0;
+    background: rgba(255,255,0, 0.5);
+    height: 100%;
+    width: 100%;
+
+    .label {
+      width: 300px;
+      top: -1em;
+      left: 1em;
+      z-index: 2;
+    }
+  }
+  .PositionW {
+    top: 0;
+    border: 2px solid black;
+    background: rgba(0,255,255, 0.25);
+    position: absolute;
+    height: 100%;
+  }
+  .reviewing {
+    .PositionW {
+      border-radius: 10px 10px 0 0;
+      height: 90%;
+    }
+  }
+
+  .Position {
+    position: absolute;
+    background: rgba(0,255,255, 0.25);
+    width: 100%;
+    height: 90%;
+
+    left: 0;
+    top: 0;
+
+  }
+
+  .sprite {
+    position: absolute;
+  }
+  .sprite-bottom {
+    bottom: 0;
+  }
+
+  .StockCoordinatesW {
+    // width: 500px;
+
+    background: var(--iro-color-bg2);
+    border: 1px solid red;
+    margin-bottom: 3em;
+
+    position: relative;
+
+    z-index: 1;
+  }
+  .StockCoordinates {
+    border-left: 1px solid var(--iro-color-grid1);
+    border-bottom: 1px solid var(--iro-color-grid1);
+
+    height: 100px;
+
+    margin-left: 50%;
+    margin-bottom: 2em;
+
+
+    position: relative;
+
+    .Breakeven {
+      // background: cyan;
+      border-right: 2px solid lightblue;
+
+      .half-circle {
+        width: 100%;
+        height: 100%; /* as the half of the width */
+        background-color: lightblue;
+        border-top-left-radius: 100%;  /* 100px of height + 10px of border */
+        border-top-right-radius: 100%; /* 100px of height + 10px of border */
+        // border: 10px solid gray;
+        // border-bottom: 0;
+      }
+    }
+
+    .Last {
+      border-left: 2px dotted red;
+    }
+    .label {
+      width: 200px;
+      color: gray;
+    }
+
+    .marker {
+      position: absolute;
+      height: 100%;
+    }
+
+    .Net {
+      position: absolute;
+      // bottom: 3em;
+      // z-index: 3;
+      height: 90%;
+
+
+      // border-bottom: 5px solid red;
+      .label {
+        color: white;
+        text-shadow: 1px 1px black;
+      }
+    }
+    .NetPositive {
+      border: 2px dashed #339966;
+      background: rgba(32,64,96, 0.5);
+    }
+    .NetNegative {
+      background: rgba(255,0,0, 0.75);
+    }
+
+    .grid-mark {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 100px;
+      z-index: -1;
+      border-left: 1px dashed var(--iro-color-grid1);
+
+      .label {
+        position: absolute;
+        bottom: -1em;
+        z-index: 0;
+      }
+    }
+
+
+  }
+
+}

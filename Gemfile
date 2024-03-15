@@ -8,8 +8,6 @@ gem 'exception_notification'
 group :development, :test do
   gem 'byebug'
 
-
-
   gem 'factory_bot_rails'
 
   gem 'irb', '>= 1.2.8'

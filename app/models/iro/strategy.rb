@@ -16,16 +16,17 @@ class Iro::Strategy
 
   has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
 
-  ## multiple strategies per ticker
-  # field :ticker
-  # validates :ticker, presence: true
-  # index({ ticker: 1 })
-  # belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
+  belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
 
+  KIND_COVERED_CALL = 'covered_call'
+  KIND_LONG_DEBIT_CALL_SPREAD = 'long_debit_call_spread'
+  KIND_SHORT_DEBIT_PUT_SPREAD = 'long_debit_call_spread'
   KINDS = [ nil,
-    'covered-call', 'credit-put-spread', 'credit-call-spread',
-    'long-inverted-call-spread',
-    'short-inverted-put-spread',
+    KIND_COVERED_CALL,
+    'long-credit-put-spread',
+    'long-debit-call-spread',
+    'short-credit-call-spread',
+    'short-credit-put-spread',
   ]
   field :kind
 
@@ -39,6 +40,37 @@ class Iro::Strategy
   def self.for_ticker ticker
     where( ticker: ticker )
   end
+
+  def max_gain_covered_call p
+    # return p.begin_inner_price
+    p.begin_inner_price * p.quantity * 100 - 0.66*p.quantity
+  end
+  def max_gain_long_debit_call_spread p
+    100 * ( p.inner_strike - p.outer_strike - p.begin_outer_price + p.begin_inner_price ) * p.quantity - 2*0.66*p.quantity
+  end
+  def max_gain_short_debit_put_spread p
+    100 * ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) * p.quantity - 2*0.66*p.quantity
+  end
+
+  def max_loss_covered_call p
+    return 'inf'
+  end
+  def max_loss_long_debit_call_spread p
+    out = 100 * ( p.outer_strike - p.inner_strike ) * p.quantity
+  end
+  def max_loss_short_debit_put_spread p
+    out = -100 * ( p.outer_strike - p.inner_strike ) * p.quantity
+  end
+
+  def net_amount_covered_call p
+    ( p.begin_inner_price - p.end_inner_price ) * 100 * p.quantity
+  end
+  def net_amount_long_debit_call_spread p
+    outer = p.end_outer_price - p.begin_outer_price
+    inner = p.begin_inner_price - p.end_inner_price
+    out = ( outer + inner ) * 100 * p.quantity
+  end
+  alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
 
   def to_s
     slug

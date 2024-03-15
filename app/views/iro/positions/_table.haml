@@ -50,14 +50,18 @@
             next_delta
             %br
             next_outcome
+
+    -# wtf caching issue?!
+    - positions.map &:id
     %tbody
       - positions.each_with_index do |position, idx|
         - if idx > 0
           - prev_position = positions[idx-1]
-        - if prev_position && position[:expires_on] != prev_position[:expires_on]
+        - if prev_position && position.expires_on != prev_position.expires_on
           %tr
             %td{ colspan: 18 }
-              %hr
+              -# %hr
+              .h-50px
 
         %tr{ class: position.strategy.long_or_short }
           %td.actions
@@ -74,7 +78,7 @@
           %td.status.strategy.w-200px
             = position.status
             %br
-            = position.expires_on.to_datetime.strftime("%b %d") rescue '-'
+            = position.expires_on.to_datetime.strftime("%b %d")
             [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
             %br
             %i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
@@ -108,14 +112,14 @@
               .a= pp_amount position.end_outer_price
               .a= pp_amount position.end_inner_price
           %td.max-gain
-            = pp_amount position.max_gain
+            = number_to_currency position.max_gain, precision: 0
             %br
-            = pp_percent( -1 * position.max_gain / position.max_loss )
+            = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-'
 
           %td.net
-            = pp_amount position.net_amount
+            = pp_amount position.net_amount rescue '@TODO'
             %br
-            = pp_percent position.net_amount / position.max_gain
+            = pp_percent position.net_amount / position.max_gain rescue '@TODO'
           %td.end_delta
             .long-or-short-item
               .a= pp_delta position.end_outer_delta

@@ -1,10 +1,8 @@
 
-class Iro::Position
+class Iro::PositionDebitSpread < Iro::Positin
   include Mongoid::Document
   include Mongoid::Timestamps
   store_in collection: 'iro_positions'
-
-  attr_accessor :gain_loss_amount
 
   STATUS_ACTIVE   = 'active'
   STATUS_PROPOSED = 'proposed'
@@ -23,11 +21,8 @@ class Iro::Position
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
 
-  # field :ticker
-  # validates :ticker, presence: true
-
   field     :outer_strike, type: :float
-  # validates :outer_strike, presence: true
+  validates :outer_strike, presence: true
 
   field     :inner_strike, type: :float
   validates :inner_strike, presence: true
@@ -74,13 +69,19 @@ class Iro::Position
   end
 
   def net_amount # total
-    strategy.send("net_amount_#{strategy.kind}", self)
+    outer = 0 - begin_outer_price + end_outer_price
+    inner = begin_inner_price - end_inner_price
+    out = ( outer + inner ) * 100 * quantity
   end
   def max_gain # total
-    strategy.send("max_gain_#{strategy.kind}", self)
+    100 * ( begin_outer_price - begin_inner_price ) * quantity
   end
-  def max_loss # total?
-    strategy.send("max_loss_#{strategy.kind}", self)
+  def max_loss
+    out = 100 * ( outer_strike - inner_strike ) * quantity
+    if strategy.long_or_short == Iro::Strategy::SHORT
+      out = out * -1
+    end
+    return out
   end
 
 
@@ -247,7 +248,4 @@ class Iro::Position
     return out
   end
 
-  def to_s
-    "Position with strategy: #{strategy}"
-  end
 end

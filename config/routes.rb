@@ -9,9 +9,13 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
-  post 'positions/:id/roll', to: 'positions#roll', as: :roll_position
+  get  'positions/:id/roll', to: 'positions#roll', as: :roll_position
+  post 'positions/:id/roll', to: 'positions#do_roll'
   resources :positions
   resources :profiles
+
+  get 'purses/:id/gameui', to: 'purses#show', as: :gameui_purse, defaults: { template: 'gameui' }
+  get 'purses/:id', to: 'purses#show', as: :purse, defaults: { template: 'show' }
   resources :purses
 
   resources :stocks
