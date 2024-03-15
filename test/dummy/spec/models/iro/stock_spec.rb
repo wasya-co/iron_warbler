@@ -1,5 +1,5 @@
 
-RSpec.describe Iro::Stock, type: :model do
+RSpec.describe Iro::Stock do
 
   before do
     destroy_every( Iro::Stock )
@@ -18,3 +18,4 @@ RSpec.describe Iro::Stock, type: :model do
   end
 
 end
+

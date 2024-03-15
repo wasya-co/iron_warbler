@@ -23,12 +23,23 @@ class Iro::Strategy
   KIND_SHORT_DEBIT_PUT_SPREAD = 'long_debit_call_spread'
   KINDS = [ nil,
     KIND_COVERED_CALL,
-    'long-credit-put-spread',
-    'long-debit-call-spread',
-    'short-credit-call-spread',
-    'short-credit-put-spread',
+    KIND_LONG_DEBIT_CALL_SPREAD,
+    KIND_SHORT_DEBIT_PUT_SPREAD,
   ]
   field :kind
+
+  def kind_short
+    case kind
+    when KIND_COVERED_CALL
+      'cc'
+    when KIND_LONG_DEBIT_CALL_SPREAD
+      'long-spread'
+    when KIND_SHORT_DEBIT_PUT_SPREAD
+      'short-spread'
+    else
+      '@TODO-zez'
+    end
+  end
 
   field :buffer_above_water, type: :float
   field :next_max_inner_delta, type: :float
@@ -43,34 +54,43 @@ class Iro::Strategy
 
   def max_gain_covered_call p
     # return p.begin_inner_price
-    p.begin_inner_price * p.quantity * 100 - 0.66*p.quantity
+    p.begin_inner_price * 100 - 0.66
   end
   def max_gain_long_debit_call_spread p
-    100 * ( p.inner_strike - p.outer_strike - p.begin_outer_price + p.begin_inner_price ) * p.quantity - 2*0.66*p.quantity
+    100 * ( p.inner_strike - p.outer_strike - p.begin_outer_price + p.begin_inner_price ) - 2*0.66
   end
   def max_gain_short_debit_put_spread p
-    100 * ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) * p.quantity - 2*0.66*p.quantity
+    100 * ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) - 2*0.66
   end
 
   def max_loss_covered_call p
     return 'inf'
   end
   def max_loss_long_debit_call_spread p
-    out = 100 * ( p.outer_strike - p.inner_strike ) * p.quantity
+    out = 100 * ( p.outer_strike - p.inner_strike )
   end
   def max_loss_short_debit_put_spread p
-    out = -100 * ( p.outer_strike - p.inner_strike ) * p.quantity
+    out = -100 * ( p.outer_strike - p.inner_strike )
   end
 
   def net_amount_covered_call p
-    ( p.begin_inner_price - p.end_inner_price ) * 100 * p.quantity
+    ( p.begin_inner_price - p.end_inner_price ) * 100
   end
   def net_amount_long_debit_call_spread p
     outer = p.end_outer_price - p.begin_outer_price
     inner = p.begin_inner_price - p.end_inner_price
-    out = ( outer + inner ) * 100 * p.quantity
+    out = ( outer + inner ) * 100
   end
   alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
+
+
+  def net_amount_long_debit_call_spread p
+    outer = p.end_outer_price - p.begin_outer_price
+    inner = p.begin_inner_price - p.end_inner_price
+    out = ( outer + inner ) * 100
+  end
+
+
 
   def to_s
     slug

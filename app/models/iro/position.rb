@@ -37,6 +37,7 @@ class Iro::Position
 
   field :quantity, type: :integer
   validates :quantity, presence: true
+  def q; quantity; end
 
   field :begin_on
   field :begin_outer_price, type: :float
@@ -52,8 +53,9 @@ class Iro::Position
   field :end_inner_price, type: :float
   field :end_inner_delta, type: :float
 
-  field :net_amount
-  field :net_percent
+  def breakeven
+    inner_strike - begin_outer_price + begin_inner_price
+  end
 
   def current_underlying_strike
     Iro::Stock.find_by( ticker: ticker ).last
@@ -73,13 +75,16 @@ class Iro::Position
     print '_'
   end
 
-  def net_amount # total
+  def net_percent
+    net_amount / max_gain
+  end
+  def net_amount # each
     strategy.send("net_amount_#{strategy.kind}", self)
   end
-  def max_gain # total
+  def max_gain # each
     strategy.send("max_gain_#{strategy.kind}", self)
   end
-  def max_loss # total?
+  def max_loss # each
     strategy.send("max_loss_#{strategy.kind}", self)
   end
 
@@ -248,6 +253,11 @@ class Iro::Position
   end
 
   def to_s
-    "Position with strategy: #{strategy}"
+    out = "#{stock} (#{q}) #{expires_on.to_datetime.strftime('%b %d')} #{strategy.kind_short} ["
+    if outer_strike
+      out = out + "$#{outer_strike}->"
+    end
+    out = out + "$#{inner_strike}] "
+    return out
   end
 end

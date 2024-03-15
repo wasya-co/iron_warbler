@@ -16,31 +16,19 @@
         %th.ticker
           .a Stock
         %th.strikes
-          .a Strikes
-        %th
-          .quantity Q
-
-        %th
-          .begin_on begin_on
+          .a outer_strike, inner_strike
         %th.begin_price
-          .a Begin price
+          .a Begin outer price, delta
         %th.max_loss
-          .a Max Loss
+          .a Max Loss, gain
         %th
-          .begin_delta begin_delta
-
-        %th
-          .end_price End Price
-        %th
-          max gain
+          .end_price End Price, delta
         %th
           .net Net Amount (%)
-        %th.end_delta
-          .a end_delta
-        -# %th
-        -#   .end_n_days End n days
-        -# %th
-        -#   .end_on End on
+        %th
+          .breakeven Breakeven
+
+
         %th.should_rollp
           .a should_rollp
         %th.next_position
@@ -55,6 +43,7 @@
     - positions.map &:id
     %tbody
       - positions.each_with_index do |position, idx|
+        - pos = position
         - if idx > 0
           - prev_position = positions[idx-1]
         - if prev_position && position.expires_on != prev_position.expires_on
@@ -87,46 +76,46 @@
 
           %td.ticker
             = position.stock.ticker
+            <b>(#{position.quantity})</b>
             %br
             = pp_amount position.stock.last
           %td.strikes
             .long-or-short-item
               .a= pp_amount position.outer_strike
               .a= pp_amount position.inner_strike
-          %td= position.quantity
 
-          %td.begin_on.mini
-            = position.begin_on rescue nil
           %td.begin_price
             .long-or-short-item
-              .a= pp_amount position.begin_outer_price
-              .a= pp_amount position.begin_inner_price
-          %td.to_open
-            = pp_amount position.max_loss
-          %td
-            .long-or-short-item
-              .a= pp_delta position.begin_outer_delta
-              .a= pp_delta position.begin_inner_delta
+              .a
+                = pp_amount position.begin_outer_price
+                <b>D</b> #{pp_delta position.begin_outer_delta}
+              .a
+                = pp_amount position.begin_inner_price
+                <b>D</b> #{pp_delta position.begin_inner_delta}
+          %td.max_loss.max_gain
+            = pp_amount position.max_loss * pos.q, precision: 0
+            %br
+            = pp_amount position.max_gain * pos.q, precision: 0
+            %br
+            = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
           %td.end_price
             .long-or-short-item
-              .a= pp_amount position.end_outer_price
-              .a= pp_amount position.end_inner_price
-          %td.max-gain
-            = number_to_currency position.max_gain, precision: 0
-            %br
-            = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-'
-
+              .a
+                = pp_amount position.end_outer_price
+                <b>D</b> #{pp_delta position.end_outer_delta}
+              .a
+                = pp_amount position.end_inner_price
+                <b>D</b> #{pp_delta position.end_inner_delta}
           %td.net
-            = pp_amount position.net_amount rescue '@TODO'
-            %br
-            = pp_percent position.net_amount / position.max_gain rescue '@TODO'
-          %td.end_delta
-            .long-or-short-item
-              .a= pp_delta position.end_outer_delta
-              .a= pp_delta position.end_inner_delta
+            .a= pp_amount position.net_amount * pos.q, precision: 0 rescue '@TODO'
+            .a <i>#{pp_percent position.net_amount / position.max_gain rescue '@TODO'}</i>
+          %td.breakeven
+            = pp_amount pos.breakeven rescue '@TODO'
+
+
 
           %td.should_rollp
-            = pp_percent position.should_rollp rescue nil
+            <i> #{pp_percent position.should_rollp rescue '?'}</i>
           %td.next_position.mini
             .a= position.next_symbol
             .a= position.next_delta
