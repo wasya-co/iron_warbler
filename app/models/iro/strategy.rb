@@ -7,8 +7,8 @@ class Iro::Strategy
   field :slug
   validates :slug, presence: true, uniqueness: true
 
-  LONG = 'is-long'
-  SHORT = 'is-short'
+  LONG = 'is_long'
+  SHORT = 'is_short'
   field     :long_or_short, type: :string
   validates :long_or_short, presence: true
 
@@ -57,10 +57,12 @@ class Iro::Strategy
     p.begin_inner_price * 100 - 0.66
   end
   def max_gain_long_debit_call_spread p
-    100 * ( p.inner_strike - p.outer_strike - p.begin_outer_price + p.begin_inner_price ) - 2*0.66
+    ## 100 * disalloed for gameui
+    ( p.inner_strike - p.outer_strike - p.begin_outer_price + p.begin_inner_price ) # - 2*0.66
   end
   def max_gain_short_debit_put_spread p
-    100 * ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) - 2*0.66
+    ## 100 * disalloed for gameui
+    ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) # - 2*0.66
   end
 
   def max_loss_covered_call p

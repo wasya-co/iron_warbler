@@ -4,6 +4,7 @@
 - nearest_strike = stock.last.round
 - u = @unit # pixels per dollar
 
+
 .collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
   [<>]
   .maxwidth= render "/iro/positions/header", pos: pos
@@ -17,20 +18,22 @@
         .label Last: #{pp_amount stock.last}
         .c
 
-        - left  = "#{ (stock.last - position.inner_strike - position.begin_inner_price) * u}px"
-        - width = "#{ position.begin_inner_price * u}px"
+        -## these are different
+        - left  = "#{ ( stock.last - pos.outer_strike ) * u}px"
+        - width = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
         .PositionW{ style: "left: #{left}; width: #{width}; " }
           .Position
-            -# .label
-            -#   width: #{ ( position.begin_inner_price - position.begin_outer_price - position.outer_strike + position.inner_strike ) }
+            .MaxGain{ style: "width: #{pos.max_gain * u}px" }
 
-            - if position.net_amount >= 0
-              .Net.NetPositive{ style: "width: #{ (position.net_amount / 100) * u }px; right: 0" }
+            - if pos.net_amount >= 0
+              .Net.NetPositive{ style: "width: #{ (pos.net_amount / 100) * u }px; right: 0" }
                 .label
                   net
-                  = pp_amount position.net_amount
+                  = pp_amount pos.net_amount
             - else
-              .Net.NetNegative{ style: "width: #{ (-1 * position.net_amount / 100) * u }px; left: 100%" }
+              .Net.NetNegative{ style: "width: #{ (-1 * pos.net_amount / 100) * u }px; left: 100%" }
                 .label
                   net
-                  = pp_amount position.net_amount
+                  = pp_amount pos.net_amount
+.c
+

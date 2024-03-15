@@ -18,8 +18,8 @@ html {
   --iro-color-long: lightseagreen;
   --iro-color-short: orange;
 
-  --iro-color-grid1: black;
-  --iro-color-grid2: gray;
+  --iro-color-grid1: #ccc;
+  --iro-color-grid2: #999;
   --iro-color-bg1: #efefef;
   --iro-color-bg2: #fefefe;
 }

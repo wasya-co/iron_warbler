@@ -1,0 +1,37 @@
+
+- pos   = position
+- stock = pos.stock
+- nearest_strike = stock.last.round
+- u = @unit # pixels per dollar
+
+.collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
+  [<>]
+  .maxwidth= render "/iro/positions/header", pos: pos
+.a
+  = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
+  .StockCoordinatesW
+    .StockCoordinates
+      = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock
+
+      .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
+        .label Last: #{pp_amount stock.last}
+        .c
+
+        - left  = "#{ ( pos.outer_strike - stock.last ) * u}px"
+        - width = "#{ ( pos.inner_strike - pos.outer_strike ) * u}px"
+        .PositionW{ style: "left: #{left}; width: #{width}; " }
+          .Position
+            .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+
+            - if pos.net_amount >= 0
+              .Net.NetPositive{ style: "width: #{ (pos.net_amount / 100) * u }px; right: 0" }
+                .label
+                  net
+                  = pp_amount pos.net_amount
+            - else
+              .Net.NetNegative{ style: "width: #{ (-1 * pos.net_amount / 100) * u }px; left: 100%" }
+                .label
+                  net
+                  = pp_amount pos.net_amount
+.c
+

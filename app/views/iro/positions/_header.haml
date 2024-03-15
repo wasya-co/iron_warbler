@@ -1,8 +1,6 @@
 
-- pos ||= position
-
 .maxwidth
   = pos
   = link_to '[roll]', roll_position_path(pos)
   = link_to '[~]',    edit_position_path(pos)
-  = render '/iro/positions/header_more', pos: pos
+  -# = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos

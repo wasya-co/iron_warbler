@@ -1,0 +1,13 @@
+
+- nearest_strike = stock.last.round
+- u = @unit
+
+.grid-mark.mark0
+  .label= nearest_strike
+- (1...@grid_size).each_with_index do |idx|
+  .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
+    .label
+      = nearest_strike + idx
+  .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
+    .label
+      = nearest_strike - idx

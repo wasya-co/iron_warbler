@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.19)
+    iron_warbler (2.0.7.20)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
@@ -134,7 +134,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bindata (2.4.15)
+    bindata (2.5.0)
     bson (4.15.0)
     builder (3.2.4)
     business_time (0.13.0)
@@ -213,14 +213,15 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
-    json-jwt (1.16.5)
+    json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
       base64
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.7.1)
+    jwt (2.8.1)
+      base64
     kaminari-actionview (1.2.2)
       actionview
       kaminari-core (= 1.2.2)

@@ -8,6 +8,8 @@
 .purses-gameui {
 
   .Origin::before {
+    position: absolute;
+    top: -1em;
     content: "";
     margin-left: -1em;
     border: 1em solid transparent;
@@ -16,14 +18,16 @@
   .Origin {
     position: absolute;
     top: 0;
-    background: rgba(255,255,0, 0.5);
+    // background: rgba(255,255,0, 0.5);
     height: 100%;
     width: 100%;
 
-    .label {
+    > .label {
       width: 300px;
-      top: -1em;
-      left: 1em;
+
+      position: absolute;
+      top: -1.5em;
+      left: 1.2em;
       z-index: 2;
     }
   }
@@ -52,6 +56,15 @@
 
   }
 
+  .MaxGain {
+    position: absolute;
+    right: 0;
+    bottom: -10%;
+    border: 2px solid green;
+    background: rgba(0,255,0, 0.5);
+    height: 10%;
+  }
+
   .sprite {
     position: absolute;
   }
@@ -62,9 +75,9 @@
   .StockCoordinatesW {
     // width: 500px;
 
-    background: var(--iro-color-bg2);
-    border: 1px solid red;
-    margin-bottom: 3em;
+    // background: var(--iro-color-bg2);
+    // border: 1px solid red;
+    margin-bottom: 2em;
 
     position: relative;
 
@@ -74,11 +87,10 @@
     border-left: 1px solid var(--iro-color-grid1);
     border-bottom: 1px solid var(--iro-color-grid1);
 
-    height: 100px;
+    height: 50px;
 
     margin-left: 50%;
-    margin-bottom: 2em;
-
+    margin-bottom: 0em;
 
     position: relative;
 
@@ -116,7 +128,6 @@
       // z-index: 3;
       height: 90%;
 
-
       // border-bottom: 5px solid red;
       .label {
         color: white;
@@ -131,17 +142,45 @@
       background: rgba(255,0,0, 0.75);
     }
 
+    .grid-mark:nth-child(4n + 1) {
+      border: 1px solid red;
+      display: none;
+    }
+    .grid-mark:nth-child(4n) {
+      border: 1px solid red;
+      display: none;
+    }
+    .grid-mark:nth-child(6n + 1) {
+      border: 1px solid red;
+      display: none;
+    }
+    .grid-mark:nth-child(6n) {
+      border: 1px solid red;
+      display: none;
+    }
+    .grid-mark:nth-child(3n + 1) {
+      border: 1px solid red;
+      display: none;
+    }
+    .grid-mark:nth-child(3n) {
+      border: 1px solid red;
+      display: none;
+    }
+
     .grid-mark {
       height: 100%;
       position: absolute;
       top: 0;
       width: 100px;
-      z-index: -1;
+      z-index: -2;
       border-left: 1px dashed var(--iro-color-grid1);
 
       .label {
+        transform: rotate(-30deg);
+        font-size: 0.8em;
+
         position: absolute;
-        bottom: -1em;
+        // bottom: -1em;
         z-index: 0;
       }
     }

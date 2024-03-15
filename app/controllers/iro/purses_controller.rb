@@ -37,6 +37,10 @@ class Iro::PursesController < Iro::ApplicationController
     @positions = @purse.positions.includes( :strategy
       ).order({ expires_on: :desc })
 
+    @unit      = 12  ## pixels per dollar
+    @height    = 100 ## pixels
+    @grid_size = 75  ## dollars to each side of origin
+
     render params[:template]
   end
 
