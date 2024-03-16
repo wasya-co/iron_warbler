@@ -11,7 +11,7 @@
 .a
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
-    .StockCoordinates
+    .StockCoordinates{ style: "height: #{pos.purse.height}px " }
       = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }

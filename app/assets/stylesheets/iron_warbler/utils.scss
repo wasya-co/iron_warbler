@@ -1,9 +1,9 @@
 
 
 
-.long-or-short::before {
-  // content: '[LONG]';
-}
+// .long-or-short::before {
+//   // content: '[LONG]';
+// }
 .long-or-short-item,
 .long-or-short-container .is_long,
 .long-or-short-container .is_short {
@@ -48,6 +48,8 @@
   margin-right: 1em;
 }
 
+/* H */
+
 /* M */
 
 .modal-absolute {
@@ -76,7 +78,4 @@
 
 /* W */
 
-.w-min-50px {
-  min-width: 50px;
-}
 

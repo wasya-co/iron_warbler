@@ -1,7 +1,7 @@
 
-- unit = u = 50 # pixels per dollar
-- grid_size = 100 # dollars to each side of origin
+- u        = @purse.unit # 50 ## pixels per dollar
 - strategy = @position.strategy
+
 .purses-gameui.padded
   = render '/iro/purses/header', purse: @position.purse
 
@@ -23,7 +23,7 @@
       .StockCoordinates
         .grid-mark.mark0
           .label= nearest_strike
-        - (1...grid_size).each_with_index do |idx|
+        - (1...@n_dollars).each_with_index do |idx|
           .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
             .label
               = nearest_strike + idx
@@ -59,7 +59,7 @@
         .StockCoordinates
           .grid-mark.mark0
             .label= nearest_strike
-          - (1...grid_size).each_with_index do |idx|
+          - (1...@n_dollars).each_with_index do |idx|
             .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
               .label
                 = nearest_strike + idx

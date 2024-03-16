@@ -19,8 +19,8 @@
           .a outer_strike, inner_strike
         %th.begin_price
           .a Begin outer price, delta
-        %th.max_loss
-          .a Max Loss, gain
+        %th.max-loss Max Loss
+        %th.max-gain Max Gain
         %th
           .end_price End Price, delta
         %th
@@ -52,11 +52,12 @@
               -# %hr
               .h-50px
 
-        %tr{ class: position.strategy.long_or_short }
+        %tr{ class: [ position.strategy.kind, position.strategy.long_or_short ] }
           %td.actions
             .flex-row
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
               = link_to '[~]', edit_position_path(position)
+              = link_to '[refresh]', refresh_position_path(pos)
               - if position.next_reasons.present? && position.should_rollp && position.should_rollp > 0.5
                 = button_to 'Roll', roll_position_path(position)
             - if position.next_reasons.present?
@@ -81,29 +82,30 @@
             = pp_amount position.stock.last
           %td.strikes
             .long-or-short-item
-              .a= pp_amount position.outer_strike
-              .a= pp_amount position.inner_strike
+              .outer-strike= pp_amount position.outer_strike
+              .inner-strike= pp_amount position.inner_strike
 
           %td.begin_price
             .long-or-short-item
-              .a
+              .begin-outer-price
                 = pp_amount position.begin_outer_price
                 <b>D</b> #{pp_delta position.begin_outer_delta}
-              .a
+              .begin-inner-price
                 = pp_amount position.begin_inner_price
                 <b>D</b> #{pp_delta position.begin_inner_delta}
-          %td.max_loss.max_gain
-            = pp_amount position.max_loss * pos.q, precision: 0
-            %br
-            = pp_amount position.max_gain * pos.q, precision: 0
-            %br
-            = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
+          %td
+            .max-loss= pp_amount position.max_loss * pos.q, precision: 0
+          %td
+            .max-gain= pp_amount position.max_gain * pos.q, precision: 0
+            .max-gainp
+              -# = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
+
           %td.end_price
             .long-or-short-item
-              .a
+              .end-outer-price
                 = pp_amount position.end_outer_price
                 <b>D</b> #{pp_delta position.end_outer_delta}
-              .a
+              .end-inner-price
                 = pp_amount position.end_inner_price
                 <b>D</b> #{pp_delta position.end_inner_delta}
           %td.net

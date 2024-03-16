@@ -37,9 +37,9 @@ class Iro::PursesController < Iro::ApplicationController
     @positions = @purse.positions.includes( :strategy
       ).order({ expires_on: :desc })
 
-    @unit      = 12  ## pixels per dollar
-    @height    = 100 ## pixels
-    @grid_size = 75  ## dollars to each side of origin
+    @unit      = @purse.unit # 12  ## pixels per dollar
+    @height    = @purse.height # 100  ## pixels
+    @n_dollars = 100 ## dollars to each side of origin
 
     render params[:template]
   end
@@ -48,8 +48,10 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :update, @purse
     if @purse.update params[:purse].permit!
-      redirect_to action: :index, notice: 'Purse was successfully updated.'
+      flash[:notice] = 'ok'
+      redirect_to purse_path(@purse)
     else
+      flash_alert @purse
       render :edit
     end
   end

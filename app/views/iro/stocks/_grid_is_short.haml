@@ -1,13 +1,16 @@
 
 - nearest_strike = stock.last.round
-- u = @unit
+- u       = @purse.unit
+- every_n = @purse.mark_every_n_usd
 
 .grid-mark.mark0
-  .label= nearest_strike
-- (1...@grid_size).each_with_index do |idx|
+  .label
+    .labelC= nearest_strike
+- (1...@n_dollars).each_with_index do |idx|
+  - idx = idx * every_n
   .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
     .label
-      = nearest_strike + idx
+      .labelC= nearest_strike + idx
   .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
     .label
-      = nearest_strike - idx
+      .labelC= nearest_strike - idx

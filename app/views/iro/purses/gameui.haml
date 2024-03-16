@@ -1,12 +1,12 @@
 
 = render '/iro/purses/header', purse: @purse
 
-- u = @unit
-.purses-gameuiW{ data: { margin: { left: u*@grid_size } } }
+- u = @purse.unit
+.purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
   .purses-gameui
     .a
 
-      %div{ style: "margin-left: #{u*@grid_size}px; width: 100% " }
+      %div{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
         - @positions.each_with_index do |pos, idx|
           - if idx == 0
             %h4.maxwidth= pos.stock
@@ -15,4 +15,5 @@
             - if pos.stock != prev_.stock
               %hr
               %h4.maxwidth= pos.stock
+          -# = pos.strategy.kind
           = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos

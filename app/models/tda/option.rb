@@ -13,7 +13,7 @@ class Tda::Option
   def self.get_chain params
     opts = { symbol: params[:ticker] } ## use 'GME' as symbol here even though a symbol is eg 'GME_021023P2.5'
     query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
-    # puts! query, 'input opts'
+    puts! query, 'input opts'
 
     path = "/v1/marketdata/chains"
     out = self.get path, { query: query }
@@ -55,7 +55,7 @@ class Tda::Option
   ## 2023-03-18 _vp_ This is what I should be using to check if a position should be rolled.
   ##
   def self.get_quote params
-    ::Tda::Option.get_quotes(params)[0]
+    OpenStruct.new ::Tda::Option.get_quotes(params)[0]
   end
 
   ##
@@ -79,18 +79,18 @@ class Tda::Option
       if params[s]
         opts[s] = params[s]
       else
-        raise Iwa::InputError.new("Invalid input, missing '#{s}'.")
+        raise Iro::InputError.new("Invalid input, missing '#{s}'.")
       end
     end
     if params[:expirationDate]
       opts[:fromDate] = opts[:toDate] = params[:expirationDate]
     else
-      raise Iwa::InputError.new("Invalid input, missing 'date'.")
+      raise Iro::InputError.new("Invalid input, missing 'date'.")
     end
     if params[:ticker]
       opts[:symbol] = params[:ticker].upcase
     else
-      raise Iwa::InputError.new("Invalid input, missing 'ticker'.")
+      raise Iro::InputError.new("Invalid input, missing 'ticker'.")
     end
 
     if params[:strike]
@@ -98,7 +98,7 @@ class Tda::Option
     end
 
     query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
-    # puts! query, 'input opts'
+    puts! query, 'input opts'
 
     path = "/v1/marketdata/chains"
     out = self.get path, { query: query }
@@ -120,7 +120,7 @@ class Tda::Option
       end
     end
 
-    # puts! outs, 'outs'
+    puts! outs, 'outs'
     return outs
   end
 

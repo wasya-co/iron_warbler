@@ -33,6 +33,25 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
+  def refresh
+    @position = pos = Iro::Position.find params[:id]
+    authorize! :refresh, @position
+
+    ## covered call
+    out = Tda::Option.get_quote({
+      contractType: 'CALL',
+      strike: pos.inner_strike,
+      expirationDate: pos.expires_on,
+      ticker: pos.stock.ticker,
+    })
+    puts! out, 'out'
+    @position.update({
+      end_inner_price: ( out.bid + out.ask ) / 2,
+      end_inner_delta: out.delta,
+    })
+    redirect_to request.referrer || purse_path( @position.purse )
+  end
+
   def roll
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position

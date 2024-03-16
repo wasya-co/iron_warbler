@@ -54,7 +54,7 @@ class Iro::Position
   field :end_inner_delta, type: :float
 
   def breakeven
-    inner_strike - begin_outer_price + begin_inner_price
+    strategy.breakeven(self)
   end
 
   def current_underlying_strike

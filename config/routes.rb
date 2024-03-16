@@ -11,6 +11,7 @@ Iro::Engine.routes.draw do
 
   get  'positions/:id/roll', to: 'positions#roll', as: :roll_position
   post 'positions/:id/roll', to: 'positions#do_roll'
+  get  'positions/:id/refresh', to: 'positions#refresh', as: :refresh_position
   resources :positions
   resources :profiles
 

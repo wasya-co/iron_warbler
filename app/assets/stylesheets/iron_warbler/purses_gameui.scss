@@ -53,10 +53,22 @@
 
     left: 0;
     top: 0;
+  }
+  /* only for covered calls */
+  .PositionC {
+    background: rgba(255,153,51, 0.5);
+    position: absolute;
 
+    /* HEREHERE: either left, or right 0, this orange strip flips. */
+    // left: 0;
+    right: 0;
+
+    width: 10000px;
+    height: 100%;
   }
 
-  .MaxGain {
+  .MaxGain,
+  .Breakeven {
     position: absolute;
     right: 0;
     bottom: -10%;
@@ -87,27 +99,10 @@
     border-left: 1px solid var(--iro-color-grid1);
     border-bottom: 1px solid var(--iro-color-grid1);
 
-    height: 50px;
-
     margin-left: 50%;
     margin-bottom: 0em;
 
     position: relative;
-
-    .Breakeven {
-      // background: cyan;
-      border-right: 2px solid lightblue;
-
-      .half-circle {
-        width: 100%;
-        height: 100%; /* as the half of the width */
-        background-color: lightblue;
-        border-top-left-radius: 100%;  /* 100px of height + 10px of border */
-        border-top-right-radius: 100%; /* 100px of height + 10px of border */
-        // border: 10px solid gray;
-        // border-bottom: 0;
-      }
-    }
 
     .Last {
       border-left: 2px dotted red;
@@ -115,6 +110,7 @@
     .label {
       width: 200px;
       color: gray;
+      // border: 1px solid cyan;
     }
 
     .marker {
@@ -142,32 +138,35 @@
       background: rgba(255,0,0, 0.75);
     }
 
-    .grid-mark:nth-child(4n + 1) {
-      border: 1px solid red;
-      display: none;
-    }
-    .grid-mark:nth-child(4n) {
-      border: 1px solid red;
-      display: none;
-    }
-    .grid-mark:nth-child(6n + 1) {
-      border: 1px solid red;
-      display: none;
-    }
-    .grid-mark:nth-child(6n) {
-      border: 1px solid red;
-      display: none;
-    }
-    .grid-mark:nth-child(3n + 1) {
-      border: 1px solid red;
-      display: none;
-    }
-    .grid-mark:nth-child(3n) {
-      border: 1px solid red;
-      display: none;
-    }
+
+    // .grid-mark:nth-child(4n + 1) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
+    // .grid-mark:nth-child(4n) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
+    // .grid-mark:nth-child(6n + 1) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
+    // .grid-mark:nth-child(6n) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
+    // .grid-mark:nth-child(3n + 1) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
+    // .grid-mark:nth-child(3n) {
+    //   border: 1px solid red;
+    //   display: none;
+    // }
 
     .grid-mark {
+      // border: 1px solid red;
+
       height: 100%;
       position: absolute;
       top: 0;
@@ -175,13 +174,37 @@
       z-index: -2;
       border-left: 1px dashed var(--iro-color-grid1);
 
+      .label::before {
+        content: "";
+        position: absolute;
+        left: -1em;
+        width: 1em;
+        height: 1em;
+        border: 1em solid transparent;
+        border-left-color: white;
+      }
       .label {
-        transform: rotate(-30deg);
+
+        // border: 1px solid red;
+
+        transform: rotate(-45deg);
+        transform-origin: center left;
+
         font-size: 0.8em;
 
         position: absolute;
-        // bottom: -1em;
-        z-index: 0;
+        height: 1em;
+        line-height: 1em;
+        bottom: -0em;
+        z-index: -2;
+        width: 0;
+
+        .labelC {
+          background: white;
+          position: absolute;
+          top: 1.5em;
+          left: -1.5em;
+        }
       }
     }
 

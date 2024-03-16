@@ -1,4 +1,9 @@
 
+.positions--header {
+  position: relative;
+  z-index: 1;
+}
+
 .positions--table {
 
   table {
@@ -15,17 +20,12 @@
       border: 1px solid red;
 
       > * {
-        // border: 1px solid yellow;
-        // background: #ddd;
-
         transform-origin: 0 0;
         rotate: -40deg;
 
         padding: .4em 0;
         width: 120px;
-
       }
-
     }
 
     th.begin_price {
@@ -49,6 +49,17 @@
     }
     tr.is_short {
       border-left: 5px solid var(--iro-color-short);
+    }
+
+    tr.covered_call {
+      .begin-outer-price,
+      .end-outer-price,
+      .max-gainp,
+      .max-loss,
+      .outer-strike,
+      ._ {
+        display: none;
+      }
     }
 
   }

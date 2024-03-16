@@ -52,6 +52,14 @@ class Iro::Strategy
     where( ticker: ticker )
   end
 
+  def breakeven p
+    p.inner_strike - p.begin_outer_price + p.begin_inner_price
+  end
+
+  def breakeven p
+    p.inner_strike + p.begin_inner_price
+  end
+
   def max_gain_covered_call p
     # return p.begin_inner_price
     p.begin_inner_price * 100 - 0.66
@@ -66,7 +74,7 @@ class Iro::Strategy
   end
 
   def max_loss_covered_call p
-    return 'inf'
+    return 'infinity'
   end
   def max_loss_long_debit_call_spread p
     out = 100 * ( p.outer_strike - p.inner_strike )

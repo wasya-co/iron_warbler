@@ -2,7 +2,7 @@
 - pos   = position
 - stock = pos.stock
 - nearest_strike = stock.last.round
-- u = @unit # pixels per dollar
+- u = @purse.unit # pixels per dollar
 
 .collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
   [<>]
@@ -10,7 +10,7 @@
 .a
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
-    .StockCoordinates
+    .StockCoordinates{ style: "height: #{pos.purse.height}px " }
       = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }

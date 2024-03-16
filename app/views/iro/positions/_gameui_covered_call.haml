@@ -10,19 +10,21 @@
 .a
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
-    .StockCoordinates
+    .StockCoordinates{ style: "height: #{pos.purse.height}px " }
       = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
         .label Last: #{pp_amount stock.last}
         .c
 
-        - left  = "#{ (stock.last - position.inner_strike - position.begin_inner_price) * u}px"
-        - width = "#{ position.begin_inner_price * u}px"
-        .PositionW{ style: "left: #{left}; width: #{width}; " }
+        -## Good, remove trash, leave as implemented.
+        -# - left  = "#{ (stock.last - position.inner_strike - position.begin_inner_price) * u}px"
+        -# - width = "#{ position.begin_inner_price * u}px"
+        - left  = "#{ (stock.last - pos.inner_strike) * u}px"
+        - width = "0px"
+        .PositionW{ style: "left: #{left} ; width: #{width} " }
           .Position
-            -# .label
-            -#   width: #{ ( position.begin_inner_price - position.begin_outer_price - position.outer_strike + position.inner_strike ) }
+            .PositionC
 
             - if position.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ (position.net_amount / 100) * u }px; right: 0" }
@@ -34,3 +36,9 @@
                 .label
                   net
                   = pp_amount position.net_amount
+
+            .Breakeven{ style: "width: #{ pos.begin_inner_price * u }px" }
+              .label
+                Breakeven:
+                = pos.begin_inner_price
+
