@@ -14,33 +14,10 @@
       = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
 
       - @positions.each_with_index do |pos, idx|
-        - stock = pos.stock
-        - nearest_strike = pos.stock.last.round
-
         .reviewing
           = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
-          .StockCoordinatesW
-            .StockCoordinates{ style: "height: #{@position.purse.height}px " }
-              .grid-mark.mark0
-                .label= nearest_strike
-              - (1...@n_dollars).each_with_index do |idx|
-                .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
-                  .label
-                    = nearest_strike + idx
-                .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
-                  .label
-                    = nearest_strike - idx
+          = render "/iro/positions/roll_#{pos.strategy.kind}", pos: pos
 
-              .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
-                .label
-                  Last:
-                  = pos.stock.last
-                - amnt = pos.gain_loss_amount
-                - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
-                - width = "#{ pos.begin_inner_price * u}px"
-                - left = "#{ (pos.stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
-                .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
-                  .Position
 
 
 

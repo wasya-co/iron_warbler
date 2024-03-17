@@ -1,0 +1,40 @@
+
+- u        = @position.purse.unit # 50 ## pixels per dollar
+- strategy = @position.strategy
+- pos      = @position
+- nearest_strike = pos.stock.last.round
+- stock = pos.stock
+
+= render '/iro/purses/header', purse: pos.purse
+
+.purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
+  .purses-gameui
+    .purses-gameuiC{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
+
+      = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
+
+      - @positions.each_with_index do |pos, idx|
+        - stock = pos.stock
+        - nearest_strike = pos.stock.last.round
+
+        .reviewing
+          = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
+          .StockCoordinatesW
+            .StockCoordinates{ style: "height: #{@position.purse.height}px " }
+
+              = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
+
+              .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
+                .label
+                  Last:
+                  = pos.stock.last
+                - amnt   = pos.gain_loss_amount
+                - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
+                - width  = "#{ pos.begin_inner_price * u}px"
+                - left   = "#{ (pos.stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
+                .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
+                  .Position
+              .c
+
+
+

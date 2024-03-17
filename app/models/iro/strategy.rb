@@ -77,10 +77,10 @@ class Iro::Strategy
     return 'infinity'
   end
   def max_loss_long_debit_call_spread p
-    out = 100 * ( p.outer_strike - p.inner_strike )
+    out = p.outer_strike - p.inner_strike
   end
   def max_loss_short_debit_put_spread p
-    out = -100 * ( p.outer_strike - p.inner_strike )
+    out = p.inner_strike - p.outer_strike
   end
 
   def calc_rollp_covered_call p

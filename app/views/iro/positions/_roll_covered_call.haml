@@ -1,0 +1,25 @@
+
+
+- u              = pos.purse.unit # 50 ## pixels per dollar
+- strategy       = pos.strategy
+- nearest_strike = pos.stock.last.round
+- stock          = pos.stock
+
+
+.StockCoordinatesW
+  .StockCoordinates{ style: "height: #{@position.purse.height}px " }
+
+    = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
+
+    .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
+      .label
+        Last:
+        = pos.stock.last
+      - amnt   = pos.gain_loss_amount
+      -# - byebug
+      - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
+      - width  = "#{ pos.begin_inner_price * u}px"
+      - left   = "#{ (pos.stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
+      .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
+        .Position
+    .c

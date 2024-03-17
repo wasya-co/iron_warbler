@@ -43,79 +43,108 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer || purse_path( @position.purse )
   end
 
-  ## covered calls
   def roll
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
-    prev  = @position
-    purse = @position.purse
 
-    stock = @position.stock
+    @prev  = @position
+    @purse = @position.purse
+    @stock = @position.stock
     @n_dollars = 100
 
     ## holiday schedule
-    next_expires_on = prev.expires_on.to_datetime.next_occurring(:monday).next_occurring(:friday)
-    if !next_expires_on.workday?
-      next_expires_on = Time.previous_business_day( next_expires_on )
+    @next_expires_on = @prev.expires_on.to_datetime.next_occurring(:monday).next_occurring(:friday)
+    if !@next_expires_on.workday?
+      @next_expires_on = Time.previous_business_day( @next_expires_on )
     end
 
     ## dealing with too many strikes in the chain
     while true
-      nn = ( @position.purse.n_next_positions/2 ).ceil
-      puts! nn, 'nn'
-
+      @nn = ( @position.purse.n_next_positions/2 ).ceil
+      puts! @nn, 'nn'
       upper = Tda::Option.get_quote({
         contractType: 'CALL',
-        strike: prev.inner_strike + nn*stock.options_price_increment,
-        expirationDate: next_expires_on,
-        ticker: stock.ticker,
+        strike: @prev.inner_strike + @nn*@stock.options_price_increment,
+        expirationDate: @next_expires_on,
+        ticker: @stock.ticker,
       })
       puts! upper, 'upper'
       if !upper.symbol
         puts! 'too high'
         flash_alert 'too high'
-        purse.n_next_positions = purse.n_next_positions - 1
-        purse.n_next_positions = 1 if purse.n_next_positions < 1
-        purse.save!
+        @purse.n_next_positions = @purse.n_next_positions - 1
+        @purse.n_next_positions = 1 if @purse.n_next_positions < 1
+        @purse.save!
         next
       end
-
       lower = Tda::Option.get_quote({
         contractType: 'CALL',
-        strike: prev.inner_strike - nn*stock.options_price_increment,
-        expirationDate: next_expires_on,
-        ticker: stock.ticker,
+        strike: @prev.inner_strike - @nn*@stock.options_price_increment,
+        expirationDate: @next_expires_on,
+        ticker: @stock.ticker,
       })
       puts! lower, 'lower'
       if !lower.symbol
         puts! 'too low'
         flash_alert 'too low'
-        purse.n_next_positions = purse.n_next_positions - 1
-        purse.n_next_positions = 1 if purse.n_next_positions < 1
-        purse.save!
+        @purse.n_next_positions = @purse.n_next_positions - 1
+        @purse.n_next_positions = 1 if @purse.n_next_positions < 1
+        @purse.save!
         next
-
       end
       break
     end
 
+    self.send("_roll_#{@position.strategy.kind}")
+  end
+
+  def _roll_covered_call
     @positions = []
-    (-nn..nn).each do |idx|
+    (-@nn..@nn).each do |idx|
       next_ = Iro::Position.new({
-        stock: stock,
-        inner_strike: prev.inner_strike - idx*stock.options_price_increment,
-        expires_on: next_expires_on,
+        stock: @stock,
+        inner_strike: @prev.inner_strike - idx*@stock.options_price_increment,
+        expires_on: @next_expires_on,
         purse: @position.purse,
         strategy: @position.strategy,
+        quantity: @position.quantity,
       })
       next_.sync
       next_.begin_inner_price = next_.end_inner_price
       next_.begin_inner_delta = next_.end_inner_delta
-      next_.gain_loss_amount  = next_.begin_inner_price  - prev.end_inner_price
+      # byebug
+      next_.gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
       puts! next_, 'next_'
       puts! next_.gain_loss_amount, 'amount'
       @positions.push next_
     end
+  end
+
+  def _roll_long_debit_call_spread
+    @positions = []
+    (-@nn..@nn).each do |idx|
+      next_ = Iro::Position.new({
+        stock: @stock,
+        inner_strike: @prev.inner_strike - idx*@stock.options_price_increment,
+        outer_strike: @prev.outer_strike - idx*@stock.options_price_increment,
+        expires_on:   @next_expires_on,
+        purse:       @position.purse,
+        strategy:    @position.strategy,
+        quantity:    @position.quantity,
+      })
+      next_.sync
+      next_.begin_inner_price = next_.end_inner_price
+      next_.begin_inner_delta = next_.end_inner_delta
+
+      next_.begin_outer_price = next_.end_outer_price
+      next_.begin_outer_delta = next_.end_outer_delta
+      next_.gain_loss_amount  = @prev.end_outer_price    - @prev.end_inner_price
+      next_.gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
+      puts! next_, 'next_'
+      puts! next_.gain_loss_amount, 'gain_loss_amount'
+      @positions.push next_
+    end
+    @positions = @positions.reverse
   end
 
   def update

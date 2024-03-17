@@ -97,18 +97,44 @@ class Iro::Position
   field :rollp, type: :float
 
 
+  ## covered call
+  # def sync
+  #   puts! [ inner_strike, expires_on, stock.ticker ], 'init sync'
+  #   out = Tda::Option.get_quote({
+  #     contractType: 'CALL',
+  #     strike: inner_strike,
+  #     expirationDate: expires_on,
+  #     ticker: stock.ticker,
+  #   })
+  #   puts! out, 'sync'
+  #   self.end_inner_price = ( out.bid + out.ask ) / 2
+  #   self.end_inner_delta = out.delta
+  # end
+
+  ## long call spread
   def sync
-    puts! [ inner_strike, expires_on, stock.ticker ], 'init sync'
-    ## covered call
-    out = Tda::Option.get_quote({
+    puts! [
+      [ inner_strike, expires_on, stock.ticker ],
+      [ outer_strike, expires_on, stock.ticker ],
+     ], 'init sync inner, outer'
+    inner = Tda::Option.get_quote({
       contractType: 'CALL',
       strike: inner_strike,
       expirationDate: expires_on,
       ticker: stock.ticker,
     })
-    puts! out, 'sync'
-    self.end_inner_price = ( out.bid + out.ask ) / 2 rescue out.last ## @TODO herehere
-    self.end_inner_delta = out.delta
+    outer = Tda::Option.get_quote({
+      contractType: 'CALL',
+      strike: outer_strike,
+      expirationDate: expires_on,
+      ticker: stock.ticker,
+    })
+    puts! [inner, outer], 'sync inner, outer'
+    self.end_outer_price = ( outer.bid + outer.ask ) / 2
+    self.end_outer_delta = outer.delta
+
+    self.end_inner_price = ( inner.bid + inner.ask ) / 2
+    self.end_inner_delta = inner.delta
   end
 
   ##

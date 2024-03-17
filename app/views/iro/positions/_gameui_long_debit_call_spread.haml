@@ -2,7 +2,7 @@
 - pos   = position
 - stock = pos.stock
 - nearest_strike = stock.last.round
-- u = @purse.unit # pixels per dollar
+- u = pos.purse.unit # pixels per dollar
 
 .collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
   [<>]
@@ -11,7 +11,7 @@
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
     .StockCoordinates{ style: "height: #{pos.purse.height}px " }
-      = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock
+      = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
         .label Last: #{pp_amount stock.last}
@@ -22,6 +22,7 @@
         .PositionW{ style: "left: #{left}; width: #{width}; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+            .RollGuide
 
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ (pos.net_amount / 100) * u }px; right: 0" }
