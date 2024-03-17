@@ -68,7 +68,7 @@ class Tda::Option
   ## 2023-02-06 _vp_ :: Continue.
   ##
   def self.get_quotes params
-    puts! params, 'Tda::Option#get_quotes'
+    # puts! params, 'Tda::Option#get_quotes'
     opts = {}
 
     #
@@ -98,7 +98,7 @@ class Tda::Option
     end
 
     query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
-    puts! query, 'input opts'
+    # puts! query, 'input opts'
 
     path = "/v1/marketdata/chains"
     out = self.get path, { query: query }
@@ -120,7 +120,7 @@ class Tda::Option
       end
     end
 
-    puts! outs, 'outs'
+    # puts! outs, 'outs'
     return outs
   end
 

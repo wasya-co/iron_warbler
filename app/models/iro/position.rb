@@ -94,52 +94,46 @@ class Iro::Position
   field :next_symbol
   field :next_mark
   field :next_reasons, type: :array, default: []
-  field :should_rollp, type: :float
+  field :rollp, type: :float
+
+
+  def sync
+    puts! [ inner_strike, expires_on, stock.ticker ], 'init sync'
+    ## covered call
+    out = Tda::Option.get_quote({
+      contractType: 'CALL',
+      strike: inner_strike,
+      expirationDate: expires_on,
+      ticker: stock.ticker,
+    })
+    puts! out, 'sync'
+    self.end_inner_price = ( out.bid + out.ask ) / 2 rescue out.last ## @TODO herehere
+    self.end_inner_delta = out.delta
+  end
 
   ##
   ## decisions
   ##
 
-  def should_roll?
-    puts! 'shold_roll?'
+  def calc_rollp
+    self.next_reasons = []
+    self.next_symbol = nil
+    self.next_delta = nil
 
-    update({
-      next_reasons: [],
-      next_symbol: nil,
-      next_delta: nil,
-    })
+    out = strategy.send( "calc_rollp_#{strategy.kind}", self )
 
-    if must_roll?
-      out = 1.0
-    elsif can_roll?
+    self.rollp = out[0]
+    self.next_reasons.push out[1]
+    save
 
-      if end_delta < strategy.threshold_delta
-        next_reasons.push "delta is lower than threshold"
-        out = 0.91
-      elsif 1 - end_outer_price/begin_outer_price > strategy.threshold_netp
-        next_reasons.push "made enough percent profit (dubious)"
-        out = 0.61
-      else
-        next_reasons.push "neutral"
-        out = 0.33
-      end
-
-    else
-      out = 0.0
-    end
-
-    update({
-      next_delta:   next_position[:delta],
-      next_outcome: next_position[:mark] - end_price,
-      next_symbol:  next_position[:symbol],
-      next_mark:    next_position[:mark],
-      should_rollp: out,
-      # status:       Iro::Position::STATE_PROPOSED,
-    })
-
-    puts! next_reasons, 'next_reasons'
-    puts! out, 'out'
-    return out > 0.5
+    # update({
+    #   next_delta:   next_position[:delta],
+    #   next_outcome: next_position[:mark] - end_price,
+    #   next_symbol:  next_position[:symbol],
+    #   next_mark:    next_position[:mark],
+    #   should_rollp: out,
+    #   # status:       Iro::Position::STATE_PROPOSED,
+    # })
   end
 
 
@@ -147,19 +141,6 @@ class Iro::Position
   def can_roll?
     ## only if less than 7 days left
     ( expires_on.to_date - Time.now.to_date ).to_i < 7
-  end
-
-  ## If I'm near below water
-  ##
-  ## expires_on = cc.expires_on ; strategy = cc.strategy ; strike = cc.strike ; nil
-  def must_roll?
-    if ( current_underlying_strike + strategy.buffer_above_water ) > strike
-      return true
-    end
-    ## @TODO: This one should not happen, I should log appropriately. _vp_ 2023-03-19
-    if ( expires_on.to_date - Time.now.to_date ).to_i < 1
-      return true
-    end
   end
 
   ## strike = cc.strike ; strategy = cc.strategy ; nil

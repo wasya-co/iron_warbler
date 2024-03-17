@@ -17,6 +17,7 @@ class Iro::Stock
   index({ ticker: -1 }, { unique: true })
 
   field :last, type: :float
+  field :options_price_increment, type: :float
 
   has_many :positions,  class_name: 'Iro::Position', inverse_of: :stock
   has_many :strategies, class_name: 'Iro::Strategy', inverse_of: :stock

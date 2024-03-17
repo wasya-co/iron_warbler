@@ -1,83 +1,46 @@
 
-- u        = @purse.unit # 50 ## pixels per dollar
+- u        = @position.purse.unit # 50 ## pixels per dollar
 - strategy = @position.strategy
+- pos      = @position
+- nearest_strike = pos.stock.last.round
+- stock = pos.stock
 
-.purses-gameui.padded
-  = render '/iro/purses/header', purse: @position.purse
+= render '/iro/purses/header', purse: pos.purse
 
-  .a
-    - position = @position
-    - stock = position.stock
-    %h4= stock
+.purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
+  .purses-gameui
+    .purses-gameuiC{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
 
-    .header
-      = position.quantity
-      = stock
-      = position.expires_on.to_datetime.strftime("%b %d")
-      = link_to '[roll]', roll_position_path(position)
-      = link_to '[~]',    edit_position_path(position)
+      = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
 
-    - nearest_strike = stock.last.round
-    .StockCoordinatesW
+      - @positions.each_with_index do |pos, idx|
+        - stock = pos.stock
+        - nearest_strike = pos.stock.last.round
 
-      .StockCoordinates
-        .grid-mark.mark0
-          .label= nearest_strike
-        - (1...@n_dollars).each_with_index do |idx|
-          .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
-            .label
-              = nearest_strike + idx
-          .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
-            .label
-              = nearest_strike - idx
-        .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
-          .label
-            Last:
-            = stock.last
-
-
-          .PositionW{ style: "width: #{ position.begin_inner_price * u}px; left: #{ (stock.last - position.inner_strike - position.begin_inner_price) * u}px" }
-
-            .Position
-              - if position.net_amount >= 0
-                .Net.NetPositive{ style: "width: #{ (position.net_amount / 100) * u }px; right: 0" }
+        .reviewing
+          = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
+          .StockCoordinatesW
+            .StockCoordinates{ style: "height: #{@position.purse.height}px " }
+              .grid-mark.mark0
+                .label= nearest_strike
+              - (1...@n_dollars).each_with_index do |idx|
+                .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
                   .label
-                    net
-                    = pp_amount position.net_amount
-              - else
-                .Net.NetNegative{ style: "width: #{ (-1 * position.net_amount / 100) * u }px; left: 100%" }
+                    = nearest_strike + idx
+                .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
                   .label
-                    net
-                    = pp_amount position.net_amount
-  .c
+                    = nearest_strike - idx
 
-  - @positions.each do |position|
-    .reviewing
-      - stock = position.stock
-      - nearest_strike = stock.last.round
-      .StockCoordinatesW
-        .StockCoordinates
-          .grid-mark.mark0
-            .label= nearest_strike
-          - (1...@n_dollars).each_with_index do |idx|
-            .grid-mark{ class: "mark#{idx}", style: "left: -#{idx * u}px" }
-              .label
-                = nearest_strike + idx
-            .grid-mark{ class: "mark-#{idx}", style: "left: #{idx * u}px" }
-              .label
-                = nearest_strike - idx
-          .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
-            .label
-              Last:
-              = stock.last
-            - amnt = position.gain_loss_amount
-            - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
-            .PositionW{ style: "width: #{ position.begin_inner_price * u}px; left: #{ (stock.last - position.inner_strike - position.begin_inner_price) * u}px; border: #{border}; border-bottom-width: 2px" }
-              .Position
-    .c
+              .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
+                .label
+                  Last:
+                  = pos.stock.last
+                - amnt = pos.gain_loss_amount
+                - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
+                - width = "#{ pos.begin_inner_price * u}px"
+                - left = "#{ (pos.stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
+                .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
+                  .Position
 
 
 
-
-%br
-%br

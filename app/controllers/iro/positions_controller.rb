@@ -37,34 +37,85 @@ class Iro::PositionsController < Iro::ApplicationController
     @position = pos = Iro::Position.find params[:id]
     authorize! :refresh, @position
 
-    ## covered call
-    out = Tda::Option.get_quote({
-      contractType: 'CALL',
-      strike: pos.inner_strike,
-      expirationDate: pos.expires_on,
-      ticker: pos.stock.ticker,
-    })
-    puts! out, 'out'
-    @position.update({
-      end_inner_price: ( out.bid + out.ask ) / 2,
-      end_inner_delta: out.delta,
-    })
+    @position.sync
+    @position.calc_rollp
+
     redirect_to request.referrer || purse_path( @position.purse )
   end
 
+  ## covered calls
   def roll
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
+    prev  = @position
+    purse = @position.purse
 
     stock = @position.stock
+    @n_dollars = 100
 
-    @positions = [
-      Iro::Position.new({ stock: stock, begin_inner_price: 5.21, inner_strike: 91, expires_on: '2024-04-05', gain_loss_amount: -1.25 }),
-      Iro::Position.new({ stock: stock, begin_inner_price: 5.77, inner_strike: 90, expires_on: '2024-04-05', gain_loss_amount: -0.7 }),
-      Iro::Position.new({ stock: stock, begin_inner_price: 6.4, inner_strike: 89, expires_on: '2024-04-05', gain_loss_amount: -0.03 }),
-      Iro::Position.new({ stock: stock, begin_inner_price: 6.85, inner_strike: 88, expires_on: '2024-04-05', gain_loss_amount: 0.6 }),
-      Iro::Position.new({ stock: stock, begin_inner_price: 7.07, inner_strike: 87, expires_on: '2024-04-05', gain_loss_amount: 1.22 }),
-    ]
+    ## holiday schedule
+    next_expires_on = prev.expires_on.to_datetime.next_occurring(:monday).next_occurring(:friday)
+    if !next_expires_on.workday?
+      next_expires_on = Time.previous_business_day( next_expires_on )
+    end
+
+    ## dealing with too many strikes in the chain
+    while true
+      nn = ( @position.purse.n_next_positions/2 ).ceil
+      puts! nn, 'nn'
+
+      upper = Tda::Option.get_quote({
+        contractType: 'CALL',
+        strike: prev.inner_strike + nn*stock.options_price_increment,
+        expirationDate: next_expires_on,
+        ticker: stock.ticker,
+      })
+      puts! upper, 'upper'
+      if !upper.symbol
+        puts! 'too high'
+        flash_alert 'too high'
+        purse.n_next_positions = purse.n_next_positions - 1
+        purse.n_next_positions = 1 if purse.n_next_positions < 1
+        purse.save!
+        next
+      end
+
+      lower = Tda::Option.get_quote({
+        contractType: 'CALL',
+        strike: prev.inner_strike - nn*stock.options_price_increment,
+        expirationDate: next_expires_on,
+        ticker: stock.ticker,
+      })
+      puts! lower, 'lower'
+      if !lower.symbol
+        puts! 'too low'
+        flash_alert 'too low'
+        purse.n_next_positions = purse.n_next_positions - 1
+        purse.n_next_positions = 1 if purse.n_next_positions < 1
+        purse.save!
+        next
+
+      end
+      break
+    end
+
+    @positions = []
+    (-nn..nn).each do |idx|
+      next_ = Iro::Position.new({
+        stock: stock,
+        inner_strike: prev.inner_strike - idx*stock.options_price_increment,
+        expires_on: next_expires_on,
+        purse: @position.purse,
+        strategy: @position.strategy,
+      })
+      next_.sync
+      next_.begin_inner_price = next_.end_inner_price
+      next_.begin_inner_delta = next_.end_inner_delta
+      next_.gain_loss_amount  = next_.begin_inner_price  - prev.end_inner_price
+      puts! next_, 'next_'
+      puts! next_.gain_loss_amount, 'amount'
+      @positions.push next_
+    end
   end
 
   def update

@@ -60,7 +60,7 @@ class Iro::StrategiesController < Iro::ApplicationController
 
   def set_lists
     @strategies_list = Iro::Strategy.list
-    @tickers_list    = Iro::Stock.list
+    @stocks_list    = Iro::Stock.list
   end
 
 end

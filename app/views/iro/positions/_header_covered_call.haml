@@ -1,6 +1,12 @@
 
-%i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{pos.id}" }
+- collapse_key ||= pos.id
+%i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
 .maxwidth
   %ul.m-0.p-0
+    - if !pos.persisted?
+      %li <b>expires_on:</b> #{pos.expires_on}
+      %li <b>inner_strike:</b> #{pp_amount pos.inner_strike}
+      %li <b>gain_loss_amount:</b> #{pp_amount pos.gain_loss_amount}
+
     %li <b>begin_inner_price:</b> #{pp_amount pos.begin_inner_price}
     %li <b>Net:</b> #{pp_amount pos.net_amount} &nbsp; <i>#{pp_percent pos.net_percent}</i>

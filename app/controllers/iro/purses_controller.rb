@@ -35,7 +35,7 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :show, @purse
 
     @positions = @purse.positions.includes( :strategy
-      ).order({ expires_on: :desc })
+      ).order({ expires_on: :desc, stock: :desc })
 
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
@@ -49,7 +49,7 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :update, @purse
     if @purse.update params[:purse].permit!
       flash[:notice] = 'ok'
-      redirect_to purse_path(@purse)
+      redirect_to request.referrer # purse_path(@purse)
     else
       flash_alert @purse
       render :edit

@@ -1,5 +1,5 @@
 
-.application-main-header.main-header
+.application--main-header.main-header{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
   .maxwidth
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderTrading

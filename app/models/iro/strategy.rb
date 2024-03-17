@@ -20,7 +20,7 @@ class Iro::Strategy
 
   KIND_COVERED_CALL = 'covered_call'
   KIND_LONG_DEBIT_CALL_SPREAD = 'long_debit_call_spread'
-  KIND_SHORT_DEBIT_PUT_SPREAD = 'long_debit_call_spread'
+  KIND_SHORT_DEBIT_PUT_SPREAD = 'short_debit_put_spread'
   KINDS = [ nil,
     KIND_COVERED_CALL,
     KIND_LONG_DEBIT_CALL_SPREAD,
@@ -81,6 +81,80 @@ class Iro::Strategy
   end
   def max_loss_short_debit_put_spread p
     out = -100 * ( p.outer_strike - p.inner_strike )
+  end
+
+  def calc_rollp_covered_call p
+
+    if ( p.expires_on.to_date - Time.now.to_date ).to_i < 1
+      return [ 0.99, '0 DTE, must exit' ]
+    end
+
+    if ( stock.last - buffer_above_water ) < p.inner_strike
+      return [ 0.98, "Last #{'%.2f' % stock.last} is " +
+          "#{'%.2f' % [p.inner_strike + buffer_above_water - stock.last]} " +
+          "below #{'%.2f' % [p.inner_strike + buffer_above_water]} water" ]
+    end
+
+    if p.end_inner_delta < threshold_delta
+      return [ 0.61, "Delta #{p.end_inner_delta} is lower than #{threshold_delta} threshold." ]
+    end
+
+    if 1 - p.end_inner_price/p.begin_inner_price > threshold_netp
+      return [ 0.51, "made enough #{'%.0f' % [(1 - p.end_inner_price/p.begin_inner_price )*100]}% profit" ]
+    end
+
+    return [ 0.33, '-' ]
+  end
+
+  ## @TODO
+  def calc_rollp_long_debit_call_spread p
+
+    if ( p.expires_on.to_date - Time.now.to_date ).to_i < 1
+      return [ 0.99, '0 DTE, must exit' ]
+    end
+    if ( p.expires_on.to_date - Time.now.to_date ).to_i < 2
+      return [ 0.99, '1 DTE, must exit' ]
+    end
+
+    if ( stock.last - buffer_above_water ) < p.inner_strike
+      return [ 0.95, "Last #{'%.2f' % stock.last} is " +
+          "#{'%.2f' % [stock.last - p.inner_strike - buffer_above_water]} " +
+          "below #{'%.2f' % [p.inner_strike + buffer_above_water]} water" ]
+    end
+
+    if p.end_inner_delta < threshold_delta
+      return [ 0.79, "Delta #{p.end_inner_delta} is lower than #{threshold_delta} threshold." ]
+    end
+
+    if 1 - p.end_inner_price/p.begin_inner_price > threshold_netp
+      return [ 0.51, "made enough #{'%.0f' % [(1 - p.end_inner_price/p.begin_inner_price )*100]}% profit" ]
+    end
+
+    return [ 0.33, '-' ]
+  end
+
+  ## @TODO
+  def calc_rollp_short_debit_put_spread p
+
+    if ( p.expires_on.to_date - Time.now.to_date ).to_i < 1
+      return [ 0.99, '0 DTE, must exit' ]
+    end
+
+    if ( stock.last - buffer_above_water ) < p.inner_strike
+      return [ 0.98, "Last #{'%.2f' % stock.last} is " +
+          "#{'%.2f' % [stock.last - p.inner_strike - buffer_above_water]} " +
+          "above #{'%.2f' % [p.inner_strike + buffer_above_water]} water" ]
+    end
+
+    if p.end_inner_delta < threshold_delta
+      return [ 0.79, "Delta #{p.end_inner_delta} is lower than #{threshold_delta} threshold." ]
+    end
+
+    if 1 - p.end_inner_price/p.begin_inner_price > threshold_netp
+      return [ 0.51, "made enough #{'%.0f' % [(1 - p.end_inner_price/p.begin_inner_price )*100]}% profit" ]
+    end
+
+    return [ 0.33, '-' ]
   end
 
   def net_amount_covered_call p

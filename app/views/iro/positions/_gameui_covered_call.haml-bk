@@ -1,4 +1,12 @@
 
+
+-## Good, remove trash, leave as implemented.
+-# - left  = "#{ (stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
+-# - width = "#{ pos.begin_inner_price * u}px"
+
+
+
+
 - unit = u = 50 # pixels per dollar
 - grid_size = 100 # dollars to each side of origin
 .purses-gameui.padded

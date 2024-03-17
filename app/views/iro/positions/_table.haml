@@ -6,6 +6,8 @@
     %thead
       %tr
         %th &nbsp;
+        %th.ticker
+          .a Stock
         %th
           .status
             Status
@@ -13,10 +15,9 @@
             Expires on
             %br
             Strategy
-        %th.ticker
-          .a Stock
         %th.strikes
-          .a outer_strike, inner_strike
+          -# .a outer_strike, inner_strike
+          Strike
         %th.begin_price
           .a Begin outer price, delta
         %th.max-loss Max Loss
@@ -52,34 +53,35 @@
               -# %hr
               .h-50px
 
+        -## tr
         %tr{ class: [ position.strategy.kind, position.strategy.long_or_short ] }
+
           %td.actions
             .flex-row
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
               = link_to '[~]', edit_position_path(position)
               = link_to '[refresh]', refresh_position_path(pos)
-              - if position.next_reasons.present? && position.should_rollp && position.should_rollp > 0.5
-                = button_to 'Roll', roll_position_path(position)
-            - if position.next_reasons.present?
-              .collapse-expand{ id: "ce-p-#{position.id}" } [Reasons]
-              = render '/iro/positions/reasons', reasons: position.next_reasons
-
-
-          %td.status.strategy.w-200px
-            = position.status
-            %br
-            = position.expires_on.to_datetime.strftime("%b %d")
-            [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
-            %br
-            %i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
-              #{position.strategy}
-            = render '/iro/strategies/show', strategy: position.strategy
+              - if true # position.next_reasons.present? && position.rollp > 0.5
+                = link_to '[roll]', roll_position_path(pos)
 
           %td.ticker
             = position.stock.ticker
             <b>(#{position.quantity})</b>
             %br
             = pp_amount position.stock.last
+
+          %td.status.strategy.w-200px
+            = position.status
+            %br
+            %b
+              = position.expires_on.to_datetime.strftime("%b %d")
+              [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
+            %br
+            %i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
+              #{position.strategy}
+            = render '/iro/strategies/show', strategy: position.strategy
+
+
           %td.strikes
             .long-or-short-item
               .outer-strike= pp_amount position.outer_strike
@@ -117,8 +119,11 @@
 
 
           %td.should_rollp
-            <i> #{pp_percent position.should_rollp rescue '?'}</i>
-          %td.next_position.mini
+            <i> #{pp_percent position.rollp, precision: 0}</i>
+          %td.next_position
+            - if position.next_reasons.present?
+              %i.fa.fa-expand.collapse-expand{ id: "pos-reasons-#{position.id}" } reasons
+              = render '/iro/positions/reasons', reasons: position.next_reasons
             .a= position.next_symbol
             .a= position.next_delta
             .a

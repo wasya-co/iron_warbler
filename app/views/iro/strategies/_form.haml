@@ -9,6 +9,9 @@
       %label Kind
       = f.select :kind, options_for_select( Iro::Strategy::KINDS, selected: strategy.kind )
     .field
+      %label stock
+      = f.select :stock_id, options_for_select(@stocks_list, selected: strategy.stock_id), class: 'select2'
+    .field
       %label slug
       = f.text_field :slug
     .field
