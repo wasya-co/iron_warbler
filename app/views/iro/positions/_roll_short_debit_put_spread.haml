@@ -1,13 +1,8 @@
 
--##
--## @TODO: this is exact copy of long, without changes
--##
-
-- u        = @position.purse.unit # 50 ## pixels per dollar
-- strategy = @position.strategy
-- pos      = @position
+- u              = pos.purse.unit # 50 ## pixels per dollar
+- strategy       = pos.strategy
 - nearest_strike = pos.stock.last.round
-- stock = pos.stock
+- stock          = pos.stock
 
 
 .StockCoordinatesW
@@ -16,13 +11,12 @@
     = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
 
     .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
-      .label
-        Last:
-        = pos.stock.last
+      .label Last: #{pos.stock.last }
+
       - amnt   = pos.gain_loss_amount
       - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
-      - width  = "#{ pos.begin_inner_price * u}px"
-      - left   = "#{ (pos.stock.last - pos.inner_strike - pos.begin_inner_price) * u}px"
+      - width  = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
+      - left   = "#{ ( pos.stock.last - pos.outer_strike ) * u}px"
       .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
         .Position
     .c

@@ -2,7 +2,7 @@
 - pos   = position
 - stock = pos.stock
 - nearest_strike = stock.last.round
-- u = @unit # pixels per dollar
+- u = pos.purse.unit # pixels per dollar
 
 
 .collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
@@ -24,6 +24,7 @@
         .PositionW{ style: "left: #{left}; width: #{width}; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+            .RollGuide
 
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ (pos.net_amount / 100) * u }px; right: 0" }

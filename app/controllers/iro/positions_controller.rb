@@ -128,9 +128,9 @@ class Iro::PositionsController < Iro::ApplicationController
         inner_strike: @prev.inner_strike - idx*@stock.options_price_increment,
         outer_strike: @prev.outer_strike - idx*@stock.options_price_increment,
         expires_on:   @next_expires_on,
-        purse:       @position.purse,
-        strategy:    @position.strategy,
-        quantity:    @position.quantity,
+        purse:        @position.purse,
+        strategy:     @position.strategy,
+        quantity:     @position.quantity,
       })
       next_.sync
       next_.begin_inner_price = next_.end_inner_price
@@ -138,13 +138,39 @@ class Iro::PositionsController < Iro::ApplicationController
 
       next_.begin_outer_price = next_.end_outer_price
       next_.begin_outer_delta = next_.end_outer_delta
-      next_.gain_loss_amount  = @prev.end_outer_price    - @prev.end_inner_price
+      next_.gain_loss_amount  = @prev.end_outer_price   - @prev.end_inner_price
       next_.gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
       puts! next_, 'next_'
       puts! next_.gain_loss_amount, 'gain_loss_amount'
       @positions.push next_
     end
     @positions = @positions.reverse
+  end
+
+  def _roll_short_debit_put_spread
+    @positions = []
+    (-@nn..@nn).each do |idx|
+      next_ = Iro::Position.new({
+        stock: @stock,
+        inner_strike: @prev.inner_strike - idx*@stock.options_price_increment,
+        outer_strike: @prev.outer_strike - idx*@stock.options_price_increment,
+        expires_on:   @next_expires_on,
+        purse:        @position.purse,
+        strategy:     @position.strategy,
+        quantity:     @position.quantity,
+      })
+      next_.sync
+      next_.begin_inner_price = next_.end_inner_price
+      next_.begin_inner_delta = next_.end_inner_delta
+
+      next_.begin_outer_price = next_.end_outer_price
+      next_.begin_outer_delta = next_.end_outer_delta
+      next_.gain_loss_amount  = @prev.end_outer_price - @prev.end_inner_price
+      next_.gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
+      puts! next_, 'next_'
+      puts! next_.gain_loss_amount, 'gain_loss_amount'
+      @positions.push next_
+    end
   end
 
   def update
