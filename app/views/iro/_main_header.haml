@@ -9,6 +9,7 @@
         %ul{ style: "margin-top: 2em;" }
           %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
+            = link_to '[re]', refresh_stocks_path
           -# %li= link_to 'Options', options_path
           -# %li Max Pain
           %li

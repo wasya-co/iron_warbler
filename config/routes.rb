@@ -9,9 +9,10 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
-  post 'positions/propose', to: 'positions#propose', as: :propose_position
+  get  'positions/duplicate/:id', to: 'positions#new',   as: :duplicate_position
+  post 'positions/propose', to: 'positions#propose',     as: :propose_position
   get  'positions/:id/prepare', to: 'positions#prepare', as: :prepare_to_roll_position, defaults: { template: 'gameui' }
-  post 'positions/:id/roll', to: 'positions#do_roll', as: :roll_position
+  post 'positions/:id/roll', to: 'positions#do_roll',    as: :roll_position
   get  'positions/:id/refresh', to: 'positions#refresh', as: :refresh_position
   resources :positions
   resources :profiles
@@ -20,6 +21,7 @@ Iro::Engine.routes.draw do
   get 'purses/:id', to: 'purses#show', as: :purse, defaults: { template: 'show' }
   resources :purses
 
+  get 'stocks/refresh', to: 'stocks#refresh', as: :refresh_stocks
   resources :stocks
 
   resources :strategies

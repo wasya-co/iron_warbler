@@ -9,7 +9,7 @@
 .StockCoordinatesW
   .StockCoordinates{ style: "height: #{@position.purse.height}px " }
 
-    = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
+    .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
 
     .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
       .label

@@ -35,7 +35,7 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
-    @positions = @purse.positions.includes( :strategy
+    @positions = @purse.positions.where( status: 'active' ).includes( :strategy
       ).order({ expires_on: :desc, stock: :desc })
 
     @unit      = @purse.unit # 12  ## pixels per dollar
@@ -98,16 +98,16 @@ class Iro::PursesController < Iro::ApplicationController
         @end_delta_short   += pos.end_delta * pos.q
       end
     end
-    @max_loss_long *= -1
-    @max_loss_short *= -1
+    # @max_loss_long *= -1
+    # @max_loss_short *= -1
     @begin_delta_short *= -1
     @end_delta_short *= -1
     if @gain_long < 0
-      @loss_long = @gain_long * -1
+      @loss_long = @gain_long
       @gain_long = nil
     end
     if @gain_short < 0
-      @loss_short = @gain_short * -1
+      @loss_short = @gain_short
       @gain_short = nil
     end
   end

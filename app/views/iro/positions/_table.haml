@@ -59,10 +59,12 @@
 
           %td.actions
             = position.status
-            .flex-row
+            .d-flex
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
               = link_to '[~]', edit_position_path(position)
-              = link_to '[refresh]', refresh_position_path(pos)
+              = link_to '[dup]', duplicate_position_path(position)
+            .d-flex
+              = link_to '[re]', refresh_position_path(pos)
               - if true # position.next_reasons.present? && position.rollp > 0.5
                 = link_to '[roll]', prepare_to_roll_position_path(pos)
 

@@ -3,8 +3,20 @@ class Iro::PositionsController < Iro::ApplicationController
   before_action :set_lists
 
   def new
-    @position = Iro::Position.new purse_id: params[:purse_id]
+    @position = Iro::Position.new
     authorize! :new, @posision
+
+    if params[:id]
+      old = Iro::Position.find params[:id]
+      old = old.attributes
+      old.delete :_id
+      puts! old, 'old'
+      @position = Iro::Position.new old
+    end
+    if params[:purse_id]
+      @position.purse_id = params[:purse_id]
+    end
+
   end
 
   def create

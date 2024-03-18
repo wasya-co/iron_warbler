@@ -10,8 +10,8 @@
 .a
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
-    .StockCoordinates{ style: "height: #{pos.purse.height}px " }
-      = render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
+    .StockCoordinates{ style: "height: #{pos.q() *u}px " }
+      .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
         .label Last: #{pp_amount stock.last}

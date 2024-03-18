@@ -54,20 +54,17 @@ class Iro::Strategy
     where( ticker: ticker )
   end
 
-  def breakeven_long_debit_call_spread p
-    p.inner_strike - p.begin_outer_price + p.begin_inner_price
-  end
-  def breakeven_short_debit_put_spread p
-    '@TODO' # p.inner_strike - p.begin_outer_price + p.begin_inner_price
-  end
-
   def breakeven_covered_call p
     p.inner_strike + p.begin_inner_price
   end
+  def breakeven_long_debit_call_spread p
+    p.inner_strike - p.max_gain # p.begin_outer_price + p.begin_inner_price
+  end
+  alias_method :breakeven_short_debit_put_spread, :breakeven_long_debit_call_spread
 
   def max_gain_covered_call p
     # return p.begin_inner_price
-    p.begin_inner_price * 100 - 0.66
+    p.begin_inner_price * 100 - 0.66 # @TODO: is this *100 really?
   end
   def max_gain_long_debit_call_spread p
     ## 100 * disalloed for gameui
@@ -94,7 +91,7 @@ class Iro::Strategy
   def max_loss_long_debit_call_spread p
     out = p.outer_strike - p.inner_strike
   end
-  def max_loss_short_debit_put_spread p
+  def max_loss_short_debit_put_spread p # different
     out = p.inner_strike - p.outer_strike
   end
 

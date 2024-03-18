@@ -24,5 +24,9 @@
       &nbsp;&nbsp;
       -## yes *100
       <b>max loss:</b> #{pp_amount pos.max_loss} :: #{pp_amount pos.max_loss * 100 * pos.q}
+    %li
+      <b>Exposure:</b> #{pp_amount pos.max_loss() *-1*100*pos.q()}
+    %li
+      <b>Breakeven:</b> #{pp_amount pos.max_gain}
     - ## no *100
     %li <b>Net:</b> #{pp_amount pos.net_amount} :: #{pp_amount pos.net_amount * pos.q} &nbsp;&nbsp; <i>#{pp_percent pos.net_percent}</i>

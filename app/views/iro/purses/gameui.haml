@@ -6,7 +6,7 @@
     .col-md-6
       = render '/iro/purses/header', purse: @purse
     .col-md-6
-      = render '/iro/purses/summary', purse: @purse
+      = render '/iro/purses/summary', purse: @purse, collapse_key: 'views-gameui'
 
   .purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
     .purses-gameui

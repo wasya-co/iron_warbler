@@ -16,13 +16,21 @@
   height: 0;
   border-bottom: 1px dotted black;
 
-  .legend {
-    position: absolute;
-    left: calc( 200px + 3em );
-    top: -100px;
+  .legendW {
+    position: relative;
+    // margin-top: 50%;
 
-    background: white;
-    padding: 0.5em;
+    .legend {
+      margin-top: -50%;
+
+      // position: absolute;
+      // top: -200px;
+      // width: 400px;
+      // height: 400px;
+
+      background: white;
+      padding: 0.5em;
+    }
   }
 
 

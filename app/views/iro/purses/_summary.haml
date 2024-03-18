@@ -1,20 +1,20 @@
 
 - u = @purse.unit
 - s_mult = @purse.summary_scale
+- collapse_key ||= nil
 
-
-%i.fa.fa-expand.collapse-expand{ id: 'pursesSummary', style: "margin-left: -1em;" } Summary
+%i.fa.fa-expand.collapse-expand{ id: "pursesSummary_#{collapse_key}", style: "margin-left: -1em;" } Summary
 .PurseSummaryW
 
   .PurseSummary
     -## loss
     .summary-amount
-      .max-gl.long.loss{ style: "height: #{@max_loss_long *s_mult*u}px" }
-      .max-gl.short.loss{ style: "height: #{@max_loss_short *s_mult*u}px" }
+      .max-gl.long.loss{ style: "height: #{@max_loss_long *-1*s_mult*u}px" }
+      .max-gl.short.loss{ style: "height: #{@max_loss_short *-1*s_mult*u}px" }
       - if @loss_long
-        .net-gl.loss.long.loss-long{ style: "height: #{@loss_long *s_mult*u}px" }
+        .net-gl.loss.long.loss-long{ style: "height: #{@loss_long *-1*s_mult*u}px" }
       - if @loss_short
-        .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *s_mult*u}px" }
+        .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *-1*s_mult*u}px" }
 
     .summary-delta
       .begin.long{ style: "height: #{@begin_delta_long *s_mult*10000*u}px" }
@@ -24,41 +24,46 @@
 
     -## gain
     .summary-amount
-      .max-gain-long{ style: "height: #{@max_gain_long *s_mult*u}px" }
-      .max-gain-short{ style: "height: #{@max_gain_short *s_mult*u}px" }
+      .max-gl.long.gain{ style: "height: #{@max_gain_long *s_mult*u}px" }
+      .max-gl.short.gain{ style: "height: #{@max_gain_short *s_mult*u}px" }
       - if @gain_long
-        .net-gl.gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
+        .net-gl.gain.long.gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
       - if @gain_short
-        .net-gl.gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
+        .net-gl.gain.short.gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
 
 
 
 
 
 
+    .legendW
+      .legend
+        %ul
+          %li
+            <b>exposure long:</b> #{pp_amount @max_loss_long *-1}
+            <b>short:</b> #{pp_amount @max_loss_short *-1}
+          %li
+            <b>max loss long:</b> #{pp_amount [ @max_loss_long + @max_gain_short, 0].min }
+            <b>short:</b> #{pp_amount [ @max_loss_short + @max_gain_long, 0].min }
+          %li.gray
+            <b>max gain long:</b> #{pp_amount @max_gain_long}
+            <b>short:</b> #{pp_amount @max_gain_short}
 
-    .legend
-      %ul
-        %li.gray.mini
-          <b>max loss long:</b> #{pp_amount @max_loss_long}
-          <b>short:</b> #{pp_amount @max_loss_short}
-        %li
-          <b>max loss long:</b> #{pp_amount [@max_loss_long - @max_gain_short, 0].max }
-          <b>short:</b> #{pp_amount [@max_loss_short - @max_gain_long, 0].max }
-        %li
-          <b>max gain long:</b> #{pp_amount @max_gain_long}
-          <b>short:</b> #{pp_amount @max_gain_short}
-        %li
-          <b>gain long:</b> #{pp_amount @gain_long}
-          <b>short:</b> #{pp_amount @gain_short}
-        %li
-          <b>loss long:</b> #{pp_amount @loss_long}
-          <b>short:</b> #{pp_amount @loss_short}
-        %li
-          <b>begin delta long:</b> #{pp_delta @begin_delta_long}
-          <b>short:</b> #{pp_delta @begin_delta_short}
-          <b>net:</b> #{pp_delta @begin_delta_long - @begin_delta_short}
-        %li
-          <b>end delta long:</b> #{pp_delta @end_delta_long}
-          <b>short:</b> #{pp_delta @end_delta_short}
-          <b>net:</b> #{pp_delta @end_delta_long - @end_delta_short}
+          %li
+            %hr
+            <b>gain long:</b> #{pp_amount @gain_long}
+            <b>short:</b> #{pp_amount @gain_short}
+          %li
+            <b>loss long:</b> #{pp_amount @loss_long}
+            <b>short:</b> #{pp_amount @loss_short}
+
+          %li
+            %hr
+            <b>begin D long:</b> #{pp_delta @begin_delta_long}
+            <b>short:</b> #{pp_delta @begin_delta_short}
+            <b>net:</b> #{pp_delta @begin_delta_long - @begin_delta_short}
+          %li
+            <b>end D long:</b> #{pp_delta @end_delta_long}
+            <b>short:</b> #{pp_delta @end_delta_short}
+            <b>net:</b> #{pp_delta @end_delta_long - @end_delta_short}
+

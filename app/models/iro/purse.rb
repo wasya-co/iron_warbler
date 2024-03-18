@@ -14,7 +14,7 @@ class Iro::Purse
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
 
   field :unit,             type: :integer, default: 10
-  field :height,           type: :integer, default: 100
+  # field :height,           type: :integer, default: 100
   field :mark_every_n_usd, type: :float, default: 1
   field :n_next_positions, type: :integer, default: 5
   ## with unit 10, sum_scale .001

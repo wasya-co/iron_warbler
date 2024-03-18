@@ -2,22 +2,6 @@
 class Iro::StocksController < Iro::ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @stocks = Iro::Stock.all
-    authorize! :index, Iro::Stock
-  end
-
-  def show
-  end
-
-  def new
-    @stock = Iro::Stock.new
-    authorize! :new, @stock
-  end
-
-  def edit
-  end
-
   def create
     @stock = Iro::Stock.new(stock_params)
     authorize! :create, @stock
@@ -28,6 +12,38 @@ class Iro::StocksController < Iro::ApplicationController
       flash_alert @stock
     end
     redirect_to action: :index
+  end
+
+  def destroy
+    @stock.destroy
+    redirect_to stocks_url, notice: 'Stock was successfully destroyed.'
+  end
+
+  def edit
+  end
+
+  def index
+    @stocks = Iro::Stock.all
+    authorize! :index, Iro::Stock
+  end
+
+  def new
+    @stock = Iro::Stock.new
+    authorize! :new, @stock
+  end
+
+  def refresh
+    authorize! :refresh, Iro::Stock
+    tickers = Iro::Stock.all.map { |s| s.ticker }.join(',')
+    outs = Tda::Stock.get_quotes tickers
+    outs.map do |out|
+      Iro::Stock.where( ticker: out[:symbol] ).update( last: out[:last] )
+    end
+    flash_notice 'ok'
+    redirect_to request.referrer
+  end
+
+  def show
   end
 
   def update
@@ -41,10 +57,6 @@ class Iro::StocksController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
-  def destroy
-    @stock.destroy
-    redirect_to stocks_url, notice: 'Stock was successfully destroyed.'
-  end
 
   ##
   ## private
