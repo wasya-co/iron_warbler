@@ -5,7 +5,9 @@
   %ul
     - @purses.each do |purse|
       %li
+        .d-inline-block= button_to 'x', purse_path(purse), method: :delete, data: { confirm: 'Are you sure?' }
         = link_to '[~]', edit_purse_path(purse)
         = link_to purse.slug, purse_path(purse)
 
-    %li= render 'iro/purses/form', purse: Iro::Purse.new
+  %hr
+  = render 'iro/purses/form', purse: Iro::Purse.new

@@ -21,7 +21,7 @@
         -## these are different
         - left  = "#{ ( stock.last - pos.outer_strike ) * u}px"
         - width = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
-        .PositionW{ style: "left: #{left}; width: #{width}; " }
+        .PositionW{ class: pos.strategy.kind, style: "left: #{left}; width: #{width}; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }
             .RollGuide

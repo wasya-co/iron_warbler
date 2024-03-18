@@ -1,0 +1,52 @@
+
+- u = @purse.unit
+- s_mult = @purse.summary_scale
+
+
+%i.fa.fa-expand.collapse-expand{ id: 'pursesSummary', style: "margin-left: -1em;" } Summary
+.PurseSummaryW
+
+  .PurseSummary
+    .max-loss-long{ style: "height: #{@max_loss_long *s_mult*u}px" }
+    .max-loss-short{ style: "height: #{@max_loss_short *s_mult*u}px" }
+    - if @loss_long
+      .loss-long{ style: "height: #{@loss_long *s_mult*u}px" }
+    - if @loss_short
+      .loss-short{ style: "height: #{@loss_short *s_mult*u}px" }
+
+
+    .max-gain-long{ style: "height: #{@max_gain_long *s_mult*u}px" }
+    .max-gain-short{ style: "height: #{@max_gain_short *s_mult*u}px" }
+    - if @gain_long
+      .gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
+    - if @gain_short
+      .gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
+
+
+    .begin_delta_long{ style: "height: #{@begin_delta_long *s_mult*10000*u}px" }
+    .begin_delta_short{ style: "height: #{@begin_delta_short *s_mult*10000*u}px" }
+
+    .end_delta_long{ style: "height: #{@end_delta_long *s_mult*10000*u}px" }
+    .end_delta_short{ style: "height: #{@end_delta_short *s_mult*10000*u}px" }
+
+
+
+    .legend
+      %pre
+        max loss long: #{@max_loss_long}
+        max loss short: #{@max_loss_short}
+      %pre
+        max gain long: #{@max_gain_long}
+        max gain short: #{@max_gain_short}
+      %pre
+        gain long: #{@gain_long}
+        gain short: #{@gain_short}
+      %pre
+        loss long: #{@loss_long}
+        loss short: #{@loss_short}
+      %pre
+        delta long begin: #{@begin_delta_long}
+        delta long end: #{@begin_delta_short}
+      %pre
+        delta short begin: #{@end_delta_long}
+        delta short end: #{@end_delta_short}

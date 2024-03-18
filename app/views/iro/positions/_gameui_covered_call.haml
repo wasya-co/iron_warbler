@@ -18,7 +18,7 @@
 
         - left  = "#{ (stock.last - pos.inner_strike) * u}px"
         - width = "0px"
-        .PositionW{ style: "left: #{left} ; width: #{width} " }
+        .PositionW{ class: pos.strategy.kind, style: "left: #{left} ; width: #{width} " }
           .Position
             .RollGuide
             .PositionC

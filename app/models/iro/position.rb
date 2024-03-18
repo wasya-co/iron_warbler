@@ -2,9 +2,10 @@
 class Iro::Position
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
   store_in collection: 'iro_positions'
 
-  attr_accessor :gain_loss_amount
+  attr_accessor :next_gain_loss_amount
 
   STATUS_ACTIVE   = 'active'
   STATUS_PROPOSED = 'proposed'
@@ -53,6 +54,13 @@ class Iro::Position
   field :end_inner_price, type: :float
   field :end_inner_delta, type: :float
 
+  def begin_delta
+    strategy.send("begin_delta_#{strategy.kind}", self)
+  end
+  def end_delta
+    strategy.send("end_delta_#{strategy.kind}", self)
+  end
+
   def breakeven
     strategy.breakeven(self)
   end
@@ -87,6 +95,9 @@ class Iro::Position
   def max_loss # each
     strategy.send("max_loss_#{strategy.kind}", self)
   end
+  # def gain_loss_amount
+  #   strategy.send("gain_loss_amount_#{strategy.kind}", self)
+  # end
 
 
   field :next_delta, type: :float

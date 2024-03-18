@@ -9,7 +9,8 @@
         %th.actions &nbsp;
         %th kind
         %th slug
-        %th next_max_inner_delta
+        %th next_inner_delta
+        %th.actions &nbsp;
     %tbody
       - strategies.each do |sss|
         %tr
@@ -17,8 +18,15 @@
             = link_to '[~]', edit_strategy_path(sss)
             = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td= sss.kind
-          %td= sss.slug
-          %td= sss.next_max_inner_delta
+          %td= link_to sss.slug, strategy_path(sss)
+          %td= sss.next_inner_delta
+          %td
+            = form_tag propose_position_path do
+              = hidden_field_tag :strategy_id, sss.id
+              .d-flex
+                %label new position for
+                = select_tag :purse_id, options_for_select(@purses_list), class: 'select2'
+                = submit_tag 'Go'
 
   .h-50px
 

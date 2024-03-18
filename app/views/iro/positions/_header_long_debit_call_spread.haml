@@ -9,9 +9,9 @@
       %li <b>expires_on:</b> #{pos.expires_on}
       %li <b>outer,inner_strike:</b> #{pp_amount pos.outer_strike} -> #{pp_amount pos.inner_strike}
       %li
-        <b>gain_loss_amount:</b> #{pp_amount pos.gain_loss_amount}
-        \:: #{pp_amount pos.gain_loss_amount * 100 * pos.q}
-        &nbsp;&nbsp; <i>#{pp_percent pos.gain_loss_amount/pos.max_loss*-1}</i>
+        <b>next_gain_loss_amount:</b> #{pp_amount pos.next_gain_loss_amount}
+        \:: #{pp_amount pos.next_gain_loss_amount * 100 * pos.q}
+        &nbsp;&nbsp; <i>#{pp_percent pos.next_gain_loss_amount/pos.max_loss*-1}</i>
 
     %li <b>outer,inner_strike:</b> #{pp_amount pos.outer_strike} -> #{pp_amount pos.inner_strike}
     %li

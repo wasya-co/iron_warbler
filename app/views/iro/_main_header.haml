@@ -4,12 +4,7 @@
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderTrading
       Iron Warbler
-
-    -# .header.collapse-expand#IroMenu
-    -#   %h5.title Iron Warbler
-
     %ul
-      %li= link_to 'ROOT', root_path
       %li
         = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
       -# %li= link_to 'Options', options_path

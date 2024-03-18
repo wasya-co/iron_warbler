@@ -1,20 +1,26 @@
 
-%label unit
-= f.number_field :unit
-px/usd
-&nbsp;&nbsp;
+.d-flex.flex-wrap
+  %label unit
+  = f.number_field :unit
+  px/usd
+  &nbsp;&nbsp;
 
-%label height
-= f.number_field :height
-px
-&nbsp;&nbsp;
+  %label height
+  = f.number_field :height
+  px
+  &nbsp;&nbsp;
 
-%label mark_every_n_usd
-= f.number_field :mark_every_n_usd, step: 0.01
-&nbsp;&nbsp;
+  %label mark_every_n_usd
+  = f.number_field :mark_every_n_usd, step: 0.01
+  &nbsp;&nbsp;
 
-%label n_next_positions
-= f.number_field :n_next_positions
-&nbsp;&nbsp;
+  %label n_next_positions
+  = f.number_field :n_next_positions
+  &nbsp;&nbsp;
+
+  %label summary_scale
+  = f.number_field :summary_scale, step: 0.0001, style: "width: 120px"
+
+  &nbsp;&nbsp;
 
 

@@ -15,7 +15,7 @@
       .label
         Last:
         = pos.stock.last
-      - amnt   = pos.gain_loss_amount
+      - amnt   = pos.next_gain_loss_amount
       -# - byebug
       - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
       - width  = "#{ pos.begin_inner_price * u}px"

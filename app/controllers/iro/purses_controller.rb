@@ -41,6 +41,57 @@ class Iro::PursesController < Iro::ApplicationController
     @height    = @purse.height # 100  ## pixels
     @n_dollars = 100 ## dollars to each side of origin
 
+    ##
+    ## summary
+    ##
+    @max_loss_long  = 0
+    @max_loss_short = 0
+
+    @max_gain_long  = 0
+    @max_gain_short = 0
+
+    @gain_long  = 0
+    @gain_short = 0
+
+    @begin_delta_long  = 0
+    @begin_delta_short = 0
+    @end_delta_long  = 0
+    @end_delta_short = 0
+
+    @positions.each do |pos|
+      if Iro::Strategy::LONG == pos.strategy.long_or_short
+        @max_loss_long += pos.max_loss * pos.q * 100
+        @max_gain_long += pos.max_gain * pos.q * 100
+        @gain_long += pos.net_amount * pos.q * 100
+
+        @begin_delta_long += pos.begin_delta * pos.q
+        @end_delta_long += pos.end_delta * pos.q
+      end
+      if Iro::Strategy::SHORT == pos.strategy.long_or_short
+        @max_loss_short += pos.max_loss * pos.q * 100
+        @max_gain_short += pos.max_gain * pos.q * 100
+        @gain_short += pos.net_amount * pos.q * 100
+
+        @begin_delta_short += pos.begin_delta * pos.q
+        @end_delta_short += pos.end_delta * pos.q
+      end
+    end
+    @max_loss_long *= -1
+    @max_loss_short *= -1
+    @begin_delta_short *= -1
+    @end_delta_short *= -1
+    if @gain_long < 0
+      @loss_long = @gain_long * -1
+      @gain_long = nil
+    end
+    if @gain_short < 0
+      @loss_short = @gain_short * -1
+      @gain_short = nil
+    end
+
+
+
+
     render params[:template]
   end
 

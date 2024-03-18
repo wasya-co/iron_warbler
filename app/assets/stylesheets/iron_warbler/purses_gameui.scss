@@ -54,6 +54,11 @@
     left: 0;
     top: 0;
   }
+  .PositionW.short_debit_put_spread .Position {
+    background: rgba(255,153,0, 0.25);
+  }
+
+
   /* only for covered calls */
   .PositionC {
     background: rgba(255,153,51, 0.5);

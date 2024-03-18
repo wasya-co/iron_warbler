@@ -3,6 +3,7 @@
 class Iro::Option
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
   store_in collection: 'iro_options'
 
   # field :ticker

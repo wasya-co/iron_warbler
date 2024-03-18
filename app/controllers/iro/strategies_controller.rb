@@ -32,6 +32,7 @@ class Iro::StrategiesController < Iro::ApplicationController
   def index
     authorize! :index, Iro::Strategy
     @strategies = Iro::Strategy.all
+
     # render '_table'
   end
 
@@ -39,6 +40,13 @@ class Iro::StrategiesController < Iro::ApplicationController
     @strategy = Iro::Strategy.new
     authorize! :new, @posision
   end
+
+  def show
+    @strategy = Iro::Strategy.find params[:id]
+    authorize! :show, @strategy
+  end
+
+
 
   def update
     @strategy = Iro::Strategy.find params[:id]
@@ -59,6 +67,7 @@ class Iro::StrategiesController < Iro::ApplicationController
   private
 
   def set_lists
+    @purses_list = Iro::Purse.list
     @strategies_list = Iro::Strategy.list
     @stocks_list    = Iro::Stock.list
   end

@@ -1,0 +1,123 @@
+
+.PurseSummaryW {
+  position: relative;
+  background: rgba(255,255,255, 0.75);
+  height: 400px;
+  width: 100%;
+  z-index: 5;
+}
+.PurseSummary {
+  position: absolute;
+  top: 200px;
+
+  width: 100%;
+  height: 0;
+  border-bottom: 1px dotted black;
+
+  .max-loss-long {
+    border: 1px solid red;
+    background: rgba(255,0,0, 0.5);
+
+    width: 100px;
+    position: absolute;
+  }
+  .max-loss-short {
+    border: 1px solid orange;
+    background: rgba(255,153,0, 0.5);
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+  }
+  .loss-long {
+    border: 1px solid red;
+    background: rgba(0,0,0, 0.5);
+
+    width: 100px;
+    position: absolute;
+    left: 0;
+  }
+  .loss-short {
+    border: 1px solid orange;
+    background: rgba(0,0,0, 0.5);
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .max-gain-long {
+    border: 1px solid red;
+    background: rgba(255,0,0, 0.5);
+
+    width: 100px;
+    position: absolute;
+    left: calc( 100px + 2em );
+  }
+  .max-gain-short {
+    border: 1px solid orange;
+    background: rgba(255,153,0, 0.5);
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    left: calc( 100px + 2em );
+  }
+  .gain-long {
+    border: 1px solid red;
+    background: rgba(0,0,0, 0.5);
+
+    width: 100px;
+    position: absolute;
+    left: calc( 100px + 2em );
+  }
+  .gain-short {
+    border: 1px solid orange;
+    background: rgba(0,0,0, 0.5);
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    left: calc( 100px + 2em );
+  }
+
+  .begin_delta_long {
+    position: absolute;
+    left: 100px;
+    width: 1em;
+    top: 0;
+    background: black;
+    border: 1px dotted yellow;
+  }
+  .begin_delta_short {
+    position: absolute;
+    left: 100px;
+    width: 1em;
+    bottom: 0;
+    background: black;
+    border: 1px dotted yellow;
+  }
+  .end_delta_long {
+    position: absolute;
+    left: 100px;
+    width: 0.5em;
+    top: 0;
+    background: red;
+    border: 1px dotted yellow;
+  }
+  .end_delta_short {
+    position: absolute;
+    left: 100px;
+    width: 0.5em;
+    bottom: 0;
+    background: red;
+    border: 1px dotted yellow;
+  }
+
+  .legend {
+    position: absolute;
+    left: calc( 200px + 3em );
+    top: -100px;
+
+    background: white;
+    padding: 0.5em;
+  }
+
+}

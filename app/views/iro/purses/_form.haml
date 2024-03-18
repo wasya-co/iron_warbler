@@ -2,9 +2,15 @@
 .iro-purses--form
   = form_for purse do |f|
     .flex-row
+
       .field
         %label Slug
         = f.text_field :slug
+
+      .field
+        %label available amount
+        = f.number_field :available_amount
+
     = render '/iro/purses/form_extra_fields', f: f
     .actions
       = f.submit

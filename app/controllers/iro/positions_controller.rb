@@ -33,6 +33,61 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
+  def propose
+    @strategy = Iro::Strategy.find params[:strategy_id]
+    authorize! :show, @strategy
+
+    @purse = Iro::Purse.find params[:purse_id]
+
+    ## short debit put spread
+    outs = Tda::Option.get_quotes({
+      contractType:   'PUT',
+      expirationDate: '2024-03-28',
+      ticker:         @strategy.stock.ticker,
+    })
+    outs = outs.select do |out|
+      out[:bidSize]+out[:askSize] > 0
+    end
+    outs = outs.select do |out|
+      out[:strikePrice] > @strategy.buffer_above_water + @strategy.stock.last
+    end
+    outs = outs.select do |out|
+      out[:strikePrice] > @strategy.next_inner_strike
+    end
+    outs = outs.select do |out|
+      out[:delta] < @strategy.next_inner_delta
+    end
+
+    inner = outs[0]
+    outs = outs.select do |out|
+      out[:strikePrice] >= inner[:strikePrice] + @strategy.spread_amount
+    end
+    outer = outs[0]
+
+    if inner && outer
+      next_position = Iro::Position.new({
+        status: 'proposed',
+        stock: @strategy.stock,
+        inner_strike: inner[:strikePrice],
+        outer_strike: outer[:strikePrice],
+        begin_outer_price: outer[:last],
+        begin_outer_delta: outer[:delta],
+        begin_inner_price: inner[:last],
+        begin_inner_delta: inner[:delta],
+        begin_on: Time.now.to_date,
+        expires_on: '2024-03-28',
+        purse: @purse,
+        strategy: @strategy,
+        quantity: 1,
+      })
+      next_position.sync
+      next_position.save
+    else
+      flash_alert 'cannot propose a new one'
+    end
+    redirect_to request.referrer
+  end
+
   def refresh
     @position = pos = Iro::Position.find params[:id]
     authorize! :refresh, @position
@@ -61,14 +116,12 @@ class Iro::PositionsController < Iro::ApplicationController
     ## dealing with too many strikes in the chain
     while true
       @nn = ( @position.purse.n_next_positions/2 ).ceil
-      puts! @nn, 'nn'
       upper = Tda::Option.get_quote({
         contractType: 'CALL',
         strike: @prev.inner_strike + @nn*@stock.options_price_increment,
         expirationDate: @next_expires_on,
         ticker: @stock.ticker,
       })
-      puts! upper, 'upper'
       if !upper.symbol
         puts! 'too high'
         flash_alert 'too high'
@@ -83,7 +136,6 @@ class Iro::PositionsController < Iro::ApplicationController
         expirationDate: @next_expires_on,
         ticker: @stock.ticker,
       })
-      puts! lower, 'lower'
       if !lower.symbol
         puts! 'too low'
         flash_alert 'too low'
@@ -112,10 +164,9 @@ class Iro::PositionsController < Iro::ApplicationController
       next_.sync
       next_.begin_inner_price = next_.end_inner_price
       next_.begin_inner_delta = next_.end_inner_delta
-      # byebug
-      next_.gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
+      next_.next_gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
       puts! next_, 'next_'
-      puts! next_.gain_loss_amount, 'amount'
+      puts! next_.next_gain_loss_amount, 'amount'
       @positions.push next_
     end
   end
@@ -138,10 +189,10 @@ class Iro::PositionsController < Iro::ApplicationController
 
       next_.begin_outer_price = next_.end_outer_price
       next_.begin_outer_delta = next_.end_outer_delta
-      next_.gain_loss_amount  = @prev.end_outer_price   - @prev.end_inner_price
-      next_.gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
+      next_.next_gain_loss_amount  = @prev.end_outer_price   - @prev.end_inner_price
+      next_.next_gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
       puts! next_, 'next_'
-      puts! next_.gain_loss_amount, 'gain_loss_amount'
+      puts! next_.next_gain_loss_amount, 'next_gain_loss_amount'
       @positions.push next_
     end
     @positions = @positions.reverse
@@ -165,10 +216,10 @@ class Iro::PositionsController < Iro::ApplicationController
 
       next_.begin_outer_price = next_.end_outer_price
       next_.begin_outer_delta = next_.end_outer_delta
-      next_.gain_loss_amount  = @prev.end_outer_price - @prev.end_inner_price
-      next_.gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
+      next_.next_gain_loss_amount  = @prev.end_outer_price - @prev.end_inner_price
+      next_.next_gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
       puts! next_, 'next_'
-      puts! next_.gain_loss_amount, 'gain_loss_amount'
+      puts! next_.next_gain_loss_amount, 'next_gain_loss_amount'
       @positions.push next_
     end
   end

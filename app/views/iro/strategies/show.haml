@@ -1,0 +1,14 @@
+
+.strategies-show.maxwidth
+  .header
+    %h5.title Strategy #{@strategy}
+    %ul
+      -# %li Purse #{@strategy.purses}
+      -# %li= link_to 'Next position', strategy_next_position_path(@strategy)
+
+  .row
+    .col-md-6
+      = render '/iro/strategies/form', strategy: @strategy
+    .col-md-6
+      %h5 Next Position:
+

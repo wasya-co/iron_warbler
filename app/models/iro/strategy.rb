@@ -2,6 +2,7 @@
 class Iro::Strategy
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
   store_in collection: 'iro_strategies'
 
   field :slug
@@ -42,11 +43,12 @@ class Iro::Strategy
   end
 
   field :buffer_above_water, type: :float
-  field :next_max_inner_delta, type: :float
-  field :next_max_outer_delta, type: :float
-  field :next_min_strike, type: :float
+  # field :next_max_inner_delta, type: :float
+  field :next_inner_delta, type: :float
+  field :next_inner_strike, type: :float
   field :threshold_delta, type: :float
   field :threshold_netp, type: :float
+  field :spread_amount, type: :float # e.g. $20 for a $2000 NVDA spread
 
   def self.for_ticker ticker
     where( ticker: ticker )
@@ -73,6 +75,16 @@ class Iro::Strategy
     ( p.outer_strike - p.inner_strike - p.begin_outer_price + p.begin_inner_price ) # - 2*0.66
   end
 
+  def net_amount_covered_call p
+    ( p.begin_inner_price - p.end_inner_price )
+  end
+  def net_amount_long_debit_call_spread p
+    outer = p.end_outer_price - p.begin_outer_price
+    inner = p.begin_inner_price - p.end_inner_price
+    out = ( outer + inner )
+  end
+  alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
+
   def max_loss_covered_call p
     return 'infinity'
   end
@@ -82,6 +94,26 @@ class Iro::Strategy
   def max_loss_short_debit_put_spread p
     out = p.inner_strike - p.outer_strike
   end
+
+  def begin_delta_covered_call p
+  end
+  def begin_delta_long_debit_call_spread p
+    p.begin_outer_delta - p.begin_inner_delta
+  end
+  alias_method :begin_delta_short_debit_put_spread, :begin_delta_long_debit_call_spread
+
+  def end_delta_covered_call p
+  end
+  def end_delta_long_debit_call_spread p
+    p.end_outer_delta - p.end_inner_delta
+  end
+  alias_method :end_delta_short_debit_put_spread, :end_delta_long_debit_call_spread
+
+
+
+  ##
+  ## decisions
+  ##
 
   def calc_rollp_covered_call p
 
@@ -157,22 +189,6 @@ class Iro::Strategy
     return [ 0.33, '-' ]
   end
 
-  def net_amount_covered_call p
-    ( p.begin_inner_price - p.end_inner_price ) * 100
-  end
-  def net_amount_long_debit_call_spread p
-    outer = p.end_outer_price - p.begin_outer_price
-    inner = p.begin_inner_price - p.end_inner_price
-    out = ( outer + inner ) * 100
-  end
-  alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
-
-
-  def net_amount_long_debit_call_spread p
-    outer = p.end_outer_price - p.begin_outer_price
-    inner = p.begin_inner_price - p.end_inner_price
-    out = ( outer + inner ) * 100
-  end
 
 
 

@@ -96,9 +96,9 @@
                 = pp_amount position.begin_inner_price
                 <b>D</b> #{pp_delta position.begin_inner_delta}
           %td
-            .max-loss= pp_amount position.max_loss * pos.q, precision: 0
+            .max-loss= pp_amount position.max_loss * pos.q * 100, precision: 0
           %td
-            .max-gain= pp_amount position.max_gain * pos.q, precision: 0
+            .max-gain= pp_amount position.max_gain * pos.q * 100, precision: 0
             .max-gainp
               -# = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
 
@@ -111,7 +111,7 @@
                 = pp_amount position.end_inner_price
                 <b>D</b> #{pp_delta position.end_inner_delta}
           %td.net
-            .a= pp_amount position.net_amount * pos.q, precision: 0 rescue '@TODO'
+            .a= pp_amount position.net_amount * pos.q * 100, precision: 0 rescue '@TODO'
             .a <i>#{pp_percent position.net_amount / position.max_gain rescue '@TODO'}</i>
           %td.breakeven
             = pp_amount pos.breakeven rescue '@TODO'
