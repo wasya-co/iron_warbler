@@ -1,3 +1,5 @@
+include Math
+require 'business_time'
 
 class Iro::Stock
   include Mongoid::Document
@@ -20,9 +22,12 @@ class Iro::Stock
   field :last, type: :float
   field :options_price_increment, type: :float
 
+  field :stdev, type: :float
+
   has_many :positions,  class_name: 'Iro::Position', inverse_of: :stock
   has_many :strategies, class_name: 'Iro::Strategy', inverse_of: :stock
   has_many :purses,     class_name: 'Iro::Purse',    inverse_of: :stock
+  has_many :options,    class_name: 'Iro::Option',   inverse_of: :stock
 
   def to_s
     ticker
@@ -33,4 +38,76 @@ class Iro::Stock
   def self.tickers_list
     [[nil,nil]] + all.map { |sss| [ sss.ticker, sss.ticker ] }
   end
+
+=begin
+  stock = Iro::Stock.find_by( ticker: 'NVDA' )
+
+  duration = 1.month
+  stock.volatility_from_mo
+
+  duration = 1.year
+  stock.volatility_from_yr
+
+=end
+  def volatility duration:
+    stock = self
+    begin_on = Time.now - duration - 1.day
+    points = Iro::Datapoint.where( kind: 'STOCK', symbol: stock.ticker,
+      :date.gte => begin_on,
+    ).order_by( date: :asc )
+
+    puts! [points.first.date, points.last.date], "from,to"
+
+    points_p = []
+    points.each_with_index do |p, idx|
+      next if idx == 0
+      prev = points[idx-1]
+
+      out = p.value / prev.value - 1
+      points_p.push out
+    end
+    n = points_p.length
+
+    avg = points_p.reduce(&:+) / n
+    _sum_of_sq = []
+    points_p.map do |p|
+      _sum_of_sq.push( ( p - avg )*( p - avg ) )
+    end
+    sum_of_sq = _sum_of_sq.reduce( &:+ ) / n
+
+    # n_periods = begin_on.to_date.business_days_until( Date.today )
+    out = Math.sqrt( sum_of_sq )*sqrt( n )
+    adjustment = 2.0
+    out = out * adjustment
+    puts! out, 'volatility (adjusted)'
+    return out
+  end
+
+  def volatility_from_mo
+    volatility( duration: 1.month )
+  end
+  def volatility_from_yr
+    volatility( duration: 1.year )
+  end
+  def stdev recompute: nil
+    if !self[:stdev] || recompute
+      out = volatility_from_yr
+      self[:stdev] = out
+      save( validate: false )
+      return out
+    else
+      self[:stdev]
+    end
+  end
+
+  ## stdev
+  ## From: https://stackoverflow.com/questions/19484891/how-do-i-find-the-standard-deviation-in-ruby
+  # contents = [1,2,3,4,5,6,7,8,9]
+  # n = contents.size             # => 9
+  # contents.map!(&:to_f)         # => [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+  # mean = contents.reduce(&:+)/n # => 5.0
+  # sum_sqr = contents.map {|x| x * x}.reduce(&:+) # => 285.0
+  # std_dev = Math.sqrt((sum_sqr - n * mean * mean)/(n-1)) # => 2.7386127875258306
+
+
 end

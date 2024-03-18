@@ -138,15 +138,15 @@ class Iro::Datapoint
       flag = create({
         kind:    'STOCK',
         symbol:   symbol,
-        date:     row['date'],
-        quote_at: row['date'],
+        date:     row['Date'],
+        quote_at: row['Date'],
 
-        volume: row['volume'],
+        volume: row['Volume'],
 
-        open:  row['open'],
-        high:  row['high'],
-        low:   row['low'],
-        value: row['close'],
+        open:  row['Open'],
+        high:  row['High'],
+        low:   row['Low'],
+        value: row['Close'],
       })
       print '.' if flag.persisted?
     end

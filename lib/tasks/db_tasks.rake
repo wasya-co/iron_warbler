@@ -1,7 +1,7 @@
 
 namespace :db do
 
-  ## date, volume, open, high, low, close
+  ## Date, Volume, Open, High, Low, Close
   desc 'import_stock symbol=GME path=./data/GME-test.csv'
   task import_stock: :environment do
     Iro::Datapoint.import_stock( symbol: ENV['symbol'], path: ENV['path'] )

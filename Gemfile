@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem 'exception_notification'
+gem 'rb-gsl'
 
 group :development, :test do
   gem 'byebug'
