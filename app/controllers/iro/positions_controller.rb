@@ -74,7 +74,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
     inner = outs[0]
     outs = outs.select do |out|
-      out[:strikePrice] >= inner[:strikePrice] + @strategy.spread_amount
+      out[:strikePrice] >= inner[:strikePrice] + @strategy.next_spread_amount
     end
     outer = outs[0]
 

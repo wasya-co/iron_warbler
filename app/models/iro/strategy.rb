@@ -43,12 +43,15 @@ class Iro::Strategy
   end
 
   field :buffer_above_water, type: :float
-  # field :next_max_inner_delta, type: :float
-  field :next_inner_delta, type: :float
-  field :next_inner_strike, type: :float
   field :threshold_delta, type: :float
   field :threshold_netp, type: :float
-  field :spread_amount, type: :float # e.g. $20 for a $2000 NVDA spread
+
+  field :next_inner_delta, type: :float
+  field :next_outer_delta, type: :float
+  field :next_inner_strike, type: :float
+  field :next_outer_strike, type: :float
+  field :next_spread_amount, type: :float # e.g. $20 for a $2000 NVDA spread
+
 
   def self.for_ticker ticker
     where( ticker: ticker )
