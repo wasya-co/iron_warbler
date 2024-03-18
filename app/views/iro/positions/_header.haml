@@ -1,6 +1,6 @@
 
 .positions--header.maxwidth
   = pos
-  = link_to '[roll]', roll_position_path(pos) if pos.persisted?
+  = link_to '[roll]', prepare_to_roll_position_path(pos) if pos.persisted?
   = link_to '[~]',    edit_position_path(pos) if pos.persisted?
   -# = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos

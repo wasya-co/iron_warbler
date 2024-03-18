@@ -7,46 +7,58 @@
 .PurseSummaryW
 
   .PurseSummary
-    .max-loss-long{ style: "height: #{@max_loss_long *s_mult*u}px" }
-    .max-loss-short{ style: "height: #{@max_loss_short *s_mult*u}px" }
-    - if @loss_long
-      .loss-long{ style: "height: #{@loss_long *s_mult*u}px" }
-    - if @loss_short
-      .loss-short{ style: "height: #{@loss_short *s_mult*u}px" }
+    -## loss
+    .summary-amount
+      .max-gl.long.loss{ style: "height: #{@max_loss_long *s_mult*u}px" }
+      .max-gl.short.loss{ style: "height: #{@max_loss_short *s_mult*u}px" }
+      - if @loss_long
+        .net-gl.loss.long.loss-long{ style: "height: #{@loss_long *s_mult*u}px" }
+      - if @loss_short
+        .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *s_mult*u}px" }
+
+    .summary-delta
+      .begin.long{ style: "height: #{@begin_delta_long *s_mult*10000*u}px" }
+      .begin.short{ style: "height: #{@begin_delta_short *s_mult*10000*u}px" }
+      .end.long{ style: "height: #{@end_delta_long *s_mult*10000*u}px" }
+      .end.short{ style: "height: #{@end_delta_short *s_mult*10000*u}px" }
+
+    -## gain
+    .summary-amount
+      .max-gain-long{ style: "height: #{@max_gain_long *s_mult*u}px" }
+      .max-gain-short{ style: "height: #{@max_gain_short *s_mult*u}px" }
+      - if @gain_long
+        .net-gl.gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
+      - if @gain_short
+        .net-gl.gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
 
 
-    .max-gain-long{ style: "height: #{@max_gain_long *s_mult*u}px" }
-    .max-gain-short{ style: "height: #{@max_gain_short *s_mult*u}px" }
-    - if @gain_long
-      .gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
-    - if @gain_short
-      .gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
 
 
-    .begin_delta_long{ style: "height: #{@begin_delta_long *s_mult*10000*u}px" }
-    .begin_delta_short{ style: "height: #{@begin_delta_short *s_mult*10000*u}px" }
-
-    .end_delta_long{ style: "height: #{@end_delta_long *s_mult*10000*u}px" }
-    .end_delta_short{ style: "height: #{@end_delta_short *s_mult*10000*u}px" }
 
 
 
     .legend
-      %pre
-        max loss long: #{@max_loss_long}
-        max loss short: #{@max_loss_short}
-      %pre
-        max gain long: #{@max_gain_long}
-        max gain short: #{@max_gain_short}
-      %pre
-        gain long: #{@gain_long}
-        gain short: #{@gain_short}
-      %pre
-        loss long: #{@loss_long}
-        loss short: #{@loss_short}
-      %pre
-        delta long begin: #{@begin_delta_long}
-        delta long end: #{@begin_delta_short}
-      %pre
-        delta short begin: #{@end_delta_long}
-        delta short end: #{@end_delta_short}
+      %ul
+        %li.gray.mini
+          <b>max loss long:</b> #{pp_amount @max_loss_long}
+          <b>short:</b> #{pp_amount @max_loss_short}
+        %li
+          <b>max loss long:</b> #{pp_amount [@max_loss_long - @max_gain_short, 0].max }
+          <b>short:</b> #{pp_amount [@max_loss_short - @max_gain_long, 0].max }
+        %li
+          <b>max gain long:</b> #{pp_amount @max_gain_long}
+          <b>short:</b> #{pp_amount @max_gain_short}
+        %li
+          <b>gain long:</b> #{pp_amount @gain_long}
+          <b>short:</b> #{pp_amount @gain_short}
+        %li
+          <b>loss long:</b> #{pp_amount @loss_long}
+          <b>short:</b> #{pp_amount @loss_short}
+        %li
+          <b>begin delta long:</b> #{pp_delta @begin_delta_long}
+          <b>short:</b> #{pp_delta @begin_delta_short}
+          <b>net:</b> #{pp_delta @begin_delta_long - @begin_delta_short}
+        %li
+          <b>end delta long:</b> #{pp_delta @end_delta_long}
+          <b>short:</b> #{pp_delta @end_delta_short}
+          <b>net:</b> #{pp_delta @end_delta_long - @end_delta_short}

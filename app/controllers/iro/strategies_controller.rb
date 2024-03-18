@@ -67,9 +67,11 @@ class Iro::StrategiesController < Iro::ApplicationController
   private
 
   def set_lists
-    @purses_list = Iro::Purse.list
+    super
+
+    @purses_list     = Iro::Purse.list
     @strategies_list = Iro::Strategy.list
-    @stocks_list    = Iro::Stock.list
+    @stocks_list     = Iro::Stock.list
   end
 
 end

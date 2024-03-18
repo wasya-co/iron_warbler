@@ -22,6 +22,7 @@ class Iro::Stock
 
   has_many :positions,  class_name: 'Iro::Position', inverse_of: :stock
   has_many :strategies, class_name: 'Iro::Strategy', inverse_of: :stock
+  has_many :purses,     class_name: 'Iro::Purse',    inverse_of: :stock
 
   def to_s
     ticker

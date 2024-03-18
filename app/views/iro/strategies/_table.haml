@@ -14,9 +14,10 @@
     %tbody
       - strategies.each do |sss|
         %tr
-          %td.actions.d-flex
-            = link_to '[~]', edit_strategy_path(sss)
-            = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
+          %td.actions
+            .d-flex
+              = link_to '[~]', edit_strategy_path(sss)
+              = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td= sss.kind
           %td= link_to sss.slug, strategy_path(sss)
           %td= sss.next_inner_delta

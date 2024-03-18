@@ -62,7 +62,7 @@ class Iro::Position
   end
 
   def breakeven
-    strategy.breakeven(self)
+    strategy.send("breakeven_#{strategy.kind}", self)
   end
 
   def current_underlying_strike
@@ -148,8 +148,32 @@ class Iro::Position
   #   self.end_inner_delta = inner.delta
   # end
 
-  ## short put spread
   def sync
+    put_call = Iro::Strategy::LONG == strategy.long_or_short ? 'CALL' : 'PUT'
+    puts! [
+      [ inner_strike, expires_on, stock.ticker ],
+      [ outer_strike, expires_on, stock.ticker ],
+     ], 'init sync inner, outer'
+    inner = Tda::Option.get_quote({
+      contractType: put_call,
+      strike: inner_strike,
+      expirationDate: expires_on,
+      ticker: stock.ticker,
+    })
+    outer = Tda::Option.get_quote({
+      contractType: put_call,
+      strike: outer_strike,
+      expirationDate: expires_on,
+      ticker: stock.ticker,
+    })
+    puts! [inner, outer], 'sync inner, outer'
+    self.end_outer_price = ( outer.bid + outer.ask ) / 2
+    self.end_outer_delta = outer.delta
+
+    self.end_inner_price = ( inner.bid + inner.ask ) / 2
+    self.end_inner_delta = inner.delta
+  end
+  def sync_short_debit_put_spread
     puts! [
       [ inner_strike, expires_on, stock.ticker ],
       [ outer_strike, expires_on, stock.ticker ],

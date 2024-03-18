@@ -42,6 +42,8 @@ class Iro::AlertsController < Iro::ApplicationController
   private
 
   def set_lists
+    super
+
     # @profiles_list = Wco::Profile.list
     @stocks_list = Iro::Stock.list
     puts! @stocks_list, '@stocks_list'

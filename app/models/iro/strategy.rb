@@ -54,11 +54,14 @@ class Iro::Strategy
     where( ticker: ticker )
   end
 
-  def breakeven p
+  def breakeven_long_debit_call_spread p
     p.inner_strike - p.begin_outer_price + p.begin_inner_price
   end
+  def breakeven_short_debit_put_spread p
+    '@TODO' # p.inner_strike - p.begin_outer_price + p.begin_inner_price
+  end
 
-  def breakeven p
+  def breakeven_covered_call p
     p.inner_strike + p.begin_inner_price
   end
 
@@ -86,7 +89,7 @@ class Iro::Strategy
   alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
 
   def max_loss_covered_call p
-    return 'infinity'
+    p.begin_inner_price*10 # just suppose 10,000%
   end
   def max_loss_long_debit_call_spread p
     out = p.outer_strike - p.inner_strike
@@ -96,6 +99,7 @@ class Iro::Strategy
   end
 
   def begin_delta_covered_call p
+    p.begin_inner_delta
   end
   def begin_delta_long_debit_call_spread p
     p.begin_outer_delta - p.begin_inner_delta
@@ -103,6 +107,7 @@ class Iro::Strategy
   alias_method :begin_delta_short_debit_put_spread, :begin_delta_long_debit_call_spread
 
   def end_delta_covered_call p
+    p.end_inner_delta
   end
   def end_delta_long_debit_call_spread p
     p.end_outer_delta - p.end_inner_delta
@@ -193,10 +198,10 @@ class Iro::Strategy
 
 
   def to_s
-    slug
+    "#{stock} #{kind_short} #{slug}"
   end
   def self.list long_or_short = nil
     these = long_or_short ? where( long_or_short: long_or_short ) : all
-    [[nil,nil]] + these.map { |ttt| [ ttt.slug, ttt.id ] }
+    [[nil,nil]] + these.map { |ttt| [ ttt, ttt.id ] }
   end
 end

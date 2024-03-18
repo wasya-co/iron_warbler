@@ -11,6 +11,8 @@ class Iro::PositionsController < Iro::ApplicationController
     @position = Iro::Position.new params[:position].permit!
     authorize! :create, @position
 
+    @position.sync
+
     if @position.save
       flash_notice @position
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
@@ -98,7 +100,7 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer || purse_path( @position.purse )
   end
 
-  def roll
+  def prepare
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
 
@@ -147,10 +149,10 @@ class Iro::PositionsController < Iro::ApplicationController
       break
     end
 
-    self.send("_roll_#{@position.strategy.kind}")
+    self.send("_prepare_#{@position.strategy.kind}")
   end
 
-  def _roll_covered_call
+  def _prepare_covered_call
     @positions = []
     (-@nn..@nn).each do |idx|
       next_ = Iro::Position.new({
@@ -171,7 +173,7 @@ class Iro::PositionsController < Iro::ApplicationController
     end
   end
 
-  def _roll_long_debit_call_spread
+  def _prepare_long_debit_call_spread
     @positions = []
     (-@nn..@nn).each do |idx|
       next_ = Iro::Position.new({
@@ -198,7 +200,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @positions = @positions.reverse
   end
 
-  def _roll_short_debit_put_spread
+  def _prepare_short_debit_put_spread
     @positions = []
     (-@nn..@nn).each do |idx|
       next_ = Iro::Position.new({
@@ -243,8 +245,11 @@ class Iro::PositionsController < Iro::ApplicationController
   private
 
   def set_lists
+    super
+
+    @purses_list     = Iro::Purse.list
     @strategies_list = Iro::Strategy.list(params[:long_or_short])
-    @stocks_list    = Iro::Stock.list
+    @stocks_list     = Iro::Stock.list
   end
 
 end

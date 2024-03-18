@@ -7,8 +7,7 @@
     .d-flex
       .field
         %label Purse
-        -# = f.select :purse_id, options_for_select( @
-        = f.text_field :purse_id
+        = f.select :purse_id, options_for_select( @purses_list, selected: position.purse_id )
 
         %label Status
         = f.select :status, options_for_select( Iro::Position::STATUSES, selected: position.status )

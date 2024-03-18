@@ -1,23 +1,24 @@
 
 - u = @purse.unit
 
-.row
-  .col-md-6
-    = render '/iro/purses/header', purse: @purse
-  .col-md-6
-    = render '/iro/purses/summary', purse: @purse
+.purses--gameui
+  .row
+    .col-md-6
+      = render '/iro/purses/header', purse: @purse
+    .col-md-6
+      = render '/iro/purses/summary', purse: @purse
 
-.purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
-  .purses-gameui
-    .purses-gameuiC{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
+  .purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
+    .purses-gameui
+      .purses-gameuiC{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
 
-      - @positions.each_with_index do |pos, idx|
-        - if idx == 0
-          %h4.maxwidth= pos.stock
-        - else
-          - prev_ = @positions[idx-1]
-          - if pos.stock != prev_.stock
-            %hr
+        - @positions.each_with_index do |pos, idx|
+          - if idx == 0
             %h4.maxwidth= pos.stock
+          - else
+            - prev_ = @positions[idx-1]
+            - if pos.stock != prev_.stock
+              %hr
+              %h4.maxwidth= pos.stock
 
-        = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
+          = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos

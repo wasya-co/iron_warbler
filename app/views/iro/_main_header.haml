@@ -1,19 +1,34 @@
 
-.application--main-header.main-header{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
+.application--main-header.main-header.iro--main-header{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
   .maxwidth
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderTrading
-      Iron Warbler
-    %ul
-      %li
-        = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
-      -# %li= link_to 'Options', options_path
-      -# %li Max Pain
-      %li
-        = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
-      %li
-        = link_to "Purses (#{Iro::Purse.all.length})", purses_path
-      %li
-        = render '/iro/strategies/header'
+      Wco Trading
+    .a
+      .d-flex
+        %ul{ style: "margin-top: 2em;" }
+          %li
+            = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
+          -# %li= link_to 'Options', options_path
+          -# %li Max Pain
+          %li
+            = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
+          %li
+            = link_to "Purses (#{Iro::Purse.all.length})", purses_path
+          %li
+            = render '/iro/strategies/header'
+
+        .a
+          = link_to 'Purses', purses_path
+          %ul
+            - @purses.each do |p|
+              %li= link_to p, purse_path(p)
+        .a
+          = link_to 'Strategies', strategies_path
+          %ul
+            - @strategies.each do |s|
+              %li
+                = link_to s, strategy_path(s)
+                = link_to '[~]', edit_strategy_path(s)
 
 

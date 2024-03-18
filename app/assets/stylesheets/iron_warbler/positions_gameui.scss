@@ -1,8 +1,11 @@
 
-.RollGuide {
-  height: 100vh;
-  border: 1px dashed gray;
-  position: absolute;
-  right: 0;
-  overflow: hidden;
+.positions--prepare {
+  .RollGuide {
+    height: 100vh;
+    border: 1px dashed gray;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+  }
 }
+

@@ -1,0 +1,24 @@
+
+- u        = @position.purse.unit # 50 ## pixels per dollar
+- strategy = @position.strategy
+- pos      = @position
+- nearest_strike = pos.stock.last.round
+- stock = pos.stock
+
+.positions--prepare
+  = render '/iro/purses/header', purse: pos.purse
+
+  .purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
+    .purses-gameui
+      .purses-gameuiC{ style: "margin-left: #{u*@n_dollars}px; width: 100% " }
+
+        = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
+
+        - @positions.each_with_index do |pos, idx|
+          .reviewing
+            = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
+            = render "/iro/positions/prepare_#{pos.strategy.kind}", pos: pos
+
+
+
+

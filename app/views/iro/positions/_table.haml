@@ -15,6 +15,7 @@
             Expires on
             %br
             Strategy
+        %th.q Q
         %th.strikes
           -# .a outer_strike, inner_strike
           Strike
@@ -57,22 +58,22 @@
         %tr{ class: [ position.strategy.kind, position.strategy.long_or_short ] }
 
           %td.actions
+            = position.status
             .flex-row
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
               = link_to '[~]', edit_position_path(position)
               = link_to '[refresh]', refresh_position_path(pos)
               - if true # position.next_reasons.present? && position.rollp > 0.5
-                = link_to '[roll]', roll_position_path(pos)
+                = link_to '[roll]', prepare_to_roll_position_path(pos)
 
           %td.ticker
             = position.stock.ticker
-            <b>(#{position.quantity})</b>
+
             %br
             = pp_amount position.stock.last
 
           %td.status.strategy.w-200px
-            = position.status
-            %br
+
             %b
               = position.expires_on.to_datetime.strftime("%b %d")
               [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
@@ -81,7 +82,8 @@
               #{position.strategy}
             = render '/iro/strategies/show', strategy: position.strategy
 
-
+          %td.q
+            <b>#{position.quantity}</b>
           %td.strikes
             .long-or-short-item
               .outer-strike= pp_amount position.outer_strike
