@@ -125,13 +125,109 @@ class Tda::Option
   end
 
 
+  def self.close_credit_call
+  end
+  def self.close_long_debit_call_spread
+  end
+  def self.close_short_debit_put_spread
+  end
+
+  def self.get_token
+    opts = {
+      grant_type: 'authorization_code',
+      access_type: 'offline',
+      code: ::TD_AMERITRADE[:code],
+    }
+  end
+
+  def self.create_credit_call outer:, inner:, q:, price:
+    query = {
+      orderType: "NET_DEBIT",
+      session: "NORMAL",
+      price: price,
+      duration: "DAY",
+      orderStrategyType: "SINGLE",
+      orderLegCollection: [
+        {
+          instruction: "BUY_TO_OPEN",
+          quantity: q,
+          instrument: {
+            symbol: outer.symbol,
+            assetType: "OPTION",
+          },
+        },
+        {
+          instruction: "SELL_TO_OPEN",
+          quantity: q,
+          instrument: {
+            symbol: inner.symbol,
+            assetType: "OPTION",
+          },
+        },
+      ],
+    }
+    File.write('tmp/query.json', JSON.pretty_generate( query ))
+    puts! query, 'query'
+
+    return
+
+    headers = {
+      Authorize: "Bearer #{::TD_AMERITRADE[:access_token]}",
+    }
+
+    path = "/v1/accounts/#{::TD_AMERITRADE[:accountId]}/orders"
+    puts! path, 'path'
+    out = self.post path, { query: query, headers: headers }
+    timestamp = DateTime.parse out.headers['date']
+    out = out.parsed_response.deep_symbolize_keys
+    puts! out, 'created credit call?'
+  end
+  def self.create_long_debit_call_spread
+  end
+  def self.create_short_debit_put_spread
+  end
+
+  def self.roll_credit_call
+  end
+  def self.roll_long_debit_call_spread
+  end
+  def self.roll_short_debit_put_spread
+  end
+
+
 end
 
+##
+## From: https://developer.tdameritrade.com/content/place-order-samples
+## Buy Limit: Vertical Call Spread
+##
 =begin
-
-outs = Tda::Option.get_quotes({
-  contractType: 'CALL', strike: 20.0, expirationDate: '2024-01-12',
-  ticker: 'GME',
-})
-
+{
+  "orderType": "NET_DEBIT",
+  "session": "NORMAL",
+  "price": "1.20",
+  "duration": "DAY",
+  "orderStrategyType": "SINGLE",
+  "orderLegCollection": [
+    {
+      "instruction": "BUY_TO_OPEN",
+      "quantity": 10,
+      "instrument": {
+        "symbol": "XYZ_011516C40",
+        "assetType": "OPTION"
+      }
+    },
+    {
+      "instruction": "SELL_TO_OPEN",
+      "quantity": 10,
+      "instrument": {
+        "symbol": "XYZ_011516C42.5",
+        "assetType": "OPTION"
+      }
+    }
+  ]
+}
 =end
+
+
+

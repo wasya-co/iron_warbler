@@ -2,7 +2,8 @@
 .purses-gameuiW {
   border: 1px solid red;
   width: 100%;
-  overflow: scroll;
+  // overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .purses-gameui {
@@ -78,7 +79,7 @@
     bottom: -10%;
     border: 2px dotted green;
     background: rgba(0,255,0, 0.5);
-    height: 10%;
+    height: 0.5em;
   }
 
   .sprite {
@@ -142,32 +143,6 @@
       background: rgba(255,0,0, 0.75);
     }
 
-
-    // .grid-mark:nth-child(4n + 1) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-    // .grid-mark:nth-child(4n) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-    // .grid-mark:nth-child(6n + 1) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-    // .grid-mark:nth-child(6n) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-    // .grid-mark:nth-child(3n + 1) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-    // .grid-mark:nth-child(3n) {
-    //   border: 1px solid red;
-    //   display: none;
-    // }
-
     .grid-mark {
       // border: 1px solid red;
 
@@ -206,8 +181,8 @@
         .labelC {
           background: white;
           position: absolute;
-          top: 1.5em;
-          left: -1.5em;
+          bottom: -1em;
+          right: 0;
         }
       }
     }

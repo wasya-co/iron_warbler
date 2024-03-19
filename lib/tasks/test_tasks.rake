@@ -28,6 +28,25 @@ namespace :test do
     puts! out, 'out'
   end
 
+  desc 'place order'
+  task place_order: :environment do
+    stock = Iro::Stock.f 'GME'
+    outer = Iro::Option.new({
+      stock:      stock,
+      put_call:  'CALL',
+      strike:     15.5,
+      expires_on: '2024-03-22',
+    })
+    inner = Iro::Option.new({
+      stock:      stock,
+      put_call:  'CALL',
+      strike:     17.0,
+      expires_on: '2024-03-22',
+    })
+    out = Tda::Option.create_credit_call( inner: inner, outer: outer, q: 1, price: 0.01 )
+    puts! out, 'out'
+  end
+
 end
 
 

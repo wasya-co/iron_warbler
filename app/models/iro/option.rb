@@ -17,11 +17,33 @@ class Iro::Option
   field :symbol
   validates :symbol, uniqueness: true, presence: true
 
+  field :put_call, type: :string
+  validates :put_call, presence: true
+
   field :delta, type: :float
+
   field :strike, type: :float
+  validates :strike, presence: true
+
   field :expires_on, type: :date
+  validates :expires_on, presence: true
 
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
+
+  def symbol
+    if !self[:symbol]
+      p_c_ = put_call == 'PUT' ? 'P' : 'C'
+      strike_ = strike.to_i == strike ? strike.to_i : strike
+      sym = "#{stock.ticker}_#{expires_on.strftime("%m%d%y")}#{p_c_}#{strike_}" # XYZ_011819P45
+      self[:symbol] = sym
+      save
+    end
+    self[:symbol]
+  end
+
+  ##
+  ## black-scholes pricing
+  ##
 
 =begin
   ##

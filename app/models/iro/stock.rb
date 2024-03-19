@@ -29,6 +29,10 @@ class Iro::Stock
   has_many :purses,     class_name: 'Iro::Purse',    inverse_of: :stock
   has_many :options,    class_name: 'Iro::Option',   inverse_of: :stock
 
+  def self.f ticker
+    self.find_by ticker: ticker
+  end
+
   def to_s
     ticker
   end
