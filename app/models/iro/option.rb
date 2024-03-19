@@ -30,6 +30,11 @@ class Iro::Option
 
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
 
+  has_one :outer, class_name: 'Iro::Position', invese_of: :outer
+  has_one :inner, class_name: 'Iro::Position', invese_of: :inner
+
+  field :last, type: :float
+
   def symbol
     if !self[:symbol]
       p_c_ = put_call == 'PUT' ? 'P' : 'C'

@@ -6,7 +6,7 @@
 
 
 .StockCoordinatesW
-  .StockCoordinates{ style: "height: #{@position.purse.height}px " }
+  .StockCoordinates{ style: "height: #{@position.q * @position.purse.height}px " }
 
     .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
 
@@ -17,7 +17,9 @@
       - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
       - width  = "#{ ( pos.inner_strike - pos.outer_strike ) * u}px"
       - left   = "#{ ( pos.outer_strike - pos.stock.last ) * u}px"
-      .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
-        .Position
-          .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+      .PositionW{ style: "width: #{width}; left: #{left}; " }
+        .Position{ style: " border-right: #{border}; " }
+        .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+
+        .select= button_to 'select', prepare2_position_path(pos.id)
     .c

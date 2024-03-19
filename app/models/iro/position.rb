@@ -17,6 +17,9 @@ class Iro::Position
   belongs_to :purse,    class_name: 'Iro::Purse',    inverse_of: :positions
   index({ purse_id: 1, ticker: 1 })
 
+  belongs_to :prev,    class_name: 'Iro::Position',    inverse_of: :nxt
+  has_one :nxt, class_name: 'Iro::Position', inverse_of: :prev
+
   belongs_to :stock,   class_name: 'Iro::Stock',    inverse_of: :positions
   def ticker
     stock&.ticker || '-'
@@ -26,6 +29,9 @@ class Iro::Position
 
   # field :ticker
   # validates :ticker, presence: true
+
+  belongs_to :outer, class_name: 'Iro::Option', inverse_of: :outer
+  belongs_to :inner, class_name: 'Iro::Option', inverse_of: :inner
 
   field     :outer_strike, type: :float
   # validates :outer_strike, presence: true

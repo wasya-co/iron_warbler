@@ -47,6 +47,7 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
+  ## this is auto-driven
   def propose
     @strategy = Iro::Strategy.find params[:strategy_id]
     authorize! :show, @strategy
@@ -110,6 +111,68 @@ class Iro::PositionsController < Iro::ApplicationController
     @position.calc_rollp
 
     redirect_to request.referrer || purse_path( @position.purse )
+  end
+
+  -## long debit call spread
+  def prepare2
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+
+    pos   = @position
+    stock = @position.stock
+
+    next_outer = @position.outer || Iro::Option.create({
+      stock: stock,
+      strike: pos.outer_strike,
+      expires_on: pos.expires_on,
+      position: pos,
+      last: pos.begin_outer_price,
+    })
+
+    next_inner = @position.inner || Iro::Option.create({
+      stock: stock,
+      strike: pos.inner_strike,
+      expires_on: pos.expires_on,
+      position: pos,
+      last: pos.begin_inner_price,
+    })
+
+    prev_outer = pos.prev.outer
+    prev_inner = pos.prev.inner
+
+    price = pos.prev.outer.last - pos.prev.inner.last + pos.nxt.inner.last - pos.nxt.outer.last
+
+    @query = {
+      orderType: "NET_DEBIT",
+      session: "NORMAL",
+      price: price,
+      duration: "DAY",
+      orderStrategyType: "SINGLE",
+      orderLegCollection: [
+        ## @TODO: this is only entering the next position, need to also close out the previous.
+        {
+          instruction: "BUY_TO_OPEN",
+          quantity: q,
+          instrument: {
+            symbol: outer.symbol,
+            assetType: "OPTION",
+          },
+        },
+        {
+          instruction: "SELL_TO_OPEN",
+          quantity: q,
+          instrument: {
+            symbol: inner.symbol,
+            assetType: "OPTION",
+          },
+        },
+      ],
+    }
+  end
+
+  -## long debit call spread
+  def prepare3
+    out = Tda::Option.roll_long_debit_call_spread( position )
   end
 
   def prepare
@@ -188,7 +251,8 @@ class Iro::PositionsController < Iro::ApplicationController
   def _prepare_long_debit_call_spread
     @positions = []
     (-@nn..@nn).each do |idx|
-      next_ = Iro::Position.new({
+      next_ = Iro::Position.find_or_create_by({
+        status: 'prepare',
         stock: @stock,
         inner_strike: @prev.inner_strike - idx*@stock.options_price_increment,
         outer_strike: @prev.outer_strike - idx*@stock.options_price_increment,
@@ -196,6 +260,7 @@ class Iro::PositionsController < Iro::ApplicationController
         purse:        @position.purse,
         strategy:     @position.strategy,
         quantity:     @position.quantity,
+        prev_id:      @prev.id,
       })
       next_.sync
       next_.begin_inner_price = next_.end_inner_price
@@ -205,6 +270,7 @@ class Iro::PositionsController < Iro::ApplicationController
       next_.begin_outer_delta = next_.end_outer_delta
       next_.next_gain_loss_amount  = @prev.end_outer_price   - @prev.end_inner_price
       next_.next_gain_loss_amount += next_.begin_inner_price - next_.begin_outer_price
+      next_.save
       puts! next_, 'next_'
       puts! next_.next_gain_loss_amount, 'next_gain_loss_amount'
       @positions.push next_

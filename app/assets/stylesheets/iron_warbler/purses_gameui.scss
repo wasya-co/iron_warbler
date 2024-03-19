@@ -52,7 +52,7 @@
   .Position {
     position: absolute;
     width: 100%;
-    height: 90%;
+    height: 100%;
 
     left: 0;
     top: 0;
@@ -64,8 +64,6 @@
     background: rgba(255,153,51, 0.5);
     position: absolute;
 
-    /* HEREHERE: either left, or right 0, this orange strip flips. */
-    // left: 0;
     right: 0;
 
     width: 10000px;
@@ -76,7 +74,7 @@
   .Breakeven {
     position: absolute;
     right: 0;
-    bottom: -10%;
+    bottom: 0;
     border: 2px dotted green;
     background: rgba(0,255,0, 0.5);
     height: 0.5em;

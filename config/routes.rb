@@ -9,11 +9,12 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
-  get  'positions/duplicate/:id', to: 'positions#new',   as: :duplicate_position
-  post 'positions/propose', to: 'positions#propose',     as: :propose_position
-  get  'positions/:id/prepare', to: 'positions#prepare', as: :prepare_to_roll_position, defaults: { template: 'gameui' }
-  post 'positions/:id/roll', to: 'positions#do_roll',    as: :roll_position
-  get  'positions/:id/refresh', to: 'positions#refresh', as: :refresh_position
+  get  'positions/duplicate/:id', to: 'positions#new',    as: :duplicate_position
+  post 'positions/propose', to: 'positions#propose',      as: :propose_position
+  get  'positions/:id/prepare', to: 'positions#prepare',  as: :prepare_to_roll_position, defaults: { template: 'gameui' }
+  match  'positions/:id/prepare2', to: 'positions#prepare2', as: :prepare2_position, defaults: { template: 'gameui' }, via: [ :get, :post ]
+  post 'positions/:id/roll', to: 'positions#do_roll',     as: :roll_position
+  get  'positions/:id/refresh', to: 'positions#refresh',  as: :refresh_position
   resources :positions
   resources :profiles
 
