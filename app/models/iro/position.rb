@@ -17,9 +17,6 @@ class Iro::Position
   belongs_to :purse,    class_name: 'Iro::Purse',    inverse_of: :positions
   index({ purse_id: 1, ticker: 1 })
 
-  belongs_to :prev,    class_name: 'Iro::Position',    inverse_of: :nxt
-  has_one :nxt, class_name: 'Iro::Position', inverse_of: :prev
-
   belongs_to :stock,   class_name: 'Iro::Stock',    inverse_of: :positions
   def ticker
     stock&.ticker || '-'
@@ -27,8 +24,17 @@ class Iro::Position
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
 
-  # field :ticker
-  # validates :ticker, presence: true
+  ## in Iro::Strategy:
+  ## LONG = 'is_long'
+  ## SHORT = 'is_short'
+  field     :long_or_short, type: :string
+  validates :long_or_short, presence: true
+
+
+  ## options
+
+  belongs_to :prev, class_name: 'Iro::Position', inverse_of: :nxt, optional: true
+  has_one :nxt,     class_name: 'Iro::Position', inverse_of: :prev
 
   belongs_to :outer, class_name: 'Iro::Option', inverse_of: :outer
   belongs_to :inner, class_name: 'Iro::Option', inverse_of: :inner
@@ -114,95 +120,38 @@ class Iro::Position
   field :rollp, type: :float
 
 
-  ## covered call
-  # def sync
-  #   puts! [ inner_strike, expires_on, stock.ticker ], 'init sync'
-  #   out = Tda::Option.get_quote({
-  #     contractType: 'CALL',
-  #     strike: inner_strike,
-  #     expirationDate: expires_on,
-  #     ticker: stock.ticker,
-  #   })
-  #   puts! out, 'sync'
-  #   self.end_inner_price = ( out.bid + out.ask ) / 2
-  #   self.end_inner_delta = out.delta
-  # end
-
-  ## long call spread
-  # def sync
-  #   # puts! [
-  #   #   [ inner_strike, expires_on, stock.ticker ],
-  #   #   [ outer_strike, expires_on, stock.ticker ],
-  #   #  ], 'init sync inner, outer'
-  #   inner = Tda::Option.get_quote({
-  #     contractType: 'CALL',
-  #     strike: inner_strike,
-  #     expirationDate: expires_on,
-  #     ticker: stock.ticker,
-  #   })
-  #   outer = Tda::Option.get_quote({
-  #     contractType: 'CALL',
-  #     strike: outer_strike,
-  #     expirationDate: expires_on,
-  #     ticker: stock.ticker,
-  #   })
-  #   puts! [inner, outer], 'sync inner, outer'
-  #   self.end_outer_price = ( outer.bid + outer.ask ) / 2
-  #   self.end_outer_delta = outer.delta
-
-  #   self.end_inner_price = ( inner.bid + inner.ask ) / 2
-  #   self.end_inner_delta = inner.delta
-  # end
-
   def sync
-    put_call = Iro::Strategy::LONG == strategy.long_or_short ? 'CALL' : 'PUT'
-    puts! [
-      [ inner_strike, expires_on, stock.ticker ],
-      [ outer_strike, expires_on, stock.ticker ],
-     ], 'init sync inner, outer'
+    put_call = case strategy.kind
+    when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
+      'CALL'
+    when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+      'PUT'
+    when Iro::Strategy::KIND_COVERED_CALL
+      'CALL'
+    end
+
     inner = Tda::Option.get_quote({
       contractType: put_call,
       strike: inner_strike,
       expirationDate: expires_on,
       ticker: stock.ticker,
     })
-    outer = Tda::Option.get_quote({
-      contractType: put_call,
-      strike: outer_strike,
-      expirationDate: expires_on,
-      ticker: stock.ticker,
-    })
-    puts! [inner, outer], 'sync inner, outer'
-    self.end_outer_price = ( outer.bid + outer.ask ) / 2
-    self.end_outer_delta = outer.delta
+    self.inner.end_price = ( inner.bid + inner.ask ) / 2
+    self.inner.end_delta = inner.delta
 
-    self.end_inner_price = ( inner.bid + inner.ask ) / 2
-    self.end_inner_delta = inner.delta
+    if [ Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD , Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+       ].include? strategy.kind
+      outer = Tda::Option.get_quote({
+        contractType: put_call,
+        strike: outer_strike,
+        expirationDate: expires_on,
+        ticker: stock.ticker,
+      })
+      self.outer.end_price = ( outer.bid + outer.ask ) / 2
+      self.outer.end_delta = outer.delta
+    end
   end
-  def sync_short_debit_put_spread
-    puts! [
-      [ inner_strike, expires_on, stock.ticker ],
-      [ outer_strike, expires_on, stock.ticker ],
-     ], 'init sync inner, outer'
-    inner = Tda::Option.get_quote({
-      contractType: 'PUT',
-      strike: inner_strike,
-      expirationDate: expires_on,
-      ticker: stock.ticker,
-    })
-    outer = Tda::Option.get_quote({
-      contractType: 'PUT',
-      strike: outer_strike,
-      expirationDate: expires_on,
-      ticker: stock.ticker,
-    })
-    puts! [inner, outer], 'sync inner, outer'
-    self.end_outer_price = ( outer.bid + outer.ask ) / 2
-    self.end_outer_delta = outer.delta
 
-    self.end_inner_price = ( inner.bid + inner.ask ) / 2
-    self.end_inner_delta = inner.delta
-  end
 
   ##
   ## decisions
@@ -324,6 +273,13 @@ class Iro::Position
       out = out - 1.day
     end
     return out
+  end
+
+  def self.long
+    where( long_or_short: Iro::Strategy::LONG )
+  end
+  def self.short
+    where( long_or_short: Iro::Strategy::SHORT )
   end
 
   def to_s

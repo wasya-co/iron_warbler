@@ -35,8 +35,10 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
+
     @positions = @purse.positions.where( status: 'active' ).includes( :strategy
-      ).order({ expires_on: :desc, stock: :desc })
+      ).order( expires_on: :desc, ticker: :desc, long_or_short: :asc )
+
 
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels

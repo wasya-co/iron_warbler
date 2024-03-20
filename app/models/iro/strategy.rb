@@ -82,8 +82,8 @@ class Iro::Strategy
     ( p.begin_inner_price - p.end_inner_price )
   end
   def net_amount_long_debit_call_spread p
-    outer = p.end_outer_price - p.begin_outer_price
-    inner = p.begin_inner_price - p.end_inner_price
+    outer = p.outer.end_price   - p.outer.begin_price
+    inner = p.inner.begin_price - p.inner.end_price
     out = ( outer + inner )
   end
   alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
@@ -110,7 +110,7 @@ class Iro::Strategy
     p.end_inner_delta
   end
   def end_delta_long_debit_call_spread p
-    p.end_outer_delta - p.end_inner_delta
+    p.outer.end_delta - p.inner.end_delta
   end
   alias_method :end_delta_short_debit_put_spread, :end_delta_long_debit_call_spread
 
@@ -153,18 +153,18 @@ class Iro::Strategy
       return [ 0.99, '1 DTE, must exit' ]
     end
 
-    if ( stock.last - buffer_above_water ) < p.inner_strike
+    if ( stock.last - buffer_above_water ) < p.inner.strike
       return [ 0.95, "Last #{'%.2f' % stock.last} is " +
-          "#{'%.2f' % [stock.last - p.inner_strike - buffer_above_water]} " +
-          "below #{'%.2f' % [p.inner_strike + buffer_above_water]} water" ]
+          "#{'%.2f' % [stock.last - p.inner.strike - buffer_above_water]} " +
+          "below #{'%.2f' % [p.inner.strike + buffer_above_water]} water" ]
     end
 
-    if p.end_inner_delta < threshold_delta
-      return [ 0.79, "Delta #{p.end_inner_delta} is lower than #{threshold_delta} threshold." ]
+    if p.inner.end_delta < threshold_delta
+      return [ 0.79, "Delta #{p.inner.end_delta} is lower than #{threshold_delta} threshold." ]
     end
 
-    if 1 - p.end_inner_price/p.begin_inner_price > threshold_netp
-      return [ 0.51, "made enough #{'%.0f' % [(1 - p.end_inner_price/p.begin_inner_price )*100]}% profit" ]
+    if 1 - p.inner.end_price/p.inner.begin_price > threshold_netp
+      return [ 0.51, "made enough #{'%.0f' % [(1 - p.inner.end_price/p.inner.begin_price )*100]}% profit" ]
     end
 
     return [ 0.33, '-' ]

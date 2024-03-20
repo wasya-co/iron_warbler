@@ -1,35 +1,44 @@
 
 - u = @purse.unit
-- s_mult = @purse.summary_scale
+- summary_unit = @purse.summary_unit
 - collapse_key ||= nil
 
 %i.fa.fa-expand.collapse-expand{ id: "pursesSummary_#{collapse_key}", style: "margin-left: -1em;" } Summary
 .PurseSummaryW
-
   .PurseSummary
-    -## loss
+
     .summary-amount
-      .max-gl.long.loss{ style: "height: #{@max_loss_long *-1*s_mult*u}px" }
-      .max-gl.short.loss{ style: "height: #{@max_loss_short *-1*s_mult*u}px" }
+      .max-gl.long.loss{  style: "height: #{@max_loss_long  *-1*summary_unit*u}px" }
+        %label Long Loss
+        .delta
+          .begin.long{  style: "height: 100%" }
+          .end.long{    style: "height: #{@end_delta_long    *summary_unit*10000*u}px" }
+
+      .max-gl.short.loss{ style: "height: #{@max_loss_short *-1*summary_unit*u}px" }
+        %label Short Loss
+        .delta
+          .begin.short{ style: "height: #{@begin_delta_short *summary_unit*10000*u}px" }
+          .end.short{   style: "height: #{@end_delta_short   *summary_unit*10000*u}px" }
+
       - if @loss_long
-        .net-gl.loss.long.loss-long{ style: "height: #{@loss_long *-1*s_mult*u}px" }
+        .net-gl.loss.long.loss-long{   style: "height: #{@loss_long  *-1*summary_unit*u}px" }
       - if @loss_short
-        .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *-1*s_mult*u}px" }
+        .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *-1*summary_unit*u}px" }
 
-    .summary-delta
-      .begin.long{ style: "height: #{@begin_delta_long *s_mult*10000*u}px" }
-      .begin.short{ style: "height: #{@begin_delta_short *s_mult*10000*u}px" }
-      .end.long{ style: "height: #{@end_delta_long *s_mult*10000*u}px" }
-      .end.short{ style: "height: #{@end_delta_short *s_mult*10000*u}px" }
+    -# .summary-delta
+    -#   .begin.long{  style: "height: #{@begin_delta_long  *summary_unit*10000*u}px" }
+    -#   .begin.short{ style: "height: #{@begin_delta_short *summary_unit*10000*u}px" }
+    -#   .end.long{    style: "height: #{@end_delta_long    *summary_unit*10000*u}px" }
+    -#   .end.short{   style: "height: #{@end_delta_short   *summary_unit*10000*u}px" }
 
-    -## gain
+    -# %label Gain
     .summary-amount
-      .max-gl.long.gain{ style: "height: #{@max_gain_long *s_mult*u}px" }
-      .max-gl.short.gain{ style: "height: #{@max_gain_short *s_mult*u}px" }
+      .max-gl.long.gain{  style: "height: #{@max_gain_long  *summary_unit*u}px" }
+      .max-gl.short.gain{ style: "height: #{@max_gain_short *summary_unit*u}px" }
       - if @gain_long
-        .net-gl.gain.long.gain-long{ style: "height: #{@gain_long *s_mult*u}px" }
+        .net-gl.gain.long.gain-long{   style: "height: #{@gain_long  *summary_unit*u}px" }
       - if @gain_short
-        .net-gl.gain.short.gain-short{ style: "height: #{@gain_short *s_mult*u}px" }
+        .net-gl.gain.short.gain-short{ style: "height: #{@gain_short *summary_unit*u}px" }
 
 
 

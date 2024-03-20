@@ -1,6 +1,10 @@
 
 FactoryBot.define do
 
+  factory :purse, class: 'Iro::Purse' do
+    slug { generate(:slug) }
+  end
+
   factory :stock, class: 'Iro::Stock' do
     ticker { 'XXX' }
   end

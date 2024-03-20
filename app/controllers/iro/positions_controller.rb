@@ -2,28 +2,34 @@
 class Iro::PositionsController < Iro::ApplicationController
   before_action :set_lists
 
-  def new
-    @position = Iro::Position.new
-    authorize! :new, @posision
-
-    if params[:id]
-      old = Iro::Position.find params[:id]
-      old = old.attributes
-      old.delete :_id
-      puts! old, 'old'
-      @position = Iro::Position.new old
-    end
-    if params[:purse_id]
-      @position.purse_id = params[:purse_id]
-    end
-
-  end
-
   def create
     @position = Iro::Position.new params[:position].permit!
     authorize! :create, @position
 
+    # short put spread
+    pos = @position
+    @position.inner = Iro::Option.new({
+      stock: pos.stock,
+      put_call: 'PUT',
+      strike: pos.inner_strike,
+      expires_on: pos.expires_on,
+      begin_price: pos.begin_inner_price,
+      begin_delta: pos.begin_inner_delta,
+      inner: pos,
+    })
+    @position.outer = Iro::Option.new({
+      stock: pos.stock,
+      put_call: 'PUT',
+      strike: pos.outer_strike,
+      expires_on: pos.expires_on,
+      begin_price: pos.begin_outer_price,
+      begin_delta: pos.begin_outer_delta,
+      outer: pos,
+    })
+
     @position.sync
+    @position.inner.save || puts!( @position.inner.errors.messages, 'cannot save inner option' )
+    @position.outer.save || puts!( @position.outer.errors.messages, 'cannot save outer option' )
 
     if @position.save
       flash_notice @position
@@ -47,73 +53,25 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
-  ## this is auto-driven
-  def propose
-    @strategy = Iro::Strategy.find params[:strategy_id]
-    authorize! :show, @strategy
+  def new
+    @position = Iro::Position.new
+    authorize! :new, @posision
 
-    @purse = Iro::Purse.find params[:purse_id]
-
-    ## short debit put spread
-    outs = Tda::Option.get_quotes({
-      contractType:   'PUT',
-      expirationDate: '2024-03-28',
-      ticker:         @strategy.stock.ticker,
-    })
-    outs = outs.select do |out|
-      out[:bidSize]+out[:askSize] > 0
+    if params[:id]
+      old = Iro::Position.find params[:id]
+      old = old.attributes
+      old.delete :_id
+      puts! old, 'old'
+      @position = Iro::Position.new old
     end
-    outs = outs.select do |out|
-      out[:strikePrice] > @strategy.buffer_above_water + @strategy.stock.last
-    end
-    outs = outs.select do |out|
-      out[:strikePrice] > @strategy.next_inner_strike
-    end
-    outs = outs.select do |out|
-      out[:delta] < @strategy.next_inner_delta
+    if params[:purse_id]
+      @position.purse_id = params[:purse_id]
     end
 
-    inner = outs[0]
-    outs = outs.select do |out|
-      out[:strikePrice] >= inner[:strikePrice] + @strategy.next_spread_amount
-    end
-    outer = outs[0]
-
-    if inner && outer
-      next_position = Iro::Position.new({
-        status: 'proposed',
-        stock: @strategy.stock,
-        inner_strike: inner[:strikePrice],
-        outer_strike: outer[:strikePrice],
-        begin_outer_price: outer[:last],
-        begin_outer_delta: outer[:delta],
-        begin_inner_price: inner[:last],
-        begin_inner_delta: inner[:delta],
-        begin_on: Time.now.to_date,
-        expires_on: '2024-03-28',
-        purse: @purse,
-        strategy: @strategy,
-        quantity: 1,
-      })
-      next_position.sync
-      next_position.save
-    else
-      flash_alert 'cannot propose a new one'
-    end
-    redirect_to request.referrer
   end
 
-  def refresh
-    @position = pos = Iro::Position.find params[:id]
-    authorize! :refresh, @position
 
-    @position.sync
-    @position.calc_rollp
-
-    redirect_to request.referrer || purse_path( @position.purse )
-  end
-
-  -## long debit call spread
+  ## long debit call spread
   def prepare2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
@@ -170,7 +128,7 @@ class Iro::PositionsController < Iro::ApplicationController
     }
   end
 
-  -## long debit call spread
+  ## long debit call spread
   def prepare3
     out = Tda::Option.roll_long_debit_call_spread( position )
   end
@@ -302,6 +260,73 @@ class Iro::PositionsController < Iro::ApplicationController
       puts! next_.next_gain_loss_amount, 'next_gain_loss_amount'
       @positions.push next_
     end
+  end
+
+
+  ## this is auto-driven
+  def propose
+    @strategy = Iro::Strategy.find params[:strategy_id]
+    authorize! :show, @strategy
+
+    @purse = Iro::Purse.find params[:purse_id]
+
+    ## short debit put spread
+    outs = Tda::Option.get_quotes({
+      contractType:   'PUT',
+      expirationDate: '2024-03-28',
+      ticker:         @strategy.stock.ticker,
+    })
+    outs = outs.select do |out|
+      out[:bidSize]+out[:askSize] > 0
+    end
+    outs = outs.select do |out|
+      out[:strikePrice] > @strategy.buffer_above_water + @strategy.stock.last
+    end
+    outs = outs.select do |out|
+      out[:strikePrice] > @strategy.next_inner_strike
+    end
+    outs = outs.select do |out|
+      out[:delta] < @strategy.next_inner_delta
+    end
+
+    inner = outs[0]
+    outs = outs.select do |out|
+      out[:strikePrice] >= inner[:strikePrice] + @strategy.next_spread_amount
+    end
+    outer = outs[0]
+
+    if inner && outer
+      next_position = Iro::Position.new({
+        status: 'proposed',
+        stock: @strategy.stock,
+        inner_strike: inner[:strikePrice],
+        outer_strike: outer[:strikePrice],
+        begin_outer_price: outer[:last],
+        begin_outer_delta: outer[:delta],
+        begin_inner_price: inner[:last],
+        begin_inner_delta: inner[:delta],
+        begin_on: Time.now.to_date,
+        expires_on: '2024-03-28',
+        purse: @purse,
+        strategy: @strategy,
+        quantity: 1,
+      })
+      next_position.sync
+      next_position.save
+    else
+      flash_alert 'cannot propose a new one'
+    end
+    redirect_to request.referrer
+  end
+
+  def refresh
+    @position = pos = Iro::Position.find params[:id]
+    authorize! :refresh, @position
+
+    @position.sync
+    @position.calc_rollp
+
+    redirect_to request.referrer || purse_path( @position.purse )
   end
 
   def update

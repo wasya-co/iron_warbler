@@ -15,6 +15,10 @@
     .field
       %label Stock
       = f.select :stock_id, options_for_select( @stocks_list, selected: position.stock_id )
+    .field
+      %label long or short?
+      = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: position.long_or_short || params[:long_or_short] )
+
       %label Strategy
       = f.select :strategy_id, options_for_select( @strategies_list, selected: position.strategy_id )
 

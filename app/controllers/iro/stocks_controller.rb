@@ -39,7 +39,7 @@ class Iro::StocksController < Iro::ApplicationController
     outs.map do |out|
       Iro::Stock.where( ticker: out[:symbol] ).update( last: out[:last] )
     end
-    flash_notice 'ok'
+    flash_notice 'refreshed stocks'
     redirect_to request.referrer
   end
 

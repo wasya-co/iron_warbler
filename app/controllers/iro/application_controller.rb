@@ -1,4 +1,9 @@
 
+Pu  ||= Iro::Purse
+Str ||= Iro::Strategy
+Po  ||= Iro::Position
+O   ||= Iro::Option
+Sto ||= Iro::Stock
 
 class Iro::ApplicationController < Wco::ApplicationController
   layout 'iro/application'

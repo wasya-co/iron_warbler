@@ -36,4 +36,4 @@ def setup_users
   sign_in user
 end
 
-EPSILON = 0.01
+EPSILON = 0.0001
