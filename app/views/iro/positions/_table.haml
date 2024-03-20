@@ -17,7 +17,6 @@
             Strategy
         %th.q Q
         %th.strikes
-          -# .a outer_strike, inner_strike
           Strike
         %th.begin_price
           .a Begin price, delta
@@ -64,7 +63,7 @@
               = link_to '[~]', edit_position_path(position)
               = link_to '[dup]', duplicate_position_path(position)
             .d-flex
-              = link_to '[sync]', refresh_position_path(pos)
+              = link_to '[sync]', sync_position_path(pos)
               - if true # position.next_reasons.present? && position.rollp > 0.5
                 = link_to '[roll]', prepare_to_roll_position_path(pos)
 
@@ -88,17 +87,17 @@
             <b>#{position.quantity}</b>
           %td.strikes
             .long-or-short-item
-              .outer-strike= pp_amount position.outer_strike
-              .inner-strike= pp_amount position.inner_strike
+              .outer-strike= pp_amount position.outer.strike
+              .inner-strike= pp_amount position.inner.strike
 
           %td.begin_price
             .long-or-short-item
               .begin-outer-price
-                = pp_amount position.begin_outer_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.begin_outer_delta}
+                = pp_amount position.outer.begin_price
+                &nbsp;<b>D</b>&nbsp; #{pp_delta position.outer.begin_delta}
               .begin-inner-price
-                = pp_amount position.begin_inner_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.begin_inner_delta}
+                = pp_amount position.inner.begin_price
+                &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.begin_delta}
           %td
             .max-loss= pp_amount position.max_loss * pos.q * 100, precision: 0
           -# %td

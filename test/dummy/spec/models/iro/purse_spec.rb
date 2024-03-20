@@ -84,10 +84,11 @@ RSpec.describe Iro::Purse do
       purse: @purse,
       long_or_short: Iro::Strategy::LONG,
     })
-    # byebug
     expected = 0.6533
-    puts! expected, 'expected'
-    ( @purse.wt_avg_begin_inner_d_long - expected ).should < EPSILON
+    # puts! expected, 'expected'
+    ( @purse.delta_wt_avg( :begin, :long, :inner ) - expected ).should < EPSILON
+    ## expected = 0.9198
+    @purse.delta_to_plot_p( :begin, :long, :inner ).should eql "82%"
   end
 
 end

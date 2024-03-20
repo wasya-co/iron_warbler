@@ -32,7 +32,7 @@ class Iro::StocksController < Iro::ApplicationController
     authorize! :new, @stock
   end
 
-  def refresh
+  def sync
     authorize! :refresh, Iro::Stock
     tickers = Iro::Stock.all.map { |s| s.ticker }.join(',')
     outs = Tda::Stock.get_quotes tickers

@@ -40,32 +40,38 @@
   .summary-amount {
     position: relative;
     width: 100px;
+    margin-right: 2em;
 
     .net-gl {
       width: 100%;
       background: rgba(0,0,0, 0.5);
     }
+
+    .delta {
+      position: absolute;
+      left: 100px;
+      height: 100%;
+
+      > div {
+        border: 1px dotted yellow;
+        width: 0.5em;
+      }
+      .begin {
+        width: 1em;
+
+        background: black;
+      }
+      .end {
+        width: .5em;
+        left: .25em;
+
+        background: rgba(255,0,0, 0.5);
+      }
+    }
+
   }
-  .summary-delta {
-    position: relative;
-    margin-right: 1em;
-    width: 1em;
 
-    > div {
-      border: 1px dotted yellow;
-    }
-    .begin {
-      width: 1em;
 
-      background: black;
-    }
-    .end {
-      width: .5em;
-      left: .25em;
-
-      background: rgba(255,0,0, 0.5);
-    }
-  }
   .loss {
   }
   .gain {
@@ -73,9 +79,12 @@
   .max-gl {
     position: absolute;
     width: 100%;
+
     label {
       position: absolute;
     }
+
+
   }
   .max-gl.long {
   }

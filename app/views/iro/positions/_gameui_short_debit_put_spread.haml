@@ -19,8 +19,8 @@
         .c
 
         -## these are different
-        - left  = "#{ ( stock.last - pos.outer_strike ) * u}px"
-        - width = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
+        - left  = "#{ ( stock.last - pos.outer.strike ) * u}px"
+        - width = "#{ ( pos.outer.strike - pos.inner.strike ) * u}px"
         .PositionW{ class: pos.strategy.kind, style: "left: #{left}; width: #{width}; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }

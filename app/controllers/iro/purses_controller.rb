@@ -37,7 +37,7 @@ class Iro::PursesController < Iro::ApplicationController
 
 
     @positions = @purse.positions.where( status: 'active' ).includes( :strategy
-      ).order( expires_on: :desc, ticker: :desc, long_or_short: :asc )
+      ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
 
     @unit      = @purse.unit # 12  ## pixels per dollar

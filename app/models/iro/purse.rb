@@ -1,4 +1,7 @@
 
+require 'distribution'
+N = Distribution::Normal
+
 class Iro::Purse
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -26,22 +29,29 @@ class Iro::Purse
 
   field :available_amount, type: :float
 
-  def wt_avg_begin_inner_d_long
+  def delta_wt_avg( begin_end, long_short, inner_outer )
     max_loss_total = 0
-    out = positions.long.map do |pos|
+
+    out = positions.send( long_short ).map do |pos|
       max_loss_total += pos.max_loss * pos.q
-      pos.max_loss * pos.q * pos.inner.begin_delta
+      pos.max_loss * pos.q * pos.send( inner_outer ).send( "#{begin_end}_delta" )
     end
-    # byebug
-    out = out.reduce( &:+ ) / max_loss_total
+    # puts! out, 'delta_wt_avg 1'
+    out = out.reduce( &:+ ) / max_loss_total rescue 0
+    # puts! out, 'delta_wt_avg 2'
     return out
   end
-  def wt_avg_begin_inner_d_short
-    max_loss_total = 0
-    positions.short.map do |pos|
-      max_loss_total += pos.max_loss * pos.q
-      pos.max_loss * pos.q * pos.inner.begin_delta
-    end.reduce( &:+ ) / max_loss_total
+  ## delta to plot percentage
+  ## convert to normal between 0 and 3 std
+  def delta_to_plot_p( *args )
+    x = delta_wt_avg( *args ).abs
+    if x < 0.5
+      y = 1
+    else
+      y = 2 - 1/( 1.5 - x )
+    end
+    y_ = "#{ (y*100) .to_i}%"
+    return y_
   end
 
   def to_s

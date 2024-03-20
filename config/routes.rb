@@ -14,7 +14,7 @@ Iro::Engine.routes.draw do
   get  'positions/:id/prepare', to: 'positions#prepare',  as: :prepare_to_roll_position, defaults: { template: 'gameui' }
   match  'positions/:id/prepare2', to: 'positions#prepare2', as: :prepare2_position, defaults: { template: 'gameui' }, via: [ :get, :post ]
   post 'positions/:id/roll', to: 'positions#do_roll',     as: :roll_position
-  get  'positions/:id/refresh', to: 'positions#refresh',  as: :refresh_position
+  get  'positions/:id/sync', to: 'positions#sync',  as: :sync_position
   resources :positions
   resources :profiles
 
@@ -22,7 +22,7 @@ Iro::Engine.routes.draw do
   get 'purses/:id', to: 'purses#show', as: :purse, defaults: { template: 'show' }
   resources :purses
 
-  get 'stocks/refresh', to: 'stocks#refresh', as: :refresh_stocks
+  get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   resources :stocks
 
   resources :strategies

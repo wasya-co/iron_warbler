@@ -17,8 +17,8 @@
         .label Last: #{pp_amount stock.last}
         .c
 
-        - left  = "#{ ( pos.outer_strike - stock.last ) * u}px"
-        - width = "#{ ( pos.inner_strike - pos.outer_strike ) * u}px"
+        - left  = "#{ ( pos.outer.strike - stock.last ) * u}px"
+        - width = "#{ ( pos.inner.strike - pos.outer.strike ) * u}px"
         .PositionW{ class: pos.strategy.kind, style: "left: #{left}; width: #{width}; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }

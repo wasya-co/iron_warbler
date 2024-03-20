@@ -30,6 +30,17 @@ class Iro::Position
   field     :long_or_short, type: :string
   validates :long_or_short, presence: true
 
+  def put_call
+    case strategy.kind
+    when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
+      put_call = 'CALL'
+    when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+      put_call = 'PUT'
+    when Iro::Strategy::KIND_COVERED_CALL
+      put_call = 'CALL'
+    end
+  end
+
 
   ## options
 
@@ -43,7 +54,7 @@ class Iro::Position
   # validates :outer_strike, presence: true
 
   field     :inner_strike, type: :float
-  validates :inner_strike, presence: true
+  # validates :inner_strike, presence: true
 
   field :expires_on
   validates :expires_on, presence: true
@@ -56,8 +67,14 @@ class Iro::Position
   field :begin_outer_price, type: :float
   field :begin_outer_delta, type: :float
 
-  field :begin_inner_price, type: :float
-  field :begin_inner_delta, type: :float
+  # field :begin_inner_price, type: :float
+  def begin_inner_price
+    inner.begin_price
+  end
+  # field :begin_inner_delta, type: :float
+  def begin_inner_delta
+    inner.begin_delta
+  end
 
   field :end_on
   field :end_outer_price, type: :float
@@ -121,35 +138,38 @@ class Iro::Position
 
 
   def sync
-    put_call = case strategy.kind
-    when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
-      'CALL'
-    when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
-      'PUT'
-    when Iro::Strategy::KIND_COVERED_CALL
-      'CALL'
-    end
+    inner.sync
+    outer.sync
 
-    inner = Tda::Option.get_quote({
-      contractType: put_call,
-      strike: inner_strike,
-      expirationDate: expires_on,
-      ticker: stock.ticker,
-    })
-    self.inner.end_price = ( inner.bid + inner.ask ) / 2
-    self.inner.end_delta = inner.delta
+    # put_call = case strategy.kind
+    # when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
+    #   'CALL'
+    # when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+    #   'PUT'
+    # when Iro::Strategy::KIND_COVERED_CALL
+    #   'CALL'
+    # end
 
-    if [ Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD , Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
-       ].include? strategy.kind
-      outer = Tda::Option.get_quote({
-        contractType: put_call,
-        strike: outer_strike,
-        expirationDate: expires_on,
-        ticker: stock.ticker,
-      })
-      self.outer.end_price = ( outer.bid + outer.ask ) / 2
-      self.outer.end_delta = outer.delta
-    end
+    # inner = Tda::Option.get_quote({
+    #   contractType: put_call,
+    #   strike: inner_strike,
+    #   expirationDate: expires_on,
+    #   ticker: stock.ticker,
+    # })
+    # self.inner.end_price = ( inner.bid + inner.ask ) / 2
+    # self.inner.end_delta = inner.delta
+
+    # if [ Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD , Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+    #    ].include? strategy.kind
+    #   outer = Tda::Option.get_quote({
+    #     contractType: put_call,
+    #     strike: outer_strike,
+    #     expirationDate: expires_on,
+    #     ticker: stock.ticker,
+    #   })
+    #   self.outer.end_price = ( outer.bid + outer.ask ) / 2
+    #   self.outer.end_delta = outer.delta
+    # end
   end
 
 
