@@ -14,7 +14,7 @@
       .label Last: #{pos.stock.last }
 
       - amnt   = pos.next_gain_loss_amount
-      - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
+      - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1*u}px solid red"
       - width  = "#{ ( pos.inner_strike - pos.outer_strike ) * u}px"
       - left   = "#{ ( pos.outer_strike - pos.stock.last ) * u}px"
       .PositionW{ style: "width: #{width}; left: #{left}; " }

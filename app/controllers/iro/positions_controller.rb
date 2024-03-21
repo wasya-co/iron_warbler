@@ -3,10 +3,7 @@ class Iro::PositionsController < Iro::ApplicationController
   before_action :set_lists
 
   def create
-    pos = @position = Iro::Position.new params[:position].permit(
-      :purse_id, :status, :stock_id,
-      :strategy_id, :expires_on, :quantity, :begin_on,
-    )
+    pos = @position = Iro::Position.new pos_params
     o_attrs = {
       expires_on: pos.expires_on,
       put_call: pos.put_call,
@@ -15,9 +12,6 @@ class Iro::PositionsController < Iro::ApplicationController
     pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
     pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
     authorize! :create, @position
-
-    # byebug
-
 
     if @position.save
       flash_notice @position
@@ -323,10 +317,7 @@ class Iro::PositionsController < Iro::ApplicationController
     pos = @position = Iro::Position.find params[:id]
     authorize! :update, @position
 
-    if @position.update params[:position].permit(
-      :purse_id, :status, :stock_id,
-      :strategy_id, :expires_on, :quantity, :begin_on,
-    )
+    if @position.update pos_params
       o_attrs = {
         expires_on: pos.expires_on,
         put_call: pos.put_call,
@@ -350,9 +341,15 @@ class Iro::PositionsController < Iro::ApplicationController
   ##
   private
 
+  def pos_params
+    params[:position].permit( :purse_id, :status, :stock_id,
+      :strategy_id, :expires_on, :quantity, :begin_on,
+      :long_or_short,
+    )
+  end
+
   def set_lists
     super
-
     @purses_list     = Iro::Purse.list
     @strategies_list = Iro::Strategy.list(params[:long_or_short])
     @stocks_list     = Iro::Stock.list

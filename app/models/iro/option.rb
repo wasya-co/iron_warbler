@@ -31,7 +31,7 @@ class Iro::Option
     [
       [ nil, nil ],
       [ 'Mar 22', '2024-03-22'.to_date ],
-      [ 'Mar 28', '2024-03-22'.to_date ],
+      [ 'Mar 28', '2024-03-28'.to_date ],
       [ 'Apr 5',  '2024-04-05'.to_date ],
       [ 'Mar 12', '2024-03-12'.to_date ],
       [ 'Mar 19', '2024-03-19'.to_date ],

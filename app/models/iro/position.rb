@@ -23,7 +23,8 @@ class Iro::Position
   end
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
-  delegate :long_or_short, to: :strategy
+  # delegate :long_or_short, to: :strategy
+  field :long_or_short
 
   def put_call
     case strategy.kind
