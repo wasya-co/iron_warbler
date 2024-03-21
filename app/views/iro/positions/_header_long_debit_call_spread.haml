@@ -1,6 +1,8 @@
 
-
+-##
 -## Same file for the spreads
+-##
+
 - collapse_key ||= pos.id
 %i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
 .maxwidth
@@ -8,27 +10,24 @@
   .a
     %table.bordered
       %tr
-        %td= pos.inner.strike
-        %td= pos.inner.begin_price
-        %td= pos.inner.begin_delta
+        %td <b>#{pp_amount pos.inner.strike}</b>
+        %td= pp_amount pos.inner.begin_price
+        %td= pp_delta pos.inner.begin_delta
+        %td &nbsp;-&nbsp;
+        %td= pp_amount pos.inner.end_price
+        %td= pp_delta pos.inner.end_delta
       %tr
-        %td= pos.outer.strike
-        %td= pos.outer.begin_price
+        %td <b>#{pp_amount pos.outer.strike}</b>
+        %td= pp_amount pos.outer.begin_price
         %td= pos.outer.begin_delta
+        %td &nbsp;-&nbsp;
+        %td= pp_amount pos.outer.end_price
+        %td= pp_delta pos.outer.end_delta
 
   %ul.m-0.p-0
-
-    -# %li
-    -#   <b>outer,inner_strike:</b> #{pp_amount pos.outer_strike} -> #{pp_amount pos.inner_strike}
-    -#   %i.fa.fa-expand.collapse-expand#innerOpt [inner]
-    -#   = render '/iro/options/show_mini', opt: pos.inner
-    -#   %i.fa.fa-expand.collapse-expand#innerOpt [outer]
-    -#   = render '/iro/options/show_mini', opt: pos.outer
-    -# %li
-    -#   <b>begin_outer,inner_price:</b> #{pp_amount pos.begin_outer_price} -> #{pp_amount pos.begin_inner_price}
-    -#   &nbsp;&nbsp;
-    -#   -## yes *100
-    -#   <b>max gain:</b> #{pp_amount pos.max_gain} :: #{pp_amount pos.max_gain * 100 * pos.q}
+    %li
+      -## yes *100
+      <b>max gain:</b> #{pp_amount pos.max_gain} :: #{pp_amount pos.max_gain * 100 * pos.q}
     -# %li
     -#   <b>end_outer,inner_price:</b> #{pp_amount pos.end_outer_price} -> #{pp_amount pos.end_inner_price}
     -#   &nbsp;&nbsp;
@@ -38,9 +37,9 @@
     %li
       <b>Exposure:</b> #{pp_amount pos.max_loss() *100*pos.q()}
     %li
-      <b>Breakeven:</b> #{pp_amount pos.max_gain}
+      <b>Breakeven:</b> #{pp_amount pos.inner.strike + pos.max_gain()}
     - ## no *100
-    %li <b>Net:</b> #{pp_amount pos.net_amount} :: #{pp_amount pos.net_amount * pos.q} &nbsp;&nbsp; <i>#{pp_percent pos.net_percent}</i>
+    %li <b>Net:</b> #{pp_amount pos.net_amount} :: #{pp_amount pos.net_amount() *100*pos.q} &nbsp;&nbsp; <i>#{pp_percent pos.net_percent}</i>
 
     - if !pos.persisted?
       %hr

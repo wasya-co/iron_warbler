@@ -4,19 +4,23 @@
     .actions
       = f.submit
 
+    .row
+      .col-md-6
+        .field
+          %label Kind
+          = f.select :kind, options_for_select( Iro::Strategy::KINDS, selected: strategy.kind )
+        .field
+          %label long or short?
+          = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
+        .field
+          %label stock
+          = f.select :stock_id, options_for_select(@stocks_list, selected: strategy.stock_id), class: 'select2'
 
-    .field
-      %label Kind
-      = f.select :kind, options_for_select( Iro::Strategy::KINDS, selected: strategy.kind )
-    .field
-      %label stock
-      = f.select :stock_id, options_for_select(@stocks_list, selected: strategy.stock_id), class: 'select2'
-    .field
-      %label slug
-      = f.text_field :slug
-    .field
-      %label long or short?
-      = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
+      .col-md-6
+        .field
+          %label slug
+          = f.text_field :slug
+    %hr
 
 
     .field

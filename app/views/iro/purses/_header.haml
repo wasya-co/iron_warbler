@@ -9,9 +9,23 @@
     = link_to '[gameUI]', gameui_purse_path(purse)
     (#{purse.positions.length})
 
-  = link_to '[+position]', new_position_path({ purse_id: purse.id })
-  -# = link_to '[+long]',     new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::LONG })
-  = link_to '[+short]',    new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::SHORT })
+.d-flex
+
+  .Card.d-flex
+    = form_for Iro::Position.new(strategy: Iro::Strategy.new), url: new_position_path, method: :get do |f|
+      .a +Position
+      = hidden_field_tag 'position[purse_id]', purse.id
+      .field
+        = f.select :strategy_id, options_for_select(@strategies_list)
+      -# .field
+      -#   = f.radio_button :long_or_short, :long
+      -#   %label long
+      -#   = f.radio_button :long_or_short, :short
+      -#   %label short
+      = f.submit 'Go'
+    -# = link_to '[+position]', new_position_path({ purse_id: purse.id })
+    -# = link_to '[+short]',    new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::SHORT })
+
 
 - if true || params[:template] == 'gameui'
   .mini-inputs

@@ -22,6 +22,7 @@ class Iro::ApplicationController < Wco::ApplicationController
   def set_lists
     @purses = Iro::Purse.all
     @strategies = Iro::Strategy.all
+    @strategies_list = Iro::Strategy.list
   end
 
 

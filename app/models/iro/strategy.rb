@@ -18,6 +18,7 @@ class Iro::Strategy
   has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
 
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
+  has_and_belongs_to_many :purses, class_name: 'Iro::Purse', inverse_of: :strategies
 
   KIND_COVERED_CALL = 'covered_call'
   KIND_LONG_DEBIT_CALL_SPREAD = 'long_debit_call_spread'

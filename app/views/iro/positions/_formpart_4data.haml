@@ -1,46 +1,49 @@
 .field
   %label Begin on
-  = f.text_field :begin_on
+  = f.text_field :begin_on, value: position.begin_on || Time.now.to_date.to_s
 
 .long-or-short-item
-  .d-flex
-    .field
-      %label Outer Strike
-      = f.number_field :outer_strike, step: 0.01
-    .field
-      %label Begin outer price
-      = f.text_field :begin_outer_price
-    .field
-      %label Begin outer delta
-      = f.text_field :begin_outer_delta
 
   .d-flex
-    .field
-      %label Inner Strike
-      = f.number_field :inner_strike, step: 0.01
-    .field
-      %label Begin inner price
-      = f.text_field :begin_inner_price
-    .field
-      %label Begin inner delta
-      = f.text_field :begin_inner_delta
+    = fields_for :outer, position.outer do |f_outer|
+      .field
+        %label Outer Strike
+        = f_outer.number_field :strike, step: 0.01
+      .field
+        %label Begin outer price
+        = f_outer.text_field :begin_price
+      .field
+        %label Begin outer delta
+        = f_outer.text_field :begin_delta
 
-%br
-.flex-row
-  %label End on
-  = f.text_field :end_on
-.long-or-short-item
   .d-flex
-    .field
-      %label End outer price
-      = f.text_field :end_outer_price
-    .field
-      %label End outer delta
-      = f.text_field :end_outer_delta
-  .d-flex
-    .field
-      %label End inner price
-      = f.text_field :end_inner_price
-    .field
-      %label End inner delta
-      = f.text_field :end_inner_delta
+    = fields_for :inner, position.inner do |f_inner|
+      .field
+        %label Inner Strike
+        = f_inner.number_field :strike, step: 0.01
+      .field
+        %label Begin inner price
+        = f_inner.text_field :begin_price
+      .field
+        %label Begin inner delta
+        = f_inner.text_field :begin_delta
+
+-# %br
+-# .flex-row
+-#   %label End on
+-#   = f.text_field :end_on
+-# .long-or-short-item
+-#   .d-flex
+-#     .field
+-#       %label End outer price
+-#       = f.text_field :end_outer_price
+-#     .field
+-#       %label End outer delta
+-#       = f.text_field :end_outer_delta
+-#   .d-flex
+-#     .field
+-#       %label End inner price
+-#       = f.text_field :end_inner_price
+-#     .field
+-#       %label End inner delta
+-#       = f.text_field :end_inner_delta

@@ -12,7 +12,9 @@ class Iro::Purse
   validates :slug, presence: true, uniqueness: true
   index({ slug: -1 }, { unique: true })
 
-  has_many :positions, class_name: 'Iro::Position', inverse_of: :purse
+  has_many :positions,  class_name: 'Iro::Position', inverse_of: :purse
+
+  has_and_belongs_to_many :strategies, class_name: 'Iro::Strategy', inverse_of: :purses
 
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
 

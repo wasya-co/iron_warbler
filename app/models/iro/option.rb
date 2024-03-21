@@ -27,6 +27,16 @@ class Iro::Option
 
   field :expires_on, type: :date
   validates :expires_on, presence: true
+  def self.expirations_list full: false
+    [
+      [ nil, nil ],
+      [ 'Mar 22', '2024-03-22'.to_date ],
+      [ 'Mar 28', '2024-03-22'.to_date ],
+      [ 'Apr 5',  '2024-04-05'.to_date ],
+      [ 'Mar 12', '2024-03-12'.to_date ],
+      [ 'Mar 19', '2024-03-19'.to_date ],
+    ]
+  end
 
   field :begin_price, type: :float
   field :begin_delta, type: :float
@@ -61,8 +71,9 @@ class Iro::Option
     puts! out, 'option sync'
     self.end_price = ( out.bid + out.ask ) / 2
     self.end_delta = out.delta
-    self.save
+    # self.save
   end
 
+  before_save :sync
 
 end

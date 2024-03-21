@@ -5,7 +5,7 @@ class Iro::Position
   include Mongoid::Paranoia
   store_in collection: 'iro_positions'
 
-  attr_accessor :next_gain_loss_amount
+  attr_accessor :next_gain_loss_amount # , :inner_strike, :outer_strike
 
   STATUS_ACTIVE   = 'active'
   STATUS_PROPOSED = 'proposed'
@@ -23,12 +23,7 @@ class Iro::Position
   end
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
-
-  ## in Iro::Strategy:
-  ## LONG = 'is_long'
-  ## SHORT = 'is_short'
-  field     :long_or_short, type: :string
-  validates :long_or_short, presence: true
+  delegate :long_or_short, to: :strategy
 
   def put_call
     case strategy.kind
@@ -41,14 +36,40 @@ class Iro::Position
     end
   end
 
-
-  ## options
-
   belongs_to :prev, class_name: 'Iro::Position', inverse_of: :nxt, optional: true
   has_one :nxt,     class_name: 'Iro::Position', inverse_of: :prev
 
-  belongs_to :outer, class_name: 'Iro::Option', inverse_of: :outer
+  ## Options
+
   belongs_to :inner, class_name: 'Iro::Option', inverse_of: :inner
+  belongs_to :outer, class_name: 'Iro::Option', inverse_of: :outer
+  accepts_nested_attributes_for :inner, :outer
+
+  # before_validation :create_inner_outer, on: :create
+  # def create_inner_outer
+  #   pos = self
+  #   # byebug
+  #   self.inner ||= Iro::Option.create({
+  #     begin_price: pos[:begin_inner_price],
+  #     begin_delta: pos[:begin_inner_delta],
+  #     expires_on:  pos[:expires_on],
+  #     inner:       pos,
+  #     put_call:    pos.put_call,
+  #     stock_id:    pos[:stock_id],
+  #     strike:      pos.inner_strike,
+  #   })
+  #   self.outer ||= Iro::Option.create({
+  #     begin_price: pos[:begin_outer_price],
+  #     begin_delta: pos[:begin_outer_delta],
+  #     expires_on:  pos[:expires_on],
+  #     outer:       pos,
+  #     put_call:    pos.put_call,
+  #     stock_id:    pos[:stock_id],
+  #     strike:      pos.outer_strike,
+  #   })
+  #   # self.inner.sync
+  #   # self.outer.sync
+  # end
 
   field     :outer_strike, type: :float
   # validates :outer_strike, presence: true
@@ -304,10 +325,18 @@ class Iro::Position
 
   def to_s
     out = "#{stock} (#{q}) #{expires_on.to_datetime.strftime('%b %d')} #{strategy.kind_short} ["
-    if outer_strike
-      out = out + "$#{outer_strike}->"
+    if Iro::Strategy::LONG == long_or_short
+      if outer.strike
+        out = out + "$#{outer.strike}->"
+      end
+      out = out + "$#{inner.strike}"
+    else
+      out = out + "$#{inner.strike}"
+      if outer.strike
+        out = out + "<-$#{outer.strike}"
+      end
     end
-    out = out + "$#{inner_strike}] "
+    out += "] "
     return out
   end
 end

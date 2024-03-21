@@ -3,43 +3,28 @@ class Iro::PositionsController < Iro::ApplicationController
   before_action :set_lists
 
   def create
-    @position = Iro::Position.new params[:position].permit(
-      :purse_id, :status, :stock_id, :long_or_short,
+    pos = @position = Iro::Position.new params[:position].permit(
+      :purse_id, :status, :stock_id,
       :strategy_id, :expires_on, :quantity, :begin_on,
     )
+    o_attrs = {
+      expires_on: pos.expires_on,
+      put_call: pos.put_call,
+      stock_id: pos.stock_id,
+    }
+    pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
+    pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
     authorize! :create, @position
-    pos = params[:position]
-    strategy = Iro::Strategy.find params[:position][:strategy_id]
 
-    @position.inner = Iro::Option.new({
-      begin_price: pos[:begin_inner_price],
-      begin_delta: pos[:begin_inner_delta],
-      expires_on: pos[:expires_on],
-      inner: @position,
-      put_call: pos.put_call,
-      stock_id: pos[:stock_id],
-      strike: pos[:inner_strike],
-    })
-    @position.outer = Iro::Option.new({
-      stock_id: pos[:stock_id],
-      put_call: pos.put_call,
-      strike: pos[:outer_strike],
-      expires_on: pos[:expires_on],
-      begin_price: pos[:begin_outer_price],
-      begin_delta: pos[:begin_outer_delta],
-      outer: @position,
-    })
+    # byebug
 
-    @position.sync
-    @position.inner.save || puts!( @position.inner.errors.messages, 'cannot save inner option' )
-    @position.outer.save || puts!( @position.outer.errors.messages, 'cannot save outer option' )
 
     if @position.save
       flash_notice @position
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
     else
       flash_alert @position
-      redirect_to request.referrer
+      render action: :new # redirect_to request.referrer
     end
   end
 
@@ -57,10 +42,13 @@ class Iro::PositionsController < Iro::ApplicationController
   end
 
   def new
-    @position = Iro::Position.new({
-      inner: Iro::Option.new,
-      outer: Iro::Option.new,
-    })
+    strategy = Iro::Strategy.find params[:position][:strategy_id]
+    @position = Iro::Position.new( params[:position].permit!.merge({
+      status: :active,
+      inner:  Iro::Option.new,
+      outer:  Iro::Option.new,
+      stock_id:  strategy.stock_id,
+    }) )
     authorize! :new, @posision
 
     if params[:id]
@@ -70,10 +58,6 @@ class Iro::PositionsController < Iro::ApplicationController
       puts! old, 'old'
       @position = Iro::Position.new old
     end
-    if params[:purse_id]
-      @position.purse_id = params[:purse_id]
-    end
-
   end
 
   def prepare
@@ -336,13 +320,21 @@ class Iro::PositionsController < Iro::ApplicationController
   ## only updates some attributes
   ##
   def update
-    @position = Iro::Position.find params[:id]
+    pos = @position = Iro::Position.find params[:id]
     authorize! :update, @position
 
     if @position.update params[:position].permit(
-      :purse_id, :status, :stock_id, :long_or_short,
+      :purse_id, :status, :stock_id,
       :strategy_id, :expires_on, :quantity, :begin_on,
     )
+      o_attrs = {
+        expires_on: pos.expires_on,
+        put_call: pos.put_call,
+        stock_id: pos.stock_id,
+      }
+      pos.inner.update params[:inner].permit!.merge( o_attrs )
+      pos.outer.update params[:outer].permit!.merge( o_attrs )
+
       flash_notice @position
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
     else
@@ -350,6 +342,8 @@ class Iro::PositionsController < Iro::ApplicationController
       redirect_to request.referrer
     end
   end
+
+
 
   ##
   ## private
