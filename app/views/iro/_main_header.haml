@@ -23,7 +23,9 @@
           = link_to 'Purses', purses_path
           %ul
             - @purses.each do |p|
-              %li= link_to p, purse_path(p)
+              %li
+                = link_to p, purse_path(p)
+                = link_to '[ui]', purse_gameui_path(p)
         .a
           = link_to 'Strategies', strategies_path
           %ul

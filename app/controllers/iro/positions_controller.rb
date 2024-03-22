@@ -114,58 +114,93 @@ class Iro::PositionsController < Iro::ApplicationController
     pos   = @position
     stock = @position.stock
 
-    next_outer = @position.outer || Iro::Option.create({
-      stock: stock,
-      strike: pos.outer_strike,
-      expires_on: pos.expires_on,
-      position: pos,
-      last: pos.begin_outer_price,
-    })
+    # next_outer = @position.outer || Iro::Option.create({
+    #   stock: stock,
+    #   strike: pos.outer_strike,
+    #   expires_on: pos.expires_on,
+    #   position: pos,
+    #   last: pos.begin_outer_price,
+    # })
 
-    next_inner = @position.inner || Iro::Option.create({
-      stock: stock,
-      strike: pos.inner.strike,
-      expires_on: pos.expires_on,
-      position: pos,
-      last: pos.inner.begin_price,
-    })
+    # next_inner = @position.inner || Iro::Option.create({
+    #   stock: stock,
+    #   strike: pos.inner.strike,
+    #   expires_on: pos.expires_on,
+    #   position: pos,
+    #   last: pos.inner.begin_price,
+    # })
 
-    prev_outer = pos.prev.outer
-    prev_inner = pos.prev.inner
+    # prev_outer = pos.prev.outer
+    # prev_inner = pos.prev.inner
 
-    price = pos.prev.outer.last - pos.prev.inner.last + pos.nxt.inner.last - pos.nxt.outer.last
+
 
     @query = {
-      orderType: "NET_DEBIT",
+      orderType: price > 0 ? "NET_CREDIT" : "NET_DEBIT",
       session: "NORMAL",
       price: price,
       duration: "DAY",
       orderStrategyType: "SINGLE",
       orderLegCollection: [
-        ## @TODO: this is only entering the next position, need to also close out the previous.
+        ## close
+        {
+          instruction: "BUY_TO_CLOSE",
+          quantity: pos.q,
+          instrument: {
+            symbol: pos.prev.inner.symbol,
+            assetType: "OPTION",
+          },
+        },
+        {
+          instruction: "SELL_TO_CLOSE",
+          quantity: pos.q,
+          instrument: {
+            symbol: pos.prev.outer.symbol,
+            assetType: "OPTION",
+          },
+        },
+
+        ## open
         {
           instruction: "BUY_TO_OPEN",
-          quantity: q,
+          quantity: pos.q,
           instrument: {
-            symbol: outer.symbol,
+            symbol: pos.outer.symbol,
             assetType: "OPTION",
           },
         },
         {
           instruction: "SELL_TO_OPEN",
-          quantity: q,
+          quantity: pos.q,
           instrument: {
-            symbol: inner.symbol,
+            symbol: pos.inner.symbol,
             assetType: "OPTION",
           },
         },
       ],
     }
+    puts! @query, '@query'
   end
 
   ## long debit call spread
   def prepare3
-    out = Tda::Option.roll_long_debit_call_spread( position )
+    pos = @position = Iro::Position.find params[:id]
+    authorize! :place_order, @position
+
+    # out = Tda::Option.roll_long_debit_call_spread( position )
+
+    ## @TODO: it's pending here, the order has not been placed.
+
+    flags = []
+
+    flags.push pos.prev.update({ status: Iro::Position::STATUS_CLOSED })
+    flags.push pos.update({ status: Iro::Position::STATUS_ACTIVE })
+    flags.push pos.purse.update({
+      available_amount: pos.purse.available_amount + price + pos.q*100,
+    })
+
+    flash_notice flags
+    redirect_to controller: :purses, action: :show, template: :gameui, id: pos.purse_id
   end
 
 
@@ -347,6 +382,13 @@ class Iro::PositionsController < Iro::ApplicationController
       :long_or_short,
     )
   end
+
+  def price
+    pos = @position
+    out = pos.prev.outer.end_price - pos.prev.inner.end_price + pos.inner.begin_price - pos.outer.begin_price
+    return out
+  end
+
 
   def set_lists
     super

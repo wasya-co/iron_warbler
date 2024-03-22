@@ -20,4 +20,5 @@
       .PositionW{ class: pos.strategy.kind, style: "width: #{width}; left: #{left}; border-right: #{border};" }
         .Position
           .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+          .select= button_to 'select', prepare2_position_path(pos.id)
     .c

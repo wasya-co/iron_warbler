@@ -9,7 +9,9 @@ class Iro::Position
 
   STATUS_ACTIVE   = 'active'
   STATUS_PROPOSED = 'proposed'
-  STATUSES = [ nil, 'active', 'inactive', 'proposed' ]
+  STATUS_CLOSED   = 'closed'
+  STATUS_PENDING  = 'pending'
+  STATUSES = [ nil, STATUS_ACTIVE, STATUS_PROPOSED, STATUS_CLOSED, STATUS_PENDING ]
   field :status
   validates :status, presence: true
   scope :active, ->{ where( status: 'active' ) }

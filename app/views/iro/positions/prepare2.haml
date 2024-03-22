@@ -5,7 +5,18 @@
 %ul
   %li
     buy to close
+    = pos.prev.inner
+  %li
+    sell to close
     = pos.prev.outer
-  %li sell to close
-  %li buy to open
-  %li sell to open
+  %li
+    buy to open
+    = pos.outer
+  %li
+    sell to open
+    = pos.inner
+  %li
+    Query
+    %pre= JSON.pretty_generate( @query )
+
+= button_to 'Place Order', prepare3_position_path(@position), data: { confirm: 'Are you sure?' }

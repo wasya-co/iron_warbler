@@ -69,3 +69,8 @@
               <b>Delta short begin:</b> #{pp_delta @purse.delta_wt_avg( :begin, :short, :inner )}
               <b>end:</b> #{pp_delta @purse.delta_wt_avg( :end, :short, :inner )}
 
+            %hr
+            %li
+              <b>Available amount:</b> #{@purse.available_amount}
+
+
