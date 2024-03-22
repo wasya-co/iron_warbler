@@ -69,7 +69,7 @@ class Iro::Option
       ticker: ticker,
     })
     puts! out, 'option sync'
-    self.end_price = ( out.bid + out.ask ) / 2
+    self.end_price = ( out.bid + out.ask ) / 2 rescue 0
     self.end_delta = out.delta
     # self.save
   end

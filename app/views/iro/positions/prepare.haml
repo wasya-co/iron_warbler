@@ -14,10 +14,12 @@
 
         = render "/iro/positions/gameui_#{pos.strategy.kind}", position: pos
 
-        - @positions.each_with_index do |pos, idx|
-          .reviewing
-            = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
-            = render "/iro/positions/prepare_#{pos.strategy.kind}", pos: pos
+        %div{ class: pos.long_or_short }
+          .long-or-short-item{ style: "border-left: 0" }
+            - @positions.each_with_index do |pos, idx|
+              .reviewing
+                = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
+                = render "/iro/positions/prepare_#{pos.strategy.kind}", pos: pos
 
 
 

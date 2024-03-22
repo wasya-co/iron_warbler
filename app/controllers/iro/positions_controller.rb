@@ -73,7 +73,7 @@ class Iro::PositionsController < Iro::ApplicationController
     while true
       @nn = ( @position.purse.n_next_positions/2 ).ceil
       upper = Tda::Option.get_quote({
-        contractType: 'CALL',
+        contractType: @position.put_call,
         strike: @prev.inner.strike + @nn*@stock.options_price_increment,
         expirationDate: @next_expires_on,
         ticker: @stock.ticker,
@@ -87,7 +87,7 @@ class Iro::PositionsController < Iro::ApplicationController
         next
       end
       lower = Tda::Option.get_quote({
-        contractType: 'CALL',
+        contractType: @position.put_call,
         strike: @prev.inner.strike - @nn*@stock.options_price_increment,
         expirationDate: @next_expires_on,
         ticker: @stock.ticker,

@@ -17,7 +17,7 @@
       - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"
       - width  = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
       - left   = "#{ ( pos.stock.last - pos.outer_strike ) * u}px"
-      .PositionW{ style: "width: #{width}; left: #{left}; border-right: #{border};" }
+      .PositionW{ class: pos.strategy.kind, style: "width: #{width}; left: #{left}; border-right: #{border};" }
         .Position
           .MaxGain{ style: "width: #{pos.max_gain * u}px" }
     .c
