@@ -6,14 +6,16 @@
     = strategy
   %ul
     -# %li <b>ticker:</b> #{strategy.ticker}
-    %li <b>slug:</b> #{strategy.slug}
+    -# %li <b>slug:</b> #{strategy.slug}
 
     %li <b>buffer_above_water:</b> #{strategy.buffer_above_water}
+    %li <b>threshold_delta:</b> #{strategy.threshold_delta}
+    %li <b>threshold_netp:</b> #{strategy.threshold_netp}
+
+    %hr
 
     %li <b>next_inner_delta:</b> #{strategy.next_inner_delta}
     -# %li <b>next_outer_delta:</b> #{strategy.next_max_outer_delta}
     %li <b>next_inner_strike:</b> #{strategy.next_inner_strike}
-
-    %li <b>threshold_delta:</b> #{strategy.threshold_delta}
-    %li <b>threshold_netp:</b> #{strategy.threshold_netp}
+    %li <b>next_spread_amount:</b> #{strategy.next_spread_amount}
 

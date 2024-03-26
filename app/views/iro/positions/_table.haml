@@ -64,8 +64,7 @@
               = link_to '[dup]', duplicate_position_path(position)
             .d-flex
               = link_to '[sync]', sync_position_path(pos)
-              - if true # position.next_reasons.present? && position.rollp > 0.5
-                = link_to '[roll]', prepare_to_roll_position_path(pos)
+              = link_to '[roll]', prepare_to_roll_position_path(pos)
 
           %td.ticker
             = position.stock.ticker
@@ -127,12 +126,13 @@
             - if position.next_reasons.present?
               %i.fa.fa-expand.collapse-expand{ id: "pos-reasons-#{position.id}" } reasons
               = render '/iro/positions/reasons', reasons: position.next_reasons
-            .a= position.next_symbol
-            .a= position.next_delta
+            .a= position.autonxt
             .a
-              = pp_amount position.next_mark
-              \=>
-              = pp_amount position.next_outcome * 100 * position.quantity rescue nil
+              - if pos.autonxt
+                = link_to '[autonxt]', prepare2_position_path(pos.autonxt)
+                = pp_amount pos.autonxt.prev_gain_loss_amount
+              -# \=>
+              -# = pp_amount position.next_outcome * 100 * position.quantity rescue nil
 
 
 

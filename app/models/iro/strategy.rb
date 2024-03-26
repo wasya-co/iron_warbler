@@ -44,15 +44,16 @@ class Iro::Strategy
   end
 
   field :buffer_above_water, type: :float
-  field :threshold_delta, type: :float
-  field :threshold_netp, type: :float
+  field :threshold_delta,    type: :float
+  field :threshold_netp,     type: :float
+  field :min_dte,            type: :integer, default: 0
 
-  field :next_inner_delta, type: :float
-  field :next_outer_delta, type: :float
-  field :next_inner_strike, type: :float
-  field :next_outer_strike, type: :float
+  field :next_inner_delta,   type: :float
+  field :next_outer_delta,   type: :float
+  field :next_inner_strike,  type: :float
+  field :next_outer_strike,  type: :float
   field :next_spread_amount, type: :float # e.g. $20 for a $2000 NVDA spread
-
+  field :next_buffer_above_water, type: :float
 
   def self.for_ticker ticker
     where( ticker: ticker )
@@ -137,7 +138,7 @@ class Iro::Strategy
     end
 
     if 1 - p.inner.end_price/p.inner.begin_price > threshold_netp
-      return [ 0.51, "made enough #{'%.0f' % [(1 - p.inner.end_price/p.inner.begin_price )*100]}% profit" ]
+      return [ 0.51, "made enough #{'%.02f' % [(1.0 - p.inner.end_price/p.inner.begin_price )*100]}% profit." ]
     end
 
     return [ 0.33, '-' ]
@@ -164,7 +165,7 @@ class Iro::Strategy
     end
 
     if 1 - p.inner.end_price/p.inner.begin_price > threshold_netp
-      return [ 0.51, "made enough #{'%.0f' % [(1 - p.inner.end_price/p.inner.begin_price )*100]}% profit" ]
+      return [ 0.51, "made enough #{'%.02f' % [(1.0 - p.inner.end_price/p.inner.begin_price )*100]}% profit^" ]
     end
 
     return [ 0.33, '-' ]
@@ -173,22 +174,22 @@ class Iro::Strategy
   ## @TODO
   def calc_rollp_short_debit_put_spread p
 
-    if ( p.expires_on.to_date - Time.now.to_date ).to_i < 1
-      return [ 0.99, '0 DTE, must exit' ]
+    if ( p.expires_on.to_date - Time.now.to_date ).to_i <= min_dte
+      return [ 0.99, "< #{min_dte}DTE, must exit" ]
     end
 
-    if ( stock.last - buffer_above_water ) < p.inner.strike
+    if stock.last + buffer_above_water > p.inner.strike
       return [ 0.98, "Last #{'%.2f' % stock.last} is " +
-          "#{'%.2f' % [stock.last - p.inner.strike - buffer_above_water]} " +
-          "above #{'%.2f' % [p.inner.strike + buffer_above_water]} water" ]
+          "#{'%.2f' % [stock.last + buffer_above_water - p.inner.strike]} " +
+          "above #{'%.2f' % [p.inner.strike - buffer_above_water]} water" ]
     end
 
-    if p.inner.end_delta < threshold_delta
+    if p.inner.end_delta.abs < threshold_delta.abs
       return [ 0.79, "Delta #{p.inner.end_delta} is lower than #{threshold_delta} threshold." ]
     end
 
-    if 1 - p.inner.end_price/p.inner.begin_price > threshold_netp
-      return [ 0.51, "made enough #{'%.0f' % [(1 - p.inner.end_price/p.inner.begin_price )*100]}% profit" ]
+    if p.net_percent > threshold_netp
+      return [ 0.51, "made enough #{'%.0f' % [p.net_percent*100]}% > #{"%.2f" % [threshold_netp*100]}% profit," ]
     end
 
     return [ 0.33, '-' ]
