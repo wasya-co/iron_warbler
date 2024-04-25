@@ -1,0 +1,16 @@
+
+.Card.d-flex
+  = form_for Iro::Position.new(strategy: Iro::Strategy.new), url: new_position_path, method: :get do |f|
+    .a +Position
+    = hidden_field_tag 'position[purse_id]', purse.id
+    .field
+      %label strategy
+      = f.select :strategy_id, options_for_select(@strategies_list)
+    -# .field
+    -#   = f.radio_button :long_or_short, :long
+    -#   %label long
+    -#   = f.radio_button :long_or_short, :short
+    -#   %label short
+    = f.submit 'Continue'
+  -# = link_to '[+position]', new_position_path({ purse_id: purse.id })
+  -# = link_to '[+short]',    new_position_path({ purse_id: purse.id, long_or_short: Iro::Strategy::SHORT })

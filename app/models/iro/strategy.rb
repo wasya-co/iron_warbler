@@ -20,28 +20,21 @@ class Iro::Strategy
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
   has_and_belongs_to_many :purses, class_name: 'Iro::Purse', inverse_of: :strategies
 
-  KIND_COVERED_CALL = 'covered_call'
-  KIND_LONG_DEBIT_CALL_SPREAD = 'long_debit_call_spread'
-  KIND_SHORT_DEBIT_PUT_SPREAD = 'short_debit_put_spread'
+  KIND_COVERED_CALL             = 'covered_call'
+  KIND_IRON_CONDOR              = 'iron_condor'
+  KIND_LONG_CREDIT_PUT_SPREAD   = 'long_credit_put_spread'
+  KIND_LONG_DEBIT_CALL_SPREAD   = 'long_debit_call_spread'
+  KIND_SHORT_CREDIT_CALL_SPREAD = 'short_credit_call_spread'
+  KIND_SHORT_DEBIT_PUT_SPREAD   = 'short_debit_put_spread'
   KINDS = [ nil,
     KIND_COVERED_CALL,
+    KIND_IRON_CONDOR,
+    KIND_LONG_CREDIT_PUT_SPREAD,
     KIND_LONG_DEBIT_CALL_SPREAD,
+    KIND_SHORT_CREDIT_CALL_SPREAD,
     KIND_SHORT_DEBIT_PUT_SPREAD,
   ]
   field :kind
-
-  def kind_short
-    case kind
-    when KIND_COVERED_CALL
-      'cc'
-    when KIND_LONG_DEBIT_CALL_SPREAD
-      'long-spread'
-    when KIND_SHORT_DEBIT_PUT_SPREAD
-      'short-spread'
-    else
-      '@TODO-zez'
-    end
-  end
 
   field :buffer_above_water, type: :float
   field :threshold_delta,    type: :float
@@ -71,11 +64,14 @@ class Iro::Strategy
     p.inner.begin_price * 100 - 0.66 # @TODO: is this *100 really?
   end
   def max_gain_long_debit_call_spread p
-    ## 100 * disalloed for gameui
+    ## 100 * disallowed for gameui
     ( p.inner.strike - p.outer.strike - p.outer.begin_price + p.inner.begin_price ) # - 2*0.66
   end
+  def max_gain_short_credit_call_spread p
+    p.inner.begin_price - p.outer.begin_price
+  end
   def max_gain_short_debit_put_spread p
-    ## 100 * disalloed for gameui
+    ## 100 * disallowed for gameui
     ( p.outer.strike - p.inner.strike - p.outer.begin_price + p.inner.begin_price ) # - 2*0.66
   end
 
@@ -87,7 +83,8 @@ class Iro::Strategy
     inner = p.inner.begin_price - p.inner.end_price
     out = ( outer + inner )
   end
-  alias_method :net_amount_short_debit_put_spread, :net_amount_long_debit_call_spread
+  alias_method :net_amount_short_credit_call_spread , :net_amount_long_debit_call_spread
+  alias_method :net_amount_short_debit_put_spread,    :net_amount_long_debit_call_spread
 
   def max_loss_covered_call p
     p.inner.begin_price*10 # just suppose 10,000%
@@ -98,6 +95,9 @@ class Iro::Strategy
   def max_loss_short_debit_put_spread p # different
     out = p.inner.strike - p.outer.strike
   end
+  def max_loss_short_credit_call_spread p
+    out = p.outer.strike - p.inner.strike
+  end
 
   def begin_delta_covered_call p
     p.inner.begin_delta
@@ -105,7 +105,8 @@ class Iro::Strategy
   def begin_delta_long_debit_call_spread p
     p.outer.begin_delta - p.inner.begin_delta
   end
-  alias_method :begin_delta_short_debit_put_spread, :begin_delta_long_debit_call_spread
+  alias_method :begin_delta_short_debit_put_spread,   :begin_delta_long_debit_call_spread
+  alias_method :begin_delta_short_credit_call_spread, :begin_delta_long_debit_call_spread
 
   def end_delta_covered_call p
     p.inner.end_delta
@@ -113,7 +114,8 @@ class Iro::Strategy
   def end_delta_long_debit_call_spread p
     p.outer.end_delta - p.inner.end_delta
   end
-  alias_method :end_delta_short_debit_put_spread, :end_delta_long_debit_call_spread
+  alias_method :end_delta_short_debit_put_spread,   :end_delta_long_debit_call_spread
+  alias_method :end_delta_short_credit_call_spread, :end_delta_long_debit_call_spread
 
 
 
@@ -199,7 +201,7 @@ class Iro::Strategy
 
 
   def to_s
-    "#{stock} #{kind_short} #{slug}"
+    slug
   end
   def self.list long_or_short = nil
     these = long_or_short ? where( long_or_short: long_or_short ) : all

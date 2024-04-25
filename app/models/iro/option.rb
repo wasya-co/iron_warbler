@@ -27,15 +27,27 @@ class Iro::Option
 
   field :expires_on, type: :date
   validates :expires_on, presence: true
-  def self.expirations_list full: false
-    [
-      [ nil, nil ],
-      [ 'Mar 22', '2024-03-22'.to_date ],
-      [ 'Mar 28', '2024-03-28'.to_date ],
-      [ 'Apr 5',  '2024-04-05'.to_date ],
-      [ 'Mar 12', '2024-03-12'.to_date ],
-      [ 'Mar 19', '2024-03-19'.to_date ],
-    ]
+  def self.expirations_list full: false, n: 5
+    out = [[nil,nil]]
+    day = Date.today
+    n.times do
+      next_exp = day.next_occurring(:thursday).next_occurring(:friday)
+      if !next_exp.workday?
+        next_exp = Time.previous_business_day( next_exp )
+      end
+
+      out.push([ next_exp.strftime('%b %e'), next_exp.strftime('%Y-%m-%d') ])
+      day = next_exp
+    end
+    return out
+    # [
+    #   [ nil, nil ],
+    #   [ 'Mar 22', '2024-03-22'.to_date ],
+    #   [ 'Mar 28', '2024-03-28'.to_date ],
+    #   [ 'Apr 5',  '2024-04-05'.to_date ],
+    #   [ 'Mar 12', '2024-03-12'.to_date ],
+    #   [ 'Mar 19', '2024-03-19'.to_date ],
+    # ]
   end
 
   field :begin_price, type: :float
@@ -74,6 +86,6 @@ class Iro::Option
     # self.save
   end
 
-  before_save :sync
+  before_save :sync, if: ->() { !Rails.env.test? } ## do not sync in test
 
 end

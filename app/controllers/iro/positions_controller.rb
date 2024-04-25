@@ -4,6 +4,8 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def create
     pos = @position = Iro::Position.new pos_params
+    authorize! :create, @position
+
     o_attrs = {
       expires_on: pos.expires_on,
       put_call: pos.put_call,
@@ -11,7 +13,15 @@ class Iro::PositionsController < Iro::ApplicationController
     }
     pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
     pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
-    authorize! :create, @position
+
+    @strategy = Iro::Strategy.find params[:position][:strategy_id]
+    case @strategy.kind
+    when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+      pos.inner.put_call = 'CALL'
+      pos.outer.put_call = 'CALL'
+    else
+      throw 'put_call in Positions#create not implemented for this strategy kind.'
+    end
 
     if @position.save
       flash_notice @position

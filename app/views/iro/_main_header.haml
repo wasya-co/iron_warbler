@@ -4,9 +4,9 @@
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderTrading
       Wco Trading
-    .a
-      .d-flex
-        %ul{ style: "margin-top: 2em;" }
+    .W
+      .d-flex.flex-wrap
+        %ul
           %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
@@ -26,6 +26,7 @@
               %li
                 = link_to p, purse_path(p)
                 = link_to '[ui]', purse_gameui_path(p)
+
         .a
           = link_to 'Strategies', strategies_path
           %ul

@@ -28,6 +28,7 @@ class Iro::Position
   delegate :ticker, to: :stock
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
+
   field :long_or_short
 
   def put_call
@@ -50,7 +51,11 @@ class Iro::Position
   ## Options
 
   belongs_to :inner, class_name: 'Iro::Option', inverse_of: :inner
+  validates_associated :inner
+
   belongs_to :outer, class_name: 'Iro::Option', inverse_of: :outer
+  validates_associated :outer
+
   accepts_nested_attributes_for :inner, :outer
 
   field     :outer_strike, type: :float
@@ -262,7 +267,7 @@ class Iro::Position
   end
 
   def to_s
-    out = "#{stock} (#{q}) #{expires_on.to_datetime.strftime('%b %d')} #{strategy.kind_short} ["
+    out = "#{stock} (#{q}) #{expires_on.to_datetime.strftime('%b %d')} #{strategy.long_or_short} ["
     if Iro::Strategy::LONG == long_or_short
       if outer.strike
         out = out + "$#{outer.strike}->"
