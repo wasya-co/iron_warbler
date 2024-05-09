@@ -8,15 +8,15 @@ class Iro::Strategy
   field :slug
   validates :slug, presence: true, uniqueness: true
 
-  LONG = 'is_long'
+  field :description
+
+  LONG  = 'is_long'
   SHORT = 'is_short'
   field     :long_or_short, type: :string
   validates :long_or_short, presence: true
 
-  field :description
 
   has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
-
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
   has_and_belongs_to_many :purses, class_name: 'Iro::Purse', inverse_of: :strategies
 
@@ -36,21 +36,32 @@ class Iro::Strategy
   ]
   field :kind
 
-  field :buffer_above_water, type: :float
-  field :threshold_delta,    type: :float
-  field :threshold_netp,     type: :float
-  field :min_dte,            type: :integer, default: 0
+  field :threshold_buffer_above_water, type: :float
+  field :threshold_delta,              type: :float
+  field :threshold_netp,               type: :float
+  field :threshold_dte,                type: :integer, default: 1
 
-  field :next_inner_delta,   type: :float
-  field :next_outer_delta,   type: :float
-  field :next_inner_strike,  type: :float
-  field :next_outer_strike,  type: :float
-  field :next_spread_amount, type: :float # e.g. $20 for a $2000 NVDA spread
+  field :next_inner_delta,        type: :float
+  field :next_inner_strike,       type: :float
+  field :next_outer_delta,        type: :float
+  field :next_outer_strike,       type: :float
+  field :next_spread_amount,      type: :float # e.g. $20 for a $2000 NVDA spread
   field :next_buffer_above_water, type: :float
 
-  def self.for_ticker ticker
-    where( ticker: ticker )
+  def next_inner_strike_on expires_on
+
   end
+
+
+  def begin_delta_covered_call p
+    p.inner.begin_delta
+  end
+  def begin_delta_long_debit_call_spread p
+    p.outer.begin_delta - p.inner.begin_delta
+  end
+  alias_method :begin_delta_short_debit_put_spread,   :begin_delta_long_debit_call_spread
+  alias_method :begin_delta_short_credit_call_spread, :begin_delta_long_debit_call_spread
+
 
   def breakeven_covered_call p
     p.inner.strike + p.inner.begin_price
@@ -59,6 +70,17 @@ class Iro::Strategy
     p.inner.strike - p.max_gain
   end
   alias_method :breakeven_short_debit_put_spread, :breakeven_long_debit_call_spread
+
+
+  def end_delta_covered_call p
+    p.inner.end_delta
+  end
+  def end_delta_long_debit_call_spread p
+    p.outer.end_delta - p.inner.end_delta
+  end
+  alias_method :end_delta_short_debit_put_spread,   :end_delta_long_debit_call_spread
+  alias_method :end_delta_short_credit_call_spread, :end_delta_long_debit_call_spread
+
 
   def max_gain_covered_call p
     p.inner.begin_price * 100 - 0.66 # @TODO: is this *100 really?
@@ -75,16 +97,6 @@ class Iro::Strategy
     ( p.outer.strike - p.inner.strike - p.outer.begin_price + p.inner.begin_price ) # - 2*0.66
   end
 
-  def net_amount_covered_call p
-    ( p.inner.begin_price - p.inner.end_price )
-  end
-  def net_amount_long_debit_call_spread p
-    outer = p.outer.end_price   - p.outer.begin_price
-    inner = p.inner.begin_price - p.inner.end_price
-    out = ( outer + inner )
-  end
-  alias_method :net_amount_short_credit_call_spread , :net_amount_long_debit_call_spread
-  alias_method :net_amount_short_debit_put_spread,    :net_amount_long_debit_call_spread
 
   def max_loss_covered_call p
     p.inner.begin_price*10 # just suppose 10,000%
@@ -99,23 +111,18 @@ class Iro::Strategy
     out = p.outer.strike - p.inner.strike
   end
 
-  def begin_delta_covered_call p
-    p.inner.begin_delta
-  end
-  def begin_delta_long_debit_call_spread p
-    p.outer.begin_delta - p.inner.begin_delta
-  end
-  alias_method :begin_delta_short_debit_put_spread,   :begin_delta_long_debit_call_spread
-  alias_method :begin_delta_short_credit_call_spread, :begin_delta_long_debit_call_spread
 
-  def end_delta_covered_call p
-    p.inner.end_delta
+  def net_amount_covered_call p
+    ( p.inner.begin_price - p.inner.end_price )
   end
-  def end_delta_long_debit_call_spread p
-    p.outer.end_delta - p.inner.end_delta
+  def net_amount_long_debit_call_spread p
+    outer = p.outer.end_price   - p.outer.begin_price
+    inner = p.inner.begin_price - p.inner.end_price
+    out = ( outer + inner )
   end
-  alias_method :end_delta_short_debit_put_spread,   :end_delta_long_debit_call_spread
-  alias_method :end_delta_short_credit_call_spread, :end_delta_long_debit_call_spread
+  alias_method :net_amount_short_credit_call_spread , :net_amount_long_debit_call_spread
+  alias_method :net_amount_short_debit_put_spread,    :net_amount_long_debit_call_spread
+
 
 
 
@@ -198,6 +205,9 @@ class Iro::Strategy
   end
 
 
+  def self.for_ticker ticker
+    where( ticker: ticker )
+  end
 
 
   def to_s

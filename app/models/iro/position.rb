@@ -253,7 +253,7 @@ class Iro::Position
   def next_expires_on
     out = expires_on.to_datetime.next_occurring(:monday).next_occurring(:friday)
     if !out.workday?
-      out = Time.previous_business_day(out )
+      out = Time.previous_business_day(out)
     end
     return out
   end
