@@ -29,7 +29,7 @@ class Iro::Option
   validates :expires_on, presence: true
   def self.expirations_list full: false, n: 5
     out = [[nil,nil]]
-    day = Date.today
+    day = Date.today - 5.days
     n.times do
       next_exp = day.next_occurring(:thursday).next_occurring(:friday)
       if !next_exp.workday?
@@ -82,7 +82,7 @@ class Iro::Option
     })
     puts! out, 'option sync'
     self.end_price = ( out.bid + out.ask ) / 2 rescue 0
-    self.end_delta = out.delta
+    self.end_delta = out.delta if out.delta
     # self.save
   end
 

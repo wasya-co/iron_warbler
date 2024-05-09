@@ -8,20 +8,11 @@ class Iro::PositionsController < Iro::ApplicationController
 
     o_attrs = {
       expires_on: pos.expires_on,
-      put_call: pos.put_call,
+      put_call: pos.put_call, # I need this. _vp_ 2024-04-26
       stock_id: pos.stock_id,
     }
     pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
     pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
-
-    @strategy = Iro::Strategy.find params[:position][:strategy_id]
-    case @strategy.kind
-    when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
-      pos.inner.put_call = 'CALL'
-      pos.outer.put_call = 'CALL'
-    else
-      throw 'put_call in Positions#create not implemented for this strategy kind.'
-    end
 
     if @position.save
       flash_notice @position
@@ -77,7 +68,7 @@ class Iro::PositionsController < Iro::ApplicationController
     while true
       @nn = ( @position.purse.n_next_positions/2 ).ceil
       upper = Tda::Option.get_quote({
-        contractType: @position.put_call,
+        contractType: @position.inner.put_call,
         strike: @prev.inner.strike + @nn*@stock.options_price_increment,
         expirationDate: @prev.next_expires_on,
         ticker: @stock.ticker,
@@ -91,7 +82,7 @@ class Iro::PositionsController < Iro::ApplicationController
         next
       end
       lower = Tda::Option.get_quote({
-        contractType: @position.put_call,
+        contractType: @position.inner.put_call,
         strike: @prev.inner.strike - @nn*@stock.options_price_increment,
         expirationDate: @prev.next_expires_on,
         ticker: @stock.ticker,
@@ -256,6 +247,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @positions = @positions.reverse
   end
   alias_method :_prepare_short_debit_put_spread, :_prepare_long_debit_call_spread
+  alias_method :_prepare_short_credit_call_spread, :_prepare_long_debit_call_spread
 
 
   def sync
@@ -281,8 +273,6 @@ class Iro::PositionsController < Iro::ApplicationController
     if @position.update pos_params
       o_attrs = {
         expires_on: pos.expires_on,
-        put_call: pos.put_call,
-        stock_id: pos.stock_id,
       }
       pos.inner.update params[:inner].permit!.merge( o_attrs )
       pos.outer.update params[:outer].permit!.merge( o_attrs )
@@ -303,9 +293,12 @@ class Iro::PositionsController < Iro::ApplicationController
   private
 
   def pos_params
-    params[:position].permit( :purse_id, :status, :stock_id,
-      :strategy_id, :expires_on, :quantity, :begin_on,
+    params[:position].permit( :begin_on,
+      :expires_on,
       :long_or_short,
+      :purse_id,
+      :quantity,
+      :status, :stock_id, :strategy_id,
     )
   end
 

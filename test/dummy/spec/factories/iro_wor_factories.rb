@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :option, class: 'Iro::Option' do
     expires_on { '2024-04-19' }
     put_call { 'CALL' }
+    strike { 800 }
     after :build do |doc|
       doc.stock    = Iro::Stock.all.first
     end

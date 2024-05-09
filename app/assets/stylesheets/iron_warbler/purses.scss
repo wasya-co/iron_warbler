@@ -1,0 +1,31 @@
+
+.purses--form-extra-fields {
+  background: rgba(255,255,255, 0.5);
+  padding: 0.3em 0;
+  margin-bottom: 0.5em;
+
+  line-height: 1.5em;
+  input {
+    height: 1.5em;
+  }
+
+  > div {
+    margin-bottom: 0.3em;
+  }
+
+  .unit {
+    min-width: 5em;
+    padding-left: 0.3em;
+  }
+
+  label {
+    min-width: 9em;
+    text-align: right;
+    padding-right: 0.3em;
+  }
+
+  input {
+    width: 4em;
+  }
+
+}

@@ -1,30 +1,26 @@
 
-.d-flex.flex-wrap
-  %label unit
-  = f.number_field :unit
-  px/usd
-  &nbsp;&nbsp;
-  %label height
-  = f.number_field :height
-  px/q
-  &nbsp;&nbsp;
+.purses--form-extra-fields
 
-  %label summary_unit
-  = f.number_field :summary_unit, step: 0.000001, style: "width: 120px"
-  px/usd
-  &nbsp;&nbsp;
+  .d-flex.flex-wrap
+    %label unit
+    = f.number_field :unit
+    .unit px/usd
 
+    %label height
+    = f.number_field :height
+    .unit px/q
 
+    %label summary_unit
+    = f.number_field :summary_unit, step: 0.000001
+    .unit px/usd
 
-  %label mark_every_n_usd
-  = f.number_field :mark_every_n_usd, step: 0.01
-  &nbsp;&nbsp;
+  .d-flex.flex-wrap
+    %label mark_every_n_usd
+    = f.number_field :mark_every_n_usd, step: 0.01
+    .unit
 
-  %label n_next_positions
-  = f.number_field :n_next_positions
-  &nbsp;&nbsp;
-
-
-  &nbsp;&nbsp;
+    %label n_next_positions
+    = f.number_field :n_next_positions
+    .unit
 
 

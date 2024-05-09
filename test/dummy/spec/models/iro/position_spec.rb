@@ -31,4 +31,21 @@ RSpec.describe Iro::Position do
     ( @pos.breakeven - 9.8 ).should < EPSILON
   end
 
+  it '#net_amount' do
+    @pos = Iro::Position.create({
+      status: 'active',
+      expires_on: '2024-01-01',
+      quantity: 2,
+      stock: @stock,
+      strategy: create(:strategy,
+        kind: Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD,
+        stock: @stock ),
+
+      inner: create( :option, begin_price: 0.6, end_price: 0.99 ),
+      outer: create( :option, begin_price: 0.8, end_price: 0.7 ),
+    })
+    expected = 0.6 - 0.99 - 0.8 + 0.7
+    ( @pos.net_amount - expected ).should < EPSILON
+  end
+
 end

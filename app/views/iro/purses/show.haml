@@ -1,8 +1,9 @@
 
 .purses-show.padded
-  .row
-    .col-md-6
+  .row.no-gutters
+    .col-md-6.pr-3
       = render '/iro/purses/header', purse: @purse
     .col-md-6
       = render '/iro/purses/summary', purse: @purse, collapse_key: 'views-show'
+
   = render '/iro/positions/table', positions: @positions

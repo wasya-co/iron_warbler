@@ -4,17 +4,21 @@
 .header
   %h5.title
     Purse `#{purse.slug}`
+    -# (#{purse.positions.length})
+    &nbsp;
     = link_to '[~]', edit_purse_path(purse)
     = link_to '[table]', purse_path(purse)
     = link_to '[gameUI]', purse_gameui_path(purse)
-    (#{purse.positions.length})
 
-.d-flex
+%ul
+  %li <b>Total:</b> #{pp_amount purse.balance}
+  %li <b>Available:</b> #{pp_amount purse.available}
 
-  = render '/iro/positions/new', purse: purse
+
+= render '/iro/positions/new', purse: purse
 
 
-- if true || params[:template] == 'gameui'
+- if true # params[:template] == 'gameui'
   .mini-inputs
     = form_for purse, html: { class: 'd-flex' } do |f|
       = render '/iro/purses/form_extra_fields', f: f

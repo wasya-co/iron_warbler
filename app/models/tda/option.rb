@@ -68,7 +68,7 @@ class Tda::Option
   ## 2023-02-06 _vp_ :: Continue.
   ##
   def self.get_quotes params
-    # puts! params, 'Tda::Option#get_quotes'
+    puts! params, 'Tda::Option#get_quotes'
     opts = {}
 
     #

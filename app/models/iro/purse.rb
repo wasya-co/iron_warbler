@@ -30,6 +30,13 @@ class Iro::Purse
   field :n_next_positions, type: :integer, default: 5
 
   field :available_amount, type: :float
+  def available
+    available_amount
+  end
+
+  def balance
+    0.01
+  end
 
   def delta_wt_avg( begin_end, long_short, inner_outer )
     max_loss_total = 0

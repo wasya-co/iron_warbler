@@ -1,5 +1,5 @@
 
-RSpec.describe Iro::StocksController, type: :controller do
+RSpec.describe Iro::StocksController do
   render_views
   routes { Iro::Engine.routes }
 

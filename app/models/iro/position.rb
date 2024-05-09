@@ -35,6 +35,8 @@ class Iro::Position
     case strategy.kind
     when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
       put_call = 'CALL'
+    when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+      put_call = 'CALL'
     when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
       put_call = 'PUT'
     when Iro::Strategy::KIND_COVERED_CALL
