@@ -16,7 +16,8 @@ class Iro::Strategy
   validates :long_or_short, presence: true
 
 
-  has_many :positions, class_name: 'Iro::Position', inverse_of: :strategy
+  has_many :positions,     class_name: 'Iro::Position', inverse_of: :strategy
+  has_one  :next_position, class_name: 'Iro::Position', inverse_of: :next_strategy
   belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
   has_and_belongs_to_many :purses, class_name: 'Iro::Purse', inverse_of: :strategies
 
@@ -36,6 +37,19 @@ class Iro::Strategy
   ]
   field :kind
 
+  def put_call
+    case kind
+    when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
+      put_call = 'CALL'
+    when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+      put_call = 'CALL'
+    when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
+      put_call = 'PUT'
+    when Iro::Strategy::KIND_COVERED_CALL
+      put_call = 'CALL'
+    end
+  end
+
   field :threshold_buffer_above_water, type: :float
   field :threshold_delta,              type: :float
   field :threshold_netp,               type: :float
@@ -48,9 +62,9 @@ class Iro::Strategy
   field :next_spread_amount,      type: :float # e.g. $20 for a $2000 NVDA spread
   field :next_buffer_above_water, type: :float
 
-  def next_inner_strike_on expires_on
 
-  end
+
+
 
 
   def begin_delta_covered_call p
@@ -123,6 +137,15 @@ class Iro::Strategy
   alias_method :net_amount_short_credit_call_spread , :net_amount_long_debit_call_spread
   alias_method :net_amount_short_debit_put_spread,    :net_amount_long_debit_call_spread
 
+
+  ## 2024-05-09 @TODO
+  def next_inner_strike_on expires_on
+    outs = Tda::Option.get_quotes({
+      contractType: put_call,
+      expirationDate: expires_on,
+      ticker: stock.ticker,
+    })
+  end
 
 
 
@@ -204,6 +227,8 @@ class Iro::Strategy
     return [ 0.33, '-' ]
   end
 
+
+  ## scopes
 
   def self.for_ticker ticker
     where( ticker: ticker )

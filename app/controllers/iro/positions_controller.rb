@@ -37,22 +37,25 @@ class Iro::PositionsController < Iro::ApplicationController
   end
 
   def new
-    strategy = Iro::Strategy.find params[:position][:strategy_id]
-    @position = Iro::Position.new( params[:position].permit!.merge({
-      status: :active,
-      inner:  Iro::Option.new,
-      outer:  Iro::Option.new,
-      stock_id:  strategy.stock_id,
+    strategy    = Iro::Strategy.find params[:position][:strategy_id]
+    @position   = strategy.next_position
+    @position ||= Iro::Position.new( params[:position].permit!.merge({
+      status:   Iro::Position::STATUS_PROPOSED,
+      # inner:    Iro::Option.new,
+      # outer:    Iro::Option.new,
+      stock_id: strategy.stock_id,
     }) )
     authorize! :new, @posision
 
-    if params[:id]
-      old = Iro::Position.find params[:id]
-      old = old.attributes
-      old.delete :_id
-      puts! old, 'old'
-      @position = Iro::Position.new old
-    end
+    @position.calc_nxt
+
+    # if params[:id]
+    #   old = Iro::Position.find params[:id]
+    #   old = old.attributes
+    #   old.delete :_id
+    #   puts! old, 'old'
+    #   @position = Iro::Position.new old
+    # end
   end
 
   def prepare

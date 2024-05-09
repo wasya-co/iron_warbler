@@ -12,11 +12,13 @@ class Iro::Position
     out += inner.begin_price - outer.begin_price
   end
 
+
   STATUS_ACTIVE   = 'active'
-  STATUS_PROPOSED = 'proposed'
   STATUS_CLOSED   = 'closed'
-  STATUS_PENDING  = 'pending'
-  STATUSES = [ nil, STATUS_ACTIVE, STATUS_PROPOSED, STATUS_CLOSED, STATUS_PENDING ]
+  STATUS_PROPOSED = 'proposed'
+  ## one more, 'selected' after proposed?
+  STATUS_PENDING  = 'pending' ## 'working'
+  STATUSES = [ nil, STATUS_CLOSED, STATUS_ACTIVE, STATUS_PROPOSED, STATUS_PENDING ]
   field :status
   validates :status, presence: true
   scope :active, ->{ where( status: 'active' ) }
@@ -28,26 +30,16 @@ class Iro::Position
   delegate :ticker, to: :stock
 
   belongs_to :strategy, class_name: 'Iro::Strategy', inverse_of: :positions
+  delegate :put_call,      to: :strategy
+  delegate :long_or_short, to: :strategy
 
-  field :long_or_short
+  belongs_to :next_strategy, class_name: 'Iro::Strategy', inverse_of: :next_position
 
-  def put_call
-    case strategy.kind
-    when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
-      put_call = 'CALL'
-    when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
-      put_call = 'CALL'
-    when Iro::Strategy::KIND_SHORT_DEBIT_PUT_SPREAD
-      put_call = 'PUT'
-    when Iro::Strategy::KIND_COVERED_CALL
-      put_call = 'CALL'
-    end
-  end
 
-  belongs_to :prev, class_name: 'Iro::Position', inverse_of: :nxt, optional: true
+  belongs_to :prev, class_name: 'Iro::Position', inverse_of: :nxts, optional: true
   belongs_to :autoprev, class_name: 'Iro::Position', inverse_of: :autonxt, optional: true
   ## there are many of these, for viewing on the 'roll' view
-  has_many :nxt,     class_name: 'Iro::Position', inverse_of: :prev
+  has_many :nxts,     class_name: 'Iro::Position', inverse_of: :prev
   has_one :autonxt, class_name: 'Iro::Position', inverse_of: :autoprev
 
   ## Options
@@ -146,6 +138,7 @@ class Iro::Position
     save
   end
 
+  ## @TODO: herehere 2024-05-09
   def calc_nxt
     pos = self
 
@@ -157,37 +150,37 @@ class Iro::Position
     })
     outs_bk = outs.dup
 
-    # byebug
-
-    ## strike price
     outs = outs.select do |out|
-      out[:bidSize]+out[:askSize] > 0
+      out[:bidSize] + out[:askSize] > 0
     end
+
+    ## next_inner_strike
+    outs = outs.select do |out|
+      if Iro::Strategy::SHORT == pos.long_or_short
+        out[:strikePrice] >= strategy.next_inner_strike
+      elsif Iro::Strategy::LONG == pos.long_or_short
+        out[:strikePrice] <= strategy.next_inner_strike
+      else
+        raise 'zz3 - this cannot happen'
+      end
+    end
+    puts! outs[0][:strikePrice], 'after calc next_inner_strike'
+
+    ## next_buffer_above_water
     outs = outs.select do |out|
       if Iro::Strategy::SHORT == pos.long_or_short
         out[:strikePrice] > strategy.next_buffer_above_water + strategy.stock.last
       elsif Iro::Strategy::LONG == pos.long_or_short
         out[:strikePrice] < strategy.stock.last - strategy.next_buffer_above_water
       else
-        throw 'zz4 - this cannot happen'
+        raise 'zz4 - this cannot happen'
       end
     end
     puts! outs[0][:strikePrice], 'after calc next_buffer_above_water'
 
+    ## next_inner_delta
     outs = outs.select do |out|
-      if Iro::Strategy::SHORT == pos.long_or_short
-        out[:strikePrice] > strategy.next_inner_strike
-      elsif Iro::Strategy::LONG == pos.long_or_short
-        out[:strikePrice] < strategy.next_inner_strike
-      else
-        throw 'zz3 - this cannot happen'
-      end
-    end
-    puts! outs[0][:strikePrice], 'after calc next_inner_strike'
-
-    ## delta
-    outs = outs.select do |out|
-      out_delta = out[:delta].abs rescue 0
+      out_delta  = out[:delta].abs rescue 0
       out_delta >= strategy.next_inner_delta.abs
     end
     puts! outs[0][:strikePrice], 'after calc next_inner_delta'
@@ -197,8 +190,6 @@ class Iro::Position
       out[:strikePrice] >= inner[:strikePrice].to_f + strategy.next_spread_amount
     end
     outer = outs[0]
-
-    # byebug
 
     if inner && outer
       o_attrs = {
@@ -210,37 +201,37 @@ class Iro::Position
         strike:        inner[:strikePrice],
         begin_price: ( inner[:bid] + inner[:ask] )/2,
         begin_delta:   inner[:delta],
-        end_price: ( inner[:bid] + inner[:ask] )/2,
-        end_delta:   inner[:delta],
+        end_price:   ( inner[:bid] + inner[:ask] )/2,
+        end_delta:     inner[:delta],
       }))
       outer_ = Iro::Option.new(o_attrs.merge({
         strike:        outer[:strikePrice],
         begin_price: ( outer[:bid] + outer[:ask] )/2,
         begin_delta:   outer[:delta],
-        end_price: ( outer[:bid] + outer[:ask] )/2,
-        end_delta:   outer[:delta],
+        end_price:   ( outer[:bid] + outer[:ask] )/2,
+        end_delta:     outer[:delta],
       }))
       pos.autonxt ||= Iro::Position.new
       pos.autonxt.update({
         prev_gain_loss_amount: 'a',
-        status: 'proposed',
-        stock: strategy.stock,
-        inner: inner_,
-        outer: outer_,
+        status:       'proposed',
+        stock:        strategy.stock,
+        inner:        inner_,
+        outer:        outer_,
         inner_strike: inner_.strike,
         outer_strike: outer_.strike,
-        begin_on: Time.now.to_date,
-        expires_on: next_expires_on,
-        purse: purse,
-        strategy: strategy,
-        quantity: 1,
-        autoprev: pos,
+        begin_on:     Time.now.to_date,
+        expires_on:   next_expires_on,
+        purse:        purse,
+        strategy:     strategy,
+        quantity:     1,
+        autoprev:     pos,
       })
 
-      # byebug
-
-      autonxt.sync
-      autonxt.save!
+      pos.autonxt.sync
+      pos.autonxt.save!
+      pos.save
+      return pos
 
     else
       throw 'zmq - should not happen'
