@@ -2,6 +2,10 @@
 FactoryBot.define do
 
   factory :option, class: 'Iro::Option' do
+    begin_price { 10 }
+    begin_delta { 0.2 }
+    end_price { 10 }
+    end_delta { 0.2 }
     expires_on { '2024-04-19' }
     put_call { 'CALL' }
     strike { 800 }
@@ -30,6 +34,7 @@ FactoryBot.define do
   end
 
   factory :strategy, class: 'Iro::Strategy' do
+    kind { Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD }
     long_or_short { Iro::Strategy::LONG }
     slug { generate(:slug) }
   end

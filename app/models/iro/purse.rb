@@ -45,9 +45,9 @@ class Iro::Purse
       max_loss_total += pos.max_loss * pos.q
       pos.max_loss * pos.q * pos.send( inner_outer ).send( "#{begin_end}_delta" )
     end
-    puts! out, 'delta_wt_avg 1'
+    # puts! out, 'delta_wt_avg 1'
     out = out.reduce( &:+ ) / max_loss_total rescue 0
-    puts! out, 'delta_wt_avg 2'
+    # puts! out, 'delta_wt_avg 2'
     return out
   end
   ## delta to plot percentage

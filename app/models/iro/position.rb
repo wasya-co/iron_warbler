@@ -33,7 +33,7 @@ class Iro::Position
   delegate :put_call,      to: :strategy
   delegate :long_or_short, to: :strategy
 
-  belongs_to :next_strategy, class_name: 'Iro::Strategy', inverse_of: :next_position
+  belongs_to :next_strategy, class_name: 'Iro::Strategy', inverse_of: :next_position, optional: true
 
 
   belongs_to :prev, class_name: 'Iro::Position', inverse_of: :nxts, optional: true
