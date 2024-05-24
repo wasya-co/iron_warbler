@@ -7,6 +7,8 @@ gem 'exception_notification'
 gem 'rb-gsl'
 
 group :development, :test do
+  gem 'ahoy_matey'
+
   gem 'byebug'
 
   gem 'factory_bot_rails'

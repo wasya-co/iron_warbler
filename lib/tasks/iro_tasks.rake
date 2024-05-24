@@ -55,14 +55,14 @@ namespace :iro do
 
       begin
         Timeout::timeout( 10 ) do
-          TDA::Api.get_quotes Iro::Stock.active.map(&:ticker).join(",")
+          outs = Tda::Stock.get_quotes Iro::Stock.active.map(&:ticker).join(",")
         end
       rescue Exception => e
         puts! e, 'Error in iro:watch_stocks'
         # Wco::Exceptionist.notify(e, 'Error in iro:watch_stocks')
       end
 
-      sleep Iro::Stock::SLEEP_TIME_SECONDS
+      sleep 15*60 # 15 min
     end
   end
 

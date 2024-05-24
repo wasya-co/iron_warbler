@@ -30,7 +30,8 @@ Iro::Engine.routes.draw do
   resources :strategies
 
   namespace :api do
-    # resources :stocks
+    get 'stocks', to: 'stocks#index'
+    get 'stocks/:ticker',                to: 'stocks#show'
     get 'stocks/:ticker/period/:period', to: 'stocks#show'
     get 'stocks/:ticker/from/:begin_on', to: 'stocks#show'
     get 'stocks/:ticker/begin_on/:begin_on', to: 'stocks#show'

@@ -1,10 +1,25 @@
 
-.stocks--index.padded
+.stocks--index.maxwidth
   .maxwidth
     %h5 Stocks
 
-  %ul
-    - @stocks.each do |stock|
-      %li
-        = render 'iro/stocks/form', stock: stock
-    %li= render 'iro/stocks/form', stock: Iro::Stock.new
+  %table.bordered.padded
+    %thead
+      %tr
+        %td Ticker
+        %td last price
+        %td n priceitems
+    %tbody
+      - @stocks.each do |stock|
+        %tr
+          %td
+            = link_to '[~]', edit_stock_path(stock)
+            = link_to '[api]', stock_path(stock, format: :json)
+            <b>#{stock.ticker}</b>
+          %td
+            #{pp_amount stock.last}
+          %td
+            = stock.priceitems.length
+
+  %hr
+  = render 'iro/stocks/form', stock: Iro::Stock.new

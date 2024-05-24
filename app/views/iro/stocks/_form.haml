@@ -7,14 +7,15 @@
         - if stock.new_record?
           %label New
         - else
+          %label status
           = f.select :status, options_for_select([ Iro::Stock::STATUS_ACTIVE, Iro::Stock::STATUS_INACTIVE ], selected: stock.status)
       .field
         = f.label :ticker
         = f.text_field :ticker
 
-      .field
-        %label Last
-        = f.number_field :last, placeholder: '80.0', step: 0.01
+      -# .field
+      -#   %label Last
+      -#   = f.number_field :last, placeholder: '80.0', step: 0.01
 
       .field
         %label options price increment

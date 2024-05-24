@@ -9,7 +9,7 @@ class Iro::Datapoint
   validates :kind, presence: true
   index({ kind: -1 })
 
-  field :symbol ## ticker, but use 'symbol' ONLY
+  field :symbol ## ticker, but use 'symbol' here
 
   field :date, type: Date ## @obsolete, use quote_at
   index({ kind: -1, date: -1 })

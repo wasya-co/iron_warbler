@@ -3,12 +3,12 @@ class Iro::Api::StocksController < Iro::ApiController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
 
   def index
+    @stocks = Iro::Stock.active
     authorize! :index, Iro::Stock
 
     respond_to do |format|
-      format.json do
-        render
-      end
+      format.html
+      format.json
     end
   end
 
@@ -16,6 +16,7 @@ class Iro::Api::StocksController < Iro::ApiController
     authorize! :show, @stock
     end_on = Time.now.to_date.in_time_zone('UTC')
 
+    begin_on = ( Time.now - 1.year ).to_date.in_time_zone('UTC')
     begin_on = params[:begin_on].to_date.in_time_zone('UTC') if params[:begin_on]
     end_on   = params[:end_on].to_date.in_time_zone('UTC')   if params[:end_on]
 
@@ -29,12 +30,14 @@ class Iro::Api::StocksController < Iro::ApiController
     when '1-yr'
       begin_on = ( Time.now - 1.year ).to_date.in_time_zone('UTC')
       # end_on   = Time.now.to_date.in_time_zone('UTC')
+    when '5-yr'
+      begin_on = ( Time.now - 5.years ).to_date.in_time_zone('UTC')
     end
 
     @datapoints = Iro::Datapoint.where({
       :quote_at.gte => begin_on,
       :quote_at.lte => end_on,
-      symbol: params[:ticker],
+      symbol:          params[:ticker],
     }).order_by({ quote_at: :asc })
   end
 

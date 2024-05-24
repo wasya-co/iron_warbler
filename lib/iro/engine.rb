@@ -1,5 +1,6 @@
 
 module Iro; end
+module Tda; end
 
 class Iro::Engine < ::Rails::Engine
   isolate_namespace Iro

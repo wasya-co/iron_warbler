@@ -1,5 +1,8 @@
 
-class Iro::PriceItem
+##
+## specifically Option or Stock priceitem?
+##
+class Iro::Priceitem
   include Mongoid::Document
   include Mongoid::Timestamps
   store_in collection: 'iro_price_items'
@@ -8,6 +11,7 @@ class Iro::PriceItem
   field :putCall,         type: String
   field :symbol,          type: String
   field :ticker,          type: String
+  # belongs_to :stock, inverse_of: :priceitems
 
   field :bid,             type: Float
   field :bidSize,         type: Integer

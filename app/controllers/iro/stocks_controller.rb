@@ -20,11 +20,19 @@ class Iro::StocksController < Iro::ApplicationController
   end
 
   def edit
+    authorize! :edit, @stock
   end
 
   def index
     @stocks = Iro::Stock.all
     authorize! :index, Iro::Stock
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render layout: false
+      end
+    end
   end
 
   def new
@@ -44,6 +52,17 @@ class Iro::StocksController < Iro::ApplicationController
   end
 
   def show
+    authorize! :show, @stock
+
+    @priceitems = Iro::PriceItem.where({
+      ticker: @stock.ticker,
+    })
+
+    respond_to do |format|
+      format.json do
+        render layout: false
+      end
+    end
   end
 
   def update
