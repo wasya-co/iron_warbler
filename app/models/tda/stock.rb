@@ -24,7 +24,7 @@ class Tda::Stock
     end
     outs = []
     inns.each do |symbol, obj|
-      outs.push ::Iro::PriceItem.create!({
+      outs.push ::Iro::Priceitem.create!({
         putCall:        'STOCK',
         symbol:          symbol,
         ticker:          symbol,
