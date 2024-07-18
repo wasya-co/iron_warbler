@@ -54,11 +54,12 @@ class Iro::StocksController < Iro::ApplicationController
   def show
     authorize! :show, @stock
 
-    @priceitems = Iro::PriceItem.where({
+    @priceitems = ::Iro::Priceitem.where({
       ticker: @stock.ticker,
     })
 
     respond_to do |format|
+      format.html
       format.json do
         render layout: false
       end

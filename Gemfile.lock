@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: db99d26d4668a10bd0778878ab2292c0e94ce8f5
+  revision: 7f1997ff9772badb13122f1d57885bf175138f53
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.162)
+    wco_models (3.1.0.164)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.27)
+    iron_warbler (2.0.7.28)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
@@ -231,7 +231,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.8.1)
+    jwt (2.8.2)
       base64
     kaminari-actionview (1.2.2)
       actionview

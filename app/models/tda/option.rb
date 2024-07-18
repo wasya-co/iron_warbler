@@ -4,7 +4,8 @@ require 'httparty'
 class Tda::Option
 
   include ::HTTParty
-  base_uri 'https://api.tdameritrade.com'
+  # base_uri 'https://api.tdameritrade.com'
+  base_uri 'https://api.schwabapi.com/marketdata/v1'
 
 
   ##
@@ -100,8 +101,13 @@ class Tda::Option
     query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
     # puts! query, 'input opts'
 
-    path = "/v1/marketdata/chains"
-    out = self.get path, { query: query }
+    headers = {
+      Authorize: "Bearer #{::TD_AMERITRADE[:access_token]}",
+    }
+
+
+    path = "/chains"
+    out = self.get path, { headers: headers, query: query }
     timestamp = DateTime.parse out.headers['date']
     ## out = HTTParty.get "https://api.tdameritrade.com#{path}", { query: query }
     out = out.parsed_response.deep_symbolize_keys

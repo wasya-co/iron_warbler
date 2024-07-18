@@ -3,7 +3,7 @@ require 'httparty'
 
 class Tda::Stock
   include ::HTTParty
-  base_uri 'https://api.tdameritrade.com'
+  base_uri 'https://api.schwabapi.com/marketdata/v1'
 
   ## alias
   def self.get_quote which
@@ -13,9 +13,15 @@ class Tda::Stock
   ## tickers = "GME"
   ## tickers = "NVDA,GME"
   def self.get_quotes tickers
-    path = "/v1/marketdata/quotes"
-    inns = self.get path, { query: { apikey: ::TD_AMERITRADE[:apiKey], symbol: tickers } }
+    path = "/quotes"
+    headers = {
+      accept:    'application/json',
+      Authorization: "Bearer #{::SCHWAB_DATA[:access_token]}",
+    }
+    inns = self.get path, { headers: headers, query: { symbols: tickers } }
     inns = inns.parsed_response
+    # puts! inns, 'parsed response'
+
     if [ NilClass, String ].include?( inns.class )
       return []
     end
@@ -23,7 +29,8 @@ class Tda::Stock
       inns[k] = v.deep_symbolize_keys
     end
     outs = []
-    inns.each do |symbol, obj|
+    inns.each do |symbol, _obj|
+      obj = _obj[:quote]
       outs.push ::Iro::Priceitem.create!({
         putCall:        'STOCK',
         symbol:          symbol,
@@ -37,8 +44,7 @@ class Tda::Stock
         closePrice:      obj[:closePrice],
         highPrice:       obj[:highPrice],
         lowPrice:        obj[:lowPrice],
-        quoteTimeInLong: obj[:quoteTimeInLong],
-        timestamp:       Time.at( obj[:quoteTimeInLong]/1000 ),
+        timestamp:       Time.at( obj[:quoteTime]/1000 ),
         totalVolume:     obj[:totalVolume],
         mark:            obj[:mark],
         exchangeName:    obj[:exchangeName],
