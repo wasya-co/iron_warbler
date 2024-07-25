@@ -45,8 +45,8 @@ class Iro::AlertsController < Iro::ApplicationController
     super
 
     # @profiles_list = Wco::Profile.list
-    @stocks_list = Iro::Stock.list
-    puts! @stocks_list, '@stocks_list'
+    @stocks_list  = Iro::Stock.list
+    @symbols_list = [[nil,nil]] + Iro::Stock.active.map { |s| [ s.ticker, s.ticker ] }
   end
 
 

@@ -24,7 +24,7 @@
       -#   = f.text_field :kind
       .field
         = f.label :symbol
-        = f.select :symbol, options_for_select( @stocks_list, selected: alert.symbol )
+        = f.select :symbol, options_for_select( @symbols_list, selected: alert.symbol )
       .field
         = f.label :direction
         = f.select :direction, options_for_select([ :ABOVE, :BELOW ], selected: alert.direction)

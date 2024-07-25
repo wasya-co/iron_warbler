@@ -8,6 +8,8 @@
       .d-flex.flex-wrap
         %ul
           %li
+            = link_to "Schwab Login", "https://api.schwabapi.com/v1/oauth/authorize?client_id=#{SCHWAB_DATA[:key]}&redirect_uri=#{SCHWAB_DATA[:redirect_url]}"
+          %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
           -# %li= link_to 'Options', options_path

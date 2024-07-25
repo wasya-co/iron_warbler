@@ -62,7 +62,8 @@ namespace :iro do
         # Wco::Exceptionist.notify(e, 'Error in iro:watch_stocks')
       end
 
-      sleep 15*60 # 15 min
+      print '.'
+      sleep 15 # *60 # 15 min
     end
   end
 

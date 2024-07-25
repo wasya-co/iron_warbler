@@ -13,14 +13,16 @@ class Tda::Stock
   ## tickers = "GME"
   ## tickers = "NVDA,GME"
   def self.get_quotes tickers
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+
     path = "/quotes"
     headers = {
       accept:    'application/json',
-      Authorization: "Bearer #{::SCHWAB_DATA[:access_token]}",
+      Authorization: "Bearer #{profile.schwab_access_token}",
     }
     inns = self.get path, { headers: headers, query: { symbols: tickers } }
     inns = inns.parsed_response
-    # puts! inns, 'parsed response'
+    puts! inns, 'parsed response'
 
     if [ NilClass, String ].include?( inns.class )
       return []

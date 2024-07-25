@@ -9,14 +9,14 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
-  match 'positions/:id/close', to: 'positions#close', as: :close_position, via: [ :get, :post ]
-  get  'positions/duplicate/:id', to: 'positions#new',    as: :duplicate_position
-  post 'positions/propose', to: 'positions#propose',      as: :propose_position
-  get  'positions/:id/prepare', to: 'positions#prepare',  as: :prepare_to_roll_position, defaults: { template: 'gameui' }
-  match  'positions/:id/prepare2', to: 'positions#prepare2', as: :prepare2_position, defaults: { template: 'gameui' }, via: [ :get, :post ]
-  match  'positions/:id/prepare3', to: 'positions#prepare3', as: :prepare3_position, defaults: { template: 'gameui' }, via: [ :get, :post ]
-  post 'positions/:id/roll', to: 'positions#do_roll',     as: :roll_position
-  get  'positions/:id/sync', to: 'positions#sync',  as: :sync_position
+  match 'positions/:id/close',     to: 'positions#close',    as: :close_position, via: [ :get, :post ]
+  get   'positions/duplicate/:id', to: 'positions#new',      as: :duplicate_position
+  post  'positions/propose',       to: 'positions#propose',  as: :propose_position
+  get   'positions/:id/prepare',   to: 'positions#prepare',  as: :prepare_to_roll_position, defaults: { template: 'gameui' }
+  match 'positions/:id/prepare2',  to: 'positions#prepare2', as: :prepare2_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
+  match 'positions/:id/prepare3',  to: 'positions#prepare3', as: :prepare3_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
+  post  'positions/:id/roll',      to: 'positions#do_roll',  as: :roll_position
+  get   'positions/:id/sync',      to: 'positions#sync',     as: :sync_position
   resources :positions
   resources :profiles
 
@@ -29,6 +29,7 @@ Iro::Engine.routes.draw do
 
   resources :strategies
 
+  get 'api/oauth2-redirect.html', to: 'api#oauth2_redirect'
   namespace :api do
     get 'stocks', to: 'stocks#index'
     get 'stocks/:ticker',                to: 'stocks#show'

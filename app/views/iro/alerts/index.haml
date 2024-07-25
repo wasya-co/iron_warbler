@@ -1,9 +1,9 @@
 
-.iro-alerts--index.maxwidth
+.iro-alerts--index.padded
   %h5 Iro Alerts
 
-  %ul
+  .a
     - @alerts.each do |alert|
-      %li
+      .a
         = render 'iro/alerts/form', alert: alert
-    %li= render 'iro/alerts/form', alert: Iro::Alert.new
+    .a= render 'iro/alerts/form', alert: Iro::Alert.new

@@ -84,7 +84,7 @@ class Tda::Option
       end
     end
     if params[:expirationDate]
-      opts[:fromDate] = opts[:toDate] = params[:expirationDate]
+      opts[:fromDate] = opts[:toDate] = params[:expirationDate].to_s[0...10]
     else
       raise Iro::InputError.new("Invalid input, missing 'date'.")
     end
@@ -98,11 +98,12 @@ class Tda::Option
       opts[:strike] = params[:strike]
     end
 
-    query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
+    query = { }.merge opts
     # puts! query, 'input opts'
 
     headers = {
-      Authorize: "Bearer #{::TD_AMERITRADE[:access_token]}",
+      accept:    'application/json',
+      Authorization: "Bearer #{::SCHWAB_DATA[:access_token]}",
     }
 
 

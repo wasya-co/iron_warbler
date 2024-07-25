@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 7f1997ff9772badb13122f1d57885bf175138f53
+  revision: 0ffa72e5c7930049a5887abe01d43225d7d3a2d8
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.164)
+    wco_models (3.1.0.166)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.28)
+    iron_warbler (2.0.7.29)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
@@ -111,28 +111,28 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     ahoy_matey (4.2.1)
       activesupport (>= 5.2)
       device_detector
       safely_block (>= 0.2.1)
     aws-eventstream (1.3.0)
-    aws-partitions (1.940.0)
-    aws-sdk-core (3.197.0)
+    aws-partitions (1.958.0)
+    aws-sdk-core (3.201.3)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.83.0)
-      aws-sdk-core (~> 3, >= 3.197.0)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.152.0)
-      aws-sdk-core (~> 3, >= 3.197.0)
+    aws-sdk-kms (1.88.0)
+      aws-sdk-core (~> 3, >= 3.201.0)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-s3 (1.156.0)
+      aws-sdk-core (~> 3, >= 3.201.0)
       aws-sdk-kms (~> 1)
-      aws-sigv4 (~> 1.8)
-    aws-sigv4 (1.8.0)
+      aws-sigv4 (~> 1.5)
+    aws-sigv4 (1.9.0)
       aws-eventstream (~> 1, >= 1.0.2)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -142,7 +142,7 @@ GEM
     bcrypt (3.1.20)
     bigdecimal (3.1.8)
     bindata (2.5.0)
-    bson (5.0.0)
+    bson (5.0.1)
     builder (3.2.4)
     business_time (0.13.0)
       activesupport (>= 3.2.0)
@@ -260,19 +260,19 @@ GEM
     method_source (1.0.0)
     mime-types (3.5.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0604)
+    mime-types-data (3.2024.0702)
     mini_mime (1.1.5)
     minitest (5.20.0)
     mocha (2.1.0)
       ruby2_keywords (>= 0.0.5)
-    mongo (2.20.0)
+    mongo (2.20.1)
       bson (>= 4.14.1, < 6.0.0)
     mongoid (7.3.5)
       activemodel (>= 5.1, < 7.1, != 7.0.0)
       mongo (>= 2.10.5, < 3.0.0)
       ruby2_keywords (~> 0.0.5)
-    mongoid-autoinc (6.0.3)
-      mongoid (>= 6.0, < 8.0)
+    mongoid-autoinc (6.0.4)
+      mongoid (>= 6.0, < 9.0)
     mongoid-paperclip (0.1.0)
       kt-paperclip
       mongoid
@@ -326,7 +326,7 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.5)
+    public_suffix (5.1.1)
     racc (1.7.3)
     rack (2.2.8)
     rack-cors (1.1.1)
@@ -383,8 +383,8 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.3.2)
+      strscan
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -443,7 +443,7 @@ GEM
       climate_control
     thor (1.3.0)
     thread_safe (0.3.6)
-    tilt (2.3.0)
+    tilt (2.4.0)
     timeout (0.4.1)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
@@ -456,7 +456,7 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
