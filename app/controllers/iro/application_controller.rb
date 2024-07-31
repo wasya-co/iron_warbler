@@ -41,10 +41,10 @@ class Iro::ApplicationController < Wco::ApplicationController
       schwab_refresh_token: out['refresh_token'],
       schwab_id_token:      out['id_token'],
     }
-    puts! attrs, 'attrs'
+    # puts! attrs, 'attrs'
 
-    # profile.update(attrs)
-    # profile.save!
+    profile.update(attrs)
+    profile.save!
 
     render json: { status: :ok }
   end
