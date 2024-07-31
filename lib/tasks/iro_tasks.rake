@@ -32,6 +32,12 @@ namespace :iro do
     print '^'
   end
 
+  desc 'get treasuries'
+  task :get_treasuries => :environment do
+    ::Iro::Iro.get_treasuries
+    print '^'
+  end
+
   desc 'import historic treasuries'
   task :import_1990_2023_treasuries => :environment do
     ::Iro::Iro.import_1990_2023_treasuries
