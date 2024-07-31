@@ -16,10 +16,10 @@ class Iro::Strategy
   validates :long_or_short, presence: true
 
 
-  has_many :positions,     class_name: 'Iro::Position', inverse_of: :strategy
-  has_one  :next_position, class_name: 'Iro::Position', inverse_of: :next_strategy
-  belongs_to :stock, class_name: 'Iro::Stock', inverse_of: :strategies
-  has_and_belongs_to_many :purses, class_name: 'Iro::Purse', inverse_of: :strategies
+  has_many :positions,             class_name: 'Iro::Position', inverse_of: :strategy
+  has_one  :next_position,         class_name: 'Iro::Position', inverse_of: :next_strategy
+  belongs_to :stock,               class_name: 'Iro::Stock',    inverse_of: :strategies
+  has_and_belongs_to_many :purses, class_name: 'Iro::Purse',    inverse_of: :strategies
 
   KIND_COVERED_CALL             = 'covered_call'
   KIND_IRON_CONDOR              = 'iron_condor'
@@ -34,11 +34,13 @@ class Iro::Strategy
     KIND_LONG_DEBIT_CALL_SPREAD,
     KIND_SHORT_CREDIT_CALL_SPREAD,
     KIND_SHORT_DEBIT_PUT_SPREAD,
-  ]
+  ];
   field :kind
 
   def put_call
     case kind
+    when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
+      put_call = 'PUT'
     when Iro::Strategy::KIND_LONG_DEBIT_CALL_SPREAD
       put_call = 'CALL'
     when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
@@ -47,6 +49,8 @@ class Iro::Strategy
       put_call = 'PUT'
     when Iro::Strategy::KIND_COVERED_CALL
       put_call = 'CALL'
+    else
+      throw 'zz9 - this should never happen'
     end
   end
 
@@ -70,6 +74,9 @@ class Iro::Strategy
   def begin_delta_covered_call p
     p.inner.begin_delta
   end
+  def begin_delta_long_credit_put_spread p
+    p.inner.begin_delta - p.outer.begin_delta
+  end
   def begin_delta_long_debit_call_spread p
     p.outer.begin_delta - p.inner.begin_delta
   end
@@ -89,6 +96,9 @@ class Iro::Strategy
   def end_delta_covered_call p
     p.inner.end_delta
   end
+  def end_delta_long_credit_put_spread p
+    p.inner.end_delta - p.outer.end_delta
+  end
   def end_delta_long_debit_call_spread p
     p.outer.end_delta - p.inner.end_delta
   end
@@ -98,6 +108,10 @@ class Iro::Strategy
 
   def max_gain_covered_call p
     p.inner.begin_price * 100 - 0.66 # @TODO: is this *100 really?
+  end
+  def max_gain_long_credit_put_spread p
+    ## 100 * disallowed for gameui
+    p.inner.begin_price - p.outer.begin_price
   end
   def max_gain_long_debit_call_spread p
     ## 100 * disallowed for gameui
@@ -114,6 +128,9 @@ class Iro::Strategy
 
   def max_loss_covered_call p
     p.inner.begin_price*10 # just suppose 10,000%
+  end
+  def max_loss_long_credit_put_spread p
+    out = p.inner.strike - p.outer.strike
   end
   def max_loss_long_debit_call_spread p
     out = p.outer.strike - p.inner.strike
@@ -134,6 +151,7 @@ class Iro::Strategy
     inner = p.inner.begin_price - p.inner.end_price
     out = ( outer + inner )
   end
+  alias_method :net_amount_long_credit_put_spread ,   :net_amount_long_debit_call_spread
   alias_method :net_amount_short_credit_call_spread , :net_amount_long_debit_call_spread
   alias_method :net_amount_short_debit_put_spread,    :net_amount_long_debit_call_spread
 

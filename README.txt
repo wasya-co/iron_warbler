@@ -10,7 +10,3 @@ From: https://docs.galpy.org/en/latest/installation.html
 calculator: https://www.omnicalculator.com/finance/black-scholes
 
 From: https://pythoninoffice.com/calculate-black-scholes-option-price-in-python/
-
-= swagger =
-
-* https://developer.schwab.com/products/trader-api--individual

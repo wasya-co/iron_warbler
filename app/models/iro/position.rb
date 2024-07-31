@@ -138,7 +138,6 @@ class Iro::Position
     save
   end
 
-  ## @TODO: herehere 2024-05-09
   def calc_nxt
     pos = self
 
@@ -154,6 +153,12 @@ class Iro::Position
       out[:bidSize] + out[:askSize] > 0
     end
 
+    if 'CALL' == pos.put_call
+      ;
+    elsif 'PUT' == pos.put_call
+      outs = outs.reverse
+    end
+
     ## next_inner_strike
     outs = outs.select do |out|
       if Iro::Strategy::SHORT == pos.long_or_short
@@ -165,6 +170,7 @@ class Iro::Position
       end
     end
     puts! outs[0][:strikePrice], 'after calc next_inner_strike'
+    puts! outs, 'outs'
 
     ## next_buffer_above_water
     outs = outs.select do |out|
@@ -177,17 +183,30 @@ class Iro::Position
       end
     end
     puts! outs[0][:strikePrice], 'after calc next_buffer_above_water'
+    puts! outs, 'outs'
 
     ## next_inner_delta
     outs = outs.select do |out|
-      out_delta  = out[:delta].abs rescue 0
-      out_delta >= strategy.next_inner_delta.abs
+      if 'CALL' == pos.put_call
+        out_delta  = out[:delta] rescue 1
+        out_delta <= strategy.next_inner_delta
+      elsif 'PUT' == pos.put_call
+        out_delta  = out[:delta] rescue 0
+        out_delta <= strategy.next_inner_delta
+      else
+        raise 'zz5 - this cannot happen'
+      end
     end
     puts! outs[0][:strikePrice], 'after calc next_inner_delta'
+    puts! outs, 'outs'
 
     inner = outs[0]
     outs = outs.select do |out|
-      out[:strikePrice] >= inner[:strikePrice].to_f + strategy.next_spread_amount
+      if 'CALL' == pos.put_call
+        out[:strikePrice] >= inner[:strikePrice].to_f + strategy.next_spread_amount
+      elsif 'PUT' == pos.put_call
+        out[:strikePrice] <= inner[:strikePrice].to_f - strategy.next_spread_amount
+      end
     end
     outer = outs[0]
 

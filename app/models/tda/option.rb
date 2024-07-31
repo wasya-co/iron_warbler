@@ -1,9 +1,18 @@
 
 require 'httparty'
 
+=begin
+class Schwab
+  include HTTParty
+  debug_output $stdout
+  base_uri 'https://api.schwabapi.com/marketdata/v1'
+end
+=end
+
 class Tda::Option
 
   include ::HTTParty
+  debug_output $stdout
   # base_uri 'https://api.tdameritrade.com'
   base_uri 'https://api.schwabapi.com/marketdata/v1'
 
@@ -70,6 +79,8 @@ class Tda::Option
   ##
   def self.get_quotes params
     puts! params, 'Tda::Option#get_quotes'
+
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
     opts = {}
 
     #
@@ -99,18 +110,22 @@ class Tda::Option
     end
 
     query = { }.merge opts
-    # puts! query, 'input opts'
+    puts! query, 'input opts'
 
     headers = {
       accept:    'application/json',
-      Authorization: "Bearer #{::SCHWAB_DATA[:access_token]}",
+      Authorization: "Bearer #{profile[:schwab_access_token]}",
     }
 
-
     path = "/chains"
-    out = self.get path, { headers: headers, query: query }
+    out = self.get path, {
+      # basic_auth: { username: SCHWAB_DATA[:key], password: SCHWAB_DATA[:secret] },
+      headers: headers,
+      query: query,
+    }
+    puts! out, 'out'
     timestamp = DateTime.parse out.headers['date']
-    ## out = HTTParty.get "https://api.tdameritrade.com#{path}", { query: query }
+    # out = HTTParty.get "https://api.tdameritrade.com#{path}", { query: query }
     out = out.parsed_response.deep_symbolize_keys
 
 

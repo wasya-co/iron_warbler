@@ -9,6 +9,8 @@
         %th.actions &nbsp;
         %th kind
         %th slug
+        %th stock
+        %th long or short
         %th next_inner_delta
         %th.actions &nbsp;
     %tbody
@@ -20,6 +22,10 @@
               = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td= sss.kind
           %td= link_to sss.slug, strategy_path(sss)
+          %td.stock
+            = sss.stock
+          %td.long-or-short
+            = sss.long_or_short
           %td= sss.next_inner_delta
           %td
             = form_tag propose_position_path do
