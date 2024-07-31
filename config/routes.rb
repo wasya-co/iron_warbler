@@ -6,6 +6,8 @@ Iro::Engine.routes.draw do
 
   post 'datapoints', to: '/iro/datapoints#create'
   get  'datapoints', to: '/iro/datapoints#index'
+  get  'datapoints/by-symbol', to: '/iro/datapoints#index'
+  get  'datapoints/by-symbol/:symbol', to: '/iro/datapoints#index'
 
   resources :option_watches
 

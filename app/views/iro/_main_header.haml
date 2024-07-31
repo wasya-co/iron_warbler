@@ -37,5 +37,11 @@
               %li
                 = link_to s, strategy_path(s)
                 = link_to '[~]', edit_strategy_path(s)
+        .a
+          %ul
+            %li
+              Datapoints
+              = form_tag datapoints_by_symbol_path, method: :get do
+                = text_field_tag :q
 
 
