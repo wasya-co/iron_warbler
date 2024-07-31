@@ -12,8 +12,24 @@ class Iro::Datapoint
   KIND_STOCK    = 'STOCK'
   KIND_OPTION   = 'OPTION' ## but not PUT or CALL
   KIND_CURRENCY = 'CURRENCY'
+  KIND_TREASURY = 'TREASURY'
 
   field :symbol ## ticker, but use 'symbol' here
+  SYMBOL_BTC   = 'BTC'
+  SYMBOL_ETH   = 'ETH'
+  SYMBOL_T1MO  = 'T1MO'
+  SYMBOL_T2MO  = 'T2MO'
+  SYMBOL_T3MO  = 'T3MO'
+  SYMBOL_T4MO  = 'T4MO'
+  SYMBOL_T6MO  = 'T6MO'
+  SYMBOL_T1YR  = 'T1YR'
+  SYMBOL_T2YR  = 'T2YR'
+  SYMBOL_T3YR  = 'T3YR'
+  SYMBOL_T5YR  = 'T5YR'
+  SYMBOL_T7YR  = 'T7YR'
+  SYMBOL_T10YR = 'T10YR'
+  SYMBOL_T20YR = 'T20YR'
+  SYMBOL_T30YR = 'T30YR'
 
   field :date, type: Date ## @obsolete, use quote_at
   index({ kind: -1, date: -1 })

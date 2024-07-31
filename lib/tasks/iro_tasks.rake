@@ -32,6 +32,16 @@ namespace :iro do
     print '^'
   end
 
+  desc 'import historic treasuries'
+  task :import_1990_2023_treasuries => :environment do
+    ::Iro::Iro.import_1990_2023_treasuries
+  end
+
+  desc 'import 2024 treasuries'
+  task :import_2024_treasuries => :environment do
+    ::Iro::Iro.import_2024_treasuries
+  end
+
   desc 'recommend position actions'
   task recommend_position_actions: :environment do
     Iro::Position.active.where({ kind: 'covered_call' }).map &:should_roll?

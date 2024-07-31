@@ -5,10 +5,12 @@
 
   %table.bordered.padded
     %thead
+      %th date
       %th quote_at
       %th value
     %tbody
       - @datapoints.each do |point|
         %tr
+          %td= pp_date point.date
           %td= pp_datetime point.quote_at
           %td= point.value
