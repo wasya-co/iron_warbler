@@ -52,18 +52,6 @@ namespace :iro do
     end
   end
 
-  desc 'Get BTC, ETH price from coinmarketcap'
-  task :get_coins => :environment do
-    while true
-
-      ::Iro::Iro.get_coins
-
-      print '.'
-      # sleep 5 * 60 # 5 minutes
-      sleep 55 * 60 # 1 hr
-    end
-  end
-
   desc 'Get COP from currencyfreaks, cron'
   task :get_currencies => :environment do
     ::Iro::Iro.get_currencies

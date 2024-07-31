@@ -14,6 +14,24 @@ namespace :iro do
     end
   end
 
+  desc 'Get BTC, ETH price from coinmarketcap'
+  task :get_coins => :environment do
+    while true
+
+      ::Iro::Iro.get_coins
+
+      print '.'
+      # sleep 5 * 60 ## 5 minutes
+      sleep 55 * 60 ## 1 hr
+    end
+  end
+
+  desc 'get coins once'
+  task :get_coins_once => :environment do
+    ::Iro::Iro.get_coins
+    print '^'
+  end
+
   desc 'recommend position actions'
   task recommend_position_actions: :environment do
     Iro::Position.active.where({ kind: 'covered_call' }).map &:should_roll?

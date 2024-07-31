@@ -5,9 +5,13 @@ class Iro::Datapoint
   include Mongoid::Timestamps
   store_in collection: 'iro_datapoints'
 
-  field :kind ## PUT, CALL, STOCK, CURRENCY, CRYPTO
+  field :kind
   validates :kind, presence: true
   index({ kind: -1 })
+  KIND_CRYPTO   = 'CRYPTO'
+  KIND_STOCK    = 'STOCK'
+  KIND_OPTION   = 'OPTION' ## but not PUT or CALL
+  KIND_CURRENCY = 'CURRENCY'
 
   field :symbol ## ticker, but use 'symbol' here
 
@@ -136,7 +140,7 @@ class Iro::Datapoint
     csv = CSV.read(path, headers: true)
     csv.each do |row|
       flag = create({
-        kind:    'STOCK',
+        kind:    KIND_STOCK,
         symbol:   symbol,
         date:     row['Date'],
         quote_at: row['Date'],
