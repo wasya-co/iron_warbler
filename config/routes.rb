@@ -24,6 +24,8 @@ Iro::Engine.routes.draw do
   get 'purses/:id', to: 'purses#show', as: :purse, defaults: { template: 'show' }
   resources :purses
 
+  get 'schwab/sync', to: 'application#schwab_sync', as: :schwab_sync
+
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   resources :stocks
 

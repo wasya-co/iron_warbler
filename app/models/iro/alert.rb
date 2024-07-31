@@ -42,7 +42,11 @@ class Iro::Alert
       if ( alert.direction == alert.class::DIRECTION_ABOVE && price >= alert.strike ) ||
          ( alert.direction == alert.class::DIRECTION_BELOW && price <= alert.strike )
 
-        Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_later
+        if Rails.env.production?
+          Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_later
+        else
+          Iro::AlertMailer.stock_alert( alert.id.to_s ).deliver_now
+        end
         alert.update({ status: alert.class::STATUS_INACTIVE })
         print '^'
 

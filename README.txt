@@ -11,9 +11,6 @@ calculator: https://www.omnicalculator.com/finance/black-scholes
 
 From: https://pythoninoffice.com/calculate-black-scholes-option-price-in-python/
 
--=---
+= swagger =
 
-
-https://api.tdameritrade.com/v1/accounts/232718838/orders/13597943085
-
-
+* https://developer.schwab.com/products/trader-api--individual
