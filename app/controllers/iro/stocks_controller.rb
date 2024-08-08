@@ -1,4 +1,7 @@
 
+##
+## https://www.macrotrends.net/stocks/charts/META/meta-platforms/stock-price-history
+##
 class Iro::StocksController < Iro::ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
 
@@ -57,6 +60,9 @@ class Iro::StocksController < Iro::ApplicationController
     @priceitems = ::Iro::Priceitem.where({
       ticker: @stock.ticker,
     })
+    @datapoints = Iro::Datapoint.where({
+      symbol: @stock.ticker,
+    }).order_by({ date: :desc }).limit(100)
 
     respond_to do |format|
       format.html
@@ -84,7 +90,12 @@ class Iro::StocksController < Iro::ApplicationController
   private
 
   def set_stock
-    @stock = Iro::Stock.find(params[:id])
+    begin
+      @stock = Iro::Stock.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound => e
+      @stock = Iro::Stock.find_by ticker: params[:id]
+    end
+    @stocks_list = Iro::Stock.tickers_list
   end
 
   def stock_params

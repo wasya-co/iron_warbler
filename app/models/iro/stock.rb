@@ -1,6 +1,9 @@
 include Math
 require 'business_time'
 
+##
+## https://www.macrotrends.net/stocks/charts/META/meta-platforms/stock-price-history
+##
 class Iro::Stock
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -18,6 +21,8 @@ class Iro::Stock
   field :ticker
   validates :ticker, uniqueness: true, presence: true
   index({ ticker: -1 }, { unique: true })
+  def symbol;    ticker;     end
+  def symbol= a; ticker = a; end
 
   field :last, type: :float
   field :options_price_increment, type: :float
@@ -29,6 +34,8 @@ class Iro::Stock
   has_many :purses,     class_name: 'Iro::Purse',    inverse_of: :stock
   has_many :options,    class_name: 'Iro::Option',   inverse_of: :stock
   has_many :priceitems, inverse_of: :stock
+
+  default_scope { order_by({ ticker: :asc }) }
 
   ## my_find
   def self.f ticker
@@ -55,7 +62,14 @@ class Iro::Stock
   stock.volatility_from_yr
 
 =end
-  def volatility duration:
+  field :volatility, type: :float
+  def volatility duration: 1.year, recompute: false
+    if self[:volatility]
+      if !recompute
+        return self[:volatility]
+      end
+    end
+
     stock = self
     begin_on = Time.now - duration - 1.day
     points = Iro::Datapoint.where( kind: 'STOCK', symbol: stock.ticker,
@@ -86,6 +100,7 @@ class Iro::Stock
     adjustment = 2.0
     out = out * adjustment
     puts! out, 'volatility (adjusted)'
+    self.update volatility: out
     return out
   end
 

@@ -1,5 +1,27 @@
 
 .stocks-show.maxwidth
-  %h4= @stock
+  .header
+    %h3.title
+      = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
 
-  %h5 Max Pain
+  .row
+    .col-md-3
+      %h4 Datapoints
+      %table.bordered
+        %thead
+          %td Date
+          %td Value
+        %tbody
+          - @datapoints.each do |pt|
+            %tr
+              %td= pt.date
+              %td= pt.value
+
+
+    .col-md-9
+      %ul
+        %li
+          %b 1 yr volatility <br />
+          = @stock.volatility
+
+      %h4 Max Pain

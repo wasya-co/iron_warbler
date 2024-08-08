@@ -1,6 +1,7 @@
 
 ##
-## specifically Option or Stock priceitem?
+## Specifically Option or Stock priceitem?
+## Priceitems are intra-day! See Datapoint for daily data
 ##
 class Iro::Priceitem
   include Mongoid::Document
@@ -8,7 +9,7 @@ class Iro::Priceitem
   store_in collection: 'iro_price_items'
 
   ## PUT, CALL, STOCK
-  field :putCall,         type: String
+  field :putCall,         type: String ## kind
   field :symbol,          type: String
   field :ticker,          type: String
   # belongs_to :stock, inverse_of: :priceitems
@@ -24,6 +25,7 @@ class Iro::Priceitem
   field :highPrice,       type: Float
   field :closePrice,      type: Float
 
+  field :quote_at, type: DateTime
   field :quoteTimeInLong, type: Integer
   field :timestamp,       type: Integer
   field :totalVolume,     type: Integer

@@ -1,5 +1,8 @@
 
-
+##
+## Datapoints are at most daily!
+## See Priceitem for intra-day data
+##
 class Iro::Datapoint
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -31,25 +34,23 @@ class Iro::Datapoint
   SYMBOL_T20YR = 'T20YR'
   SYMBOL_T30YR = 'T30YR'
 
-  field :date, type: Date ## @obsolete, use quote_at
+  field :date, type: Date
   index({ kind: -1, date: -1 })
+  validates :date, uniqueness: { scope: [ :symbol ] }
 
   field :quote_at, type: DateTime
   index({ kind: -1, quote_at: -1 })
-  validates :quote_at, uniqueness: { scope: [ :kind, :symbol ] }
+  validates :quote_at, uniqueness: { scope: [ :kind, :symbol ] } ## scope-by-kind is unnecessary here? _vp_ 2024-08-08
 
   field :open, type: Float
   field :high, type: Float
   field :low, type: Float
+  def close;    value;    end
+  def close= a; value= a; end
 
   field :value, type: Float
   validates :value, presence: true
-  def close
-    value
-  end
-  def close= a
-    value= a
-  end
+
 
   field :volume, type: Integer
 
@@ -156,7 +157,7 @@ class Iro::Datapoint
     csv = CSV.read(path, headers: true)
     csv.each do |row|
       flag = create({
-        kind:    KIND_STOCK,
+        kind:     KIND_STOCK,
         symbol:   symbol,
         date:     row['Date'],
         quote_at: row['Date'],
@@ -168,7 +169,11 @@ class Iro::Datapoint
         low:   row['Low'],
         value: row['Close'],
       })
-      print '.' if flag.persisted?
+      if flag.persisted?
+        print '^'
+      else
+        puts flag.errors.messages
+      end
     end
     puts 'ok'
   end
