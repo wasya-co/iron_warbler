@@ -33,6 +33,8 @@ class Iro::Priceitem
   field :exchangeName,    type: String
   field :volatility,      type: Float
 
+  field :expires_on, type: :date
+
   def self.my_find props={}
     lookup = { '$lookup': {
       'from':         'iro_price_items',

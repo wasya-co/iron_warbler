@@ -34,7 +34,7 @@ class Iro::ApplicationController < Wco::ApplicationController
       },
     })
     out = out.parsed_response
-    puts! out, 'out'
+    # puts! out, 'out'
 
     attrs = {
       schwab_access_token:  out['access_token'],
@@ -43,10 +43,12 @@ class Iro::ApplicationController < Wco::ApplicationController
     }
     # puts! attrs, 'attrs'
 
-    profile.update(attrs)
-    profile.save!
+    if attrs[:schwab_refresh_token]
+      profile.update(attrs)
+      profile.save!
+    end
 
-    render json: { status: :ok }
+    render json: { attrs: attrs, out: out }
   end
 
   ##

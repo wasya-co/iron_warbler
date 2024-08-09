@@ -18,18 +18,30 @@ class Tda::Option
 
 
   ##
-  ## 2023-02-05 _vp_ :: Gets the entire chain
+  ## Get entire chains for a ticker
+  ## params: { ticker, }
   ##
-  def self.get_chain params
-    opts = { symbol: params[:ticker] } ## use 'GME' as symbol here even though a symbol is eg 'GME_021023P2.5'
-    query = { apikey: ::TD_AMERITRADE[:apiKey] }.merge opts
-    puts! query, 'input opts'
+  ## 2024-08-09 :: Continue
+  ##
+  def self.get_chains params
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
 
-    path = "/v1/marketdata/chains"
-    out = self.get path, { query: query }
+    query = { symbol: params[:ticker] } ## use 'GME' as symbol here even though a symbol is eg 'GME_021023P2.5'
+    puts! query, 'query'
+
+    headers = {
+      accept:        'application/json',
+      Authorization: "Bearer #{profile[:schwab_access_token]}",
+    }
+    path = "/chains"
+    out = self.get path, {
+      basic_auth: { username: SCHWAB_DATA[:key], password: SCHWAB_DATA[:secret] },
+      headers: headers,
+      query: query }
     timestamp = DateTime.parse out.headers['date']
     out = out.parsed_response.deep_symbolize_keys
 
+    byebug
 
     outs = []
     %w| put call |.each do |contractType|
@@ -53,8 +65,8 @@ class Tda::Option
       end
     end
 
-    outs.each do |x|
-      opi = ::Iro::OptionPriceItem.create( x )
+    outs.each do |out|
+      opi = ::Iro::PriceItem.create( out )
       if !opi.persisted?
         puts! opi.errors.full_messages, "Cannot create OptionPriceItem"
       end
@@ -125,7 +137,6 @@ class Tda::Option
     }
     puts! out, 'out'
     timestamp = DateTime.parse out.headers['date']
-    # out = HTTParty.get "https://api.tdameritrade.com#{path}", { query: query }
     out = out.parsed_response.deep_symbolize_keys
 
 
