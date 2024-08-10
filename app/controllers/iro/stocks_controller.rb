@@ -66,6 +66,25 @@ class Iro::StocksController < Iro::ApplicationController
       symbol: @stock.ticker,
     }).order_by({ date: :desc }).limit(100)
 
+    filename = "./data/schwab/#{Time.now.to_date.to_s}-#{@stock.ticker}-chains.json"
+    if File.exists? filename
+      hash = JSON.parse File.read filename
+    else
+      hash = Tda::Option.get_chains({ ticker: @stock.ticker })
+      File.write filename, hash.to_json
+    end
+    @max_pain = Iro::Option.max_pain hash
+    @max_pain_summary = {}
+    @max_pain.each do |date, types|
+      all = types['all']
+      @max_pain_summary[date] = all.keys[0]
+      all.each do |strike, amount|
+        if amount < all[@max_pain_summary[date]]
+          @max_pain_summary[date] = strike
+        end
+      end
+    end
+
     respond_to do |format|
       format.html
       format.json do
