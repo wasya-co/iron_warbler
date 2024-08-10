@@ -35,23 +35,32 @@ class Tda::Option
     }
     path = "/chains"
     out = self.get path, {
-      basic_auth: { username: SCHWAB_DATA[:key], password: SCHWAB_DATA[:secret] },
       headers: headers,
       query: query }
     timestamp = DateTime.parse out.headers['date']
-    out = out.parsed_response.deep_symbolize_keys
+    out = out.parsed_response
 
-    byebug
+    # byebug
 
     outs = []
     %w| put call |.each do |contractType|
-      tmp_sym = "#{contractType}ExpDateMap".to_sym
-      _out = out[tmp_sym]
+      _out = out["#{contractType}ExpDateMap"]
       _out.each do |date, vs| ## date="2023-02-10:5"
         vs.each do |strike, _v| ## strike="18.5"
-          v = _v[0] ## v={} many attrs
-          v = v.except( :lastSize, :optionDeliverablesList, :settlementType,
-            :deliverableNote, :pennyPilot, :mini )
+          _v = _v[0] ## weird, keep
+          # puts! _v, '_v'
+
+          v = {
+            putCall: _v['putCall'],
+            symbol:  _v['symbol'],
+            bid: _v['bid'],
+            ask: _v['ask'],
+            last: _v['last'],
+            totalVolume: _v['totalVolume'],
+            openInterest: _v['openInterest'],
+            strikePrice: _v['strikePrice'],
+            expirationDate: _v['expirationDate'],
+          }
           v.each do |k, i|
             if i == 'NaN'
               v[k] = nil
@@ -66,11 +75,13 @@ class Tda::Option
     end
 
     outs.each do |out|
-      opi = ::Iro::PriceItem.create( out )
+      opi = ::Iro::Priceitem.create( out )
       if !opi.persisted?
-        puts! opi.errors.full_messages, "Cannot create OptionPriceItem"
+        puts! opi.errors.full_messages, "Cannot create PriceItem"
       end
     end
+
+    return out
   end
 
   ##

@@ -11,6 +11,7 @@ class Iro::Priceitem
   ## PUT, CALL, STOCK
   field :putCall,         type: String ## kind
   field :symbol,          type: String
+  field :description,     type: String
   field :ticker,          type: String
   # belongs_to :stock, inverse_of: :priceitems
 
@@ -33,7 +34,12 @@ class Iro::Priceitem
   field :exchangeName,    type: String
   field :volatility,      type: Float
 
-  field :expires_on, type: :date
+  field :expirationDate, type: :date
+  field :delta,          type: Float
+  field :gamma,          type: Float
+  field :theta,          type: Float
+  field :openInterest,   type: Integer
+  field :strikePrice,    type: Float
 
   def self.my_find props={}
     lookup = { '$lookup': {

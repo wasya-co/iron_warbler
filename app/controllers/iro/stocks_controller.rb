@@ -3,7 +3,7 @@
 ## https://www.macrotrends.net/stocks/charts/META/meta-platforms/stock-price-history
 ##
 class Iro::StocksController < Iro::ApplicationController
-  before_action :set_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_stock, only: [:destroy, :edit, :show, :update ]
 
   def create
     @stock = Iro::Stock.new(stock_params)
@@ -37,6 +37,8 @@ class Iro::StocksController < Iro::ApplicationController
       end
     end
   end
+
+
 
   def new
     @stock = Iro::Stock.new

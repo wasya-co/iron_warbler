@@ -1,6 +1,6 @@
 
 class Iro::Api::StocksController < Iro::ApiController
-  before_action :set_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_stock, only: [:destroy, :edit, :max_pain, :show, :update ]
 
   def index
     @stocks = Iro::Stock.active
@@ -9,6 +9,21 @@ class Iro::Api::StocksController < Iro::ApiController
     respond_to do |format|
       format.html
       format.json
+    end
+  end
+
+  def max_pain
+    authorize! :max_pain, @stock
+
+    hash = Tda::Option.get_chains({ ticker: @stock.ticker })
+    # hash = JSON.parse File.read './trash.json'
+    @max_pain = Iro::Option.max_pain hash
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render layout: false
+      end
     end
   end
 

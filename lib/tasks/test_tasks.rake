@@ -1,6 +1,14 @@
 
 namespace :test do
 
+  desc 'max pain'
+  task max_pain: :environment do
+    hash = JSON.parse File.read './trash.json'
+    puts! hash.keys, '+++ +++ parsed hash'
+    outs = Iro::Option.max_pain hash
+    byebug
+  end
+
   desc 'stock#volatility_mo'
   task stock_vol_mo: :environment do
     out = Iro::Stock.find_by( ticker: 'NVDA' ).volatility_from_mo

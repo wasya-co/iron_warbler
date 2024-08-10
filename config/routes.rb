@@ -35,13 +35,14 @@ Iro::Engine.routes.draw do
 
   get 'api/oauth2-redirect.html', to: 'api#oauth2_redirect'
   namespace :api do
-    get 'stocks', to: 'stocks#index'
-    get 'stocks/:ticker',                to: 'stocks#show'
-    get 'stocks/:ticker/period/:period', to: 'stocks#show'
-    get 'stocks/:ticker/from/:begin_on', to: 'stocks#show'
-    get 'stocks/:ticker/begin_on/:begin_on', to: 'stocks#show'
-    get 'stocks/:ticker/from/:begin_on/to/:end_on', to: 'stocks#show'
+    get 'stocks',                                           to: 'stocks#index'
+    get 'stocks/:ticker',                                   to: 'stocks#show'
+    get 'stocks/:ticker/begin_on/:begin_on',                to: 'stocks#show'
     get 'stocks/:ticker/begin_on/:begin_on/end_on/:end_on', to: 'stocks#show'
+    get 'stocks/:ticker/from/:begin_on',                    to: 'stocks#show'
+    get 'stocks/:ticker/from/:begin_on/to/:end_on',         to: 'stocks#show'
+    get 'stocks/:ticker/max-pain',                          to: 'stocks#max_pain'
+    get 'stocks/:ticker/period/:period',                    to: 'stocks#show'
   end
 
 end

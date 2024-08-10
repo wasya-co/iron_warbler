@@ -49,4 +49,14 @@ class Iro::ApiController < ActionController::Base
     sign_in user
   end
 
+  def set_stock
+    begin
+      @stock = Iro::Stock.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound => e
+      @stock = Iro::Stock.find_by ticker: params[:id]
+    end
+    @stocks_list = Iro::Stock.tickers_list
+  end
+
+
 end

@@ -73,6 +73,7 @@ class Iro::Option
     self[:symbol]
   end
 
+  before_save :sync, if: ->() { !Rails.env.test? } ## do not sync in test
   def sync
     out = Tda::Option.get_quote({
       contractType: put_call,
@@ -86,6 +87,53 @@ class Iro::Option
     # self.save
   end
 
-  before_save :sync, if: ->() { !Rails.env.test? } ## do not sync in test
+  def self.max_pain hash
+    outs = {}
+
+    %w| put call |.each do |contractType|
+      dates = hash["#{contractType}ExpDateMap"]
+      dates.each do |_date, strikes| ## _date="2023-02-10:5"
+        date = _date.split(':')[0].to_date.to_s
+        outs[date] ||= {
+          'all'  => {},
+          'put'  => {},
+          'call' => {},
+        }
+
+        strikes.each do |_strike, _v| ## _strike="18.5"
+          strike = _strike.to_f
+
+          ## calls
+          mem_c = 0
+          strikes.keys.reverse.each do |_key|
+            if _key == _strike
+              break
+            end
+            key = _key.to_f
+            tmp = hash["callExpDateMap"][_date][_key][0]['openInterest'] * ( key - strike )
+            mem_c += tmp
+          end
+          outs[date]['call'][_strike] = mem_c
+
+          ## puts
+          mem_p = 0
+          strikes.keys.each do |_key|
+            if _key == _strike
+              break
+            end
+            key = _key.to_f
+            tmp = hash["putExpDateMap"][_date][_key][0]['openInterest'] * ( strike - key )
+            mem_p += tmp
+          end
+          outs[date]['put'][_strike] = mem_p
+          outs[date]['all'][_strike] = mem_c + mem_p
+
+        end
+      end
+    end
+
+    return outs
+  end
+
 
 end
