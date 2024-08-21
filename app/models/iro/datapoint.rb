@@ -18,8 +18,14 @@ class Iro::Datapoint
   KIND_TREASURY = 'TREASURY'
 
   field :symbol ## ticker, but use 'symbol' here
-  SYMBOL_BTC   = 'BTC'
-  SYMBOL_ETH   = 'ETH'
+  ## crypto
+  SYMBOL_BTC = 'BTC'
+  SYMBOL_ETH = 'ETH'
+  ## currencies
+  SYMBOL_JPY = 'JPY'
+  SYMBOL_COP = 'COP'
+  SUMBOL_EUR = 'EUR'
+  ## treasuries
   SYMBOL_T1MO  = 'T1MO'
   SYMBOL_T2MO  = 'T2MO'
   SYMBOL_T3MO  = 'T3MO'

@@ -25,6 +25,35 @@ class Iro::Iro
     end
   end
 
+  def self.get_currencies
+    out = HTTParty.get "https://api.currencyfreaks.com/v2.0/rates/latest?apikey=#{CURRENCYFREAKS[:key]}&symbols=COP,EUR,JPY"
+    out = out.parsed_response.deep_symbolize_keys!
+    out[:rates].each do |currency, value|
+
+      # opi = OPI.new({
+      #   putCall:     'CURRENCY',
+      #   symbol:      currency,
+      #   ticker:      currency,
+      #   exchangeName: 'currencyfreaks',
+      #   mark:        value,
+      #   lastPrice:   value,
+      #   timestamp:   Time.now.to_date,
+      # })
+      # opi.save!
+
+      datapoint = Iro::Datapoint.new({
+        date: Time.now.to_date,
+        quote_at: Time.now,
+        kind: Iro::Datapoint::KIND_CURRENCY,
+        symbol: currency,
+        value: value,
+      })
+      datapoint.save!
+
+      print '^'
+    end
+  end
+
   def self.get_treasuries
     response = HTTParty.get( "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/#{Time.now.strftime('%Y%m')}?type=daily_treasury_yield_curve&field_tdr_date_value_month=#{Time.now.strftime('%Y%m')}&page&_format=csv")
     outs = CSV.parse( response.body, { headers: true })
