@@ -6,7 +6,7 @@ class Iro::AlertMailer < ActionMailer::Base
   def stock_alert id
     @alert = Iro::Alert.find id
     mail( to: 'victor@piousbox.com',
-     subject: 'Iro::AlertMailer#stock_alert' )
+     subject: "#{Time.now.to_date} Iro::AlertMailer#stock_alert" )
   end
 
 end
