@@ -2,6 +2,23 @@
 class Iro::Api::StocksController < Iro::ApiController
   before_action :set_stock, only: [:destroy, :edit, :max_pain, :show, :update ]
 
+  def create
+    @stock = Iro::Stock.new(stock_params)
+    authorize! :create, @stock
+
+    if @stock.save
+      flash_notice @stock
+    else
+      flash_alert @stock
+    end
+    redirect_to action: :index
+  end
+
+  def destroy
+    @stock.destroy
+    redirect_to stocks_url, notice: 'Stock was successfully destroyed.'
+  end
+
   def index
     @stocks = Iro::Stock.active
     authorize! :index, Iro::Stock
@@ -14,8 +31,9 @@ class Iro::Api::StocksController < Iro::ApiController
 
   def max_pain
     authorize! :max_pain, @stock
+    Iro::Iro.schwab_sync
 
-    hash = Tda::Option.get_chains({ ticker: @stock.ticker })
+    hash = Tda::Option.get_chains({ ticker: @stock.ticker, force: false })
     # hash = JSON.parse File.read './trash.json'
     @max_pain = Iro::Option.max_pain hash
 
@@ -26,6 +44,12 @@ class Iro::Api::StocksController < Iro::ApiController
       end
     end
   end
+
+  def new
+    @stock = Iro::Stock.new
+    authorize! :new, @stock
+  end
+
 
   def show
     authorize! :show, @stock
@@ -56,26 +80,6 @@ class Iro::Api::StocksController < Iro::ApiController
     }).order_by({ quote_at: :asc })
   end
 
-  def new
-    @stock = Iro::Stock.new
-    authorize! :new, @stock
-  end
-
-  def edit
-  end
-
-  def create
-    @stock = Iro::Stock.new(stock_params)
-    authorize! :create, @stock
-
-    if @stock.save
-      flash_notice @stock
-    else
-      flash_alert @stock
-    end
-    redirect_to action: :index
-  end
-
   def update
     @stock = Iro::Stock.find params[:id]
     authorize! :update, @stock
@@ -87,10 +91,7 @@ class Iro::Api::StocksController < Iro::ApiController
     redirect_to request.referrer
   end
 
-  def destroy
-    @stock.destroy
-    redirect_to stocks_url, notice: 'Stock was successfully destroyed.'
-  end
+
 
   ##
   ## private

@@ -11,8 +11,14 @@ json.max_pain do
           json.value value
         end
       end
+      json.summary do
+        json.max_pain maps['summary']['value']
+      end
     end
   end
 end
+
+
+
 
 

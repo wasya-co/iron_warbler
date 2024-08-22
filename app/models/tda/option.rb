@@ -19,69 +19,77 @@ class Tda::Option
 
   ##
   ## Get entire chains for a ticker
-  ## params: { ticker, }
+  ## params: { ticker, force }
   ##
   ## 2024-08-09 :: Continue
+  ## 2024-08-21 :: Continue : )
   ##
   def self.get_chains params
-    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+    filename = "./data/schwab/#{Time.now.to_date.to_s}-#{params[:ticker]}-chains.json"
+    if !params[:force] && File.exists?( filename)
+      return JSON.parse File.read filename
 
-    query = { symbol: params[:ticker] } ## use 'GME' as symbol here even though a symbol is eg 'GME_021023P2.5'
-    puts! query, 'query'
+    else
+      profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+      query = { symbol: params[:ticker] } ## use 'GME' as symbol here even though a symbol is eg 'GME_021023P2.5'
+      # puts! query, 'query'
 
-    headers = {
-      accept:        'application/json',
-      Authorization: "Bearer #{profile[:schwab_access_token]}",
-    }
-    path = "/chains"
-    out = self.get path, {
-      headers: headers,
-      query: query }
-    timestamp = DateTime.parse out.headers['date']
-    out = out.parsed_response
+      headers = {
+        accept:        'application/json',
+        Authorization: "Bearer #{profile[:schwab_access_token]}",
+      }
+      path = "/chains"
+      out = self.get path, {
+        headers: headers,
+        query: query }
+      timestamp = DateTime.parse out.headers['date']
+      out = out.parsed_response
+      puts! out, 'outs'
 
-    # byebug
+      # byebug
 
-    outs = []
-    %w| put call |.each do |contractType|
-      _out = out["#{contractType}ExpDateMap"]
-      _out.each do |date, vs| ## date="2023-02-10:5"
-        vs.each do |strike, _v| ## strike="18.5"
-          _v = _v[0] ## weird, keep
-          # puts! _v, '_v'
+      outs = []
+      %w| put call |.each do |contractType|
+        _out = out["#{contractType}ExpDateMap"]
+        _out.each do |date, vs| ## date="2023-02-10:5"
+          vs.each do |strike, _v| ## strike="18.5"
+            _v = _v[0] ## weird, keep
+            # puts! _v, '_v'
 
-          v = {
-            putCall: _v['putCall'],
-            symbol:  _v['symbol'],
-            bid: _v['bid'],
-            ask: _v['ask'],
-            last: _v['last'],
-            totalVolume: _v['totalVolume'],
-            openInterest: _v['openInterest'],
-            strikePrice: _v['strikePrice'],
-            expirationDate: _v['expirationDate'],
-          }
-          v.each do |k, i|
-            if i == 'NaN'
-              v[k] = nil
+            v = {
+              putCall: _v['putCall'],
+              symbol:  _v['symbol'],
+              bid: _v['bid'],
+              ask: _v['ask'],
+              last: _v['last'],
+              totalVolume: _v['totalVolume'],
+              openInterest: _v['openInterest'],
+              strikePrice: _v['strikePrice'],
+              expirationDate: _v['expirationDate'],
+            }
+            v.each do |k, i|
+              if i == 'NaN'
+                v[k] = nil
+              end
             end
-          end
 
-          v[:timestamp] = timestamp
-          v[:ticker] = params[:ticker]
-          outs.push( v )
+            v[:timestamp] = timestamp
+            v[:ticker] = params[:ticker]
+            outs.push( v )
+          end
         end
       end
-    end
 
-    outs.each do |out|
-      opi = ::Iro::Priceitem.create( out )
-      if !opi.persisted?
-        puts! opi.errors.full_messages, "Cannot create PriceItem"
+      outs.each do |out|
+        opi = ::Iro::Priceitem.create( out )
+        if !opi.persisted?
+          puts! opi.errors.full_messages, "Cannot create PriceItem"
+        end
       end
-    end
 
-    return out
+      File.write filename, out.to_json
+      return out
+    end
   end
 
   ##

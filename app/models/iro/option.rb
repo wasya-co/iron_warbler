@@ -96,8 +96,9 @@ class Iro::Option
         date = _date.split(':')[0].to_date.to_s
         outs[date] ||= {
           'all'  => {},
-          'put'  => {},
           'call' => {},
+          'put'  => {},
+          'summary' => {},
         }
 
         strikes.each do |_strike, _v| ## _strike="18.5"
@@ -128,6 +129,17 @@ class Iro::Option
           outs[date]['put'][_strike] = mem_p
           outs[date]['all'][_strike] = mem_c + mem_p
 
+        end
+      end
+    end
+
+    ## compute summary
+    outs.each do |date, types|
+      all = types['all']
+      outs[date]['summary'] = { 'value' => all.keys[0] }
+      all.each do |strike, amount|
+        if amount < all[ outs[date]['summary']['value'] ]
+          outs[date]['summary']['value'] = strike
         end
       end
     end
