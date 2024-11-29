@@ -3,3 +3,5 @@
 2.1.0 :: 2024-03-14 :: continue... preferably without losing all my money
 2.2.0 :: 2024-03-15 :: now, lets visualize debit call spreads
 2.2.1 :: 2024-05-09 :: continue
+2.3.0 :: 2024-11-29 :: many changes
+

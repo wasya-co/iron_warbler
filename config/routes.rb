@@ -31,6 +31,8 @@ Iro::Engine.routes.draw do
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   resources :stocks
 
+  get 'strategies/new-spread', to: 'strategies#new', as: :new_spread_strategy, defaults: { kind: 'spread' }
+  get 'strategies/new-wheel',  to: 'strategies#new', as: :new_wheel_strategy,  defaults: { kind: 'wheel' }
   resources :strategies
 
   get 'api/oauth2-redirect.html', to: 'api#oauth2_redirect'

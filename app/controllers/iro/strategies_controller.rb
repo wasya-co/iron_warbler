@@ -7,13 +7,18 @@ class Iro::StrategiesController < Iro::ApplicationController
     @strategy = Iro::Strategy.new params[:strategy].permit!
     authorize! :create, @strategy
 
-    if @strategy.save
-      flash_notice @strategy
-    else
-      flash_alert @strategy
+    if @strategy[:kind] == Iro::Strategy::KIND_WHEEL
+      @strategy.long_or_short   = Iro::Strategy::LONG
+      @strategy.credit_or_debit = Iro::Strategy::DEBIT
     end
 
-    redirect_to action: :index
+    if @strategy.save
+      flash_notice @strategy
+      redirect_to action: :index
+    else
+      flash_alert @strategy
+      render action: 'new'
+    end
   end
 
   def destroy
@@ -37,7 +42,7 @@ class Iro::StrategiesController < Iro::ApplicationController
   end
 
   def new
-    @strategy = Iro::Strategy.new
+    @strategy = Iro::Strategy.new({ kind: params[:kind] })
     authorize! :new, @posision
   end
 

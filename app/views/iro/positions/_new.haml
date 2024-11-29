@@ -8,6 +8,10 @@
         .label +Position
 
         .d-flex.flex-column
+          %label Stock
+          = f.select :stock_id, options_for_select(@stocks_list)
+
+        .d-flex.flex-column
           %label Strategy
           = f.select :strategy_id, options_for_select(@strategies_list)
 

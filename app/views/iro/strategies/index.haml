@@ -3,6 +3,7 @@
   .header
     %h5.title
       Strategies
-      = link_to '[+]', iro.new_strategy_path
+      = link_to '[+spread]', iro.new_spread_strategy_path
+      = link_to '[+wheel]', iro.new_wheel_strategy_path
 
   = render '/iro/strategies/table', strategies: @strategies

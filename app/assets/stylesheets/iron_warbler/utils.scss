@@ -5,28 +5,28 @@
 //   // content: '[LONG]';
 // }
 .long-or-short-item,
-.long-or-short-container .is_long,
-.long-or-short-container .is_short {
+.long-or-short-container .is-long,
+.long-or-short-container .is-short {
   display: flex;
   flex-direction: column;
 }
 
-.long-or-short-container .is_long,
-.is_long .long-or-short-item {
+.long-or-short-container .is-long,
+.is-long .long-or-short-item {
   border-left: 3px solid var(--iro-color-long);
   padding-left: 5px;
 }
-.long-or-short-container .is_short,
-.is_short .long-or-short-item {
+.long-or-short-container .is-short,
+.is-short .long-or-short-item {
   border-left: 3px solid var(--iro-color-short);
   padding-left: 5px;
 }
 
-.is_short .long-or-short-item::before {
+.is-short .long-or-short-item::before {
   // content: '[SHORT]';
 }
-.is_short .long-or-short-item,
-.long-or-short-container .is_short {
+.is-short .long-or-short-item,
+.long-or-short-container .is-short {
   flex-direction: column-reverse;
 }
 

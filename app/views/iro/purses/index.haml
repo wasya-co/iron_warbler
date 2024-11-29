@@ -9,5 +9,6 @@
         = link_to '[~]', edit_purse_path(purse)
         = link_to purse.slug, purse_path(purse)
 
-  %hr
-  = render 'iro/purses/form', purse: Iro::Purse.new
+  .descr
+    %h5.header New Purse
+    = render 'iro/purses/form', purse: Iro::Purse.new

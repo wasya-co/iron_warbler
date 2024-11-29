@@ -7,19 +7,27 @@
     .row
       .col-md-6
         .field
-          %label Kind
-          = f.select :kind, options_for_select( Iro::Strategy::KINDS, selected: strategy.kind )
+          %label Kind:
+          = strategy.kind
+          = hidden_field_tag 'strategy[kind]', params[:kind] if params[:kind]
+        .field
+          %label stock
+          = f.select :stock_id, options_for_select(@stocks_list, selected: strategy.stock_id), class: 'select2'
         .field
           %label long or short?
           = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
         .field
-          %label stock
-          = f.select :stock_id, options_for_select(@stocks_list, selected: strategy.stock_id), class: 'select2'
-
-      .col-md-6
+          %label credit or debit?
+          = f.select :credit_or_debit, options_for_select([nil, Iro::Strategy::CREDIT, Iro::Strategy::DEBIT], selected: strategy.credit_or_debit)
         .field
-          %label slug
-          = f.text_field :slug
+          %label call or put?
+          .comment This is selected automatically
+          -# = f.select :call_or_put, options_for_select([nil, 'CALL', 'PUT'], selected: strategy.credit_or_debit)
+
+      -# .col-md-6
+      -#   .field
+      -#     %label slug
+      -#     = f.text_field :slug
     %hr
 
 
@@ -47,6 +55,7 @@
     .field
       = f.label :next_inner_strike
       = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
+      .comment Literally the min (max) dollar amount of next strike
     .field
       = f.label :next_spread_amount
       = f.number_field :next_spread_amount, placeholder: "20", step: 0.1

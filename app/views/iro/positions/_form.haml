@@ -1,7 +1,7 @@
 
 - long_or_short = position.long_or_short || position.strategy&.long_or_short || params[:long_or_short]
 
-.positions--form{ class: params[:long_or_short] || long_or_short }
+.positions--form{ class: "is-#{long_or_short}" }
   = form_for position do |f|
     .actions
       = f.submit

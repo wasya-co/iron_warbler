@@ -3,6 +3,7 @@
 .inline-search
   = form_tag strategies_path, method: :get do
     = text_field_tag :q
-= link_to '[+]', new_strategy_path
+= link_to '[+spread]', new_spread_strategy_path
+= link_to '[+wheel]', new_wheel_strategy_path
 
 

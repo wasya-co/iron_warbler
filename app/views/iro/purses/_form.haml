@@ -2,9 +2,9 @@
 .iro-purses--form
   = form_for purse do |f|
     .flex-row
-      .field
-        %label stock
-        = f.select :stock_id, options_for_select( @stocks_list, selected: purse.stock_id )
+      -# .field
+      -#   %label stock
+      -#   = f.select :stock_id, options_for_select( @stocks_list, selected: purse.stock_id )
 
       .field
         %label Slug

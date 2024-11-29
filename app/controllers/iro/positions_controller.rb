@@ -38,6 +38,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def new
     strategy    = Iro::Strategy.find params[:position][:strategy_id]
+
     @position   = strategy.next_position
     @position ||= Iro::Position.new( params[:position].permit!.merge({
       status:   Iro::Position::STATUS_PROPOSED,

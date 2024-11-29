@@ -36,7 +36,9 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :show, @purse
 
 
-    @positions = @purse.positions.where( status: 'active' ).includes( :strategy
+    @positions = @purse.positions(
+      ).where( status: 'active'
+      ).includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
 
