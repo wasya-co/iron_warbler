@@ -1,0 +1,3 @@
+
+5,25,45 * * * * cd /opt/projects/micros_email/current && RAILS_ENV=production /root/.rbenv/shims/bundle exec rake iro:sync_schwab
+

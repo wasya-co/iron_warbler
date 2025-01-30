@@ -73,6 +73,12 @@ namespace :iro do
     Iro::Position.active.where({ kind: 'covered_call' }).map &:refresh
   end
 
+  desc 'sync schwab'
+  task sync_schwab: :environment do
+    Iro::Iro.schwab_sync
+    puts '.'
+  end
+
   desc 'watch positions'
   task watch_positions: :environment do
     while true

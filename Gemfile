@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem 'exception_notification'
-gem 'rb-gsl'
+# gem 'rb-gsl'
 
 group :development, :test do
   gem 'ahoy_matey'
@@ -12,6 +12,7 @@ group :development, :test do
   gem 'byebug'
 
   gem 'factory_bot_rails'
+  # gem 'httparty'
 
   gem 'irb', '>= 1.2.8'
 
@@ -23,7 +24,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem "rspec-rails"
 
-  gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.1.0'
+  gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.2.0'
 
 
 end

@@ -2,6 +2,7 @@
 require 'business_time'
 require 'haml'
 require 'mongoid'
+require 'httparty'
 
 require "iro/engine"
 
@@ -178,7 +179,7 @@ class Iro::Iro
       },
     })
     out = out.parsed_response
-    puts! out, 'out'
+    puts! out, '#schwab_sync'
 
     attrs = {
       schwab_access_token:  out['access_token'],
