@@ -17,7 +17,7 @@ RSpec.describe Iro::Purse do
   end
 
   it '#wt_avg_begin_inner_d_long' do
-    @purse = create(:purse, stock: @stock)
+    @purse = create(:purse)
     outer_1 = Iro::Option.create({
       stock: @stock,
       expires_on: '2024-01-01',

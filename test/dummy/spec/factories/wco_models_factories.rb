@@ -1,0 +1,1 @@
+/Users/piousbox/projects/ruby/wco_models/w-spec/factories.rb

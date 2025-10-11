@@ -35,10 +35,11 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
-
-    @positions = @purse.positions(
-      ).where( status: 'active'
-      ).includes( :strategy
+    @positions = @purse.positions
+    if params[:view_status] && 'all' != params[:view_status]
+      @positions = @positions.where( status: params[:view_status] )
+    end
+    @positions = @positions.includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
 

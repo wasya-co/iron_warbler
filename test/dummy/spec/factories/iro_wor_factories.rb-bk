@@ -29,15 +29,9 @@ FactoryBot.define do
     slug { generate(:slug) }
   end
 
-  factory :stock, class: 'Iro::Stock' do
-    ticker { 'XXX' }
-  end
 
-  factory :strategy, class: 'Iro::Strategy' do
-    kind { Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD }
-    long_or_short { Iro::Strategy::LONG }
-    slug { generate(:slug) }
-  end
+
+
 
 end
 

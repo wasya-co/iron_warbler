@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 51d0293c5687334538055c718123563a3c557e14
-  branch: 3.2.0
+  revision: e7095d184b5710490a4248eb153a540bd325b5c7
+  branch: 3.2.1
   specs:
-    wco_models (3.1.0.199)
+    wco_models (3.1.0.217)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -118,21 +118,24 @@ GEM
       activesupport (>= 5.2)
       device_detector
       safely_block (>= 0.2.1)
-    aws-eventstream (1.3.0)
-    aws-partitions (1.1043.0)
-    aws-sdk-core (3.217.0)
+    aws-eventstream (1.4.0)
+    aws-partitions (1.1171.0)
+    aws-sdk-core (3.233.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
+      base64
+      bigdecimal
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.97.0)
-      aws-sdk-core (~> 3, >= 3.216.0)
+      logger
+    aws-sdk-kms (1.113.0)
+      aws-sdk-core (~> 3, >= 3.231.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.179.0)
-      aws-sdk-core (~> 3, >= 3.216.0)
+    aws-sdk-s3 (1.199.1)
+      aws-sdk-core (~> 3, >= 3.231.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
-    aws-sigv4 (1.11.0)
+    aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -140,7 +143,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.9)
+    bigdecimal (3.3.1)
     bindata (2.5.0)
     bson (5.0.2)
     builder (3.2.4)
@@ -162,7 +165,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.2.2)
-    connection_pool (2.5.0)
+    connection_pool (2.5.4)
     crass (1.0.6)
     date (3.3.4)
     descendants_tracker (0.0.4)
@@ -201,7 +204,7 @@ GEM
     faraday-net_http (3.0.2)
     faraday-retry (2.2.1)
       faraday (~> 2.0)
-    ffi (1.17.1-x86_64-darwin)
+    ffi (1.17.2-x86_64-darwin)
     globalid (1.2.1)
       activesupport (>= 6.1)
     haml (6.3.0)
@@ -246,7 +249,7 @@ GEM
       marcel (~> 1.0.1)
       mime-types
       terrapin (>= 0.6.0, < 2.0)
-    logger (1.6.5)
+    logger (1.7.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -256,12 +259,12 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.4)
-    matrix (0.4.2)
+    matrix (0.4.3)
     method_source (1.0.0)
-    mime-types (3.6.0)
+    mime-types (3.7.0)
       logger
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0107)
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0924)
     mini_mime (1.1.5)
     minitest (5.20.0)
     mocha (2.1.0)
@@ -372,9 +375,9 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.23.2)
+    redis-client (0.26.1)
       connection_pool
-    regexp_parser (2.10.0)
+    regexp_parser (2.11.3)
     reline (0.4.1)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -382,7 +385,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.4.0)
+    rexml (3.4.4)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -436,7 +439,7 @@ GEM
     stringio (3.1.0)
     stripe (10.4.0)
     temple (0.10.3)
-    terrapin (1.0.1)
+    terrapin (1.1.1)
       climate_control
     thor (1.3.0)
     thread_safe (0.3.6)

@@ -1,6 +1,7 @@
 
 .d-flex
   .Card
+    -# %h5.center.text-center New position
     = form_for Iro::Position.new(strategy: Iro::Strategy.new), url: new_position_path, method: :get do |f|
       = hidden_field_tag 'position[purse_id]', purse.id
 

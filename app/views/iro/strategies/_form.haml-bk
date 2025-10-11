@@ -1,3 +1,6 @@
+-##
+-## 2025-10-11 old, obsolete.
+-##
 
 .strategies--form
   = form_for strategy do |f|
@@ -16,12 +19,9 @@
         .field
           %label long or short?
           = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
-        -## 2025-10-11 unnecessary: always credit.
-        -# .field
-        -#   %label credit or debit?
-        -#   = f.select :credit_or_debit, options_for_select([nil, Iro::Strategy::CREDIT, Iro::Strategy::DEBIT], selected: strategy.credit_or_debit)
-
-        -# selected automatically
+        .field
+          %label credit or debit?
+          = f.select :credit_or_debit, options_for_select([nil, Iro::Strategy::CREDIT, Iro::Strategy::DEBIT], selected: strategy.credit_or_debit)
         .field
           %label call or put?
           .comment This is selected automatically

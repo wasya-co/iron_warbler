@@ -6,7 +6,7 @@ RSpec.describe Iro::Alert do
       Iro::Alert,
       Iro::Stock,
     )
-    @stock = create( :iro_stock )
+    @stock = create( :stock )
   end
 
   it 'sanity' do
@@ -16,7 +16,7 @@ RSpec.describe Iro::Alert do
 
   describe '#do_run' do
     it 'sanity' do
-      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+      @alert = create( :alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
 
       expect( Iro::AlertMailer ).to receive( :stock_alert ).exactly( 1 ).times
       @alert.do_run
@@ -24,7 +24,7 @@ RSpec.describe Iro::Alert do
 
     it 'incorrectly retirns string' do
       expect( Tda::Stock ).to receive( :get ).and_return(OpenStruct.new( parsed_response: "" ))
-      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+      @alert = create( :alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
 
       expect( ::ExceptionNotifier ).to_not receive( :notify_exception )
       @alert.do_run
@@ -32,7 +32,7 @@ RSpec.describe Iro::Alert do
 
     it 'incorrectly returns nil' do
       expect( Tda::Stock ).to receive( :get ).and_return(OpenStruct.new( parsed_response: nil ))
-      @alert = create( :iro_alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
+      @alert = create( :alert, symbol: @stock.ticker, direction: "ABOVE", strike: 0.0 )
 
       expect( ::ExceptionNotifier ).to_not receive( :notify_exception )
       @alert.do_run

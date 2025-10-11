@@ -5,10 +5,10 @@ RSpec.describe Iro::AlertsController do
 
   before do
     destroy_every( Iro::Alert, Iro::Stock )
-    qqq = create( :iro_stock )
+    qqq = create( :stock )
     setup_users
 
-    @alert = create( :iro_alert )
+    @alert = create( :alert )
   end
 
   describe '#index' do
