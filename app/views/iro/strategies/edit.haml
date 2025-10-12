@@ -1,3 +1,7 @@
 
 .strategies-edit.maxwidth
-  = render "form_#{@strategy.kind}", strategy: @strategy
+  - if @strategy.kind == Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
+    = render "form_spread", strategy: @strategy
+  - else
+    %b review strategies/edit, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
+

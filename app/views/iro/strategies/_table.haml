@@ -10,6 +10,7 @@
         %th stock
         %th kind
         %th long or short
+        %th put_call
         %th next_inner_delta
         %th slug
         %th.actions &nbsp;
@@ -23,6 +24,7 @@
           %td.stock= sss.stock
           %td= sss.kind
           %td.long-or-short= sss.long_or_short
+          %td.put-call= sss.put_call
           %td= sss.next_inner_delta
           %td= link_to sss.slug, strategy_path(sss)
           %td

@@ -23,7 +23,7 @@ Iro::Engine.routes.draw do
   resources :profiles
 
   get 'purses/:id/gameui', to: 'purses#show', as: :purse_gameui, defaults: { template: 'gameui' }
-  get 'purses/:id', to: 'purses#show', as: :purse, defaults: { template: 'show' }
+  get 'purses/:id',        to: 'purses#show', as: :purse # ,        defaults: { template: 'show' }
   resources :purses
 
   get 'schwab/sync', to: 'application#schwab_sync', as: :schwab_sync
@@ -31,8 +31,8 @@ Iro::Engine.routes.draw do
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   resources :stocks
 
-  get 'strategies/new-spread', to: 'strategies#new', as: :new_spread_strategy, defaults: { kind: 'spread' }
-  get 'strategies/new-wheel',  to: 'strategies#new', as: :new_wheel_strategy,  defaults: { kind: 'wheel' }
+  # get 'strategies/new-spread', to: 'strategies#new', as: :new_spread_strategy, defaults: { kind: 'spread' }
+  # get 'strategies/new-wheel',  to: 'strategies#new', as: :new_wheel_strategy,  defaults: { kind: 'wheel' }
   resources :strategies
 
   get 'api/oauth2-redirect.html', to: 'api#oauth2_redirect'

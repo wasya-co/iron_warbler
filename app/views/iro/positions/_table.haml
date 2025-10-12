@@ -1,11 +1,6 @@
 
+%h5 Positions (#{@purse.positions.length})
 .positions--table
-
-  .d-flex
-    %h5 Positions (#{positions.length})
-    = form_tag purse_path( @purse ), method: :get do
-      = select_tag :view_status, options_for_select([ :all, :active, :proposed, :pending ])
-      = submit_tag '>'
   %table.bordered
     %thead
       %tr

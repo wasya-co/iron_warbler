@@ -7,8 +7,8 @@
     -# (#{purse.positions.length})
     &nbsp;
     = link_to '[~]', edit_purse_path(purse)
-    = link_to '[table]', purse_path(purse)
-    = link_to '[gameUI]', purse_gameui_path(purse)
+    = link_to '[table]', purse_path(purse,         template: params[:template], view_status: params[:view_status] )
+    = link_to '[gameUI]', purse_gameui_path(purse, template: params[:template], view_status: params[:view_status] )
 
 %ul
   %li <b>Total:</b> #{pp_amount purse.balance}
@@ -18,9 +18,17 @@
 = render '/iro/positions/new', purse: purse
 
 
+
 - if true # params[:template] == 'gameui'
   .mini-inputs
     = form_for purse, html: { class: 'd-flex' } do |f|
       = render '/iro/purses/form_extra_fields', f: f
       = f.submit '>'
   %br
+
+.d-flex
+  %h5 view_status
+  = form_tag purse_path( @purse ), method: :get do
+    = select_tag :view_status, options_for_select([ :all, :active, :proposed, :pending ], selected: params[:view_status] )
+    = hidden_field_tag :template, params[:template]
+    = submit_tag '>'

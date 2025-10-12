@@ -31,8 +31,10 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :index, Iro::Purse
   end
 
+  ## table or gameui
   def show
     @purse = Iro::Purse.find(params[:id])
+    params[:template] = params[:template].presence || 'show'
     authorize! :show, @purse
 
     @positions = @purse.positions
