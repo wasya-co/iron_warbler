@@ -1,7 +1,11 @@
 
 .strategies-edit.maxwidth
-  - if @strategy.kind == Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
-    = render "form_spread", strategy: @strategy
-  - else
-    %b review strategies/edit, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
+  .row
+    .col-md-9
+      - if @strategy.kind == Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
+        .Card= render "form_spread", strategy: @strategy
+      - else
+        %b _TODO: review strategies/edit, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
+
+    .col-md-3= render 'iro/stocks/show_card', stock: @strategy.stock
 

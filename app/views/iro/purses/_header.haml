@@ -7,8 +7,8 @@
     -# (#{purse.positions.length})
     &nbsp;
     = link_to '[~]', edit_purse_path(purse)
-    = link_to '[table]', purse_path(purse,         template: params[:template], view_status: params[:view_status] )
-    = link_to '[gameUI]', purse_gameui_path(purse, template: params[:template], view_status: params[:view_status] )
+    = link_to '[table]', purse_path(purse,  template: 'show', view_status: params[:view_status] )
+    = link_to '[gameUI]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
 
 %ul
   %li <b>Total:</b> #{pp_amount purse.balance}

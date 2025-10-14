@@ -5,8 +5,14 @@ RSpec.describe Iro::StrategiesController do
 
   before do
     setup_users
-    destroy_every( Iro::Strategy )
-    @strategy = create(:strategy)
+    destroy_every( Iro::Stock, Iro::Strategy )
+  end
+
+  it '#edit' do
+    @stock_meta = create(:stock_meta)
+    @strategy = create(:strategy_long_credit_put_spread, stock: @stock_meta )
+    get :edit, params: { id: @strategy.id }
+    response.code.should eql '200'
   end
 
   it '#new' do
@@ -15,6 +21,8 @@ RSpec.describe Iro::StrategiesController do
   end
 
   it '#show' do
+    @stock_meta = create(:stock_meta)
+    @strategy = create(:strategy_long_credit_put_spread, stock: @stock_meta )
     get :show, params: { id: @strategy.id }
     response.code.should eql '200'
   end

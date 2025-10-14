@@ -1,7 +1,9 @@
 
 .strategies-show.maxwidth
   .header
-    %h5.title Strategy #{@strategy}
+    %h5.title
+      Strategy `#{@strategy}`
+      = link_to '[~]', edit_strategy_path(@strategy)
     %ul
       -# %li Purse #{@strategy.purses}
       -# %li= link_to 'Next position', strategy_next_position_path(@strategy)
