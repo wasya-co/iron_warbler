@@ -5,6 +5,14 @@ RSpec.describe Iro::PositionsController do
 
   before do
     setup_users
+    do_iro_setup_1
+  end
+
+  describe '#prepare' do
+    it 'prepare_long_credit_put_spread' do
+      get :prepare, params: { id: @position.id }
+      response.code.should eql '200'
+    end
   end
 
   describe '#update' do
@@ -18,12 +26,6 @@ RSpec.describe Iro::PositionsController do
       pos.reload
       pos.inner.begin_price.should eql 2.01
       pos.inner.begin_delta.should eql 0.33
-    end
-  end
-
-  describe '#prepare' do
-    it 'prepare_short_credit_call_spread' do
-      raise 'not implemented - @TODO'
     end
   end
 

@@ -26,7 +26,7 @@ class Tda::Option
   ##
   def self.get_chains params
     filename = "./data/schwab/#{Time.now.to_date.to_s}-#{params[:ticker]}-chains.json"
-    if !params[:force] && File.exists?( filename)
+    if !params[:force] && File.exists?(filename)
       return JSON.parse File.read filename
 
     else
@@ -141,7 +141,7 @@ class Tda::Option
     end
 
     query = { }.merge opts
-    puts! query, 'input opts'
+    puts! query, 'zp1 - query'
 
     headers = {
       accept:    'application/json',
@@ -150,13 +150,13 @@ class Tda::Option
 
     path = "/chains"
     out = self.get path, {
-      # basic_auth: { username: SCHWAB_DATA[:key], password: SCHWAB_DATA[:secret] },
       headers: headers,
       query: query,
     }
-    puts! out, 'out'
+    puts! out, 'zp1 - got a chain'
     timestamp = DateTime.parse out.headers['date']
     out = out.parsed_response.deep_symbolize_keys
+    puts! out, 'zp1 - out'
 
 
     tmp_sym = "#{opts[:contractType].to_s.downcase}ExpDateMap".to_sym

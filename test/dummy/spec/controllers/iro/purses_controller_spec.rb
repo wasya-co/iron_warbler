@@ -4,15 +4,8 @@ RSpec.describe Iro::PursesController do
   routes { Iro::Engine.routes }
 
   before do
-    destroy_every(
-      Iro::Option,
-      Iro::Position, Iro::Purse,
-      Iro::Stock, Iro::Strategy )
     setup_users
-    @stock = create(:stock)
-    @strategy = create(:strategy, stock: @stock)
-    @purse = create(:purse, stock: @stock)
-    @position = create(:position, inner: create(:option), outer: create(:option) )
+    do_iro_setup_1
   end
 
   it '#show' do

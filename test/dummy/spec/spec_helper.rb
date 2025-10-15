@@ -28,6 +28,22 @@ def destroy_every *args
   end
 end
 
+def do_iro_setup_1
+  destroy_every(
+    Iro::Option,
+    Iro::Position, Iro::Purse,
+    Iro::Stock,    Iro::Strategy,
+  );
+  @stock_meta = create(:stock_meta)
+  @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
+  @purse      = create(:purse, )
+  @inner      = create(:option)
+  @outer      = create(:option)
+  @position   = create(:position, strategy: @strategy, inner: @inner, outer: @outer )
+
+end
+
+
 def setup_users
 
   User.all.destroy_all

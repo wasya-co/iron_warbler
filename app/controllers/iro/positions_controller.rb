@@ -59,23 +59,26 @@ class Iro::PositionsController < Iro::ApplicationController
     # end
   end
 
+  ## 2025-10-14
+  ## long_credit_put_spread
   def prepare
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
+    @n_dollars = 100 ## used in the view, but the name is unclear
 
     @prev  = @position
     @purse = @position.purse
     @stock = @position.stock
-    @n_dollars = 100
 
     ## dealing with too many strikes in the chain
+=begin
     while true
-      @nn = ( @position.purse.n_next_positions/2 ).ceil
+      @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @nn_next_positions
       upper = Tda::Option.get_quote({
-        contractType: @position.inner.put_call,
-        strike: @prev.inner.strike + @nn*@stock.options_price_increment,
+        contractType:   @position.inner.put_call,
+        strike:         @prev.inner.strike + @nn*@stock.options_price_increment,
         expirationDate: @prev.next_expires_on,
-        ticker: @stock.ticker,
+        ticker:         @stock.ticker,
       })
       if !upper.symbol
         puts! 'too high'
@@ -101,6 +104,7 @@ class Iro::PositionsController < Iro::ApplicationController
       end
       break
     end
+=end
 
     self.send("_prepare_#{@position.strategy.kind}")
   end
@@ -187,17 +191,69 @@ class Iro::PositionsController < Iro::ApplicationController
     @positions = []
     (-@nn..@nn).each do |idx|
       next_ = Iro::Position.new({
-        stock: @stock,
+        stock:        @stock,
         inner_strike: @prev.inner.strike - idx*@stock.options_price_increment,
-        expires_on: @prev.next_expires_on,
-        purse: @position.purse,
-        strategy: @position.strategy,
-        quantity: @position.quantity,
+        expires_on:   @prev.next_expires_on,
+        purse:        @position.purse,
+        strategy:     @position.strategy,
+        quantity:     @position.quantity,
       })
       next_.sync
       next_.begin_inner_price = next_.end_inner_price
       next_.begin_inner_delta = next_.end_inner_delta
       next_.next_gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
+      @positions.push next_
+    end
+  end
+
+  ## 2025-10-14 _TODO: move to a model?
+  ##            _TODO: what does this do, exactly?
+  def _prepare_long_credit_put_spread
+    ## get quotes for next expires_at
+    # quotes = Tda::Option.get_quotes({ contractType: @position.put_call
+    @positions = []
+    (-@nn..@nn).each do |idx|
+      next_ = Iro::Position.find_or_create_by({
+        expires_on:   @prev.next_expires_on,
+        inner_strike: @prev.inner.strike - idx*@stock.options_price_increment,
+        outer_strike: @prev.outer.strike - idx*@stock.options_price_increment,
+        prev_id:      @prev.id,
+        purse:        @position.purse,
+        quantity:     @position.quantity,
+        status:       'prepare',
+        stock:        @stock,
+        strategy:     @position.strategy,
+      })
+      pos = next_
+      next_.inner ||= Iro::Option.new({
+        # begin_price: pos[:begin_inner_price],
+        # begin_delta: pos[:begin_inner_delta],
+        expires_on: pos[:expires_on],
+        inner:      pos,
+        put_call:   pos.put_call,
+        stock_id:   pos[:stock_id],
+        strike:     pos[:inner_strike],
+      })
+      next_.outer ||= Iro::Option.new({
+        # begin_price: pos[:begin_inner_price],
+        # begin_delta: pos[:begin_inner_delta],
+        expires_on: pos[:expires_on],
+        outer:      pos,
+        put_call:   pos.put_call,
+        stock_id:   pos[:stock_id],
+        strike:     pos[:outer_strike],
+      })
+
+      next_.sync
+      next_.inner.begin_price = next_.inner.end_price
+      next_.inner.begin_delta = next_.inner.end_delta
+
+      next_.outer.begin_price = next_.outer.end_price
+      next_.outer.begin_delta = next_.outer.end_delta
+
+      next_.next_gain_loss_amount  = @prev.outer.end_price   - @prev.inner.end_price
+      next_.next_gain_loss_amount += next_.inner.begin_price - next_.outer.begin_price
+      next_.save
       @positions.push next_
     end
   end
@@ -300,7 +356,7 @@ class Iro::PositionsController < Iro::ApplicationController
     params[:position].permit( :begin_on,
       :expires_on,
       :long_or_short,
-      :purse_id,
+      :purse_id, :put_call,
       :quantity,
       :status, :stock_id, :strategy_id,
     )
