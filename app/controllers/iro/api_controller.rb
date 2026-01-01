@@ -43,10 +43,15 @@ class Iro::ApiController < ActionController::Base
   private
 
   def decode_jwt
-    out = JWT.decode params[:jwt_token], nil, false
-    email = out[0]['email']
-    user = User.find_by({ email: email })
-    sign_in user
+    # puts! current_user, '#decode_jwt'
+    if current_user
+      ;
+    else
+      out = JWT.decode params[:jwt_token], nil, false
+      email = out[0]['email']
+      user = User.find_by({ email: email })
+      sign_in user
+    end
   end
 
   def set_stock
