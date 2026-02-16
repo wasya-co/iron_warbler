@@ -41,12 +41,13 @@ class Iro::PositionsController < Iro::ApplicationController
 
     @position   = strategy.next_position
     @position ||= Iro::Position.new( params[:position].permit!.merge({
+      put_call: strategy.put_call,
       status:   Iro::Position::STATUS_PROPOSED,
       # inner:    Iro::Option.new,
       # outer:    Iro::Option.new,
       stock_id: strategy.stock_id,
     }) )
-    authorize! :new, @posision
+    authorize! :new, @position
 
     @position.calc_nxt
 

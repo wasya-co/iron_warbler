@@ -39,7 +39,12 @@ def do_iro_setup_1
   @purse      = create(:purse, )
   @inner      = create(:option)
   @outer      = create(:option)
-  @position   = create(:position, strategy: @strategy, inner: @inner, outer: @outer )
+  @position   = create(:position, {
+    inner: @inner,
+    outer: @outer,
+    put_call: 'PUT',
+    strategy: @strategy,
+  })
 
 end
 
@@ -47,13 +52,15 @@ end
 def setup_users
 
   User.all.destroy_all
-  user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
+  user    = User.create!( email: 'victor@wasya.co',    password: 'test1234', provider: 'keycloakopenid' )
+  user_pi = User.create!( email: 'piousbox@gmail.com', password: 'test1234', provider: 'keycloakopenid' )
 
   Wco::Leadset.unscoped.map &:destroy!
   leadset = create( :leadset )
 
   Wco::Profile.unscoped.map &:destroy!
-  p = Wco::Profile.create!( email: user.email, leadset: leadset )
+  p    = Wco::Profile.create!( email: user.email,    leadset: leadset )
+  p_pi = Wco::Profile.create!( email: user_pi.email, leadset: leadset )
 
   sign_in user
 end
