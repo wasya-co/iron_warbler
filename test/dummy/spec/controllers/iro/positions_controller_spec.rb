@@ -5,7 +5,45 @@ RSpec.describe Iro::PositionsController do
 
   before do
     setup_users
-    do_iro_setup_1
+
+    destroy_every(
+      Iro::Option,
+      Iro::Position, Iro::Purse,
+      Iro::Stock,    Iro::Strategy,
+    );
+    @stock_meta = create(:stock, ticker: 'META', options_price_increment: 5.0 )
+    @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
+    @purse      = create(:purse, )
+    @inner      = create(:option)
+    @outer      = create(:option)
+    @position   = create(:position, {
+      expires_on: '2026-02-20',
+      inner:    @inner,
+      outer:    @outer,
+      put_call: 'PUT',
+      strategy: @strategy,
+    })
+
+    fake_quote_bundles = [ '2026-02-20_GME_PUT', '2026-02-27_GME_PUT' ]
+    fake_quote_bundles.each do |bundle|
+      bs = bundle.split('_')
+      fake_quotes = JSON.parse(File.read("data/schwab/#{bundle}.json")).map &:deep_symbolize_keys
+      allow( Tda::Option ).to receive( :get_quotes ).with({ contractType: bs[2], ticker: bs[1], expirationDate: bs[0] }).and_return(fake_quotes)
+    end
+    fake_quote_bundles = [
+      '2026-02-20_META_810_CALL',
+      '2026-02-27_GME_16_PUT',
+      '2026-02-27_GME_21_PUT',
+      '2026-02-27_META_790_CALL',
+      '2026-02-27_META_810_CALL',
+      '2026-02-27_META_810_PUT',
+    ];
+    fake_quote_bundles.each do |bundle|
+      bs = bundle.split('_')
+      fake_quotes = JSON.parse(File.read("data/schwab/#{bundle}.json")).map &:deep_symbolize_keys
+      allow( Tda::Option ).to receive( :get_quotes ).with({ strike: bs[2].to_f, contractType: bs[3], ticker: bs[1], expirationDate: bs[0] }).and_return(fake_quotes)
+    end
+
   end
 
   ##
@@ -13,21 +51,7 @@ RSpec.describe Iro::PositionsController do
   ##
   describe '#new' do
     it 'renders' do
-
-      fake_quote_bundles = [ '2026-02-20_GME_PUT', '2026-02-27_GME_PUT' ]
-      fake_quote_bundles.each do |bundle|
-        bs = bundle.split('_')
-        fake_quotes = JSON.parse(File.read("data/schwab/#{bundle}.json")).map &:deep_symbolize_keys
-        allow( Tda::Option ).to receive( :get_quotes ).with({ contractType: bs[2], ticker: bs[1], expirationDate: bs[0] }).and_return(fake_quotes)
-      end
-      fake_quote_bundles = [ '2026-02-27_GME_16_PUT', '2026-02-27_GME_21_PUT' ]
-      fake_quote_bundles.each do |bundle|
-        bs = bundle.split('_')
-        fake_quotes = JSON.parse(File.read("data/schwab/#{bundle}.json")).map &:deep_symbolize_keys
-        allow( Tda::Option ).to receive( :get_quotes ).with({ strike: bs[2].to_f, contractType: bs[3], ticker: bs[1], expirationDate: bs[0] }).and_return(fake_quotes)
-      end
-
-      @stock_gme = create(:stock_gme, last: 23.57 )
+      @stock_gme = create(:stock, last: 23.57, ticker: 'GME' )
       @strategy  = create(:strategy_long_credit_put_spread, {
         next_buffer_above_water: 1.00,
         next_inner_delta: 0.2,

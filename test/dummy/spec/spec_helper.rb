@@ -34,7 +34,7 @@ def do_iro_setup_1
     Iro::Position, Iro::Purse,
     Iro::Stock,    Iro::Strategy,
   );
-  @stock_meta = create(:stock_meta)
+  @stock_meta = create(:stock_meta, options_price_increment: 5.0 )
   @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
   @purse      = create(:purse, )
   @inner      = create(:option)
@@ -45,7 +45,6 @@ def do_iro_setup_1
     put_call: 'PUT',
     strategy: @strategy,
   })
-
 end
 
 

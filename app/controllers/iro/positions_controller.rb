@@ -77,7 +77,7 @@ class Iro::PositionsController < Iro::ApplicationController
     while true
       upper = Tda::Option.get_quote({
         contractType:   @position.inner.put_call,
-        strike:         @prev.inner.strike + @nn*@stock.options_price_increment,
+        strike:         @prev.inner.strike + @nn*@stock.options_price_increment, ## _TODO 2026-02-16: no more options_price_increment, just get strickes "around" current.
         expirationDate: @prev.next_expires_on,
         ticker:         @stock.ticker,
       })
