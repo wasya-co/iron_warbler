@@ -1,3 +1,42 @@
 
-%h5 _gameui_long_credit_put_spread
+- pos   = position
+- stock = pos.stock
+- nearest_strike = stock.last.round
+- u = pos.purse.unit # pixels per dollar
+
+-#
+-# 2026-02-16 I have not verified any of this
+-#
+
+.collapse-expand.d-flex.--gameui-long-credit-put-spread{ id: "gameui-pos-#{pos.id}" }
+  [<>]
+  .maxwidth= render "/iro/positions/header", pos: pos
+.a
+  = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
+  .StockCoordinatesW
+    .StockCoordinates{ style: "height: #{pos.q() *pos.purse.height}px " }
+      .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
+
+      .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
+        .label Last: #{pp_amount stock.last}
+        .c
+
+        - left  = "#{ ( pos.outer.strike - stock.last ).abs() *-1*u}px"
+        - width = "#{ ( pos.inner.strike - pos.outer.strike ).abs() *u}px"
+        .PositionW{ class: pos.strategy.kind, style: "left: #{left}; width: #{width}; " }
+          .Position
+            .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+            .RollGuide
+
+            - if pos.net_amount >= 0
+              .Net.NetPositive{ style: "width: #{ (pos.net_amount) * u }px; right: 0" }
+                .label
+                  net
+                  = pp_amount pos.net_amount
+            - else
+              .Net.NetNegative{ style: "width: #{ (-1 * pos.net_amount) * u }px; left: 100%" }
+                .label
+                  net
+                  = pp_amount pos.net_amount
+.c
 

@@ -71,10 +71,10 @@ class Iro::PositionsController < Iro::ApplicationController
     @purse = @position.purse
     @stock = @position.stock
 
+    @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @nn_next_positions
+
     ## dealing with too many strikes in the chain
-=begin
     while true
-      @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @nn_next_positions
       upper = Tda::Option.get_quote({
         contractType:   @position.inner.put_call,
         strike:         @prev.inner.strike + @nn*@stock.options_price_increment,
@@ -105,7 +105,6 @@ class Iro::PositionsController < Iro::ApplicationController
       end
       break
     end
-=end
 
     self.send("_prepare_#{@position.strategy.kind}")
   end
