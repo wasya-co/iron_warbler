@@ -66,7 +66,7 @@
               = link_to '[dup]', duplicate_position_path(position)
             .d-flex
               = link_to '[sync]', sync_position_path(pos)
-              = link_to '[roll]', prepare_to_roll_position_path(pos)
+              = link_to '[roll]', position_prepare_to_roll_path(pos)
 
           %td.ticker
             = position.stock.ticker

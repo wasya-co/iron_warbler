@@ -80,41 +80,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @prev  = @position
     @purse = @position.purse
     @stock = @position.stock
-
-    @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @n_next_positions
-
-    ## dealing with too many strikes in the chain
-    while true
-      upper = Tda::Option.get_quote({
-        contractType:   @position.inner.put_call,
-        strike:         @prev.inner.strike + @nn*@stock.options_price_increment, ## _TODO 2026-02-16: no more options_price_increment, just get strickes "around" current.
-        expirationDate: @prev.next_expires_on,
-        ticker:         @stock.ticker,
-      })
-      if !upper.symbol
-        puts! 'too high'
-        flash_alert 'too high'
-        @purse.n_next_positions = @purse.n_next_positions - 1
-        @purse.n_next_positions = 1 if @purse.n_next_positions < 1
-        @purse.save!
-        next
-      end
-      lower = Tda::Option.get_quote({
-        contractType: @position.inner.put_call,
-        strike: @prev.inner.strike - @nn*@stock.options_price_increment,
-        expirationDate: @prev.next_expires_on,
-        ticker: @stock.ticker,
-      })
-      if !lower.symbol
-        puts! 'too low'
-        flash_alert 'too low'
-        @purse.n_next_positions = @purse.n_next_positions - 1
-        @purse.n_next_positions = 1 if @purse.n_next_positions < 1
-        @purse.save!
-        next
-      end
-      break
-    end
+    @nn    = @position.purse.n_next_positions
 
     self.send("_prepare_#{@position.strategy.kind}")
   end
@@ -208,7 +174,7 @@ class Iro::PositionsController < Iro::ApplicationController
         strategy:     @position.strategy,
         quantity:     @position.quantity,
       })
-      next_.sync
+      # next_.sync
       next_.begin_inner_price = next_.end_inner_price
       next_.begin_inner_delta = next_.end_inner_delta
       next_.next_gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
@@ -217,49 +183,81 @@ class Iro::PositionsController < Iro::ApplicationController
   end
 
   ## 2025-10-14 _TODO: move to a model?
-  ##            _TODO: what does this do, exactly?
+  ## 2026-02-18 continue
   def _prepare_long_credit_put_spread
     ## get quotes for next expires_at
-    # quotes = Tda::Option.get_quotes({ contractType: @position.put_call
+    quotes_params = { contractType: @position.put_call, ticker: @stock.ticker, expirationDate: @prev.next_expires_on }
+    puts! quotes_params, 'quotes_params'
+    quotes = Tda::Option.get_quotes(quotes_params)
+
+    # strike_price = @position.inner.strike
+    # strike_prices = quotes.map { |q| q[:strikePrice] }
+    # index = strike_prices.index(strike_price)
+
     @positions = []
     (-@nn..@nn).each do |idx|
-      next_ = Iro::Position.find_or_create_by({
-        expires_on:   @prev.next_expires_on,
-        inner_strike: @prev.inner.strike - idx*@stock.options_price_increment,
-        outer_strike: @prev.outer.strike - idx*@stock.options_price_increment,
+      outer_strike = @prev.outer.strike - idx*@stock.options_price_increment
+      inner_strike = @prev.inner.strike - idx*@stock.options_price_increment
+      puts! [idx, outer_strike, inner_strike], '[idx, outer_strike, inner_strike]'
+
+      next_ = Iro::Position.where({
         prev_id:      @prev.id,
-        purse:        @position.purse,
-        quantity:     @position.quantity,
-        status:       'prepare',
-        stock:        @stock,
-        strategy:     @position.strategy,
-      })
-      pos = next_
-      next_.inner ||= Iro::Option.new({
-        # begin_price: pos[:begin_inner_price],
-        # begin_delta: pos[:begin_inner_delta],
-        expires_on: pos[:expires_on],
-        inner:      pos,
-        put_call:   pos.put_call,
-        stock_id:   pos[:stock_id],
-        strike:     pos[:inner_strike],
-      })
-      next_.outer ||= Iro::Option.new({
-        # begin_price: pos[:begin_inner_price],
-        # begin_delta: pos[:begin_inner_delta],
-        expires_on: pos[:expires_on],
-        outer:      pos,
-        put_call:   pos.put_call,
-        stock_id:   pos[:stock_id],
-        strike:     pos[:outer_strike],
-      })
+        expires_on:   @prev.next_expires_on,
+        inner_strike: inner_strike,
+        outer_strike: outer_strike,
+      }).first
+      if !next_
+        next_ = Iro::Position.create({
+          prev_id:      @prev.id,
+          expires_on:   @prev.next_expires_on,
+          inner_strike: inner_strike,
+          outer_strike: outer_strike,
 
-      next_.sync
-      next_.inner.begin_price = next_.inner.end_price
-      next_.inner.begin_delta = next_.inner.end_delta
+          purse:        @position.purse,
+          quantity:     @position.quantity,
+          status:       'prepare',
+          stock:        @stock,
+          strategy:     @position.strategy,
+        })
+        pos = next_
+        next_.inner ||= Iro::Option.create({
+          # begin_price: pos[:begin_inner_price],
+          # begin_delta: pos[:begin_inner_delta],
+          expires_on:   pos[:expires_on],
+          pos_of_inner: pos,
+          put_call:     pos.put_call,
+          stock_id:     pos[:stock_id],
+          strike:       pos[:inner_strike],
+        })
+        next_.outer ||= Iro::Option.create({
+          # begin_price: pos[:begin_inner_price],
+          # begin_delta: pos[:begin_inner_delta],
+          expires_on:   pos[:expires_on],
+          pos_of_outer: pos,
+          put_call:     pos.put_call,
+          stock_id:     pos[:stock_id],
+          strike:       pos[:outer_strike],
+        })
+      end
 
-      next_.outer.begin_price = next_.outer.end_price
-      next_.outer.begin_delta = next_.outer.end_delta
+      quotes.map do |quote|
+        if quote[:strikePrice] == next_.inner.strike
+          price = ( quote[:bid] + quote[:ask] )/2
+          next_.inner.begin_price = price
+          next_.inner.end_price   = price
+          next_.inner.begin_delta = quote[:delta]
+          next_.inner.end_delta   = quote[:delta]
+          next_.inner.save
+        end
+        if quote[:strikePrice] == next_.outer.strike
+          price = ( quote[:bid] + quote[:ask] )/2
+          next_.outer.begin_price = price
+          next_.outer.end_price   = price
+          next_.outer.begin_delta = quote[:delta]
+          next_.outer.end_delta   = quote[:delta]
+          next_.outer.save
+        end
+      end
 
       next_.next_gain_loss_amount  = @prev.outer.end_price   - @prev.inner.end_price
       next_.next_gain_loss_amount += next_.inner.begin_price - next_.outer.begin_price
@@ -302,7 +300,7 @@ class Iro::PositionsController < Iro::ApplicationController
         strike:     pos[:outer_strike],
       })
 
-      next_.sync
+      # next_.sync
       next_.inner.begin_price = next_.inner.end_price
       next_.inner.begin_delta = next_.inner.end_delta
 
