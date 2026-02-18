@@ -81,7 +81,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @purse = @position.purse
     @stock = @position.stock
 
-    @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @nn_next_positions
+    @nn = ( @position.purse.n_next_positions/2 ).ceil ## @nn == @n_next_positions
 
     ## dealing with too many strikes in the chain
     while true

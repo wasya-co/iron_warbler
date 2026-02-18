@@ -14,7 +14,7 @@ Iro::Engine.routes.draw do
   match 'positions/:id/close',     to: 'positions#close',    as: :close_position, via: [ :get, :post ]
   get   'positions/duplicate/:id', to: 'positions#new',      as: :duplicate_position
   post  'positions/propose',       to: 'positions#propose',  as: :propose_position
-  get   'positions/:id/prepare',   to: 'positions#prepare',  as: :prepare_to_roll_position, defaults: { template: 'gameui' }
+  get   'positions/:id/prepare',   to: 'positions#prepare',  as: :position_prepare_to_roll, defaults: { template: 'gameui' }
   match 'positions/:id/prepare2',  to: 'positions#prepare2', as: :prepare2_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
   match 'positions/:id/prepare3',  to: 'positions#prepare3', as: :prepare3_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
   post  'positions/:id/roll',      to: 'positions#do_roll',  as: :roll_position
