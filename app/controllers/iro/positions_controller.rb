@@ -319,14 +319,15 @@ class Iro::PositionsController < Iro::ApplicationController
 
 
   def sync
-    @position = pos = Iro::Position.find params[:id]
+    @position = Iro::Position.find params[:id]
     authorize! :refresh, @position
 
     @position.sync
     @position.calc_rollp
-    if true # @position.rollp > 0.5
-      @position.calc_nxt
-    end
+    ## _TODO: this craps out in a bad way. 2026-02-18
+    # if true # @position.rollp > 0.5
+    #   @position.calc_nxt
+    # end
 
     redirect_to request.referrer || purse_path( @position.purse )
   end
