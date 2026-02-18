@@ -4,7 +4,10 @@
   %table.bordered
     %thead
       %tr
-        %th.actions &nbsp;
+        %th.actions
+          = form_tag positions_path, method: :delete, id: 'positionsXmultiSubmit' do
+            = hidden_field_tag "positions_xmulti", ''
+            = submit_tag 'X-multi', data: { confirm: 'Are you sure?' }
         %th.ticker
           .a Stock
         %th
@@ -39,7 +42,6 @@
             %br
             next_outcome
 
-    -# wtf caching issue?!
     - positions.map &:id
     %tbody
       - positions.each_with_index do |position, idx|
@@ -58,6 +60,7 @@
           %td.actions
             = position.status
             .d-flex
+              = check_box_tag 'positions_xmulti', position.id , false, { class: 'positions-xmulti' }
               = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
               = link_to '[~]', edit_position_path(position)
               = link_to '[dup]', duplicate_position_path(position)

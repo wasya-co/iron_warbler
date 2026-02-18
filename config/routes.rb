@@ -19,6 +19,7 @@ Iro::Engine.routes.draw do
   match 'positions/:id/prepare3',  to: 'positions#prepare3', as: :prepare3_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
   post  'positions/:id/roll',      to: 'positions#do_roll',  as: :roll_position
   get   'positions/:id/sync',      to: 'positions#sync',     as: :sync_position
+  delete 'positions', to: 'positions#destroy_multi'
   resources :positions
   resources :profiles
 

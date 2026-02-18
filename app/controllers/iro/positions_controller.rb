@@ -31,6 +31,16 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
+  def destroy_multi
+    positions = Iro::Position.find params[:positions_xmulti].split(',')
+    authorize! :destroy, Iro::Position
+
+    puts! positions, 'positions'
+    flags = positions.map { |p| p.delete }
+    flash_notice "Probably ok: #{flags}"
+    redirect_to request.referrer
+  end
+
   def edit
     @position = Iro::Position.find params[:id]
     authorize! :edit, @position
