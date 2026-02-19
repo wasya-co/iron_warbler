@@ -1,7 +1,10 @@
 
 .maxwidth
-  - if params[:kind] == Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
+  - case params[:kind]
+  - when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
+    = render "form_spread", strategy: @strategy
+  - when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
     = render "form_spread", strategy: @strategy
   - else
-    %b review strategies/new, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
+    %p.alert _TODO: review strategies/new, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
 

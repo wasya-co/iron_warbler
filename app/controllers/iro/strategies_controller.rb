@@ -44,7 +44,6 @@ class Iro::StrategiesController < Iro::ApplicationController
   def new
     @strategy = Iro::Strategy.new({ kind: params[:kind] })
     authorize! :new, @posision
-
   end
 
   def show

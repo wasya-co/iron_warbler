@@ -44,6 +44,7 @@ class Iro::PursesController < Iro::ApplicationController
     @positions = @positions.includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
+    @positions.each { |p| p.sync }
 
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
