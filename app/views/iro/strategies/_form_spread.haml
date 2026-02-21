@@ -45,13 +45,17 @@
     -#   = f.label :next_max_outer_delta
     -#   = f.number_field :next_max_outer_delta, placeholder: "0.25", step: 0.01
     .field
-      = f.label :threshold_delta
-      = f.number_field :threshold_pos_delta, placeholder: "0.14", step: 0.001
-      .comment that's a best-case scenario roll
+      = f.label :threshold_neg_delta
+      = f.number_field :threshold_neg_delta, placeholder: "0.14", step: 0.001
+      .comment defensive
     .field
       = f.label :threshold_netp
       = f.number_field :threshold_netp, placeholder: "0.69", step: 0.001
       .comment Should not be used.
+    .field
+      = f.label :threshold_pos_delta
+      = f.number_field :threshold_pos_delta, placeholder: "0.14", step: 0.001
+      .comment Best-case scenario roll, offensive
 
     %hr
 

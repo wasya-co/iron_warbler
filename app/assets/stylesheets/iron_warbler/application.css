@@ -39,3 +39,7 @@ html {
   }
 }
 
+
+.strategies--show {
+  display: none;
+}

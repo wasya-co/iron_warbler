@@ -11,7 +11,9 @@
         %th kind
         %th long or short
         %th put_call
-        %th next_inner_delta
+        %th next inner delta
+        %th thresh neg delta
+        %th thresh pos delta
         %th slug
         %th.actions &nbsp;
     %tbody
@@ -26,7 +28,11 @@
           %td.long-or-short= sss.long_or_short
           %td.put-call= sss.put_call
           %td= sss.next_inner_delta
-          %td= link_to sss.slug, strategy_path(sss)
+          %td.threshold-neg-delta
+            = sss.threshold_neg_delta
+          %td.threshold-pos-delta
+            = sss.threshold_pos_delta
+          %td.slug= link_to sss.slug, strategy_path(sss)
           %td
             = form_tag propose_position_path do
               = hidden_field_tag :strategy_id, sss.id

@@ -55,7 +55,8 @@
               .h-50px
 
         -## tr
-        %tr{ class: [ position.strategy.kind, position.strategy.long_or_short ] }
+        %tr{ class: [ position.strategy.kind, |
+                      position.strategy.long_or_short == 'long' ? 'is-long' : 'is-short' ] }
 
           %td.actions
             = position.status
@@ -75,14 +76,10 @@
             = pp_amount position.stock.last
 
           %td.status.strategy.w-200px
-
             %b
               = position.expires_on.to_datetime.strftime("%b %d")
               [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
-            %br
-            %i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
-              #{position.strategy}
-            = render '/iro/strategies/show', strategy: position.strategy
+            = render '/iro/strategies/show', position: position, strategy: position.strategy
 
           %td.q
             <b>#{position.quantity}</b>

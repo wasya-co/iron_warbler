@@ -4,6 +4,8 @@
     .col-md-9
       - if @strategy.kind == Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD
         .Card= render "form_spread", strategy: @strategy
+      - if @strategy.kind == Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+        .Card= render "form_spread", strategy: @strategy
       - else
         %b _TODO: review strategies/edit, incorporate strategies other than KIND_LONG_CREDIT_PUT_SPREAD
 

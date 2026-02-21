@@ -79,6 +79,11 @@
     background: rgba(0,255,0, 0.5);
     height: 0.5em;
   }
+  .PositionW.is-short .MaxGain {
+    right: auto;
+    left: 0;
+  }
+
 
   .sprite {
     position: absolute;
