@@ -12,6 +12,12 @@ RSpec.describe Iro::StocksController do
       get :index
       response.code.should eql '200'
     end
+
+    it '#show' do
+      stock = create(:stock, ticker: 'TSLA')
+      get :show, params: { id: stock.id }
+      response.code.should eql '200'
+    end
   end
 
   # describe 'negative' do

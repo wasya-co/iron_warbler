@@ -39,6 +39,20 @@ html {
   }
 }
 
+.red {
+  border: 1px solid red;
+}
+
+.no-dot {
+  list-style-type: decimal;
+  li {
+    padding-left: 5px;
+    text-align: center;
+  }
+  li::marker {
+    content: counter(list-item);
+  }
+}
 
 .strategies--show {
   display: none;

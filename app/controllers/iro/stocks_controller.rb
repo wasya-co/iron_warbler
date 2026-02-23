@@ -66,20 +66,16 @@ class Iro::StocksController < Iro::ApplicationController
     })
     @datapoints = Iro::Datapoint.where({
       symbol: @stock.ticker,
-    }).order_by({ date: :desc }).limit(100)
-
-    ## @deprecated, use api/stocks_controller#max_pain
-    hash = Tda::Option.get_chains({ ticker: @stock.ticker, force: false })
-    @max_pain = Iro::Option.max_pain hash
-    @max_pain_summary = {}
-    @max_pain.each do |date, types|
-      all = types['all']
-      @max_pain_summary[date] = all.keys[0]
-      all.each do |strike, amount|
-        if amount < all[@max_pain_summary[date]]
-          @max_pain_summary[date] = strike
-        end
-      end
+    }).order_by({ date: :desc })
+    if @datapoints.length == 0
+      @stock.get_historic_data
+      @datapoints = Iro::Datapoint.where({
+        symbol: @stock.ticker,
+      }).order_by({ date: :desc })
+    end
+    @datapoints_h = {}
+    @datapoints.each do |dp|
+      @datapoints_h[dp.date.to_s] = dp.value
     end
 
     respond_to do |format|

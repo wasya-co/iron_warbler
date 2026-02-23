@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: a5a9459d54f1e6c8d923d34646216a2382d74d0b
+  revision: ed9af4902a04164e77b27b0545aaa93b020e09f0
   branch: 3.3.0
   specs:
     wco_models (3.1.0.240)

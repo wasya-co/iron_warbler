@@ -5,17 +5,46 @@
       = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
 
   .row
-    .col-md-3
+    -#
+      .col-md-6
+        %h4 Datapoints
+        %table.bordered
+          %thead
+            %td Date
+            %td Value
+          %tbody
+            - @datapoints.each do |pt|
+              %tr
+                %td= pt.date
+                %td= pt.value
+
+    .col-md-6
       %h4 Datapoints
-      %table.bordered
-        %thead
-          %td Date
-          %td Value
-        %tbody
-          - @datapoints.each do |pt|
-            %tr
-              %td= pt.date
-              %td= pt.value
+      - date_oldest = @datapoints.last.date
+      - today = Date.today
+      - current = date_oldest
+      - while current <= today
+        = @datapoints_h[current.to_s] ? '^' : '.'
+        - if current.next_day.month != current.month || current == today
+          %br
+        - current = current.next_day
+
+      %h4 Datapoints
+      .d-flex
+        - start_date = @datapoints.last.date
+        - today = Date.today
+        - (start_date..today).group_by { |d| d.beginning_of_month }.each do |month, days|
+          %div
+            %h5= month.strftime("%B %Y")
+            %ol.no-dot
+              - days.each do |_day|
+                %li
+                  - if @datapoints_h[_day.to_s]
+                    \^
+                  - elsif _day.saturday? || _day.sunday?
+                    S
+                  - else
+                    .red .
 
 
     .col-md-9
@@ -24,6 +53,3 @@
           %b 1 yr volatility <br />
           = @stock.volatility
 
-      %h4 Max Pain
-      %pre
-        = JSON.pretty_generate @max_pain_summary

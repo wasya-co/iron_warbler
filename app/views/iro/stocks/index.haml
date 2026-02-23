@@ -10,19 +10,24 @@
         %td last price
         %td n priceitems
         %td volatility
+        %td strategies
     %tbody
       - @stocks.each do |stock|
         %tr
-          %td
+          %td.actions
             = link_to '[~]', edit_stock_path(stock)
             = link_to '[api]', stock_path(stock, format: :json)
             <b>#{link_to stock.ticker, stock_path(stock)}</b>
-          %td
+          %td.last
             #{pp_amount stock.last}
-          %td
+          %td.priceitems
             = stock.priceitems.length
-          %td
+          %td.volatility
             = stock.volatility rescue nil
+          %td.strategies
+            %ul
+              - stock.strategies.each do |s|
+                %li= link_to s, strategy_path(s)
 
   %hr
   = render 'iro/stocks/form', stock: Iro::Stock.new
