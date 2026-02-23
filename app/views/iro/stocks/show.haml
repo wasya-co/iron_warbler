@@ -5,6 +5,13 @@
       = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
 
   .row
+    .col-md-6
+      %h4 Strategies [+]
+      %ul
+        - @stock.strategies.each do |st|
+          %li= link_to st, strategy_path(st)
+
+  .row
     -#
       .col-md-6
         %h4 Datapoints
