@@ -3,6 +3,8 @@ class Iro::DatapointsController < Iro::ApplicationController
 
   ## params: d, k, v
   def create
+    # puts! params, 'datapoints#create'
+
     authorize! :create, Iro::Datapoint
     begin
       Iro::Datapoint.create!(
@@ -11,7 +13,8 @@ class Iro::DatapointsController < Iro::ApplicationController
         value: params[:v],
       )
       render json: { status: :ok }
-    rescue Mongoid::Errors::Validations => e
+    rescue Mongoid::Errors::Validations => err
+      puts! err, 'could not create datapoint'
       render json: { status: 401 }, status: 401
     end
   end

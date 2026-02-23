@@ -5,6 +5,9 @@ RSpec.describe Iro::StocksController do
 
   before do
     setup_users
+    destroy_every( Iro::Datapoint, Iro::Stock )
+    @stock     = create(:stock, ticker: 'TSLA')
+    @datapoint = create(:datapoint, date: '2026-01-01', symbol: @stock.ticker, value: 100.0 )
   end
 
   describe 'positive' do
@@ -14,17 +17,9 @@ RSpec.describe Iro::StocksController do
     end
 
     it '#show' do
-      stock = create(:stock, ticker: 'TSLA')
-      get :show, params: { id: stock.id }
+      get :show, params: { id: @stock.id }
       response.code.should eql '200'
     end
   end
-
-  # describe 'negative' do
-  #   it '#create' do
-  #     post :create, params: { time: Time.now, value: 2 }
-  #     response.code.should eql '401'
-  #   end
-  # end
 
 end

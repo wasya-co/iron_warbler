@@ -4,6 +4,7 @@ RSpec.describe Iro::DatapointsController do
   routes { Iro::Engine.routes }
 
   before do
+    destroy_every( Iro::Datapoint )
     setup_users
   end
 
