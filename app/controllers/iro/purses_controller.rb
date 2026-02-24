@@ -53,7 +53,6 @@ class Iro::PursesController < Iro::ApplicationController
     })
     count = 1
     @positions.each do |pos|
-      # byebug
       pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
       pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
       pos.inner.save ? print("#{count}^") : print("#{count}X")

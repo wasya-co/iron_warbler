@@ -372,7 +372,9 @@ class Iro::PositionsController < Iro::ApplicationController
         expires_on: pos.expires_on,
       }
       pos.inner.update params[:inner].permit!.merge( o_attrs )
-      pos.outer.update params[:outer].permit!.merge( o_attrs )
+      if pos.outer
+        pos.outer.update params[:outer].permit!.merge( o_attrs )
+      end
 
       flash_notice @position
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s

@@ -95,6 +95,22 @@ RSpec.describe Iro::PositionsController do
     end
   end
 
+  describe '#edit' do
+    it 'covered_call' do
+      purse = create(:purse)
+      strategy  = create(:strategy, {
+        kind: Iro::Strategy::KIND_COVERED_CALL,
+        stock: @stock_gme,
+      })
+      position = create(:position, {
+        strategy: strategy,
+        inner: create(:option, begin_price: 0.99, begin_delta: 0.2),
+      })
+      get :edit, params: { id: position.id.to_s }
+      response.code.should eql '200'
+    end
+  end
+
   ## 2026-02-16
   describe '#new' do
     before do
@@ -166,10 +182,25 @@ RSpec.describe Iro::PositionsController do
       })
       post :update, params: { id: pos.id, position: { expires_on: pos.expires_on },
         inner: { begin_price: 2.01, begin_delta: 0.33 },
-        outer: { begin_price: pos.outer.begin_price } }
+        outer: { begin_price: pos.outer.begin_price, end_price: 0.56 } }
       pos.reload
       pos.inner.begin_price.should eql 2.01
       pos.inner.begin_delta.should eql 0.33
+      pos.outer.end_price.should eql 0.56
+    end
+
+    it 'covered_call' do
+      strategy = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL)
+      pos = create( :position, {
+        strategy: strategy,
+        inner: create(:option, begin_price: 0.99, begin_delta: 0.2),
+        put_call: 'CALL',
+      })
+      post :update, params: { id: pos.id, position: { expires_on: pos.expires_on },
+        inner: { begin_price: 2.01, begin_delta: 0.33 },
+      };
+      pos.reload
+      pos.inner.begin_price.should eql 2.01
     end
   end
 

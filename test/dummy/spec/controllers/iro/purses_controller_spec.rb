@@ -14,7 +14,41 @@ RSpec.describe Iro::PursesController do
   end
 
   context '#show' do
-    it 'long_credit_put_spread' do
+
+    it 'gameui, table for covered_call' do
+      purse = create(:purse)
+      strategy   = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL, stock: @stock_meta )
+      inner      = create(:option, begin_price: 10 )
+      position   = create(:position, {
+        expires_on: '2024-04-19',
+        inner: inner,
+        put_call: 'CALL',
+        purse: purse,
+        strategy: strategy,
+      })
+
+      ## quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
+      fake_quotes = {
+        '2024-04-19' => {
+          'CALL' => {
+            800.0 => {
+              price: 0.1,
+              delta: 0.1,
+            },
+          },
+        },
+      }
+      allow( Tda::Option ).to receive( :get_quotes_h
+        ).and_return(fake_quotes)
+      get :show, params: { id: purse.id, template: 'gameui' }
+      response.code.should eql '200'
+
+      get :show, params: { id: purse.id, template: 'show' }
+      response.code.should eql '200'
+    end
+
+
+    it 'table for long_credit_put_spread' do
       strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta )
       purse      = create(:purse )
       inner      = create(:option, begin_price: 10 )
@@ -46,34 +80,6 @@ RSpec.describe Iro::PursesController do
       response.code.should eql '200'
     end
 
-    it 'gameui for covered_call' do
-      purse = create(:purse)
-      strategy   = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL, stock: @stock_meta )
-      inner      = create(:option, begin_price: 10 )
-      position   = create(:position, {
-        expires_on: '2024-04-19',
-        inner: inner,
-        put_call: 'CALL',
-        purse: purse,
-        strategy: strategy,
-      })
-
-      ## quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
-      fake_quotes = {
-        '2024-04-19' => {
-          'CALL' => {
-            800.0 => {
-              price: 0.1,
-              delta: 0.1,
-            },
-          },
-        },
-      }
-      allow( Tda::Option ).to receive( :get_quotes_h
-        ).and_return(fake_quotes)
-      get :show, params: { id: purse.id, template: 'gameui' }
-      response.code.should eql '200'
-    end
   end
 
 end

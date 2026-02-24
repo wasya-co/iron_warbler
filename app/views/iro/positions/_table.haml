@@ -1,5 +1,5 @@
 
-%h5.text-center Positions (#{@purse.positions.length})
+%h5.text-center Positions (#{positions.length})
 .positions--table
   %table.bordered
     %thead
@@ -42,97 +42,17 @@
             %br
             next_outcome
 
-    - positions.map &:id
     %tbody
       - positions.each_with_index do |position, idx|
-        - pos = position
+
         - if idx > 0
           - prev_position = positions[idx-1]
         - if prev_position && position.expires_on != prev_position.expires_on
           %tr
             %td{ colspan: 18 }
-              -# %hr
               .h-50px
 
-        -## tr
-        %tr{ class: [ position.strategy.kind, |
-                      position.strategy.long_or_short == 'long' ? 'is-long' : 'is-short' ] }
-
-          %td.actions
-            = position.status
-            .d-flex
-              = check_box_tag 'positions_xmulti', position.id , false, { class: 'positions-xmulti' }
-              = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
-              = link_to '[~]', edit_position_path(position)
-              = link_to '[dup]', duplicate_position_path(position)
-            .d-flex
-              = link_to '[sync]', sync_position_path(pos)
-              = link_to '[roll]', position_prepare_to_roll_path(pos)
-
-          %td.ticker
-            = position.stock.ticker
-
-            %br
-            = pp_amount position.stock.last
-
-          %td.status.strategy.w-200px
-            %b
-              = position.expires_on.to_datetime.strftime("%b %d")
-              [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
-            = render '/iro/strategies/show', position: position, strategy: position.strategy
-
-          %td.q
-            <b>#{position.quantity}</b>
-          %td.strikes
-            .long-or-short-item
-              .outer-strike= pp_amount position.outer.strike
-              .inner-strike= pp_amount position.inner.strike
-
-          %td.begin_price
-            .long-or-short-item
-              .begin-outer-price
-                = pp_amount position.outer.begin_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.outer.begin_delta}
-              .begin-inner-price
-                = pp_amount position.inner.begin_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.begin_delta}
-          %td
-            .max-loss= pp_amount position.max_loss * pos.q * 100, precision: 0
-          -# %td
-          -#   .max-gain= pp_amount position.max_gain * pos.q * 100, precision: 0
-          -#   .max-gainp
-          -#     -# = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
-
-          %td.end
-            .long-or-short-item
-              .end-outer-price
-                = pp_amount position.outer.end_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.outer.end_delta}
-              .end-inner-price
-                = pp_amount position.inner.end_price
-                &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.end_delta}
-          %td.net
-            .a= pp_amount position.net_amount * pos.q * 100, precision: 0 rescue '@TODO'
-            .a <i>#{pp_percent position.net_amount / position.max_gain rescue '@TODO'}</i>
-          %td.breakeven
-            = pp_amount pos.breakeven rescue '@TODO'
-
-
-
-          %td.should_rollp
-            <i> #{pp_percent position.rollp, precision: 0}</i>
-          %td.next_position
-            - if position.next_reasons.present?
-              %i.fa.fa-expand.collapse-expand{ id: "pos-reasons-#{position.id}" } reasons
-              = render '/iro/positions/reasons', reasons: position.next_reasons
-            .a= position.autonxt
-            .a
-              - if pos.autonxt
-                = link_to '[autonxt]', prepare2_position_path(pos.autonxt)
-                = pp_amount pos.autonxt.prev_gain_loss_amount
-              -# \=>
-              -# = pp_amount position.next_outcome * 100 * position.quantity rescue nil
-
+        = render "iro/positions/table_tr_#{position.strategy.kind}", position: position
 
 
 
