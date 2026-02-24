@@ -46,9 +46,56 @@ RSpec.describe Iro::PositionsController do
 
   end
 
-  ##
+  describe '#create' do
+    it 'covered_call' do
+      n = Iro::Position.all.length
+      strategy = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL )
+      post :create, params: {
+        inner: {
+          strike: 500.0,
+          begin_price: 1.0,
+          begin_delta: 0.5,
+        },
+        position: {
+          expires_on: '2026-03-20',
+          purse_id: @purse.id,
+          quantity: 1,
+          status: 'active',
+          stock_id: @stock_meta.id,
+          strategy_id: strategy.id.to_s,
+        },
+      }
+      Iro::Position.all.length.should eql( n + 1 )
+    end
+
+    it 'long_credit_put_spread' do
+      n = Iro::Position.all.length
+      strategy = create(:strategy, kind: Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD )
+      post :create, params: {
+        inner: {
+          strike: 500.0,
+          begin_price: 1.0,
+          begin_delta: 0.5,
+        },
+        outer: {
+          strike: 500.0,
+          begin_price: 1.0,
+          begin_delta: 0.5,
+        },
+        position: {
+          expires_on: '2026-03-20',
+          purse_id: @purse.id,
+          quantity: 1,
+          status: 'active',
+          stock_id: @stock_meta.id,
+          strategy_id: strategy.id.to_s,
+        },
+      }
+      Iro::Position.all.length.should eql( n + 1 )
+    end
+  end
+
   ## 2026-02-16
-  ##
   describe '#new' do
     before do
       @stock_gme = create(:stock, last: 23.57, ticker: 'GME' )

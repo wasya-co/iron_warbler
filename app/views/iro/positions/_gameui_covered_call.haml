@@ -16,7 +16,7 @@
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
         .label Last: #{pp_amount stock.last}
 
-        - left  = "#{ (stock.last - pos.inner_strike) * u}px"
+        - left  = "#{ (stock.last - pos.inner.strike) * u}px"
         - width = "0px"
         .PositionW{ class: pos.strategy.kind, style: "left: #{left} ; width: #{width} " }
           .Position
@@ -34,8 +34,8 @@
                   net
                   = pp_amount pos.net_amount
 
-            .Breakeven{ style: "width: #{ pos.begin_inner_price * u }px" }
+            .Breakeven{ style: "width: #{ pos.inner.begin_price * u }px" }
               .label
                 Breakeven:
-                = pos.begin_inner_price
+                = pos.inner.begin_price
 

@@ -12,7 +12,9 @@ class Iro::PositionsController < Iro::ApplicationController
       stock_id: pos.stock_id,
     }
     pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
-    pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
+    if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
+      pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
+    end
 
     if @position.save
       flash_notice @position
