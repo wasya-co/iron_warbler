@@ -31,10 +31,10 @@
             .RollGuide
 
             - if pos.net_amount >= 0
-              .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: -#{pos.net_amount*u + border_px}px" }
+              .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: #{-1* pos.net_amount() *u + border_px}px" }
                 .label net #{pp_amount pos.net_amount}
             - else
-              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: -#{pos.net_amount*u + border_px}px" }
+              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: #{pos.net_amount() *u + border_px}px" }
                 .label net #{pp_amount pos.net_amount}
 .c
 

@@ -7,7 +7,7 @@
 .collapse-expand.d-flex{ id: "gameui-pos-#{pos.id}" }
   [<>]
   .maxwidth= render "/iro/positions/header", pos: pos
-.a
+.collapseC
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
     .StockCoordinates{ style: "height: #{pos.q() * pos.purse.height}px " }
@@ -16,26 +16,25 @@
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
         .label Last: #{pp_amount stock.last}
 
-        - left  = "#{ (stock.last - pos.inner.strike) * u}px"
-        - width = "0px"
-        .PositionW{ class: pos.strategy.kind, style: "left: #{left} ; width: #{width} " }
+        - left  = "#{ (pos.inner.strike - stock.last) * u}px"
+        .PositionW{ class: [ 'is-short', pos.strategy.kind ], style: "left: #{left}" }
           .Position
+            .MaxGain{ style: "width: #{pos.max_gain * u}px" }
             .RollGuide
-            .PositionC
 
             - if pos.net_amount >= 0
-              .Net.NetPositive{ style: "width: #{ (pos.net_amount / 100) * u }px; right: 0" }
+              .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px; right: 0" }
                 .label
                   net
                   = pp_amount pos.net_amount
             - else
-              .Net.NetNegative{ style: "width: #{ (-1 * pos.net_amount / 100) * u }px; left: 100%" }
+              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount() *u}px; right: 0" }
                 .label
                   net
                   = pp_amount pos.net_amount
 
-            .Breakeven{ style: "width: #{ pos.inner.begin_price * u }px" }
-              .label
-                Breakeven:
-                = pos.inner.begin_price
+            -# .Breakeven{ style: "width: #{ pos.inner.begin_price * u }px" }
+            -#   .label
+            -#     Breakeven:
+            -#     = pos.inner.begin_price
 
