@@ -3,19 +3,22 @@
 -##
 - pos = position
 
-%tr{ class: [ position.strategy.kind, |
+%tr{ 'data-pos-id' => pos.id, |
+     class: [ position.strategy.kind, |
               position.strategy.long_or_short == 'long' ? 'is-long' : 'is-short' ] }
 
   %td.actions
     = position.status
     .d-flex
-      = check_box_tag 'positions_xmulti', position.id , false, { class: 'positions-xmulti' }
-      = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
-      = link_to '[~]', edit_position_path(position)
-      = link_to '[dup]', duplicate_position_path(position)
+      = check_box_tag 'positions_xmulti', pos.id , false, { class: 'positions-xmulti' }
+      = button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to '[~]', edit_position_path(pos)
+      = link_to '[dup]', duplicate_position_path(pos)
     .d-flex
       = link_to '[sync]', sync_position_path(pos)
       = link_to '[roll]', position_prepare_to_roll_path(pos)
+      = link_to '[eval]', position_eval_path(pos)
+
 
   %td.ticker
     = position.stock.ticker
@@ -60,10 +63,10 @@
         = pp_amount position.inner.end_price
         &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.end_delta}
   %td.net
-    .a= pp_amount position.net_amount * pos.q * 100, precision: 0 rescue '@TODO'
-    .a <i>#{pp_percent position.net_amount / position.max_gain rescue '@TODO'}</i>
+    .a= pp_amount position.net_amount * pos.q * 100, precision: 0 rescue '_TODO-net_amount'
+    .a <i>#{pp_percent position.net_amount / position.max_gain rescue '_TODO-net-amount-percent' }</i>
   %td.breakeven
-    = pp_amount pos.breakeven rescue '@TODO'
+    = pp_amount pos.breakeven rescue '_TODO-breakeven'
 
 
 

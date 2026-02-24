@@ -12,11 +12,7 @@
 
 .StockCoordinatesW.--prepare-short-credit-call-spread
   .StockCoordinates{ style: "height: #{@position.purse.height}px " }
-
-    -## obsolete, I decided that the grid is the same for everything. 2026-02-21
-    -# .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
     .grid= render "/iro/stocks/grid", stock: stock, position: pos
-
     .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
       .label Last: #{pos.stock.last }
 
@@ -25,7 +21,6 @@
       - width  = "#{ ( pos.outer_strike - pos.inner_strike ) * u}px"
       - left   = "#{ ( pos.inner_strike - pos.stock.last ) * u}px"
       - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
-      -## border-left: #{border};
       .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "width: #{width}; left: #{left}; " }
         .Position
           .MaxGain{ style: "width: #{pos.max_gain * u}px" }

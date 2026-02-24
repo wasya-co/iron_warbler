@@ -38,12 +38,56 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :show, @purse
 
     @positions = @purse.positions
+    params[:view_status] ||= 'active'
     if params[:view_status] && 'all' != params[:view_status]
       @positions = @positions.where( status: params[:view_status] )
     end
     @positions = @positions.includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
+    if @positions.length == 0
+      redirect_to new_position_path()
+      return
+    end
+
+    ## lets only sync when I say.
+    ## 2026-02-24
+=begin
+    expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
+    quotes_h = Tda::Option.get_quotes_h({
+      contractType: 'ALL',
+      ticker:  @positions[0].ticker,
+      fromDate: expiration_dates.first,
+      toDate: expiration_dates.last,
+    })
+    count = 1
+    @positions.each do |pos|
+      pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
+      pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
+      pos.inner.save ? print("#{count}^") : print("#{count}X")
+      if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
+        pos.outer.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:price]
+        pos.outer.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:delta]
+        pos.outer.save ? print('^') : print('X')
+      end
+      count = count+1
+    end
+=end
+
+    @unit      = @purse.unit # 12  ## pixels per dollar
+    @height    = @purse.height # 100  ## pixels
+    @n_dollars = 100 ## dollars to each side of origin
+
+    calc_summary
+
+    render params[:template]
+  end
+
+  def sync
+    @purse = Iro::Purse.find(params[:id])
+    authorize! :show, @purse
+
+    @positions = @purse.positions
     expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
     quotes_h = Tda::Option.get_quotes_h({
       contractType: 'ALL',
@@ -64,13 +108,8 @@ class Iro::PursesController < Iro::ApplicationController
       count = count+1
     end
 
-    @unit      = @purse.unit # 12  ## pixels per dollar
-    @height    = @purse.height # 100  ## pixels
-    @n_dollars = 100 ## dollars to each side of origin
-
-    calc_summary
-
-    render params[:template]
+    flash[:notice] = 'Probably synced the purse.'
+    redirect_to request.referrer
   end
 
   def update

@@ -25,7 +25,7 @@ class Iro::ApplicationController < Wco::ApplicationController
   private
 
   def set_lists
-    @purses = Iro::Purse.all
+    @purses = Iro::Purse.all.order_by( slug: :asc )
     @strategies = Iro::Strategy.all
     @strategies_list = Iro::Strategy.list
   end

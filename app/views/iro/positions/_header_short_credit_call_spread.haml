@@ -1,1 +1,25 @@
-_header_spread.haml
+
+- collapse_key ||= pos.id
+- q = pos.quantity
+
+%i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
+.maxwidth.--header-short-credit-call-spread
+  %ul.m-0.p-0
+    %li
+      -# 2026-02-24 This ordering.
+      <b>begin_inner_price:</b> #{pp_amount pos.inner.begin_price}
+      <b>begin_outer_price:</b> #{pp_amount pos.outer.begin_price}
+
+      <b>max_gain:</b> #{pp_amount pos.max_gain * 100}
+      <b>breakeven:</b> #{pp_amount pos.breakeven}
+    %li
+      -# 2026-02-24 This ordering.
+      <b>end_inner_price:</b>   #{pp_amount pos.inner.end_price}
+      <b>end_outer_price:</b>   #{pp_amount pos.outer.end_price}
+
+      <b>Net:</b> #{pp_amount pos.net_amount * 100} &nbsp; <i>#{pp_percent pos.net_percent}</i>
+    %li
+      -# 2026-02-24 This ordering.
+      #{pos.expires_on} <b>#{pos.strategy.kind}</b> [#{pp_amount pos.inner.strike} -> #{pp_amount pos.outer.strike}]
+      <b>max_loss:</b> #{pp_amount pos.max_loss * 100*q}
+    %li

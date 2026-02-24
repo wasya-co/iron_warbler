@@ -3,17 +3,24 @@ class Iro::PositionsController < Iro::ApplicationController
   before_action :set_lists
 
   def create
-    pos = @position = Iro::Position.new pos_params
+    @position = Iro::Position.new pos_params
     authorize! :create, @position
 
+    @position.inner_strike = params[:inner][:strike]
+    @position.outer_strike = params[:outer][:strike]
+
     o_attrs = {
-      expires_on: pos.expires_on,
-      put_call: pos.put_call, # I need this. _vp_ 2024-04-26
-      stock_id: pos.stock_id,
+      expires_on: @position.expires_on,
+      put_call: @position.put_call, # I need this. _vp_ 2024-04-26
+      stock_id: @position.stock_id,
     }
-    pos.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
-    if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
-      pos.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
+    @position.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
+    @position.inner.end_price = @position.inner.begin_price
+    @position.inner.end_delta = @position.inner.begin_delta
+    if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( @position.strategy.kind )
+      @position.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
+      @position.outer.end_price = @position.outer.begin_price
+      @position.outer.end_delta = @position.outer.begin_delta
     end
 
     if @position.save
@@ -21,7 +28,7 @@ class Iro::PositionsController < Iro::ApplicationController
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
     else
       flash_alert @position
-      render action: :new # redirect_to request.referrer
+      redirect_to request.referrer # render action: :new
     end
   end
 
@@ -48,6 +55,19 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :edit, @position
   end
 
+  def eval
+    @position = Iro::Position.find params[:id]
+    authorize! :edit, @position
+    @position.calc_rollp
+
+    if @position.rollp > 0.5
+      @position.calc_nxt
+    end
+
+    flash[:notice] = 'Probably eval ed the position.'
+    redirect_to request.referrer
+  end
+
   def new
     strategy    = Iro::Strategy.find params[:position][:strategy_id]
 
@@ -60,17 +80,6 @@ class Iro::PositionsController < Iro::ApplicationController
       stock_id: strategy.stock_id,
     }) )
     authorize! :new, @position
-
-    ## 2026-02-24 why is this here?
-    # @position.calc_nxt
-
-    # if params[:id]
-    #   old = Iro::Position.find params[:id]
-    #   old = old.attributes
-    #   old.delete :_id
-    #   puts! old, 'old'
-    #   @position = Iro::Position.new old
-    # end
   end
 
   ## 2025-10-14 long_credit_put_spread
@@ -97,9 +106,9 @@ class Iro::PositionsController < Iro::ApplicationController
     stock = @position.stock
 
     @query = {
-      orderType: price > 0 ? "NET_CREDIT" : "NET_DEBIT",
+      orderType: pos.roll_price > 0 ? "NET_CREDIT" : "NET_DEBIT",
       session: "NORMAL",
-      price: price,
+      price: pos.roll_price,
       duration: "DAY",
       orderStrategyType: "SINGLE",
       orderLegCollection: [
@@ -145,23 +154,24 @@ class Iro::PositionsController < Iro::ApplicationController
 
   ## long debit call spread
   def prepare3
-    pos = @position = Iro::Position.find params[:id]
+    @position = Iro::Position.find params[:id]
     authorize! :place_order, @position
 
-    # out = Tda::Option.roll_long_debit_call_spread( position )
+    outs = Tda::Order.roll_short_credit_call_spread( @position )
+    puts! outs, 'did it roll?!'
 
-    ## @TODO: it's pending here, the order has not been placed.
+    ## _TODO: it's pending here, the order has not been placed.
 
     flags = []
 
-    flags.push pos.prev.update({ status: Iro::Position::STATUS_CLOSED })
-    flags.push pos.update({ status: Iro::Position::STATUS_ACTIVE })
-    flags.push pos.purse.update({
-      available_amount: pos.purse.available_amount + price + pos.q*100,
+    flags.push @position.prev.update({ status: Iro::Position::STATUS_CLOSED })
+    flags.push @position.update({ status: Iro::Position::STATUS_ACTIVE })
+    flags.push @position.purse.update({
+      available_amount: @position.purse.available_amount + @position.roll_price * @position.q*100,
     })
 
     flash_notice flags
-    redirect_to controller: :purses, action: :show, template: :gameui, id: pos.purse_id
+    redirect_to controller: :purses, action: :show, template: :gameui, id: @position.purse_id
   end
 
 
@@ -344,14 +354,13 @@ class Iro::PositionsController < Iro::ApplicationController
     @positions = @positions.reverse
   end
 
-
-
   def sync
     @position = Iro::Position.find params[:id]
     authorize! :refresh, @position
 
     @position.sync
     @position.calc_rollp
+
     ## _TODO: this craps out in a bad way. 2026-02-18
     # if @position.rollp > 0.5
     #   @position.calc_nxt
@@ -400,13 +409,6 @@ class Iro::PositionsController < Iro::ApplicationController
       :status, :stock_id, :strategy_id,
     )
   end
-
-  def price
-    pos = @position
-    out = pos.autoprev.outer.end_price - pos.autoprev.inner.end_price + pos.inner.begin_price - pos.outer.begin_price
-    return out
-  end
-
 
   def set_lists
     super

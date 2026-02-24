@@ -32,7 +32,7 @@
             = sss.threshold_neg_delta
           %td.threshold-pos-delta
             = sss.threshold_pos_delta
-          %td.slug= link_to sss.slug, strategy_path(sss)
+          %td.slug= link_to sss.to_s, strategy_path(sss)
           %td
             = form_tag propose_position_path do
               = hidden_field_tag :strategy_id, sss.id
