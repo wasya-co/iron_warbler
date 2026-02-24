@@ -3,20 +3,16 @@
 %i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
 .maxwidth.--header-spread
   %ul.m-0.p-0
-    - if !pos.persisted? ## NOT persisted
-      %li <b>expires_on:</b> #{pos.expires_on}
-      %li <b>inner_strike:</b> #{pp_amount pos.inner_strike}
-      %li <b>next_gain_loss_amount:</b> #{pp_amount pos.next_gain_loss_amount}
-
     %li
-      <b>begin_outer_price:</b> #{pp_amount pos.outer.begin_price} <b>begin_inner_price:</b> #{pp_amount pos.inner.begin_price}
-      <b>max_gain:</b> #{pp_amount pos.max_gain * 100} <b>max_loss:</b> #{pp_amount pos.max_loss * 100}
+      <b>begin_inner_price:</b> #{pp_amount pos.inner.begin_price}
+      <b>begin_outer_price:</b> #{pp_amount pos.outer.begin_price}
+      <b>max_gain:</b> #{pp_amount pos.max_gain * 100}
+      <b>breakeven:</b> #{pp_amount pos.breakeven}
     %li
-      <b>end_outer_price:</b>   #{pp_amount pos.outer.end_price}   <b>end_inner_price:</b>   #{pp_amount pos.inner.end_price}
+      <b>end_inner_price:</b>   #{pp_amount pos.inner.end_price}
+      <b>end_outer_price:</b>   #{pp_amount pos.outer.end_price}
       <b>Net:</b> #{pp_amount pos.net_amount * 100} &nbsp; <i>#{pp_percent pos.net_percent}</i>
     %li
-      <b>kind:</b> #{pos.strategy.kind}
-      <b>inner strike:</b> #{pos.inner.strike}
-      <b>outer strike:</b> #{pos.outer.strike}
+      #{pos.expires_on} <b>#{pos.strategy.kind}</b> [#{pp_amount pos.inner.strike} -> #{pp_amount pos.outer.strike}]
+      <b>max_loss:</b> #{pp_amount pos.max_loss * 100}
     %li
-      &nbsp;

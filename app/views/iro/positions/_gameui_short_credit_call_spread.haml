@@ -5,9 +5,9 @@
 - u = pos.purse.unit # pixels per dollar
 - border_px = 2.0
 
--#
--# 2026-02-19 copy-pasted from long put spread, _TODO: change everything.
--#
+-##
+-## 2026-02-19 copy-pasted from long put spread, _TODO: change everything.
+-##
 
 .collapse-expand.d-flex.--gameui-short-credit-call-spread{ id: "gameui-pos-#{pos.id}" }
   [<>]
@@ -31,17 +31,10 @@
             .RollGuide
 
             - if pos.net_amount >= 0
-              - if 'is-long' == long_or_short
-                .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; right: 0" }
-                  .label net #{pp_amount pos.net_amount}
-              - else
-                .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: -#{pos.net_amount*u + border_px}px" }
-                  .label net #{pp_amount pos.net_amount}
-
+              .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: -#{pos.net_amount*u + border_px}px" }
+                .label net #{pp_amount pos.net_amount}
             - else
-              .Net.NetNegative{ style: "width: #{ (-1 * pos.net_amount) * u }px; left: 100%" }
-                .label
-                  net
-                  = pp_amount pos.net_amount
+              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: -#{pos.net_amount*u + border_px}px" }
+                .label net #{pp_amount pos.net_amount}
 .c
 

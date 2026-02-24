@@ -48,24 +48,12 @@ class Iro::PursesController < Iro::ApplicationController
     # @positions.each { |p| p.sync }
     ## but now I bundle it all together:
     expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
-    putcall = @positions[0].put_call
-    quotes = Tda::Option.get_quotes({
-      contractType: putcall,
+    quotes_h = Tda::Option.get_quotes_h({
+      contractType: 'ALL',
       ticker:  @positions[0].ticker,
       fromDate: expiration_dates.first,
       toDate: expiration_dates.last,
     })
-    ## date, putcall, strike, price
-    ## date, putcall, strike, delta
-    quotes_h = {}
-    quotes.map do |quote|
-      date = quote[:expirationDate][0...10]
-      quotes_h[date] ||= { 'PUT' => {}, 'CALL' => {} }
-      quotes_h[date][putcall][quote[:strikePrice]] = {
-        delta: quote[:delta],
-        price: ( quote[:bid]+quote[:ask] )/2,
-      }
-    end
     count = 1
     @positions.each do |pos|
       pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]

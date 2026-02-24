@@ -17,7 +17,7 @@
           .long-or-short-item{ style: "border-left: 0" }
             - @positions.each_with_index do |pos, idx|
               .reviewing
-                = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
+                = render "/iro/positions/prepare_header_#{pos.strategy.kind}", pos: pos, collapse_key: 'roll'
                 = render "/iro/positions/prepare_#{pos.strategy.kind}", pos: pos
 
 
