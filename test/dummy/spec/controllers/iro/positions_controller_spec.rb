@@ -11,7 +11,7 @@ RSpec.describe Iro::PositionsController do
       Iro::Position, Iro::Purse,
       Iro::Stock,    Iro::Strategy,
     );
-    @stock_meta = create(:stock, ticker: 'META', options_price_increment: 5.0 )
+    @stock_meta = create(:stock, ticker: 'META', last: 400, options_price_increment: 5.0 )
     @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
     @purse      = create(:purse, )
     @inner      = create(:option)
@@ -47,12 +47,16 @@ RSpec.describe Iro::PositionsController do
   end
 
   ##
-  ## today is 2026-02-16
+  ## 2026-02-16
   ##
   describe '#new' do
-    it 'renders' do
+    before do
       @stock_gme = create(:stock, last: 23.57, ticker: 'GME' )
-      @strategy  = create(:strategy_long_credit_put_spread, {
+    end
+
+    it 'strategy long_credit_put_spread' do
+      purse = create(:purse)
+      strategy  = create(:strategy_long_credit_put_spread, {
         next_buffer_above_water: 1.00,
         next_inner_delta: 0.2,
         next_inner_strike: 21,
@@ -61,15 +65,46 @@ RSpec.describe Iro::PositionsController do
       })
       get :new, params: { position: {
         expires_on: '2026-02-20',
-        purse_id: @purse.id,
-        strategy_id: @strategy.id,
+        purse_id: purse.id,
+        strategy_id: strategy.id,
       } }
       response.code.should eql '200'
+      assert_select '.positions--form-spread'
+    end
+
+    it 'strategy covered_call' do
+      purse = create(:purse)
+      strategy  = create(:strategy, {
+        kind: Iro::Strategy::KIND_COVERED_CALL,
+        stock: @stock_gme,
+      })
+      get :new, params: { position: {
+        expires_on: '2026-02-20',
+        purse_id: purse.id,
+        strategy_id: strategy.id,
+      } }
+      response.code.should eql '200'
+      assert_select('.positions--form-credit-call')
     end
   end
 
   describe '#prepare' do
     it 'prepare_long_credit_put_spread' do
+      fake_quotes = [
+        { strikePrice: 775, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 780, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 785, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 790, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 795, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 800, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 805, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 810, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 815, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 820, delta: 0.1, bid: 0.1, ask: 0.2 },
+        { strikePrice: 825, delta: 0.1, bid: 0.1, ask: 0.2 },
+      ]
+      allow( Tda::Option ).to receive( :get_quotes ).with({ contractType: 'PUT', ticker: @position.stock.ticker, expirationDate: '2026-02-27' }).and_return(fake_quotes)
+
       get :prepare, params: { id: @position.id }
       response.code.should eql '200'
     end

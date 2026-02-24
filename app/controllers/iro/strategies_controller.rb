@@ -7,11 +7,6 @@ class Iro::StrategiesController < Iro::ApplicationController
     @strategy = Iro::Strategy.new params[:strategy].permit!
     authorize! :create, @strategy
 
-    if @strategy[:kind] == Iro::Strategy::KIND_WHEEL
-      @strategy.long_or_short   = Iro::Strategy::LONG
-      @strategy.credit_or_debit = Iro::Strategy::DEBIT
-    end
-
     if @strategy.save
       flash_notice @strategy
       redirect_to action: :index

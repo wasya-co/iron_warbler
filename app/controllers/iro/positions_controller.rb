@@ -59,7 +59,8 @@ class Iro::PositionsController < Iro::ApplicationController
     }) )
     authorize! :new, @position
 
-    @position.calc_nxt
+    ## 2026-02-24 why is this here?
+    # @position.calc_nxt
 
     # if params[:id]
     #   old = Iro::Position.find params[:id]

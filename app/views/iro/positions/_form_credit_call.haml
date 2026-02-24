@@ -1,7 +1,5 @@
 
-- long_or_short = position.long_or_short || position.strategy&.long_or_short || params[:long_or_short]
-
-.positions--form{ class: "is-#{long_or_short}" }
+.positions--form-credit-call
   = form_for position do |f|
     .actions
       = f.submit
@@ -23,10 +21,6 @@
         = f.select :put_call, options_for_select([nil, 'PUT', 'CALL'], selected: position.put_call)
         = position.put_call
 
-    -# .field
-    -#   %label long or short?
-    -#   = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: long_or_short )
-
     .field
       %label Strategy
       = f.select :strategy_id, options_for_select( @strategies_list, selected: position.strategy_id )
@@ -40,8 +34,21 @@
         %label Quantity
         = f.text_field :quantity
 
-    %br
-    = render 'formpart_4data', f: f, position: position
+    .field
+      %label Begin on
+      = f.text_field :begin_on, value: position.begin_on || Time.now.to_date.to_s
+
+    .d-flex
+      = fields_for :inner, position.inner do |f_inner|
+        .field
+          %label Inner Strike
+          = f_inner.number_field :strike, step: 0.01
+        .field
+          %label Begin inner price
+          = f_inner.text_field :begin_price
+        .field
+          %label Begin inner delta
+          = f_inner.text_field :begin_delta
 
     .actions
       = f.submit
