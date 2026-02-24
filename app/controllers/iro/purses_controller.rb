@@ -44,9 +44,6 @@ class Iro::PursesController < Iro::ApplicationController
     @positions = @positions.includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
-    ## this used to update inner, outer price, delta of each position:
-    # @positions.each { |p| p.sync }
-    ## but now I bundle it all together:
     expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
     quotes_h = Tda::Option.get_quotes_h({
       contractType: 'ALL',
@@ -56,6 +53,7 @@ class Iro::PursesController < Iro::ApplicationController
     })
     count = 1
     @positions.each do |pos|
+      # byebug
       pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
       pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
       pos.inner.save ? print("#{count}^") : print("#{count}X")
