@@ -5,9 +5,13 @@ RSpec.describe Iro::StocksController do
 
   before do
     setup_users
-    destroy_every( Iro::Datapoint, Iro::Stock )
-    @stock     = create(:stock, ticker: 'TSLA')
-    @datapoint = create(:datapoint, date: '2026-01-01', symbol: @stock.ticker, value: 100.0 )
+    destroy_every(
+      Iro::Datapoint,
+      Iro::Stock,
+    );
+    @stock       = create(:stock, ticker: 'TSLA')
+    @datapoint   = create(:datapoint, date: '2026-01-01', symbol: @stock.ticker, value: 100.0 )
+    @datapoint_2 = create(:datapoint, date: '2026-01-02', symbol: @stock.ticker, value: 100.0 )
   end
 
   describe 'positive' do
