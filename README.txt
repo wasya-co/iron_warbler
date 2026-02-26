@@ -12,6 +12,9 @@ calculator: https://www.omnicalculator.com/finance/black-scholes
 From: https://pythoninoffice.com/calculate-black-scholes-option-price-in-python/
 
 = schwab =
+  callback: https://email.wasya.co/trading/api/oauth2-redirect.html
+  callback: https://email.wasya.co/trading/api/schwab-exec-redirect.html
+
 == swagger ==
 
 * https://developer.schwab.com/products/trader-api--individual

@@ -197,5 +197,34 @@ class Iro::Iro
     end
   end
 
+  def self.schwab_sync_exec
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+    out = Schwab.post( "https://api.schwabapi.com/v1/oauth/token", {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      basic_auth: { username: SCHWAB_EXEC[:key], password: SCHWAB_EXEC[:secret] },
+      body: {
+        grant_type: 'refresh_token',
+        refresh_token: profile.schwab_exec_refresh_token
+      },
+    })
+    out = out.parsed_response
+    puts! out, '#schwab_sync_exec'
+
+    attrs = {
+      schwab_exec_access_token:  out['access_token'],
+      schwab_exec_refresh_token: out['refresh_token'],
+      schwab_exec_id_token:      out['id_token'],
+    }
+    # puts! attrs, 'attrs'
+
+    if attrs[:schwab_exec_refresh_token]
+      profile.update(attrs)
+      profile.save!
+      return attrs
+    else
+      return false
+    end
+  end
+
 
 end

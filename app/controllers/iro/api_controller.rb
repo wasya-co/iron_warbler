@@ -37,6 +37,34 @@ class Iro::ApiController < ActionController::Base
     render json: { status: :ok }
   end
 
+  def schwab_exec_redirect
+    out = Schwab.post( "https://api.schwabapi.com/v1/oauth/token", {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      basic_auth: { username: SCHWAB_EXEC[:key], password: SCHWAB_EXEC[:secret] },
+      body: {
+        grant_type: 'authorization_code',
+        code: params[:code].sub('%40', '@'),
+        redirect_uri: SCHWAB_EXEC[:redirect_url],
+      },
+    })
+    out = out.parsed_response
+
+    attrs = {
+      schwab_exec_access_token:  out['access_token'],
+      schwab_exec_refresh_token: out['refresh_token'],
+      schwab_exec_id_token:      out['id_token'],
+    }
+    # puts! attrs, 'attrs'
+
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+    profile.update(attrs)
+    profile.save!
+
+    render json: { status: :ok }
+  end
+
   ##
   ## private
   ##

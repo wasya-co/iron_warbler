@@ -29,7 +29,8 @@ Iro::Engine.routes.draw do
   get 'purses/:id',        to: 'purses#show', as: :purse # ,        defaults: { template: 'show' }
   resources :purses
 
-  get 'schwab/sync', to: 'application#schwab_sync', as: :schwab_sync
+  get 'schwab/sync',      to: 'application#schwab_sync',      as: :schwab_sync
+  get 'schwab/sync_exec', to: 'application#schwab_sync_exec', as: :schwab_sync_exec
 
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   resources :stocks
@@ -38,7 +39,8 @@ Iro::Engine.routes.draw do
   # get 'strategies/new-wheel',  to: 'strategies#new', as: :new_wheel_strategy,  defaults: { kind: 'wheel' }
   resources :strategies
 
-  get 'api/oauth2-redirect.html', to: 'api#oauth2_redirect'
+  get 'api/oauth2-redirect.html',      to: 'api#oauth2_redirect'
+  get 'api/schwab-exec-redirect.html', to: 'api#schwab_exec_redirect'
   namespace :api do
     get 'stocks',                                           to: 'stocks#index'
     get 'stocks/:ticker',                                   to: 'stocks#show'
