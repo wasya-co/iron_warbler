@@ -12,7 +12,7 @@
     = link_to '[gameUI]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
 
 %ul
-  %li <b>Total:</b> #{pp_amount purse.balance}
+  -# %li <b>Balance:</b> #{pp_amount purse.balance}
   %li <b>Available:</b> #{pp_amount purse.available}
 
 

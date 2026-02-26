@@ -55,11 +55,11 @@
 
   .Position {
     position: absolute;
-    width: 100%;
-    height: 100%;
-
     left: 0;
     top: 0;
+
+    width: 100%;
+    height: 100%;
   }
 
 
@@ -119,13 +119,17 @@
       height: 100%;
     }
 
+    .PositionW.is-short .Net .label {
+      text-align: right;
+      position: absolute;
+      right: 0;
+    }
     .Net {
       position: absolute;
       // bottom: 3em;
       // z-index: 3;
       height: 90%;
 
-      // border-bottom: 5px solid red;
       .label {
         color: white;
         text-shadow: 1px 1px black;
@@ -159,9 +163,6 @@
         border-left-color: white;
       }
       .label {
-
-        // border: 1px solid red;
-
         transform: rotate(-45deg);
         transform-origin: center left;
 

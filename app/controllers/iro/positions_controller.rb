@@ -94,83 +94,57 @@ class Iro::PositionsController < Iro::ApplicationController
     @nn        = @position.purse.n_next_positions
     @n_dollars = 100 ## used in the view, but the name is unclear
 
+    quotes_params = { contractType: @position.put_call, ticker: @stock.ticker, expirationDate: @prev.next_expires_on }
+    # puts! quotes_params, 'quotes_params'
+    @quotes = Tda::Option.get_quotes(quotes_params)
+
     self.send("_prepare_#{@position.strategy.kind}")
   end
 
-  ## long debit call spread
+  ## 2026-02-26 continue...
+  ## short credit call spread
+  ## covered call
   def prepare2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
+    @position.update({
+      status: Iro::Position::STATUS_PROPOSED,
+    })
+    if params[:prev_id]
+      prev = Iro::Position.find params[:prev_id]
+      prev.update({ autonxt_id: params[:id] })
+      @position.reload
+    else
+      if @position.autoprev
+        ;
+      else
+        throw 'I need prev_id'
+      end
+    end
 
-    pos   = @position
-    stock = @position.stock
-
-    @query = {
-      orderType: pos.roll_price > 0 ? "NET_CREDIT" : "NET_DEBIT",
-      session: "NORMAL",
-      price: pos.roll_price,
-      duration: "DAY",
-      orderStrategyType: "SINGLE",
-      orderLegCollection: [
-        ## close
-        {
-          instruction: "BUY_TO_CLOSE",
-          quantity: pos.q,
-          instrument: {
-            symbol: pos.autoprev.inner.symbol,
-            assetType: "OPTION",
-          },
-        },
-        {
-          instruction: "SELL_TO_CLOSE",
-          quantity: pos.q,
-          instrument: {
-            symbol: pos.autoprev.outer.symbol,
-            assetType: "OPTION",
-          },
-        },
-
-        ## open
-        {
-          instruction: "BUY_TO_OPEN",
-          quantity: pos.q,
-          instrument: {
-            symbol: pos.outer.symbol,
-            assetType: "OPTION",
-          },
-        },
-        {
-          instruction: "SELL_TO_OPEN",
-          quantity: pos.q,
-          instrument: {
-            symbol: pos.inner.symbol,
-            assetType: "OPTION",
-          },
-        },
-      ],
-    }
-    puts! @query, '@query'
+    @query = case @position.strategy.kind
+      when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+        Tda::Order.roll_short_credit_call_spread_q @position
+      when Iro::Strategy::KIND_COVERED_CALL
+        Tda::Order.roll_covered_call_q @position
+      else
+        throw 'pp0 - not implemented'
+      end
   end
 
-  ## long debit call spread
+  ## 2026-02-26 continue...
+  ## short credit call spread
   def prepare3
     @position = Iro::Position.find params[:id]
     authorize! :place_order, @position
+    order_id = Tda::Order.place_order( Tda::Order.roll_short_credit_call_spread_q @position )
 
-    outs = Tda::Order.roll_short_credit_call_spread( @position )
-    puts! outs, 'did it roll?!'
-
-    ## _TODO: it's pending here, the order has not been placed.
-
-    flags = []
-
-    flags.push @position.prev.update({ status: Iro::Position::STATUS_CLOSED })
-    flags.push @position.update({ status: Iro::Position::STATUS_ACTIVE })
-    flags.push @position.purse.update({
-      available_amount: @position.purse.available_amount + @position.roll_price * @position.q*100,
+    flag = @position.update({
+      schwab_order_id: order_id,
+      status: Iro::Position::STATUS_PENDING,
     })
 
-    flash_notice flags
+    flash_notice flag
     redirect_to controller: :purses, action: :show, template: :gameui, id: @position.purse_id
   end
 
@@ -179,34 +153,61 @@ class Iro::PositionsController < Iro::ApplicationController
   def _prepare_covered_call
     @positions = []
     (-@nn..@nn).each do |idx|
-      next_ = Iro::Position.new({
-        stock:        @stock,
-        inner_strike: @prev.inner.strike - idx*@stock.options_price_increment,
+      inner_strike = @prev.inner.strike - idx*@stock.options_price_increment
+      outer_strike = 0
+      puts! [idx, outer_strike, inner_strike], '[idx, outer_strike, inner_strike]'
+
+      next_ = Iro::Position.where({
+        prev_id:      @prev.id,
         expires_on:   @prev.next_expires_on,
-        purse:        @position.purse,
-        strategy:     @position.strategy,
-        quantity:     @position.quantity,
-      })
-      # next_.sync
-      next_.begin_inner_price = next_.end_inner_price
-      next_.begin_inner_delta = next_.end_inner_delta
-      next_.next_gain_loss_amount  = next_.begin_inner_price  - @prev.end_inner_price
+        inner_strike: inner_strike,
+        outer_strike: outer_strike,
+      }).first
+      if !next_
+        next_ = Iro::Position.create({
+          prev_id:      @prev.id,
+          expires_on:   @prev.next_expires_on,
+          inner_strike: inner_strike,
+          outer_strike: outer_strike,
+
+          purse:        @position.purse,
+          quantity:     @position.quantity,
+          status:       Iro::Position::STATUS_PREPARE,
+          stock:        @stock,
+          strategy:     @position.strategy,
+        })
+        pos = next_
+        next_.inner ||= Iro::Option.create({
+          expires_on:   pos[:expires_on],
+          pos_of_inner: pos,
+          put_call:     pos.put_call,
+          stock_id:     pos[:stock_id],
+          strike:       pos[:inner_strike],
+        })
+      end
+
+
+      @quotes.map do |quote|
+        if quote[:strikePrice] == next_.inner.strike
+          price = ( quote[:bid] + quote[:ask] )/2
+          next_.inner.begin_price = price
+          next_.inner.end_price   = price
+          next_.inner.begin_delta = quote[:delta]
+          next_.inner.end_delta   = quote[:delta]
+          next_.inner.save
+        end
+      end
+
+      next_.next_gain_loss_amount  = next_.inner.begin_price - @prev.inner.end_price
+      next_.save
       @positions.push next_
     end
+    @positions = @positions.reverse
   end
 
   ## 2025-10-14 _TODO: move to a model?
   ## 2026-02-18 continue
   def _prepare_long_credit_put_spread
-    ## get quotes for next expires_at
-    quotes_params = { contractType: @position.put_call, ticker: @stock.ticker, expirationDate: @prev.next_expires_on }
-    puts! quotes_params, 'quotes_params'
-    quotes = Tda::Option.get_quotes(quotes_params)
-
-    # strike_price = @position.inner.strike
-    # strike_prices = quotes.map { |q| q[:strikePrice] }
-    # index = strike_prices.index(strike_price)
-
     @positions = []
     (-@nn..@nn).each do |idx|
       outer_strike = @prev.outer.strike - idx*@stock.options_price_increment
@@ -228,7 +229,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
           purse:        @position.purse,
           quantity:     @position.quantity,
-          status:       'prepare',
+          status:       Iro::Position::STATUS_PREPARE,
           stock:        @stock,
           strategy:     @position.strategy,
         })
@@ -253,7 +254,7 @@ class Iro::PositionsController < Iro::ApplicationController
         })
       end
 
-      quotes.map do |quote|
+      @quotes.map do |quote|
         if quote[:strikePrice] == next_.inner.strike
           price = ( quote[:bid] + quote[:ask] )/2
           next_.inner.begin_price = price
@@ -272,19 +273,16 @@ class Iro::PositionsController < Iro::ApplicationController
         end
       end
 
-      next_.next_gain_loss_amount  = @prev.outer.end_price   - @prev.inner.end_price
-      next_.next_gain_loss_amount += next_.inner.begin_price - next_.outer.begin_price
+      next_.next_gain_loss_amount  = @prev.outer.end_price   - next_.outer.begin_price
+      next_.next_gain_loss_amount += next_.inner.begin_price - @prev.inner.end_price
       next_.save
       @positions.push next_
     end
   end
 
   ## 2026-02-21 its not working
+  ## 2026-02-26 I assume its working?
   def _prepare_short_credit_call_spread
-    quotes_params = { contractType: @position.put_call, ticker: @stock.ticker, expirationDate: @prev.next_expires_on }
-    puts! quotes_params, 'quotes_params'
-    quotes = Tda::Option.get_quotes(quotes_params)
-
     @positions = []
     (-@nn..@nn).each do |idx|
       inner_strike = @prev.inner.strike - idx*@stock.options_price_increment
@@ -306,7 +304,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
           purse:        @position.purse,
           quantity:     @position.quantity,
-          status:       'prepare',
+          status:       Iro::Position::STATUS_PREPARE,
           stock:        @stock,
           strategy:     @position.strategy,
         })
@@ -327,7 +325,7 @@ class Iro::PositionsController < Iro::ApplicationController
         })
       end
 
-      quotes.map do |quote|
+      @quotes.map do |quote|
         if quote[:strikePrice] == next_.inner.strike
           price = ( quote[:bid] + quote[:ask] )/2
           next_.inner.begin_price = price
@@ -346,8 +344,8 @@ class Iro::PositionsController < Iro::ApplicationController
         end
       end
 
-      next_.next_gain_loss_amount  = @prev.outer.end_price   - @prev.inner.end_price
-      next_.next_gain_loss_amount += next_.inner.begin_price - next_.outer.begin_price
+      next_.next_gain_loss_amount  = @prev.outer.end_price   - next_.outer.begin_price
+      next_.next_gain_loss_amount += next_.inner.begin_price - @prev.inner.end_price
       next_.save
       @positions.push next_
     end
@@ -403,7 +401,9 @@ class Iro::PositionsController < Iro::ApplicationController
   def pos_params
     params[:position].permit( :begin_on,
       :expires_on,
+      :inner_strike,
       :long_or_short,
+      :outer_strike,
       :purse_id, :put_call,
       :quantity,
       :status, :stock_id, :strategy_id,

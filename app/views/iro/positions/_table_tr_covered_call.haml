@@ -10,7 +10,7 @@
       = check_box_tag 'positions_xmulti', position.id , false, { class: 'positions-xmulti' }
       = button_to 'x', position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
       = link_to '[~]', edit_position_path(position)
-      = link_to '[dup]', duplicate_position_path(position)
+      -# = link_to '[dup]', duplicate_position_path(position)
     .d-flex
       = link_to '[sync]', sync_position_path(pos)
       = link_to '[roll]', position_prepare_to_roll_path(pos)
@@ -62,5 +62,5 @@
     .a
       - if pos.autonxt
         = link_to '[autonxt]', prepare2_position_path(pos.autonxt)
-        = pp_amount pos.autonxt.prev_gain_loss_amount
+        = pp_amount pos.autonxt.next_gain_loss_amount
 

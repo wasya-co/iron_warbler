@@ -17,16 +17,12 @@
           %label long or short?
           = hidden_field_tag 'strategy[long_or_short]', Iro::Strategy::LONG
           = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: Iro::Strategy::LONG), {}, disabled: true
-        -## unnecessary: always debit
-          .field
-            %label credit or debit?
-            Debit
     %hr
 
 
     .field
-      %label Threshold Buffer dollars above water
-      = f.number_field :buffer_above_water, placeholder: "0.00", step: 0.01
+      %label threshold_usd_above_mark
+      = f.number_field :threshold_usd_above_mark, placeholder: "0.00", step: 0.01
     .field
       = f.label :threshold_dte
       = f.number_field :threshold_dte, placeholder: "1"
@@ -47,8 +43,8 @@
       = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
       .comment Literally the min (max) dollar amount of next strike
     .field
-      %label next buffer dollars above water
-      = f.number_field :next_buffer_above_water, placeholder: "80", step: 0.01
+      %label next_threshold_usd_above_mark
+      = f.number_field :next_threshold_usd_above_mark, placeholder: "80", step: 0.01
 
     .actions
       = f.submit

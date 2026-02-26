@@ -13,11 +13,16 @@
   }
 }
 
-.select {
+.PositionW .select {
   position: absolute;
+  width: calc(100px - 1em);
   z-index: 5;
-
+}
+.PositionW.is-long .select {
+  left: -100px;
+  text-align: right;
+}
+.PositionW.is-short .select {
   right: -100px;
   text-align: left;
-  width: calc(100px - 1em);
 }

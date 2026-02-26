@@ -1,7 +1,7 @@
 
 - pos = @position
 
--## long call spread
+-## short credit call spread
 %ul
   %li
     buy to close
@@ -10,13 +10,13 @@
     sell to close
     = pos.autoprev.outer
   %li
-    buy to open
-    = pos.outer
-  %li
     sell to open
     = pos.inner
   %li
-    Query
+    buy to open
+    = pos.outer
+  %li
+    Query 2
     %pre= JSON.pretty_generate( @query )
 
 = button_to 'Place Order', prepare3_position_path(@position), data: { confirm: 'Are you sure?' }

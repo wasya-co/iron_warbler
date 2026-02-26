@@ -40,6 +40,14 @@
         %label Quantity
         = f.text_field :quantity
 
+    .d-flex
+      .field
+        %label inner_strike
+        = f.text_field :inner_strike
+      .field
+        %label outer_strike
+        = f.text_field :outer_strike
+
     %br
     = render 'formpart_4data', f: f, position: position
 

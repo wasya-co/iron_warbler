@@ -4,6 +4,13 @@
   z-index: 1;
 }
 
+.begin-inner-price,
+.begin-outer-price,
+.end-inner-price,
+.end-outer-price {
+  white-space: nowrap;
+}
+
 .positions--table {
 
   table {
@@ -24,7 +31,7 @@
         // rotate: -40deg;
 
         padding: .4em 0;
-        width: 120px;
+        min-width: 120px;
       }
     }
 
@@ -36,6 +43,9 @@
 
     th.end_delta {
       width: 50px;
+    }
+    th.end_priceW {
+      width: 160px;
     }
     th.next_position {
       width: 160px;

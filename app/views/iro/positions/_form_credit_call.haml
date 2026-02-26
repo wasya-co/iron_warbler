@@ -34,6 +34,14 @@
         %label Quantity
         = f.text_field :quantity
 
+    .d-flex
+      .field
+        %label inner_strike
+        = f.text_field :inner_strike
+      .field
+        %label outer_strike
+        = f.text_field :outer_strike
+
     .field
       %label Begin on
       = f.text_field :begin_on, value: position.begin_on || Time.now.to_date.to_s
