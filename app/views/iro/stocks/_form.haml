@@ -21,5 +21,10 @@
         %label options price increment
         = f.number_field :options_price_increment, step: 0.5
 
-      .actions
-        = f.submit
+    .row
+      .field
+        %label descr
+        = f.text_area :descr
+
+    .actions
+      = f.submit

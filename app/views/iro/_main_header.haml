@@ -16,6 +16,8 @@
           %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
+            -## actually there is no stocks/new template, use index
+            -# = link_to '[+]', new_stock_path
           -# %li= link_to 'Options', options_path
           -# %li Max Pain
           %li

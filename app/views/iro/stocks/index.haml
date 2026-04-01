@@ -11,6 +11,7 @@
         %td n priceitems
         %td volatility
         %td strategies
+        %td descr
     %tbody
       - @stocks.each do |stock|
         %tr
@@ -28,6 +29,7 @@
             %ul
               - stock.strategies.each do |s|
                 %li= link_to s, strategy_path(s)
+          %td.descr= stock.descr
 
   %hr
   = render 'iro/stocks/form', stock: Iro::Stock.new
