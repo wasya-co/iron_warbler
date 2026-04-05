@@ -64,7 +64,7 @@ class Iro::PositionsController < Iro::ApplicationController
       @position.calc_nxt
     end
 
-    flash[:notice] = 'Probably eval ed the position.'
+    flash[:notice] = 'called position.calc_rollp , maybe position.calc_nxt .'
     redirect_to request.referrer
   end
 
@@ -104,7 +104,9 @@ class Iro::PositionsController < Iro::ApplicationController
 
   ## 2026-02-26 continue...
   ## short credit call spread
-  ## covered call
+  ## covered call ???
+  ## short credit call spread
+  ## long credit put spread
   def prepare2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
@@ -119,13 +121,14 @@ class Iro::PositionsController < Iro::ApplicationController
       if @position.autoprev
         ;
       else
-        throw 'I need prev_id'
+        throw 'Must pass prev_id here.'
       end
     end
 
     @query = case @position.strategy.kind
-      when Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
-        Tda::Order.roll_short_credit_call_spread_q @position
+      when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,
+           Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+        Tda::Order.roll_credit_call_spread_q @position
       when Iro::Strategy::KIND_COVERED_CALL
         Tda::Order.roll_covered_call_q @position
       else
@@ -138,7 +141,7 @@ class Iro::PositionsController < Iro::ApplicationController
   def prepare3
     @position = Iro::Position.find params[:id]
     authorize! :place_order, @position
-    order_id = Tda::Order.place_order( Tda::Order.roll_short_credit_call_spread_q @position )
+    order_id = Tda::Order.place_order( Tda::Order.roll_credit_call_spread_q @position )
 
     flag = @position.update({
       schwab_order_id: order_id,

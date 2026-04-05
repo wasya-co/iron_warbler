@@ -120,7 +120,7 @@ RSpec.describe Iro::PositionsController do
     it 'strategy long_credit_put_spread' do
       purse = create(:purse)
       strategy  = create(:strategy_long_credit_put_spread, {
-        next_buffer_above_water: 1.00,
+        next_threshold_usd_above_mark: 1.00,
         next_inner_delta: 0.2,
         next_inner_strike: 21,
         next_spread_amount: 5.0,

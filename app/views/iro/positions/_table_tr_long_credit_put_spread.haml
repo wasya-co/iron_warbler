@@ -79,11 +79,8 @@
     - if position.next_reasons.present?
       %i.fa.fa-expand.collapse-expand{ id: "pos-reasons-#{position.id}" } reasons
       = render '/iro/positions/reasons', reasons: position.next_reasons
-    .a= position.autonxt
-    .a
-      - if pos.autonxt
-        = link_to '[autonxt]', prepare2_position_path(pos.autonxt)
-        = pp_amount pos.autonxt.next_gain_loss_amount
-      -# \=>
-      -# = pp_amount position.next_outcome * 100 * position.quantity rescue nil
+    - if pos.autonxt
+      .bordered= position.autonxt
+      = link_to '[prepare2 autonxt]', prepare2_position_path(pos.autonxt)
+      <b>outcome:</b> #{pp_amount pos.autonxt.next_gain_loss_amount}
 

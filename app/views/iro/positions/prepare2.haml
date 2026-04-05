@@ -1,6 +1,10 @@
 
 - pos = @position
 
+%ul
+  %li= link_to '[table]', iro.purse_path(pos.purse)
+  %li= link_to '[gameUI]', iro.purse_gameui_path(pos.purse)
+
 -## short credit call spread
 %ul
   %li
