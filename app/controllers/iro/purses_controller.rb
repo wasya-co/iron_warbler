@@ -45,10 +45,12 @@ class Iro::PursesController < Iro::ApplicationController
     @positions = @positions.includes( :strategy
       ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
 
-    if @positions.length == 0
-      redirect_to new_position_path()
-      return
-    end
+    ## 2026-05-05 doesn't seem to work.
+    # if @positions.length == 0
+    #   redirect_to new_position_path()
+    #   return
+    # end
+
 
     ## lets only sync when I say.
     ## 2026-02-24
@@ -179,11 +181,8 @@ class Iro::PursesController < Iro::ApplicationController
 
   def set_lists
     super
-
-    # @profiles_list = Wco::Profile.list
     # @tickers_list = [[nil,nil]] + Iro::Stock.active.map { |s| [ s.ticker, s.ticker ] }
     @stocks_list = Iro::Stock.list
-
   end
 
 

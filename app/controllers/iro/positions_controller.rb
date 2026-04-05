@@ -68,7 +68,9 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
+  ## only callable from _new.haml, with position partially pre-filled
   def new
+    authorize! :new, Iro::Position
     strategy    = Iro::Strategy.find params[:position][:strategy_id]
 
     @position   = strategy.next_position
@@ -79,7 +81,6 @@ class Iro::PositionsController < Iro::ApplicationController
       # outer:    Iro::Option.new,
       stock_id: strategy.stock_id,
     }) )
-    authorize! :new, @position
   end
 
   ## 2025-10-14 long_credit_put_spread
@@ -92,7 +93,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @purse     = @position.purse
     @stock     = @position.stock
     @nn        = @position.purse.n_next_positions
-    @n_dollars = 100 ## used in the view, but the name is unclear
+    @n_dollars = 50 ## * unit * 2 = length of the grid
 
     quotes_params = { contractType: @position.put_call, ticker: @stock.ticker, expirationDate: @prev.next_expires_on }
     # puts! quotes_params, 'quotes_params'

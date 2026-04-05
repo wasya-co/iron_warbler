@@ -1,0 +1,7 @@
+
+.strategies--list
+  %ul
+    - strategies.each do |st|
+      %li
+        = link_to '[~]', iro.edit_strategy_path(st)
+        = st

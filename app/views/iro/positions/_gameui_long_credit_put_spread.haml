@@ -21,7 +21,7 @@
         .label Last: #{pp_amount stock.last}
         .c
 
-        - left  = "#{ ( pos.outer.strike - stock.last ).abs() *-1*u}px"
+        - left  = "#{ ( pos.outer.strike - stock.last ) *u}px"
         - width = "#{ ( pos.inner.strike - pos.outer.strike ).abs() *u}px"
         .PositionW{ class: pos.strategy.kind, style: "left: #{left}; width: #{width}; " }
           .Position

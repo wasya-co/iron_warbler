@@ -5,7 +5,7 @@
       = f.submit
 
     .row
-      .col-md-6
+      .col-md-6.border-right
         .field
           %label Kind:
           = f.select :kind, options_for_select(Iro::Strategy::KINDS, selected: strategy.kind || params[:kind] )
@@ -15,42 +15,61 @@
         .field
           %label long or short?
           = f.select :long_or_short, options_for_select([nil, Iro::Strategy::LONG, Iro::Strategy::SHORT], selected: strategy.long_or_short)
-    %hr
+          .comment should be automatic
+        .field
+          %label purse
+          = f.select :purse, options_for_select(@purses_list, selected: strategy.purse_id), {}, { class: 'select2' }
+        .field
+          %label descr
+          = f.text_field :descr
 
-    .field
-      %label threshold_usd_above_mark
-      = f.number_field :threshold_usd_above_mark, placeholder: "0.49", step: 0.01
-    .field
-      = f.label :threshold_dte
-      = f.number_field :threshold_dte, placeholder: "1"
-    .field
-      = f.label :threshold_neg_delta
-      = f.number_field :threshold_neg_delta, placeholder: "0.65", step: 0.001
-      .comment defensive
-    .field
-      = f.label :threshold_pos_delta
-      = f.number_field :threshold_pos_delta, placeholder: "0.09", step: 0.001
-      .comment Best-case scenario roll, offensive
-    .field
-      = f.label :threshold_netp
-      = f.number_field :threshold_netp, placeholder: "0.69", step: 0.001
-      .comment Should not be used.
     %hr
+    .row
+      .col-6.border-right
+        %h5.text-center Defensive
+        .field
+          = f.label :threshold_neg_delta
+          = f.number_field :threshold_neg_delta, placeholder: "0.65", step: 0.001
+          .comment defensive, absolute value
+        .field
+          %label threshold_dte
+          = f.number_field :threshold_dte, placeholder: "1"
+        .field
+          %label threshold_usd_above_mark
+          = f.number_field :threshold_usd_above_mark, placeholder: "0.49", step: 0.01
+          .comment seems defensive
 
-    .field
-      = f.label :next_inner_delta
-      = f.number_field :next_inner_delta, placeholder: "0.25", step: 0.001
-    .field
-      = f.label :next_inner_strike
-      = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
-      .comment Literally the min (max) dollar amount of next strike
-    .field
-      = f.label :next_spread_amount
-      = f.number_field :next_spread_amount, placeholder: "20", step: 0.1
-      .commend usd, each
-    .field
-      %label next threshold_usd_above_mark
-      = f.number_field :next_threshold_usd_above_mark, placeholder: "80", step: 0.01
+      .col-6
+        %h5.text-center Offensive
+        .field
+          = f.label :threshold_pos_delta
+          = f.number_field :threshold_pos_delta, placeholder: "0.09", step: 0.001
+          .comment Best-case scenario roll, offensive, absolute value
+        .field
+          %label threshold_netp
+          = f.number_field :threshold_netp, placeholder: "0.69", step: 0.001
+          .comment Should not be used.
+
+    %hr
+    .row
+      .col-6.border-right &nbsp;
+      .col-6
+        .field
+          = f.label :next_inner_delta
+          = f.number_field :next_inner_delta, placeholder: "0.25", step: 0.001
+          .comment absolute value
+        .field
+          = f.label :next_inner_strike
+          = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
+          .comment Literally the min (max) dollar amount of next strike
+        .field
+          = f.label :next_spread_amount
+          = f.number_field :next_spread_amount, placeholder: "20", step: 0.1
+          .commend usd, each
+        .field
+          %label next_usd_above_mark
+          = f.number_field :next_usd_above_mark, placeholder: "80", step: 0.01
+          .comment usd, each, absolute value
 
     .actions
       = f.submit

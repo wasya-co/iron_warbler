@@ -19,7 +19,7 @@
       -# = link_to '[dup]', duplicate_position_path(pos)
     .d-flex
       = link_to '[sync]', sync_position_path(pos)
-      = link_to '[roll]', position_prepare_to_roll_path(pos)
+      = link_to '[prepare]', position_prepare_to_roll_path(pos) if pos.persisted?
       = link_to '[eval]', position_eval_path(pos)
 
 

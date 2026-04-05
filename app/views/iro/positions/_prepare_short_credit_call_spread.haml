@@ -14,7 +14,7 @@
   .StockCoordinates{ style: "height: #{@position.q * @position.purse.height}px " }
     .grid= render "/iro/stocks/grid", stock: stock, position: pos
     .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
-      .label Last: #{pos.stock.last }
+      -# .label Last: #{pp_amount pos.stock.last }
 
       - amnt   = pos.next_gain_loss_amount
       - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1 * u}px solid red"

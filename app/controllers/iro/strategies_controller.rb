@@ -32,8 +32,6 @@ class Iro::StrategiesController < Iro::ApplicationController
   def index
     authorize! :index, Iro::Strategy
     @strategies = Iro::Strategy.all
-
-    # render '_table'
   end
 
   def new
@@ -45,8 +43,6 @@ class Iro::StrategiesController < Iro::ApplicationController
     @strategy = Iro::Strategy.find params[:id]
     authorize! :show, @strategy
   end
-
-
 
   def update
     @strategy = Iro::Strategy.find params[:id]

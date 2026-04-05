@@ -22,7 +22,7 @@
         .label Last: #{pp_amount stock.last}
         .c
 
-        - left  = "#{ ( pos.inner.strike - stock.last ).abs() *u}px"
+        - left  = "#{ ( pos.inner.strike - stock.last ) *u}px"
         - width = "#{ ( pos.inner.strike - pos.outer.strike ).abs() *u}px"
         - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
         .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "left: #{left}; width: #{width}; " }

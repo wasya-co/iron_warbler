@@ -1,8 +1,8 @@
 
 - purse ||= @purse
+.purses--header
 
-.header
-  %h5.title
+  %h5.text-center
     Purse `#{purse.slug}`
     -# (#{purse.positions.length})
     &nbsp;
@@ -11,25 +11,30 @@
     = link_to '[table]', purse_path(purse,  template: 'show', view_status: params[:view_status] )
     = link_to '[gameUI]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
 
-%ul
-  -# %li <b>Balance:</b> #{pp_amount purse.balance}
-  %li <b>Available:</b> #{pp_amount purse.available}
+  .row
+    .col-6
+      %ul
+        -# %li <b>Balance:</b> #{pp_amount purse.balance}
+        %li <b>Available:</b> #{pp_amount purse.available}
+    .col-6
+      %label strategies:
+      = render 'iro/strategies/list', strategies: purse.strategies
 
 
-= render '/iro/positions/new', purse: purse
+  = render '/iro/positions/new', purse: purse
 
 
 
-- if true # params[:template] == 'gameui'
-  .mini-inputs
-    = form_for purse, html: { class: 'd-flex' } do |f|
-      = render '/iro/purses/form_extra_fields', f: f
-      = f.submit '>'
-  %br
+  - if true # params[:template] == 'gameui'
+    .mini-inputs
+      = form_for purse, html: { class: 'd-flex' } do |f|
+        = render '/iro/purses/form_extra_fields', f: f
+        = f.submit '>'
+    %br
 
-.d-flex
-  %h5 view_status
-  = form_tag purse_path( @purse ), method: :get do
-    = select_tag :view_status, options_for_select([ :all, :active, :proposed, :pending ], selected: params[:view_status] )
-    = hidden_field_tag :template, params[:template]
-    = submit_tag '>'
+  .d-flex
+    %h5 view_status
+    = form_tag purse_path( @purse ), method: :get do
+      = select_tag :view_status, options_for_select([ :all, :active, :proposed, :pending ], selected: params[:view_status] )
+      = hidden_field_tag :template, params[:template]
+      = submit_tag '>'

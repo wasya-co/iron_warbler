@@ -9,13 +9,16 @@
         %th.actions &nbsp;
         %th stock
         %th kind
+        %th descr
         %th long or short
         %th put_call
         %th next inner delta
         %th thresh neg delta
         %th thresh pos delta
-        %th slug
-        %th.actions &nbsp;
+        %th next_usd_above_mark
+        %th next_spread_amount
+
+
     %tbody
       - strategies.each do |sss|
         %tr
@@ -24,7 +27,8 @@
               = link_to '[~]', edit_strategy_path(sss)
               = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td.stock= sss.stock
-          %td= sss.kind
+          %td.kind= sss.kind
+          %td.descr= sss.descr
           %td.long-or-short= sss.long_or_short
           %td.put-call= sss.put_call
           %td= sss.next_inner_delta
@@ -32,14 +36,11 @@
             = sss.threshold_neg_delta
           %td.threshold-pos-delta
             = sss.threshold_pos_delta
-          %td.slug= link_to sss.to_s, strategy_path(sss)
-          %td
-            = form_tag propose_position_path do
-              = hidden_field_tag :strategy_id, sss.id
-              .d-flex
-                %label new position for
-                = select_tag :purse_id, options_for_select(@purses_list), class: 'select2'
-                = submit_tag 'Go'
+          %td.next_usd_above_mark
+            = sss.next_usd_above_mark
+          %td.next_spread_amount
+            = sss.next_spread_amount
+
 
   .h-50px
 
