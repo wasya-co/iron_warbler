@@ -24,7 +24,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem "rspec-rails"
 
-  gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.3.0'
+  gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.3.1'
 
 
 end
