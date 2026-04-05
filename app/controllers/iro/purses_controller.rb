@@ -27,7 +27,7 @@ class Iro::PursesController < Iro::ApplicationController
   end
 
   def index
-    @purses = Iro::Purse.all
+    @purses = Iro::Purse.all.order_by( slug: :asc )
     authorize! :index, Iro::Purse
   end
 
