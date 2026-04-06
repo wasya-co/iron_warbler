@@ -78,7 +78,7 @@ class Iro::PursesController < Iro::ApplicationController
 
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
-    @n_dollars = 100 ## dollars to each side of origin
+    @n_dollars = 50 ## * unit * 2 = length of the grid
 
     calc_summary
 

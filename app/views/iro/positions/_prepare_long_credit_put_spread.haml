@@ -23,8 +23,10 @@
 
           - if amnt >= 0
             .Net.NetPositive{ style: "width: #{ amnt*u }px; right: -#{amnt*u + border_px}px" }
-              .label net #{pp_amount amnt}
+              .label
+                .labelC net #{pp_amount amnt}
           - else
             .Net.NetNegative{ style: "width: #{ -amnt*u }px; right: 0" }
-              .label net #{pp_amount amnt}
+              .label
+                .labelC net #{pp_amount amnt}
     .c

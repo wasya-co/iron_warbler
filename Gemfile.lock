@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 1127de1cb5f04ffbe290d9ee31a01575c4431f34
+  revision: c7d1fd399a39709139fe7a2717af829a79bbc18f
   branch: 3.3.1
   specs:
     wco_models (3.1.0.264)
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.48)
+    iron_warbler (2.0.7.49)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)

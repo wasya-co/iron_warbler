@@ -14,7 +14,7 @@
     content: "";
     margin-left: -1em;
     border: 1em solid transparent;
-    border-top: 1em solid black;
+    border-top: 1em solid #666;
   }
   .Origin {
     position: absolute;
@@ -23,13 +23,18 @@
     height: 100%;
     width: 100%;
 
-    > .label {
-      width: 300px;
+    > .origin-label {
+      // border: 1px solid cyan;
+
+      width: 200px;
 
       position: absolute;
       top: -1.5em;
       left: 1.2em;
       z-index: 2;
+
+      color: #666;
+
     }
   }
   .PositionW.covered_call {
@@ -69,8 +74,8 @@
     right: 0;
     bottom: 0;
     border: 2px dotted green;
-    background: rgba(0,255,0, 0.5);
-    height: 0.5em;
+    background: rgba(50,55,55, 0.5);
+    height: 25%;
   }
   .PositionW.is-short .MaxGain {
     right: auto;
@@ -108,39 +113,63 @@
     .Last {
       border-left: 2px dotted red;
     }
-    .label {
-      width: 200px;
-      color: gray;
-      // border: 1px solid cyan;
-    }
 
     .marker {
       position: absolute;
       height: 100%;
     }
 
-    .PositionW.is-short .Net .label {
-      text-align: right;
-      position: absolute;
-      right: 0;
+    .PositionW.is-short {
+      .NetNegative {
+        left: 0;
+      }
+      .NetPositive {
+        right: 0;
+      }
+      .Net .label {
+        text-align: right;
+        left: 0;
+        .labelC {
+          right: 0.5em;
+        }
+      }
+    }
+    .PositionW.is-long {
+      .NetNegative {
+        right: 0;
+      }
+      .NetPositive {
+        left: 100%;
+      }
+      .Net .label {
+        text-align: left;
+        right: 0;
+        .labelC {
+          left: 0.5em;
+        }
+      }
     }
     .Net {
       position: absolute;
-      // bottom: 3em;
-      // z-index: 3;
-      height: 90%;
+      height: 70%;
 
       .label {
         color: white;
         text-shadow: 1px 1px black;
+        width: 0;
+        position: absolute;
+
+        .labelC {
+          width: 200px;
+          position: absolute;
+        }
       }
-    }
-    .NetPositive {
-      border: 2px dashed #339966;
-      background: rgba(32,64,96, 0.5);
     }
     .NetNegative {
       background: rgba(255,0,0, 0.75);
+    }
+    .NetPositive {
+      background: rgba(32,164,96, 0.5);
     }
 
     .grid-mark {

@@ -6,20 +6,21 @@
 - border_px = 2.0
 
 -##
--## 2026-02-19 copy-pasted from long put spread, _TODO: change everything.
+-## 2026-02-19 copy-pasted from long put spread
+-## 2026-04-05 move loss inside, gain outside
 -##
 
 .collapse-expand.d-flex.--gameui-short-credit-call-spread{ id: "gameui-pos-#{pos.id}" }
   [<>]
   .maxwidth= render "/iro/positions/header", pos: pos
-.a
+.--gameui-short-credit-call-spread
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
     .StockCoordinates{ style: "height: #{pos.q() *pos.purse.height}px " }
       .grid= render "/iro/stocks/grid", stock: stock, position: pos
 
       .Origin{ style: "left: #{ ( nearest_strike - stock.last )* u}px" }
-        .label Last: #{pp_amount stock.last}
+        .origin-label Last: #{pp_amount stock.last}
         .c
 
         - left  = "#{ ( pos.inner.strike - stock.last ) *u}px"
@@ -32,9 +33,12 @@
 
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: #{-1* pos.net_amount() *u + border_px}px" }
-                .label net #{pp_amount pos.net_amount}
+                .label
+                  .labelC net #{pp_amount pos.net_amount}
             - else
-              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: #{pos.net_amount() *u + border_px}px" }
-                .label net #{pp_amount pos.net_amount}
+              -# .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: #{pos.net_amount() *u + border_px}px" }
+              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px;" }
+                .label
+                  .labelC net #{pp_amount pos.net_amount}
 .c
 
