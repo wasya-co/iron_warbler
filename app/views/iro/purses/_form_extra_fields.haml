@@ -2,25 +2,30 @@
 .purses--form-extra-fields
 
   .d-flex.flex-wrap
-    %label unit
-    = f.number_field :unit, step: 0.1
-    .unit px/usd
+    .d-flex.flex-nowrap
+      %label unit
+      = f.number_field :unit, step: 0.1
+      .unit px/usd
 
-    %label height
-    = f.number_field :height
-    .unit px/q
+    .d-flex.flex-nowrap
+      %label height
+      = f.number_field :height
+      .unit px/q
 
-    %label summary_unit
-    = f.number_field :summary_unit, step: 0.000001
-    .unit px/usd
+    .d-flex.flex-nowrap
+      %label summary_unit
+      = f.number_field :summary_unit, step: 0.000001
+      .unit px/usd
 
   .d-flex.flex-wrap
-    %label mark_every_n_usd
-    = f.number_field :mark_every_n_usd, step: 0.01
-    .unit
+    .d-flex.flex-nowrap
+      %label mark_every_n_usd
+      = f.number_field :mark_every_n_usd, step: 0.01
+      .unit
 
-    %label n_next_positions
-    = f.number_field :n_next_positions
-    .unit
+    .d-flex.flex-nowrap
+      %label n_next_positions
+      = f.number_field :n_next_positions
+      .unit
 
 

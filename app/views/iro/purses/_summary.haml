@@ -1,54 +1,87 @@
 
-- u = @purse.unit
+- u = 1 # = @purse.unit
 - summary_unit = @purse.summary_unit
 - collapse_key ||= nil
 
-- if @purse.positions.present?
-  %i.fa.fa-expand.collapse-expand{ id: "pursesSummary_#{collapse_key}", style: "margin-left: -1em;" } Summary
+.purses--summary
+  %i.fa.fa-expand.collapse-expand{ id: "pursesSummary_#{collapse_key}" } Summary
   .PurseSummaryW
     .PurseSummary
 
       .summary-amount
-        .max-gl.long.loss{  style: "height: #{@max_loss_long  *-1*summary_unit*u}px" }
+        .max-gl.long.loss{  style: "height: #{@max_loss_long *summary_unit*u}px" }
           %label Long Loss
+          - if @loss_long
+            .net-gl.loss.long.loss-long{   style: "height: #{@loss_long  *-1*summary_unit*u}px" }
           .delta
-            .begin.long{  style: "height: #{@purse.delta_to_plot_p( :begin, :long, :inner )}" }
-            .end.long{    style: "height: #{@purse.delta_to_plot_p( :end,   :long, :inner )}" }
+            .begin.long{  style: "height: #{@delta_long_begin/summary_unit*-1}px" }
+            .end.long{    style: "height: #{@delta_long_end/summary_unit*-1}px" }
 
-        .max-gl.short.loss{ style: "height: #{@max_loss_short *-1*summary_unit*u}px" }
+        .max-gl.short.loss{ style: "height: #{@max_loss_short *summary_unit*u}px" }
           %label Short Loss
+          - if @loss_short
+            .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *-1*summary_unit*u}px" }
           .delta
-            .begin.short{  style: "height: #{@purse.delta_to_plot_p( :begin, :short, :inner )}" }
-            .end.short{    style: "height: #{@purse.delta_to_plot_p( :end,   :short, :inner )}" }
+            .begin.short{  style: "height: #{@delta_short_begin/summary_unit}px" }
+            .end.short{    style: "height: #{@delta_short_end/summary_unit}px" }
 
-        - if @loss_long
-          .net-gl.loss.long.loss-long{   style: "height: #{@loss_long  *-1*summary_unit*u}px" }
-        - if @loss_short
-          .net-gl.loss.short.loss-short{ style: "height: #{@loss_short *-1*summary_unit*u}px" }
 
-      -# %label Gain
       .summary-amount
         .max-gl.long.gain{  style: "height: #{@max_gain_long  *summary_unit*u}px" }
-        .max-gl.short.gain{ style: "height: #{@max_gain_short *summary_unit*u}px" }
+          %label Long Gain
         - if @gain_long
           .net-gl.gain.long.gain-long{   style: "height: #{@gain_long  *summary_unit*u}px" }
-        - if @gain_short
-          .net-gl.gain.short.gain-short{ style: "height: #{@gain_short *summary_unit*u}px" }
+
+        .max-gl.short.gain{ style: "height: #{@max_gain_short *summary_unit*u}px" }
+          %label Short Gain
+          - if @gain_short
+            .net-gl.gain.short.gain-short{ style: "height: #{@gain_short *summary_unit*u}px" }
+      .c
+
+      -# separated by long and short:
+      .legendW
+        .legend
+          %label Short:
+          %ul
+            %li
+              <b>exposure short:</b> -#{pp_amount @max_loss_short}
+            %li.gray
+              <b>max gain short:</b> #{pp_amount @max_gain_short}
+            %li
+              <b>loss short:</b> #{pp_amount @loss_short}
+            %li
+              <b>gain short:</b> #{pp_amount @gain_short}
+            %li
+              <b>Delta short begin:</b> #{pp_delta @delta_short_begin}
+              <b>end:</b> #{pp_delta @delta_short_end}
+
+          %label Long:
+          %ul
+            %li
+              <b>exposure long:</b> -#{pp_amount @max_loss_long}
+            %li.gray
+              <b>max gain long:</b> #{pp_amount @max_gain_long}
+            %li
+              <b>loss long:</b> #{pp_amount @loss_long}
+            %li
+              <b>gain long:</b> #{pp_amount @gain_long}
+            %li
+              <b>Delta long begin:</b> #{pp_delta @delta_long_begin}
+              <b>end:</b> #{pp_delta @delta_long_end}
 
 
 
 
-
-
+    -# old, remove?
       .legendW
         .legend
           %ul
             %li
-              <b>exposure long:</b> #{pp_amount @max_loss_long *-1}
-              <b>short:</b> #{pp_amount @max_loss_short *-1}
-            %li
-              <b>max loss long:</b> #{pp_amount [ @max_loss_long + @max_gain_short, 0].min }
-              <b>short:</b> #{pp_amount [ @max_loss_short + @max_gain_long, 0].min }
+              <b>exposure long:</b> -#{pp_amount @max_loss_long}
+              <b>short:</b> -#{pp_amount @max_loss_short}
+            -# %li
+            -#   <b>max loss long:</b> #{pp_amount [ @max_loss_long + @max_gain_short, 0].min }
+            -#   <b>short:</b> #{pp_amount [ @max_loss_short + @max_gain_long, 0].min }
             %li.gray
               <b>max gain long:</b> #{pp_amount @max_gain_long}
               <b>short:</b> #{pp_amount @max_gain_short}
@@ -63,14 +96,14 @@
 
             %li
               %hr
-              <b>Delta long begin:</b> #{pp_delta @purse.delta_wt_avg( :begin, :long, :inner )}
-              <b>end:</b> #{pp_delta @purse.delta_wt_avg( :end, :long, :inner )}
+              <b>Delta long begin:</b> #{pp_delta @delta_long_begin}
+              <b>end:</b> #{pp_delta @delta_long_end}
             %li
-              <b>Delta short begin:</b> #{pp_delta @purse.delta_wt_avg( :begin, :short, :inner )}
-              <b>end:</b> #{pp_delta @purse.delta_wt_avg( :end, :short, :inner )}
+              <b>Delta short begin:</b> #{pp_delta @delta_short_begin}
+              <b>end:</b> #{pp_delta @delta_short_end}
 
             %hr
             %li
-              <b>Available amount:</b> #{@purse.available_amount}
+              <b>Available amount:</b> #{pp_amount @purse.available_amount}
 
 

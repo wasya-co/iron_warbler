@@ -1,110 +1,259 @@
 
-.PurseSummaryW {
-  position: relative;
-  background: rgba(255,255,255, 0.75);
-  height: 400px;
-  width: 100%;
-  z-index: 5;
-}
-.PurseSummary {
-  position: absolute;
-  top: 200px;
-
+.summaries {
   display: flex;
+}
+.PurseSummaryW {
+  margin-left: 1em;
+  width: 500px;
+}
 
-  width: 100%;
-  height: 0;
-  border-bottom: 1px dotted black;
-
-  .legendW {
+.purses--summary {
+  .PurseSummaryW {
     position: relative;
-    // margin-top: 50%;
+    background: rgba(255,255,255, 0.75);
+    height: 400px;
+    z-index: 5;
+  }
+  .PurseSummary {
+    position: absolute;
+    top: 200px;
 
-    .legend {
-      margin-top: -50%;
+    display: flex;
 
-      // position: absolute;
-      // top: -200px;
-      // width: 400px;
-      // height: 400px;
+    width: 100%;
+    height: 0;
+    border-bottom: 1px dotted black;
 
-      background: white;
-      padding: 0.5em;
+    .legendW {
+      position: relative;
+      // margin-top: 50%;
+
+      .legend {
+        margin-top: -50%;
+
+        // position: absolute;
+        // top: -200px;
+        // width: 400px;
+        // height: 400px;
+
+        background: white;
+        padding: 0.5em;
+      }
+    }
+
+
+    /*
+     * summary amount and delta
+    **/
+    .summary-amount {
+      position: relative;
+      width: 100px;
+      margin-right: 2em;
+
+      .net-gl {
+        width: 90%;
+        background: rgba(0,0,0, 0.5);
+      }
+
+      .delta {
+        position: absolute;
+        left: 100px;
+        height: 100%;
+
+        > div {
+          border: 1px dotted yellow;
+          width: 0.5em;
+        }
+        .begin {
+          width: 1em;
+
+          background: black;
+        }
+        .end {
+          width: .5em;
+          left: .25em;
+
+          background: rgba(255,0,0, 0.5);
+        }
+      }
+
+    }
+
+
+    .loss {
+    }
+    .gain {
+    }
+    .max-gl {
+      position: absolute;
+      width: 100%;
+
+      label {
+        position: absolute;
+      }
+
+
+    }
+    .max-gl.long {
+    }
+    .max-gl.short {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .long {
+      position: absolute;
+      top: 0;
+
+      background: rgba(255,0,0, 0.5);
+      border: 1px solid red;
+      bottom: 0;
+    }
+    .short {
+      background: rgba(255,153,0, 0.5);
+      border: 1px solid orange;
+
+      position: absolute;
+      bottom: 0;
     }
   }
+}
 
+.purses--summary2 {
+  // border: 1px solid yellow;
 
-  /*
-   * summary amount and delta
-  **/
-  .summary-amount {
+  label {
+    position: absolute;
+  }
+
+  .legendW {
+    height: 100px;
+    margin-left: 60px;
+
+    display: flex;
+  }
+
+  .PurseSummaryW {
     position: relative;
-    width: 100px;
-    margin-right: 2em;
+    background: rgba(255,255,255, 0.75);
+    height: 400px;
+    z-index: 5;
+  }
+  .PurseSummary {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid black;
+  }
 
-    .net-gl {
-      width: 100%;
-      background: rgba(0,0,0, 0.5);
+  /* shared */
+  .summary-long, .summary-short {
+    // border: 1px solid blue;
+    position: absolute;
+
+    display: flex;
+
+    width: 100%;
+    // height: 300px;
+
+    .deltaW {
+      border: 2px solid black;
+      height: 0;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      left: 100px;
+
+      .delta {
+        // border: 2px dashed green;
+        width: 20px;
+
+        display: flex;
+        align-items: center;
+
+        .begin {
+          width: 100%;
+          background: rgba(0,0,0, 0.5);
+        }
+        .end {
+          width: 50%;
+          background: rgba(0,0,0, 0.75);
+        }
+
+      }
     }
 
-    .delta {
-      position: absolute;
-      left: 100px;
-      height: 100%;
+    /* shared */
+    .plot {
+      border: 1px solid cyan;
+      background: rgba(255,153,0, 0.5);
 
-      > div {
-        border: 1px dotted yellow;
-        width: 0.5em;
+      position: relative;
+
+      width: 100px;
+
+      .max-gl {
+        width: 100%;
+        position: absolute;
+        background: rgba(255,255,0, 0.5);
       }
-      .begin {
-        width: 1em;
-
-        background: black;
+      .net-gl {
+        position: absolute;
+        width: 90%;
       }
-      .end {
-        width: .5em;
-        left: .25em;
-
+      .gain {
+        background: rgba(0,0,0, 0.5);
+      }
+      .loss {
         background: rgba(255,0,0, 0.5);
       }
     }
-
   }
 
-
-  .loss {
-  }
-  .gain {
-  }
-  .max-gl {
-    position: absolute;
-    width: 100%;
-
-    label {
-      position: absolute;
-    }
-
-
-  }
-  .max-gl.long {
-  }
-  .max-gl.short {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  .long {
-    position: absolute;
+  .summary-long {
     top: 0;
 
-    background: rgba(255,0,0, 0.5);
-    border: 1px solid red;
-    bottom: 0;
+    .legendW {
+      flex-direction: column;
+    }
+    .plot {
+      bottom: 0;
+      .gain {
+        bottom: 0;
+      }
+      .max-gl {
+        bottom: 0;
+      }
+    }
   }
-  .short {
-    background: rgba(255,153,0, 0.5);
-    border: 1px solid orange;
 
-    position: absolute;
+  .summary-short {
     bottom: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    .deltaW {
+      left: 120px;
+    }
+    label {
+      bottom: 0;
+    }
+    .legendW {
+      flex-direction: column-reverse;
+    }
+    .plot {
+      border: 1px solid cyan;
+      background: rgba(255,153,0, 0.5);
+      width: 100px;
+
+      .gain {
+        top: 0;
+      }
+      .loss {
+        bottom: 0;
+      }
+    }
   }
 }

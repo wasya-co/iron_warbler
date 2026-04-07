@@ -34,51 +34,20 @@ class Iro::PursesController < Iro::ApplicationController
   ## table or gameui
   def show
     @purse = Iro::Purse.find(params[:id])
-    params[:template] = params[:template].presence || 'show'
     authorize! :show, @purse
-
-    @positions = @purse.positions
+    params[:template]    ||= 'show'
     params[:view_status] ||= 'active'
-    if params[:view_status] && 'all' != params[:view_status]
-      @positions = @positions.where( status: params[:view_status] )
-    end
-    @positions = @positions.includes( :strategy
-      ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
-
-    ## 2026-05-05 doesn't seem to work.
-    # if @positions.length == 0
-    #   redirect_to new_position_path()
-    #   return
-    # end
-
-
-    ## lets only sync when I say.
-    ## 2026-02-24
-=begin
-    expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
-    quotes_h = Tda::Option.get_quotes_h({
-      contractType: 'ALL',
-      ticker:  @positions[0].ticker,
-      fromDate: expiration_dates.first,
-      toDate: expiration_dates.last,
-    })
-    count = 1
-    @positions.each do |pos|
-      pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
-      pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
-      pos.inner.save ? print("#{count}^") : print("#{count}X")
-      if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
-        pos.outer.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:price]
-        pos.outer.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:delta]
-        pos.outer.save ? print('^') : print('X')
-      end
-      count = count+1
-    end
-=end
-
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
     @n_dollars = 50 ## * unit * 2 = length of the grid
+
+    @positions = @purse.positions.where( status: params[:view_status]
+      ).includes( :strategy
+      ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
+
+    if 'all' == params[:view_status]
+      @positions = @positions.unscope( where: :status )
+    end
 
     calc_summary
 
@@ -142,10 +111,10 @@ class Iro::PursesController < Iro::ApplicationController
     @gain_long  = 0
     @gain_short = 0
 
-    @begin_delta_long  = 0
-    @begin_delta_short = 0
-    @end_delta_long  = 0
-    @end_delta_short = 0
+    @delta_long_begin  = 0
+    @delta_short_begin = 0
+    @delta_long_end  = 0
+    @delta_short_end = 0
 
     @positions.each do |pos|
       if Iro::Strategy::LONG == pos.strategy.long_or_short
@@ -153,22 +122,23 @@ class Iro::PursesController < Iro::ApplicationController
         @max_gain_long += pos.max_gain * pos.q * 100
         @gain_long     += pos.net_amount * pos.q * 100
 
-        @begin_delta_long += pos.begin_delta * pos.q
-        @end_delta_long   += pos.end_delta * pos.q
+        @delta_long_begin += pos.begin_delta * pos.q
+        @delta_long_end   += pos.end_delta * pos.q
       end
       if Iro::Strategy::SHORT == pos.strategy.long_or_short
         @max_loss_short += pos.max_loss * pos.q * 100
         @max_gain_short += pos.max_gain * pos.q * 100
         @gain_short     += pos.net_amount * pos.q * 100
 
-        @begin_delta_short += pos.begin_delta * pos.q
-        @end_delta_short   += pos.end_delta * pos.q
+        @delta_short_begin += pos.begin_delta * pos.q
+        @delta_short_end   += pos.end_delta * pos.q
       end
     end
-    # @max_loss_long *= -1
-    # @max_loss_short *= -1
-    @begin_delta_short *= -1
-    @end_delta_short *= -1
+
+    # @delta_long_begin *= -1
+    # @delta_long_end *= -1
+
+    ## 2026-05-07 being used.
     if @gain_long < 0
       @loss_long = @gain_long
       @gain_long = nil
@@ -187,4 +157,34 @@ class Iro::PursesController < Iro::ApplicationController
 
 
 end
+
+
+
+
+
+
+    ## lets only sync when I say.
+    ## 2026-02-24
+=begin
+    expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
+    quotes_h = Tda::Option.get_quotes_h({
+      contractType: 'ALL',
+      ticker:  @positions[0].ticker,
+      fromDate: expiration_dates.first,
+      toDate: expiration_dates.last,
+    })
+    count = 1
+    @positions.each do |pos|
+      pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
+      pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
+      pos.inner.save ? print("#{count}^") : print("#{count}X")
+      if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
+        pos.outer.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:price]
+        pos.outer.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:delta]
+        pos.outer.save ? print('^') : print('X')
+      end
+      count = count+1
+    end
+=end
+
 
