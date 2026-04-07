@@ -1,0 +1,27 @@
+
+- pos = @position
+
+.positions-place2.maxwidth
+  %ul
+    %li= link_to '[table]', iro.purse_path(pos.purse)
+    %li= link_to '[gameUI]', iro.purse_gameui_path(pos.purse)
+
+  = form_tag place3_position_path(@position) do
+    %ul
+      %li
+        autoprev:
+        = pos.autoprev.inspect
+      %li
+        sell to open
+        = pos.inner
+      %li
+        buy to open
+        = pos.outer
+      %li
+        pending_price
+        = text_field_tag :pending_price, pos.pending_price
+      %li
+        Query 2
+        %pre= JSON.pretty_generate( @query )
+
+    = submit_tag 'Place3 Order', data: { confirm: 'Are you sure?' }

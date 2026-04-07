@@ -1,26 +1,28 @@
 
 - pos = @position
 
-%ul
-  %li= link_to '[table]', iro.purse_path(pos.purse)
-  %li= link_to '[gameUI]', iro.purse_gameui_path(pos.purse)
+.positions-prepare2.maxwidth
 
--## short credit call spread
-%ul
-  %li
-    buy to close
-    = pos.autoprev.inner
-  %li
-    sell to close
-    = pos.autoprev.outer
-  %li
-    sell to open
-    = pos.inner
-  %li
-    buy to open
-    = pos.outer
-  %li
-    Query 2
-    %pre= JSON.pretty_generate( @query )
+  %ul
+    %li= link_to '[table]', iro.purse_path(pos.purse)
+    %li= link_to '[gameUI]', iro.purse_gameui_path(pos.purse)
 
-= button_to 'Place Order', prepare3_position_path(@position), data: { confirm: 'Are you sure?' }
+  -## short credit call spread
+  %ul
+    %li
+      buy to close
+      = pos.autoprev.inner
+    %li
+      sell to close
+      = pos.autoprev.outer
+    %li
+      sell to open
+      = pos.inner
+    %li
+      buy to open
+      = pos.outer
+    %li
+      Query 2
+      %pre= JSON.pretty_generate( @query )
+
+  = button_to 'Place Order', prepare3_position_path(@position), data: { confirm: 'Are you sure?' }

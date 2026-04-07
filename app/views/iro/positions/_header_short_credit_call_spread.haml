@@ -3,8 +3,8 @@
 - q = pos.quantity
 
 %i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
-.maxwidth.--header-short-credit-call-spread
-  %ul.ml-0
+.maxwidth.positions--header.--header-short-credit-call-spread
+  %ul
     %li
       <b>begin $:</b> [#{pp_amount pos.inner.begin_price} -> #{pp_amount pos.outer.begin_price}]
       <b>D:</b> [[#{pos.inner.begin_delta} >> #{pos.outer.begin_delta}]]

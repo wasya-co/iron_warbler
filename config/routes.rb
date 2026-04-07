@@ -20,13 +20,18 @@ Iro::Engine.routes.draw do
   post  'positions/:id/roll',      to: 'positions#do_roll',  as: :roll_position
   get   'positions/:id/sync',      to: 'positions#sync',     as: :sync_position
   get   'positions/:id/eval',      to: 'positions#eval',     as: :position_eval
+  match 'positions/:id/place2',    to: 'positions#place2',   as: :place2_position, via: [ :get, :post ]
+  post  'positions/:id/place3',    to: 'positions#place3',   as: :place3_position
+  post  'positions/:id/reprice',   to: 'positions#reprice',  as: :reprice_position
   delete 'positions', to: 'positions#destroy_multi'
+  get 'positions/:id/check', to: 'positions#check', as: :check_position
   resources :positions
   resources :profiles
 
   get 'purses/:id/sync', to: 'purses#sync', as: :sync_purse
   get 'purses/:id/gameui', to: 'purses#show', as: :purse_gameui, defaults: { template: 'gameui' }
-  get 'purses/:id',        to: 'purses#show', as: :purse # ,        defaults: { template: 'show' }
+  get 'purses/:id/table',  to: 'purses#show', as: :purse_table,  defaults: { template: 'table' }
+  get 'purses/:id',        to: 'purses#show', as: :purse
   resources :purses
 
   get 'schwab/sync',      to: 'application#schwab_sync',      as: :schwab_sync

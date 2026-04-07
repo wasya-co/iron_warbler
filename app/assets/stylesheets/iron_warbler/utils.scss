@@ -83,15 +83,16 @@
   position: absolute;
 
   min-width: 200px;
-  width: 400px;
+  // width: 400px;
 
   min-height: 200px;
-  height: 300px;
+  // height: 300px;
+
   /* overflow: auto; */
 
   background: white;
 
-  z-index: 2;
+  z-index: 200;
 
 }
 

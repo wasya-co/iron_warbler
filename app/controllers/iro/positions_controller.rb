@@ -1,26 +1,36 @@
 
 class Iro::PositionsController < Iro::ApplicationController
-  before_action :set_lists
+
+  def check
+    @position = Iro::Position.find params[:id]
+    authorize! :check, @position
+    outs = Tda::Order.check_status @position.schwab_order_id
+    @position.update({ schwab_status: outs[:status] })
+    puts! outs, 'outs'
+    redirect_to request.referrer
+  end
 
   def create
     @position = Iro::Position.new pos_params
     authorize! :create, @position
 
-    @position.inner_strike = params[:inner][:strike]
-    @position.outer_strike = params[:outer][:strike]
+    # @position.inner_strike = params[:inner][:strike]
+    # @position.outer_strike = params[:outer][:strike]
 
     o_attrs = {
       expires_on: @position.expires_on,
-      put_call: @position.put_call, # I need this. _vp_ 2024-04-26
-      stock_id: @position.stock_id,
+      put_call:   @position.put_call, # I need this. _vp_ 2024-04-26
+      stock_id:   @position.stock_id,
     }
-    @position.inner = Iro::Option.new params[:inner].permit!.merge( o_attrs )
-    @position.inner.end_price = @position.inner.begin_price
-    @position.inner.end_delta = @position.inner.begin_delta
+    @position.inner = Iro::Option.create!({ strike: params[:position][:inner_strike] }.merge( o_attrs ))
+    @position.inner.sync
+    @position.inner.begin_price = @position.inner.end_price
+    @position.inner.begin_delta = @position.inner.end_delta
     if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( @position.strategy.kind )
-      @position.outer = Iro::Option.new params[:outer].permit!.merge( o_attrs )
-      @position.outer.end_price = @position.outer.begin_price
-      @position.outer.end_delta = @position.outer.begin_delta
+      @position.outer = Iro::Option.create!({ strike: params[:position][:outer_strike] }.merge( o_attrs ))
+      @position.outer.sync
+      @position.outer.begin_price = @position.outer.end_price
+      @position.outer.begin_delta = @position.outer.end_delta
     end
 
     if @position.save
@@ -53,6 +63,7 @@ class Iro::PositionsController < Iro::ApplicationController
   def edit
     @position = Iro::Position.find params[:id]
     authorize! :edit, @position
+    set_position_lists
   end
 
   def eval
@@ -81,6 +92,40 @@ class Iro::PositionsController < Iro::ApplicationController
       # outer:    Iro::Option.new,
       stock_id: strategy.stock_id,
     }) )
+
+    set_position_lists
+  end
+
+  ## only credit-spread
+  def reprice
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+    @position.update({ pending_price: params[:pending_price] })
+
+    Tda::Order.cancel_order!( @position.schwab_order_id )
+    outs = Tda::Order.place_order!( Tda::Order.credit_spread_q @position )
+
+    flag = @position.update({
+      schwab_order_id: outs[:schwab_order_id],
+      schwab_status: outs[:schwab_status],
+      status: Iro::Position::STATUS_PENDING,
+    })
+
+    flash_notice flag
+    # redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
+    redirect_to request.referrer
+  end
+
+  ## place2 = credit-spread
+  def place2
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+    @position.inner.sync
+    @position.inner.update({ begin_price: @position.inner.end_price })
+    @position.outer.sync
+    @position.outer.update({ begin_price: @position.outer.end_price })
+    @position.update({ pending_price: @position.place2_price })
+    @query = Tda::Order.credit_spread_q @position
   end
 
   ## 2025-10-14 long_credit_put_spread
@@ -102,11 +147,6 @@ class Iro::PositionsController < Iro::ApplicationController
     self.send("_prepare_#{@position.strategy.kind}")
   end
 
-  ## 2026-02-26 continue...
-  ## short credit call spread
-  ## covered call ???
-  ## short credit call spread
-  ## long credit put spread
   def prepare2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
@@ -136,15 +176,33 @@ class Iro::PositionsController < Iro::ApplicationController
       end
   end
 
+  ## credit-spread
+  def place3
+    @position = Iro::Position.find params[:id]
+    @position.update({ pending_price: params[:pending_price] })
+    authorize! :place_order, @position
+    outs = Tda::Order.place_order!( Tda::Order.credit_spread_q @position )
+
+    flag = @position.update({
+      schwab_order_id: outs[:schwab_order_id],
+      schwab_status: outs[:schwab_status],
+      status: Iro::Position::STATUS_PENDING,
+    })
+
+    flash_notice flag
+    redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
+  end
+
   ## 2026-02-26 continue...
   ## short credit call spread
   def prepare3
     @position = Iro::Position.find params[:id]
     authorize! :place_order, @position
-    order_id = Tda::Order.place_order( Tda::Order.roll_credit_call_spread_q @position )
+    outs = Tda::Order.place_order!( Tda::Order.roll_credit_call_spread_q @position )
 
     flag = @position.update({
-      schwab_order_id: order_id,
+      schwab_order_id: outs[:schwab_order_id],
+      schwab_status: outs[:schwab_status],
       status: Iro::Position::STATUS_PENDING,
     })
 
@@ -414,11 +472,9 @@ class Iro::PositionsController < Iro::ApplicationController
     )
   end
 
-  def set_lists
-    super
-    @purses_list     = Iro::Purse.list
-    @strategies_list = Iro::Strategy.list(params[:long_or_short])
+  def set_position_lists
     @stocks_list     = Iro::Stock.list
+    @strategies_list = @position.purse.strategies.list # Iro::Strategy.list(params[:long_or_short])
   end
 
 end

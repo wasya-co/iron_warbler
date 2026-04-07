@@ -2,6 +2,10 @@
 .positions--header {
   position: relative;
   z-index: 1;
+  ul {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .begin-inner-price,

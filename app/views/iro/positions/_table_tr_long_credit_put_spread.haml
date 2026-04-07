@@ -10,17 +10,26 @@
   %td.actions
     .small.gray= position.id
     = position.status
-    = position.schwab_order_id
-    = position.schwab_status
+
     .d-flex
       = check_box_tag 'positions_xmulti', pos.id , false, { class: 'positions-xmulti' }
       = button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
       = link_to '[~]', edit_position_path(pos)
-      -# = link_to '[dup]', duplicate_position_path(pos)
+      = link_to '[place2]', place2_position_path(pos)
+    - if 'pending' == pos.status
+      .d-flex
+        = form_tag( reprice_position_path(pos), class: 'd-flex' ) do
+          = text_field_tag :pending_price, pos.pending_price
+          = submit_tag 'Reprice', data: { confirm: 'Are you sure?' }
     .d-flex
       = link_to '[sync]', sync_position_path(pos)
       = link_to '[prepare]', position_prepare_to_roll_path(pos) if pos.persisted?
       = link_to '[eval]', position_eval_path(pos)
+    .d-flex.flex-nowrap
+      .text-nowrap
+        = position.schwab_order_id
+        `#{position.schwab_status}`
+      = link_to '[check]', check_position_path(pos)
 
 
   %td.ticker
@@ -33,7 +42,7 @@
     %b
       = position.expires_on.to_datetime.strftime("%b %d")
       [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
-    = render '/iro/strategies/show', position: position, strategy: position.strategy
+    = render '/iro/strategies/show', collapse_key: position.id, strategy: position.strategy
 
   %td.q
     <b>#{position.quantity}</b>

@@ -19,8 +19,14 @@
             -# %li <b>Balance:</b> #{pp_amount purse.balance}
             %li <b>Available:</b> #{pp_amount purse.available}
 
-          %label strategies:
-          = render 'iro/strategies/list', strategies: purse.strategies
+          .strategies--list
+            %label strategies:
+            %ul
+              - purse.strategies.each do |st|
+                %li
+                  = link_to '[~]', iro.edit_strategy_path(st)
+                  = render 'iro/strategies/show', strategy: st, collapse_key: st.id
+
 
       = render '/iro/positions/new', purse: purse
 

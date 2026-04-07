@@ -25,7 +25,7 @@
     %b
       = position.expires_on.to_datetime.strftime("%b %d")
       [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
-    = render '/iro/strategies/show', position: position, strategy: position.strategy
+    = render '/iro/strategies/show', collapse_key: position.id, strategy: position.strategy
 
   %td.q
     <b>#{position.quantity}</b>

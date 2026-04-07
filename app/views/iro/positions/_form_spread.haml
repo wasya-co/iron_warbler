@@ -9,7 +9,7 @@
     .d-flex
       .field
         %label Purse
-        = f.select :purse_id, options_for_select( @purses_list, selected: position.purse_id )
+        = f.select :purse_id, options_for_select( @purses.list, selected: position.purse_id )
       .field
         %label Status
         = f.select :status, options_for_select( Iro::Position::STATUSES, selected: position.status )
@@ -48,8 +48,10 @@
         %label outer_strike
         = f.text_field :outer_strike
 
-    %br
-    = render 'formpart_4data', f: f, position: position
+
+    - if %w| edit update |.include? params[:action]
+      %hr
+      = render 'formpart_4data', f: f, position: position
 
     .actions
       = f.submit

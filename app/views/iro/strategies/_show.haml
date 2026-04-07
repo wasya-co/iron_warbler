@@ -1,5 +1,5 @@
 
-%i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{position.id}" }
+%i.fa.fa-compress.collapse-expand{ id: "ce-pos-reasons-#{collapse_key}" }
   #{strategy}
 .strategies--show.modal-absolute
   .header
@@ -18,7 +18,8 @@
     %hr
 
     %li <b>next_inner_delta:</b> #{strategy.next_inner_delta}
-    -# %li <b>next_outer_delta:</b> #{strategy.next_max_outer_delta}
     %li <b>next_inner_strike:</b> #{strategy.next_inner_strike}
     %li <b>next_spread_amount:</b> #{strategy.next_spread_amount}
 
+  %hr
+  = strategy.inspect
