@@ -20,7 +20,6 @@
           - if @gain_short
             .net-gl.gain{ style: "height: #{@gain_short *u}px" }
 
-
           .deltaW
             .delta
               .begin.short{  style: "height: #{@delta_short_begin/u}px" }
@@ -35,7 +34,7 @@
               %li.gray
                 <b>max gain short:</b> #{pp_amount @max_gain_short}
               %li
-                <b>loss short:</b> #{pp_amount @loss_short}
+                <b>loss short:</b> #{pp_amount @loss_short} :: <i>#{pp_percent @loss_short/@max_gain_short rescue '___' }</i>
               %li
                 <b>gain short:</b> #{pp_amount @gain_short} :: <i>#{pp_percent @gain_short/@max_gain_short rescue '___' }</i>
               %li
@@ -66,7 +65,7 @@
               %li.gray
                 <b>max gain long:</b> #{pp_amount @max_gain_long}
               %li
-                <b>loss long:</b> #{pp_amount @loss_long}
+                <b>loss long:</b> #{pp_amount @loss_long} :: <i>#{pp_percent @loss_long/@max_gain_long rescue '___' }</i>
               %li
                 <b>gain long:</b> #{pp_amount @gain_long} :: <i>#{pp_percent @gain_long/@max_gain_long rescue '___' }</i>
               %li

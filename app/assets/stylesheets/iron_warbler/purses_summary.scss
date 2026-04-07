@@ -2,122 +2,6 @@
 .summaries {
   display: flex;
 }
-.PurseSummaryW {
-  margin-left: 1em;
-  width: 500px;
-}
-
-.purses--summary {
-  .PurseSummaryW {
-    position: relative;
-    background: rgba(255,255,255, 0.75);
-    height: 400px;
-    z-index: 5;
-  }
-  .PurseSummary {
-    position: absolute;
-    top: 200px;
-
-    display: flex;
-
-    width: 100%;
-    height: 0;
-    border-bottom: 1px dotted black;
-
-    .legendW {
-      position: relative;
-      // margin-top: 50%;
-
-      .legend {
-        margin-top: -50%;
-
-        // position: absolute;
-        // top: -200px;
-        // width: 400px;
-        // height: 400px;
-
-        background: white;
-        padding: 0.5em;
-      }
-    }
-
-
-    /*
-     * summary amount and delta
-    **/
-    .summary-amount {
-      position: relative;
-      width: 100px;
-      margin-right: 2em;
-
-      .net-gl {
-        width: 90%;
-        background: rgba(0,0,0, 0.5);
-      }
-
-      .delta {
-        position: absolute;
-        left: 100px;
-        height: 100%;
-
-        > div {
-          border: 1px dotted yellow;
-          width: 0.5em;
-        }
-        .begin {
-          width: 1em;
-
-          background: black;
-        }
-        .end {
-          width: .5em;
-          left: .25em;
-
-          background: rgba(255,0,0, 0.5);
-        }
-      }
-
-    }
-
-
-    .loss {
-    }
-    .gain {
-    }
-    .max-gl {
-      position: absolute;
-      width: 100%;
-
-      label {
-        position: absolute;
-      }
-
-
-    }
-    .max-gl.long {
-    }
-    .max-gl.short {
-      display: flex;
-      flex-direction: column-reverse;
-    }
-    .long {
-      position: absolute;
-      top: 0;
-
-      background: rgba(255,0,0, 0.5);
-      border: 1px solid red;
-      bottom: 0;
-    }
-    .short {
-      background: rgba(255,153,0, 0.5);
-      border: 1px solid orange;
-
-      position: absolute;
-      bottom: 0;
-    }
-  }
-}
-
 .purses--summary2 {
   // border: 1px solid yellow;
 
@@ -133,10 +17,13 @@
   }
 
   .PurseSummaryW {
+    margin-left: 1em;
+    width: 500px;
+    z-index: 11;
+    height: 400px;
     position: relative;
     background: rgba(255,255,255, 0.75);
-    height: 400px;
-    z-index: 5;
+
   }
   .PurseSummary {
     position: absolute;
@@ -163,7 +50,7 @@
       align-items: center;
       position: absolute;
       top: 50%;
-      left: 100px;
+      left: 110px;
 
       .delta {
         // border: 2px dashed green;
@@ -186,7 +73,6 @@
 
     /* shared */
     .plot {
-      border: 1px solid cyan;
       background: rgba(255,153,0, 0.5);
 
       position: relative;
@@ -235,7 +121,7 @@
     align-items: flex-end;
 
     .deltaW {
-      left: 120px;
+      left: 140px;
     }
     label {
       bottom: 0;
@@ -244,7 +130,6 @@
       flex-direction: column-reverse;
     }
     .plot {
-      border: 1px solid cyan;
       background: rgba(255,153,0, 0.5);
       width: 100px;
 

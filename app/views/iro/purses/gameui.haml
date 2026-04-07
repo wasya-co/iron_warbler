@@ -2,14 +2,7 @@
 - u = @purse.unit
 
 .purses--gameui
-
-  .row.padded
-    .col-md-6
-      = render '/iro/purses/header', purse: @purse
-    .col-md-6
-      .summaries
-        = render '/iro/purses/summary', purse: @purse, collapse_key: 'views-gameui-summary'
-        = render '/iro/purses/summary2', purse: @purse, collapse_key: 'views-gameui-summary2'
+  = render '/iro/purses/header', purse: @purse
 
   .purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }
     .purses-gameui
