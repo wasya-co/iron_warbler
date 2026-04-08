@@ -28,7 +28,6 @@
           = link_to "Purses (#{Iro::Purse.all.length})", purses_path
           = link_to '[+]', purses_path
           %ul
-
             - @purses.each do |p|
               %li
                 = p

@@ -46,11 +46,10 @@
     = render '/wco/application/alerts_notices' if notice || alert
     .spacer-small
 
-    %span.absolute.collapse-expand#mainW
     = yield
-    %br
-    %br
 
+    %br
+    %br
     = render '/wco/main_footer'
     = render '/iro/analytics' if Rails.env.production?
     %br

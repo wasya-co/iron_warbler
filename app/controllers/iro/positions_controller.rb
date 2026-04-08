@@ -79,6 +79,11 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
+  def index
+    authorize! :index, Iro::Position
+    @positions = Iro::Position.active
+  end
+
   ## only callable from _new.haml, with position partially pre-filled
   def new
     authorize! :new, Iro::Position

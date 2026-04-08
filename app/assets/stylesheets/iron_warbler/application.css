@@ -24,10 +24,6 @@ html {
   --iro-color-bg2: #fefefe;
 }
 
-/* body {
-  color: red !important;
-} */
-
 .iro--main-header {
   li {
     margin-bottom: 0.2em;

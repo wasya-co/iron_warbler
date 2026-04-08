@@ -13,7 +13,7 @@
         %td strategies
         %td descr
     %tbody
-      - @stocks.each do |stock|
+      - @all_stocks.each do |stock|
         %tr
           %td.actions
             = link_to '[~]', edit_stock_path(stock)

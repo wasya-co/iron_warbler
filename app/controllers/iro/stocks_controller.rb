@@ -27,7 +27,7 @@ class Iro::StocksController < Iro::ApplicationController
   end
 
   def index
-    @stocks = Iro::Stock.all
+    @all_stocks = Iro::Stock.all
     authorize! :index, Iro::Stock
 
     respond_to do |format|
