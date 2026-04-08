@@ -64,11 +64,8 @@ class Iro::StocksController < Iro::ApplicationController
     authorize! :refresh, Iro::Stock
     tickers = Iro::Stock.all.map { |s| s.ticker }.join(',')
     outs = Tda::Stock.get_quotes tickers
-    puts! outs, 'got all tickers'
 
     outs.map do |out|
-      puts! out, 'a ticker'
-
       Iro::Stock.where( ticker: out[:symbol] ).update_all( last: out[:last] )
     end
     flash_notice 'refreshed stocks'

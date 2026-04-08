@@ -39,9 +39,9 @@ class Iro::PositionsController < Iro::ApplicationController
     @position = Iro::Position.find params[:id]
     authorize! :close, @position
     @position.inner.sync
-    @position.inner.update({ begin_price: @position.inner.end_price })
+    # @position.inner.update({ begin_price: @position.inner.end_price })
     @position.outer.sync
-    @position.outer.update({ begin_price: @position.outer.end_price })
+    # @position.outer.update({ begin_price: @position.outer.end_price })
     @position.update({ pending_price: @position.close_price, intent: Iro::Position::INTENT_CLOSE })
     @query = Tda::Order.close_credit_spread_q @position
     @page_title = "Closing #{@position} ..."
@@ -118,7 +118,20 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def index
     authorize! :index, Iro::Position
-    @positions = Iro::Position.active
+    params[:poss] ||= {}
+    template = params[:poss][:template] || Iro::Purse::TEMPLATE_TABLE
+
+    @purse = Iro::Purse.find_by( slug: 'all' )
+    @positions = Iro::Position.all().includes( :strategy, :inner, :outer, :stock, :purse
+      ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
+
+    if params[:poss][:statuses]
+      @positions = @positions.where( :status.in => params[:poss][:statuses] )
+    end
+
+    puts! @positions
+
+    @page_title = 'All Positions'
   end
 
   ## only callable from _new.haml, with position partially pre-filled
@@ -195,6 +208,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
   ## 2025-10-14 long_credit_put_spread
   ## 2026-02-21 short_credit_call_spread
+  ## That's for looking at the ui, with buttons 'select'
   def prepare
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
@@ -212,6 +226,8 @@ class Iro::PositionsController < Iro::ApplicationController
     self.send("_prepare_#{@position.strategy.kind}")
   end
 
+  ## Manually selected one, I suppose
+  ## _TODO: pos is autonext position, but should be this position?
   def prepare2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
@@ -240,6 +256,28 @@ class Iro::PositionsController < Iro::ApplicationController
         throw 'pp0 - not implemented'
       end
   end
+
+  ## 2026-04-08 try-close only so far.
+  ## pos is this position, not autonext.
+  def prepare2_intent
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+    case @position.strategy.intent
+      when Iro::Strategy::INTENT_CLOSE
+
+        @position.inner.sync
+        @position.inner.update({ begin_price: @position.inner.end_price })
+        @position.outer.sync
+        @position.outer.update({ begin_price: @position.outer.end_price })
+        @position.update({ pending_price: @position.close_price, intent: Iro::Position::INTENT_CLOSE })
+        # @query = Tda::Order.close_credit_spread_q @position
+
+      else
+        throw 'unknown intent - trt'
+      end
+
+  end
+
 
   ## credit-spread
   def place3

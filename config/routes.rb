@@ -26,6 +26,7 @@ Iro::Engine.routes.draw do
   delete 'positions',                 to: 'positions#destroy_multi'
   get    'positions/:id/check',       to: 'positions#check',       as: :check_position
   post   'positions/:id/place-order', to: 'positions#place_order',  as: :position_place_order
+  get    'positions/:id/prepare2-intent', to: 'positions#prepare2_intent', as: :position_prepare2_intent
   resources :positions
   resources :profiles
 

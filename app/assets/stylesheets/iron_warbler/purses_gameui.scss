@@ -53,15 +53,15 @@
     width: 5px;
     background: yellow;
   }
-  .PositionW.short_debit_put_spread {
-    background: rgba(255,153,0, 0.25);
-  }
   .PositionW {
     top: 0;
     border: 2px solid black;
     background: rgba(0,255,255, 0.25);
     position: absolute;
     height: 100%;
+  }
+  .PositionW.short_credit_call_spread {
+    background: rgba(255,153,0, 0.25);
   }
   .reviewing {
     .PositionW {

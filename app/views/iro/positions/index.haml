@@ -1,5 +1,25 @@
 
 .positions-index.padded
 
+  = params[:poss]
+
+  = form_tag nil, method: :get do
+
+    .poss-selector.d-flex
+      %label statuses:
+      - Iro::Position::STATUSES.compact.each do |st|
+        .item.bordered
+          = check_box_tag 'poss[statuses][]', st, params[:poss][:statuses]&.include?(st)
+          %label= st
+    .poss-selector.d-flex
+      %label template:
+      = radio_button_tag 'poss[template]', 'show', params[:poss][:template] == 'show'
+      %label table
+      = radio_button_tag 'poss[template]', 'gameui', params[:poss][:template] == 'gameui'
+      %label gameui
+
+    = submit_tag '>'
+
+
   -# = render '/iro/purses/header', purse: @purse
-  = render '/iro/positions/table', positions: @positions
+  = render "/iro/purses/#{params[:poss][:template]}_fast", positions: @positions

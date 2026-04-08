@@ -1,0 +1,61 @@
+
+%h5.text-center Positions (#{positions.length})
+.positions--table
+  %table.bordered.sticky
+    %thead
+      %tr
+        %th.actions
+          = form_tag positions_path, method: :delete, id: 'positionsXmultiSubmit' do
+            = hidden_field_tag "positions_xmulti", ''
+            = submit_tag 'X-multi', data: { confirm: 'Are you sure?' }
+        %th.ticker
+          .a Stock
+        %th
+          .status
+            Status
+            %br
+            Expires on
+            %br
+            Strategy
+        %th.q Q
+        %th.strikes
+          Strike
+        %th.begin_price
+          .a Begin $, D
+        %th.max-loss Max Loss
+        -# %th.max-gain Max Gain
+        %th.end_priceW
+          .end_price End $, D
+        %th
+          .net Net Amount (%)
+        %th
+          .breakeven Breakeven
+
+
+        %th.should_rollp
+          .a should_rollp
+        %th.next_position
+          .a
+            next_symbol
+            %br
+            next_delta
+            %br
+            next_outcome
+
+    %tbody
+      - positions.each_with_index do |position, idx|
+
+        - if idx > 0
+          - prev_position = positions[idx-1]
+        - if prev_position && position.expires_on != prev_position.expires_on
+          %tr
+            %td{ colspan: 18 }
+              .h-50px
+
+        = render "iro/positions/table_tr_#{position.strategy.kind}_fast", position: position
+
+
+
+
+
+

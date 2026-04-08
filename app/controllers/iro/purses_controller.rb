@@ -22,7 +22,7 @@ class Iro::PursesController < Iro::ApplicationController
   end
 
   def edit
-    @purse = Iro::Purse.find(params[:id])
+    @purse = Iro::Purse.unscoped.find(params[:id]) rescue Iro::Purse.unscoped.find_by( slug: params[:id] )
     authorize! :edit, @purse
   end
 
@@ -33,7 +33,7 @@ class Iro::PursesController < Iro::ApplicationController
 
   ## table or gameui
   def show
-    @purse = Iro::Purse.find(params[:id])
+    @purse = Iro::Purse.unscoped.find(params[:id]) rescue Iro::Purse.unscoped.find_by( slug: params[:id] )
     authorize! :show, @purse
     params[:template]    ||= 'show'
     params[:view_status] ||= 'active'
@@ -85,7 +85,7 @@ class Iro::PursesController < Iro::ApplicationController
   end
 
   def update
-    @purse = Iro::Purse.find(params[:id])
+    @purse = Iro::Purse.unscoped.find(params[:id]) rescue Iro::Purse.unscoped.find_by( slug: params[:id] )
     authorize! :update, @purse
     if @purse.update params[:purse].permit!
       flash[:notice] = 'ok'

@@ -52,7 +52,10 @@
 
     %hr
     .row
-      .col-6.border-right &nbsp;
+      .col-6.border-right
+        .field
+          %label intent
+          = f.select :intent, options_for_select(Iro::Strategy::INTENTS, selected: strategy.intent)
       .col-6
         .field
           = f.label :next_inner_delta

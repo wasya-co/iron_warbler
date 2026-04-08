@@ -18,6 +18,7 @@
         %th next usd above mark
         %th next inner strike
         %th next spread amount
+        %th intent
 
 
     %tbody
@@ -44,6 +45,8 @@
             = sss.next_inner_strike
           %td.next_spread_amount
             = sss.next_spread_amount
+          %td.intent
+            .text-nowrap= sss.intent
 
 
   .h-50px
