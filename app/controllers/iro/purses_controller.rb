@@ -43,7 +43,7 @@ class Iro::PursesController < Iro::ApplicationController
 
     @positions = @purse.positions.where( status: params[:view_status]
       ).includes( :strategy
-      ).order( expires_on: :asc, ticker: :desc, long_or_short: :asc, inner_strike: :asc )
+      ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
 
     if 'all' == params[:view_status]
       @positions = @positions.unscope( where: :status )

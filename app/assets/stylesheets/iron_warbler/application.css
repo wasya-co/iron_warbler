@@ -31,11 +31,6 @@ html {
 .iro--main-header {
   li {
     margin-bottom: 0.2em;
-
-    a {
-      background: white;
-      padding: 0 0.2em;
-    }
   }
 }
 

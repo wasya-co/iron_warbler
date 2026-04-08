@@ -8,6 +8,18 @@
 
 .purses-gameui {
 
+  .divider-expiry {
+    height: 5px;
+    width: 100%;
+    background: red;
+  }
+  .divider-ticker {
+    height: 2px;
+    width: 100%;
+    background: red;
+    margin-bottom: 20px;
+  }
+
   .Origin::before {
     position: absolute;
     top: -1em;

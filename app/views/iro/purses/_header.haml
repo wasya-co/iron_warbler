@@ -9,9 +9,12 @@
         -# (#{purse.positions.length})
         &nbsp;
         = link_to '[sync]', sync_purse_path(purse)
+        &nbsp;
         = link_to '[~]', edit_purse_path(purse)
-        = link_to '[table]', purse_path(purse,  template: 'show', view_status: params[:view_status] )
-        = link_to '[gameUI]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
+        &nbsp;
+        = link_to '[#]', purse_path(purse,  template: 'show', view_status: params[:view_status] )
+        &nbsp;
+        = link_to '[ui]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
 
       .row
         .col-12

@@ -16,25 +16,25 @@
           %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
-            -## actually there is no stocks/new template, use index
-            -# = link_to '[+]', new_stock_path
-          -# %li= link_to 'Options', options_path
-          -# %li Max Pain
           %li
             = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
-          %li
-            = link_to "Purses (#{Iro::Purse.all.length})", purses_path
+          -# %li
+          -#   = link_to "Purses (#{Iro::Purse.all.length})", purses_path
           %li
             = render '/iro/strategies/header'
 
 
-        .a
+        .ml-3
           = link_to "Purses (#{Iro::Purse.all.length})", purses_path
+          = link_to '[+]', purses_path
           %ul
 
             - @purses.each do |p|
               %li
-                = link_to p, purse_path(p)
+                = p
+                &nbsp;
+                = link_to '[#]', purse_path(p)
+                &nbsp;
                 = link_to '[ui]', purse_gameui_path(p)
 
         -#

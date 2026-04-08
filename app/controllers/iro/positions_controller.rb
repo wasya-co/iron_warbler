@@ -474,7 +474,7 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def set_position_lists
     @stocks_list     = Iro::Stock.list
-    @strategies_list = @position.purse.strategies.list # Iro::Strategy.list(params[:long_or_short])
+    @strategies_list = ( @position.purse.strategies.list + [[ @position.strategy.to_s, @position.strategy.id.to_s ]] ).uniq
   end
 
 end
