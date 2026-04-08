@@ -11,20 +11,21 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
-  match 'positions/:id/close',     to: 'positions#close',    as: :close_position, via: [ :get, :post ]
-  get   'positions/:id/duplicate', to: 'positions#new',      as: :duplicate_position
-  post  'positions/propose',       to: 'positions#propose',  as: :propose_position
-  get   'positions/:id/prepare',   to: 'positions#prepare',  as: :position_prepare_to_roll, defaults: { template: 'gameui' }
-  match 'positions/:id/prepare2',  to: 'positions#prepare2', as: :prepare2_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
-  match 'positions/:id/prepare3',  to: 'positions#prepare3', as: :prepare3_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
-  post  'positions/:id/roll',      to: 'positions#do_roll',  as: :roll_position
-  get   'positions/:id/sync',      to: 'positions#sync',     as: :sync_position
-  get   'positions/:id/eval',      to: 'positions#eval',     as: :position_eval
-  match 'positions/:id/place2',    to: 'positions#place2',   as: :place2_position, via: [ :get, :post ]
-  post  'positions/:id/place3',    to: 'positions#place3',   as: :place3_position
-  post  'positions/:id/reprice',   to: 'positions#reprice',  as: :reprice_position
-  delete 'positions', to: 'positions#destroy_multi'
-  get 'positions/:id/check', to: 'positions#check', as: :check_position
+  match  'positions/:id/close',       to: 'positions#close_prep2', as: :close_position, via: [ :get, :post ]
+  get    'positions/:id/duplicate',   to: 'positions#new',         as: :duplicate_position
+  post   'positions/propose',         to: 'positions#propose',     as: :propose_position
+  get    'positions/:id/prepare',     to: 'positions#prepare',     as: :position_prepare_to_roll, defaults: { template: 'gameui' }
+  match  'positions/:id/prepare2',    to: 'positions#prepare2',    as: :prepare2_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
+  match  'positions/:id/prepare3',    to: 'positions#prepare3',    as: :prepare3_position,        defaults: { template: 'gameui' }, via: [ :get, :post ]
+  post   'positions/:id/roll',        to: 'positions#do_roll',     as: :roll_position
+  get    'positions/:id/sync',        to: 'positions#sync',        as: :sync_position
+  get    'positions/:id/eval',        to: 'positions#eval',        as: :position_eval
+  match  'positions/:id/place2',      to: 'positions#place2',      as: :place2_position, via: [ :get, :post ]
+  post   'positions/:id/place3',      to: 'positions#place3',      as: :place3_position
+  post   'positions/:id/reprice',     to: 'positions#reprice',     as: :reprice_position
+  delete 'positions',                 to: 'positions#destroy_multi'
+  get    'positions/:id/check',       to: 'positions#check',       as: :check_position
+  post   'positions/:id/place-order', to: 'positions#place_order',  as: :position_place_order
   resources :positions
   resources :profiles
 
@@ -38,10 +39,10 @@ Iro::Engine.routes.draw do
   get 'schwab/sync_exec', to: 'application#schwab_sync_exec', as: :schwab_sync_exec
 
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
+  match 'stocks/:id/get-historic-data', to: 'stocks#get_historic_data', as: :stock_get_historic_data, via: [ :get, :post ]
+  match 'stocks/:id/recompute-volatility', to: 'stocks#recompute_volatility', as: :stock_recompute_volatility, via: [ :get, :post ]
   resources :stocks
 
-  # get 'strategies/new-spread', to: 'strategies#new', as: :new_spread_strategy, defaults: { kind: 'spread' }
-  # get 'strategies/new-wheel',  to: 'strategies#new', as: :new_wheel_strategy,  defaults: { kind: 'wheel' }
   resources :strategies
 
   get 'api/oauth2-redirect.html',      to: 'api#oauth2_redirect'

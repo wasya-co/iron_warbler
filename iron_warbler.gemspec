@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'iron_warbler'
-  spec.version     = '2.0.7.50'
+  spec.version     = '2.0.7.51'
   spec.authors     = [ 'Victor Pudeyev' ]
   spec.email       = 'victor@wasya.co'
   spec.homepage    = 'https://wasya.co'
@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   ## Edit the template, not the gemspec!
   ##
   spec.add_dependency "business_time"
+  spec.add_dependency "holidays"
   spec.add_dependency "cancancan",  "~> 3.5.0"
   spec.add_dependency 'devise',     "~> 4.9.3"
   spec.add_dependency 'exception_notification', "~> 4.5.0"

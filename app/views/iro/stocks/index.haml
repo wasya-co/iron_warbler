@@ -3,28 +3,36 @@
   .maxwidth
     %h5 Stocks
 
-  %table.bordered.padded
+  %table.bordered.data-table
     %thead
       %tr
         %td Ticker
         %td last price
         %td n priceitems
-        %td volatility
+        %td volatility annual
+        %td volatility monthly
+        %td volatility daily
         %td strategies
         %td descr
     %tbody
       - @all_stocks.each do |stock|
         %tr
-          %td.actions
-            = link_to '[~]', edit_stock_path(stock)
-            = link_to '[api]', stock_path(stock, format: :json)
-            <b>#{link_to stock.ticker, stock_path(stock)}</b>
+          %td.actions{ style: 'min-width: 180px;' }
+            .d-flex
+              = link_to '[~]', edit_stock_path(stock)
+              = link_to '[api]', stock_path(stock, format: :json)
+              <b>#{link_to stock.ticker, stock_path(stock)}</b>&nbsp;
+              .d-inline= button_to 'x', stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' }
           %td.last
             #{pp_amount stock.last}
           %td.priceitems
             = stock.priceitems.length
           %td.volatility
-            = stock.volatility rescue nil
+            = stock.volatility_annual.round(4) rescue '___'
+          %td.volatility-monthly
+            = stock.volatility_monthly.round(4) rescue '___'
+          %td.volatility-daily
+            = stock.volatility_daily.round(4) rescue '___'
           %td.strategies
             %ul
               - stock.strategies.each do |s|

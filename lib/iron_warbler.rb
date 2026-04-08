@@ -3,6 +3,7 @@ require 'business_time'
 require 'haml'
 require 'mongoid'
 require 'httparty'
+require 'holidays'
 
 require "iro/engine"
 
@@ -228,3 +229,12 @@ class Iro::Iro
 
 
 end
+
+Holidays.between(Date.civil(2015, 1, 1), 2.years.from_now, :us, :observed).map do |holiday|
+  BusinessTime::Config.holidays << holiday[:date]
+  # Implement long weekends if they apply to the region, eg:
+  # BusinessTime::Config.holidays << holiday[:date].next_week if !holiday[:date].weekday?
+end
+BusinessTime::Config.holidays << '2025-04-18'.to_date
+BusinessTime::Config.holidays << '2026-04-03'.to_date
+# puts! 'all the holidays'

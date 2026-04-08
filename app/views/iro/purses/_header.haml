@@ -20,7 +20,7 @@
         .col-12
           %ul
             -# %li <b>Balance:</b> #{pp_amount purse.balance}
-            %li <b>Available:</b> #{pp_amount purse.available}
+            %li <b>Available:</b> #{pp_amount purse.available_amount}
 
           .strategies--list
             %label strategies:
@@ -42,7 +42,7 @@
       .d-flex
         %h5 view_status
         = form_tag purse_path( @purse ), method: :get do
-          = select_tag :view_status, options_for_select([ :all, :active, :proposed, :pending ], selected: params[:view_status] )
+          = select_tag :view_status, options_for_select(Iro::Position::STATUSES, selected: params[:view_status] )
           = hidden_field_tag :template, params[:template]
           = submit_tag '>'
 

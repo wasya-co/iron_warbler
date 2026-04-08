@@ -4,12 +4,34 @@
     %h3.title
       = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
 
+  = form_tag stock_get_historic_data_path(@stock) do
+    get historic data:
+    = text_field_tag :date_from
+    = submit_tag 'Go'
+
   .row
+
     .col-md-6
-      %h4 Strategies [+]
+      %hr
+      = button_to 'recompute', stock_recompute_volatility_path(@stock)
       %ul
-        - @stock.strategies.each do |st|
-          %li= link_to st, strategy_path(st)
+        %li
+          %b 1 yr volatility <br />
+          = @stock.volatility_annual
+
+        %li
+          %b monthly <br />
+          = @stock.volatility_monthly
+        %li
+          %b daily <br />
+          = @stock.volatility_daily
+
+
+    -# .col-md-6
+    -#   %h4 Strategies [+]
+    -#   %ul
+    -#     - @stock.strategies.each do |st|
+    -#       %li= link_to st, strategy_path(st)
 
   .row
     -#
@@ -41,7 +63,7 @@
         - start_date = @datapoints.last.date
         - today = Date.today
         - (start_date..today).group_by { |d| d.beginning_of_month }.each do |month, days|
-          %div
+          %div.bordered
             %h5= month.strftime("%B %Y")
             %ol.no-dot
               - days.each do |_day|
@@ -51,12 +73,8 @@
                   - elsif _day.saturday? || _day.sunday?
                     S
                   - else
-                    .red .
-
-
-    .col-md-9
-      %ul
-        %li
-          %b 1 yr volatility <br />
-          = @stock.volatility
+                    - if _day.workday?
+                      .red .
+                    - else
+                      h
 

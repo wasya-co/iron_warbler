@@ -12,18 +12,35 @@ class Iro::StocksController < Iro::ApplicationController
     if @stock.save
       flash_notice @stock
     else
+      @stock = Iro::Stock.unscoped.find_by ticker: stock_params[:ticker]
+      flag = @stock.update( deleted_at: nil, options_price_increment: stock_params[:options_price_increment] )
       flash_alert @stock
     end
     redirect_to action: :index
   end
 
   def destroy
+    authorize! :destroy, @stock
     @stock.destroy
-    redirect_to stocks_url, notice: 'Stock was successfully destroyed.'
+    redirect_to stocks_url, notice: 'Stock was destroyed.'
   end
 
   def edit
     authorize! :edit, @stock
+  end
+
+  def get_historic_data
+    authorize! :show, Iro::Stock
+    @stock = Iro::Stock.find params[:id]
+    @stock.get_historic_data( params[:date_from].to_date )
+    redirect_to action: :show, id: params[:id]
+  end
+
+  def recompute_volatility
+    authorize! :show, Iro::Stock
+    @stock = Iro::Stock.find params[:id]
+    @stock.volatility( recompute: true )
+    redirect_to action: :show, id: params[:id]
   end
 
   def index

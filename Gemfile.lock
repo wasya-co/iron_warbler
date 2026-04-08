@@ -33,13 +33,14 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.50)
+    iron_warbler (2.0.7.51)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
       distribution
       exception_notification (~> 4.5.0)
       haml (~> 6.3.0)
+      holidays
       httparty (~> 0.21.0)
       jbuilder (~> 2.11.0)
       mongoid (~> 7.3.0)
@@ -212,6 +213,7 @@ GEM
       thor
       tilt
     hashie (5.0.0)
+    holidays (8.8.0)
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)

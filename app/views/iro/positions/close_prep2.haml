@@ -1,0 +1,24 @@
+
+- pos = @position
+
+.positions-close-prep2.maxwidth
+
+  %ul
+    %li= link_to '[table]', iro.purse_path(pos.purse)
+    %li= link_to '[gameUI]', iro.purse_gameui_path(pos.purse)
+
+  %ul
+    %li Intent: #{@position.intent}
+
+  %ul
+    %li
+      buy to close
+      = pos.inner
+    %li
+      sell to close
+      = pos.outer
+    %li
+      Query 2
+      %pre= JSON.pretty_generate( @query )
+
+  = button_to 'Place Order', position_place_order_path(@position), data: { confirm: 'Are you sure?' }

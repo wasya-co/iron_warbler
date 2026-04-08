@@ -46,11 +46,12 @@ class Iro::PursesController < Iro::ApplicationController
       ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
 
     if 'all' == params[:view_status]
-      @positions = @positions.unscope( where: :status )
+      @positions = @positions.where( :status.in => Iro::Position::STATUSES )
     end
 
     calc_summary
 
+    @page_title = @purse.to_s
     render params[:template]
   end
 

@@ -5,9 +5,46 @@ class Iro::PositionsController < Iro::ApplicationController
     @position = Iro::Position.find params[:id]
     authorize! :check, @position
     outs = Tda::Order.check_status @position.schwab_order_id
-    @position.update({ schwab_status: outs[:status] })
     puts! outs, 'outs'
+
+    if outs[:errors]
+      flash[:alert] = 'need to sync?!'
+      redirect_to request.referrer
+      return
+    end
+
+    attrs = { schwab_status: outs[:status] }
+    if 'FILLED' == outs[:status]
+      attrs[:status] = Iro::Position::STATUS_CLOSED
+      outs[:orderLegCollection].each do |leg|
+        hash = Iro::Option.symbol_to_h leg[:instrument][:symbol]
+        price = outs[:orderActivityCollection][0][:executionLegs].select do |exec_leg|
+          exec_leg[:instrumentId] == leg[:instrument][:instrumentId]
+        end[0][:price]
+        if @position.inner.matches_h( hash )
+          attrs[:inner_attributes] = { end_price: price }
+        end
+        if @position.outer.matches_h( hash )
+          attrs[:outer_attributes] = { end_price: price }
+        end
+      end
+    end
+    puts! attrs,' attrs'
+    @position.update(attrs)
+
     redirect_to request.referrer
+  end
+
+  def close_prep2
+    @position = Iro::Position.find params[:id]
+    authorize! :close, @position
+    @position.inner.sync
+    @position.inner.update({ begin_price: @position.inner.end_price })
+    @position.outer.sync
+    @position.outer.update({ begin_price: @position.outer.end_price })
+    @position.update({ pending_price: @position.close_price, intent: Iro::Position::INTENT_CLOSE })
+    @query = Tda::Order.close_credit_spread_q @position
+    @page_title = "Closing #{@position} ..."
   end
 
   def create
@@ -121,7 +158,30 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
+  def place_order
+    @position = Iro::Position.find params[:id]
+    authorize! :place_order, @position
+
+    query = case @position.intent
+    when Iro::Position::INTENT_CLOSE
+      Tda::Order.close_credit_spread_q @position
+    else
+      throw '_TODO: hls - placing order, not implemented'
+    end
+    outs = Tda::Order.place_order!( query )
+
+    flag = @position.update({
+      schwab_order_id: outs[:schwab_order_id],
+      schwab_status: outs[:schwab_status],
+      status: Iro::Position::STATUS_PENDING,
+    })
+
+    flash_notice flag
+    redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
+  end
+
   ## place2 = credit-spread
+  ## should be renamped to open_prep2
   def place2
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
