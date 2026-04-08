@@ -4,7 +4,7 @@
 - nearest_strike = @position.stock.last.round
 - stock = @position.stock
 
-.positions-prepare.maxwidth
+.positions-prepare
   = render '/iro/purses/header', purse: @position.purse
 
   .purses-gameuiW{ data: { margin: { left: u*@n_dollars } } }

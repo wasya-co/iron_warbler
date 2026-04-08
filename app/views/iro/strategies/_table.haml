@@ -3,7 +3,7 @@
 
 .strategies--table
 
-  %table.bordered
+  %table.bordered.data-table
     %thead
       %tr
         %th.actions &nbsp;
@@ -15,8 +15,9 @@
         %th next inner delta
         %th thresh neg delta
         %th thresh pos delta
-        %th next_usd_above_mark
-        %th next_spread_amount
+        %th next usd above mark
+        %th next inner strike
+        %th next spread amount
 
 
     %tbody
@@ -28,7 +29,8 @@
               = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td.stock= sss.stock
           %td.kind= sss.kind
-          %td.descr= sss.descr
+          %td.descr
+            = sss.descr
           %td.long-or-short= sss.long_or_short
           %td.put-call= sss.put_call
           %td= sss.next_inner_delta
@@ -38,6 +40,8 @@
             = sss.threshold_pos_delta
           %td.next_usd_above_mark
             = sss.next_usd_above_mark
+          %td.next_inner_strike
+            = sss.next_inner_strike
           %td.next_spread_amount
             = sss.next_spread_amount
 

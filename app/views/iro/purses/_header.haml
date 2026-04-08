@@ -31,7 +31,7 @@
       = render '/iro/positions/new', purse: purse
 
       .mini-inputs
-        = form_for purse, html: { class: 'd-flex' } do |f|
+        = form_for purse, html: { class: 'd-flex align-items-stretch' } do |f|
           = render '/iro/purses/form_extra_fields', f: f
           = f.submit '>'
         %br

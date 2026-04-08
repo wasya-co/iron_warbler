@@ -11,66 +11,67 @@
   .PurseSummaryW
     .PurseSummary
 
-      .summary-short
-        .plot{ style: "height: #{@max_loss_short *u}px" }
-          %label Short
-          .max-gl{ style: "height: #{@max_gain_short *u}px" }
-          - if @loss_short
-            .net-gl.loss{ style: "height: #{@loss_short *-1*u}px" }
-          - if @gain_short
-            .net-gl.gain{ style: "height: #{@gain_short *u}px" }
+      - if !@max_loss_short != 0
+        .summary-short
+          .plot{ style: "height: #{@max_loss_short *u}px" }
+            %label Short
+            .max-gl{ style: "height: #{@max_gain_short *u}px" }
+            - if @loss_short
+              .net-gl.loss{ style: "height: #{@loss_short *-1*u}px" }
+            - if @gain_short
+              .net-gl.gain{ style: "height: #{@gain_short *u}px" }
 
-          .deltaW
-            .delta
-              .begin.short{  style: "height: #{@delta_short_begin/u}px" }
-              .end.short{    style: "height: #{@delta_short_end/u}px" }
+            .deltaW
+              .delta
+                .begin.short{  style: "height: #{@delta_short_begin*100}px" }
+                .end.short{    style: "height: #{@delta_short_end*100}px", class: "#{@delta_short_end > @delta_short_begin ? 'loss' : 'gain' }" }
 
-        .legendW
-          .legend
-            -# %label Short:
-            %ul
-              %li
-                <b>exposure short:</b> -#{pp_amount @max_loss_short}
-              %li.gray
-                <b>max gain short:</b> #{pp_amount @max_gain_short}
-              %li
-                <b>loss short:</b> #{pp_amount @loss_short} :: <i>#{pp_percent @loss_short/@max_gain_short rescue '___' }</i>
-              %li
-                <b>gain short:</b> #{pp_amount @gain_short} :: <i>#{pp_percent @gain_short/@max_gain_short rescue '___' }</i>
-              %li
-                <b>Delta short begin:</b> #{pp_delta @delta_short_begin}
-                <b>end:</b> #{pp_delta @delta_short_end}
+          .legendW
+            .legend
+              -# %label Short:
+              %ul
+                %li
+                  <b>exposure short:</b> -#{pp_amount @max_loss_short}
+                %li.gray
+                  <b>max gain short:</b> #{pp_amount @max_gain_short}
+                %li
+                  <b>loss short:</b> #{pp_amount @loss_short} :: <i>#{pp_percent @loss_short/@max_gain_short rescue '___' }</i>
+                %li
+                  <b>gain short:</b> #{pp_amount @gain_short} :: <i>#{pp_percent @gain_short/@max_gain_short rescue '___' }</i>
+                %li
+                  <b>Delta short begin:</b> #{pp_delta @delta_short_begin}
+                  <b>end:</b> #{pp_delta @delta_short_end}
       .c
+      - if @max_loss_long != 0
+        .summary-long
+          .plot{  style: "height: #{@max_loss_long *u}px" }
+            %label Long
+            .max-gl{  style: "height: #{@max_gain_long *u}px" }
+            - if @loss_long
+              .net-gl.loss{   style: "height: #{@loss_long  *-1*u}px" }
+            - if @gain_long
+              .net-gl.gain{   style: "height: #{@gain_long  *u}px" }
 
-      .summary-long
-        .plot{  style: "height: #{@max_loss_long *u}px" }
-          %label Long
-          .max-gl{  style: "height: #{@max_gain_long *u}px" }
-          - if @loss_long
-            .net-gl.loss{   style: "height: #{@loss_long  *-1*u}px" }
-          - if @gain_long
-            .net-gl.gain{   style: "height: #{@gain_long  *u}px" }
+            .deltaW
+              .delta
+                .begin.long{  style: "height: #{@delta_long_begin*100*-1}px" }
+                .end.long{    style: "height: #{@delta_long_end*100*-1}px", class: "#{@delta_long_end < @delta_long_begin ? 'loss' : 'gain' }" }
 
-        .deltaW
-          .delta
-            .begin.long{  style: "height: #{@delta_long_begin/u*-1}px" }
-            .end.long{    style: "height: #{@delta_long_end/u*-1}px" }
-
-        .legendW
-          .legend
-            -# %label Long:
-            %ul
-              %li
-                <b>exposure long:</b> -#{pp_amount @max_loss_long}
-              %li.gray
-                <b>max gain long:</b> #{pp_amount @max_gain_long}
-              %li
-                <b>loss long:</b> #{pp_amount @loss_long} :: <i>#{pp_percent @loss_long/@max_gain_long rescue '___' }</i>
-              %li
-                <b>gain long:</b> #{pp_amount @gain_long} :: <i>#{pp_percent @gain_long/@max_gain_long rescue '___' }</i>
-              %li
-                <b>Delta long begin:</b> #{pp_delta @delta_long_begin}
-                <b>end:</b> #{pp_delta @delta_long_end}
+          .legendW
+            .legend
+              -# %label Long:
+              %ul
+                %li
+                  <b>exposure long:</b> -#{pp_amount @max_loss_long}
+                %li.gray
+                  <b>max gain long:</b> #{pp_amount @max_gain_long}
+                %li
+                  <b>loss long:</b> #{pp_amount @loss_long} :: <i>#{pp_percent @loss_long/@max_gain_long rescue '___' }</i>
+                %li
+                  <b>gain long:</b> #{pp_amount @gain_long} :: <i>#{pp_percent @gain_long/@max_gain_long rescue '___' }</i>
+                %li
+                  <b>Delta long begin:</b> #{pp_delta @delta_long_begin}
+                  <b>end:</b> #{pp_delta @delta_long_end}
 
 
 

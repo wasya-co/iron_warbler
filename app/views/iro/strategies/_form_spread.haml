@@ -30,7 +30,7 @@
         .field
           = f.label :threshold_neg_delta
           = f.number_field :threshold_neg_delta, placeholder: "0.65", step: 0.001
-          .comment defensive, absolute value
+          .comment absolute value
         .field
           %label threshold_dte
           = f.number_field :threshold_dte, placeholder: "1"
@@ -41,14 +41,14 @@
 
       .col-6
         %h5.text-center Offensive
-        .field
-          = f.label :threshold_pos_delta
-          = f.number_field :threshold_pos_delta, placeholder: "0.09", step: 0.001
+        .field.d-flex.flex-column
+          .a
+            = f.label :threshold_pos_delta
+            = f.number_field :threshold_pos_delta, placeholder: "0.09", step: 0.001
           .comment Best-case scenario roll, offensive, absolute value
         .field
           %label.crossed threshold_netp
           = f.number_field :threshold_netp, placeholder: "0.69", step: 0.001
-          .comment Should not be used.
 
     %hr
     .row
@@ -58,10 +58,11 @@
           = f.label :next_inner_delta
           = f.number_field :next_inner_delta, placeholder: "0.25", step: 0.001
           .comment absolute value
-        .field
-          %label.crossed next_inner_strike
-          = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
-          .comment Literally the min (max) dollar amount of next strike
+        .field.d-flex.flex-column
+          .a
+            %label next_inner_strike
+            = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
+          .comment The min (max) dollar amount of next inner strike
         .field
           = f.label :next_spread_amount
           = f.number_field :next_spread_amount, placeholder: "20", step: 0.1

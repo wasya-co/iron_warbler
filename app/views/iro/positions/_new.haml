@@ -1,6 +1,6 @@
 
 .d-flex
-  .Card
+  .Card.pt-0
     -# %h5.text-center New position
     = form_for Iro::Position.new(strategy: Iro::Strategy.new), url: new_position_path, method: :get do |f|
       = hidden_field_tag 'position[purse_id]', purse.id
@@ -17,7 +17,7 @@
           = f.select :strategy_id, options_for_select([[nil,nil]] + purse.strategies.map { |s| [ s.to_s, s.id ] })
 
         .d-flex.flex-column
-          %label Expires on
+          %label.text-nowrap Expires on
           = f.select :expires_on, options_for_select( Iro::Option.expirations_list )
 
         .d-flex.flex-column
