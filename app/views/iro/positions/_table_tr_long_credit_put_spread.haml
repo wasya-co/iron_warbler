@@ -15,8 +15,8 @@
       = check_box_tag 'positions_xmulti', pos.id , false, { class: 'positions-xmulti' }
       .d-inline-block= button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
       = link_to '[~]', edit_position_path(pos)
-      = link_to '[place2]', place2_position_path(pos)
-    - if 'pending' == pos.status
+      = link_to '[open]', open_position_path(pos)
+    - if [ 'active', 'proposed', 'pending' ].include?( pos.status ) && pos.pending_price.present?
       .d-flex
         = form_tag( reprice_position_path(pos), class: 'd-flex' ) do
           = text_field_tag :pending_price, pos.pending_price
@@ -32,8 +32,9 @@
       = link_to '[check]', check_position_path(pos)
 
   %td.intent
-    .text-nowrap `#{position.intent}`
-    .text-nowrap pending_price: #{pp_amount position.pending_price}
+    - if pos.intent.present?
+      .text-nowrap `#{pos.intent}`
+      .text-nowrap pending_price: #{pp_amount pos.pending_price}
 
   %td.ticker
     = position.stock.ticker

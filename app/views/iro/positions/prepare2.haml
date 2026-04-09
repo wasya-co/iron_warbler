@@ -1,7 +1,7 @@
 
 - pos = @position
 
-.positions-prepare2
+.positions-prepare2.maxwidth
 
   %ul
     %li= link_to '[table]', iro.purse_path(pos.purse)
@@ -21,6 +21,9 @@
     %li
       buy to open
       = pos.outer
+    %li
+      pending_price:
+      = pos.pending_price
     %li
       Query 2
       %pre= JSON.pretty_generate( @query )

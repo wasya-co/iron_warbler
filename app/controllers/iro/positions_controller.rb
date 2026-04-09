@@ -151,23 +151,24 @@ class Iro::PositionsController < Iro::ApplicationController
     set_position_lists
   end
 
-  ## only credit-spread
+  ## only open   credit-spread,
+  ##      roll a credit-spread
   def reprice
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
-    @position.update({ pending_price: params[:pending_price] })
+    flash_notice @position.update({ pending_price: params[:pending_price] })
 
-    Tda::Order.cancel_order!( @position.schwab_order_id )
-    outs = Tda::Order.place_order!( Tda::Order.credit_spread_q @position )
+    if @position.schwab_order_id
+      Tda::Order.cancel_order!( @position.schwab_order_id )
+      outs = Tda::Order.place_order!( @position.schwab_query )
+      flag = @position.update({
+        schwab_order_id: outs[:schwab_order_id],
+        schwab_status:   outs[:schwab_status],
+        status:          Iro::Position::STATUS_PENDING,
+      })
+      flash_notice "Updated schwab order!"
+    end
 
-    flag = @position.update({
-      schwab_order_id: outs[:schwab_order_id],
-      schwab_status: outs[:schwab_status],
-      status: Iro::Position::STATUS_PENDING,
-    })
-
-    flash_notice flag
-    # redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
     redirect_to request.referrer
   end
 
@@ -193,17 +194,16 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
   end
 
-  ## place2 = credit-spread
-  ## should be renamped to open_prep2
-  def place2
+  ## credit-spread
+  def open
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
     @position.inner.sync
     @position.inner.update({ begin_price: @position.inner.end_price })
     @position.outer.sync
     @position.outer.update({ begin_price: @position.outer.end_price })
-    @position.update({ pending_price: @position.place2_price })
-    @query = Tda::Order.credit_spread_q @position
+    @position.update({ pending_price: @position.open_price })
+    @query = @position.schwab_query # Tda::Order.credit_spread_q @position
   end
 
   ## 2025-10-14 long_credit_put_spread
@@ -240,6 +240,8 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :roll, @position
     @position.update({
       status: Iro::Position::STATUS_PROPOSED,
+      intent: @position.strategy.intent,
+      pending_price: @position.roll_price,
     })
 
     @query = case @position.strategy.kind

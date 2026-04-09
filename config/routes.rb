@@ -20,7 +20,7 @@ Iro::Engine.routes.draw do
   post   'positions/:id/roll',        to: 'positions#do_roll',     as: :roll_position
   get    'positions/:id/sync',        to: 'positions#sync',        as: :sync_position
   get    'positions/:id/eval',        to: 'positions#eval',        as: :position_eval
-  match  'positions/:id/place2',      to: 'positions#place2',      as: :place2_position, via: [ :get, :post ]
+  get    'positions/:id/place2',      to: 'positions#open',      as: :open_position
   post   'positions/:id/place3',      to: 'positions#place3',      as: :place3_position
   post   'positions/:id/reprice',     to: 'positions#reprice',     as: :reprice_position
   delete 'positions',                 to: 'positions#destroy_multi'

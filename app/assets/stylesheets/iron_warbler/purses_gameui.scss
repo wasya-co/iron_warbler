@@ -89,16 +89,16 @@
     }
   }
   .PositionW.long_credit_put_spread {
-    // background: linear-gradient(to left, rgba(0,255,255, 0.5), transparent);
-    background: linear-gradient(to left, rgba(0,0,0, 0.5), transparent);
+    background: linear-gradient(to left, rgba(0,255,255, 0.6), transparent);
+    // background: linear-gradient(to left, rgba(0,0,0, 0.5), transparent);
     .Quantities {
       left: 0;
     }
   }
   .PositionW.short_credit_call_spread {
-    // background: linear-gradient(to right, rgba(151,41,125, 0.5), transparent);
     background: linear-gradient(to right, rgba(0,255,255, 0.5), transparent);
     background: linear-gradient(to right, rgba(0,0,0, 0.5), transparent);
+    background: linear-gradient(to right, rgba(236,164,60, 0.6), transparent);
     .Quantities {
       right: 0;
     }
@@ -115,7 +115,9 @@
     right: 0;
     bottom: 0;
     border: 2px dotted #eee;
+    border: 2px dotted rgb(61,98,66);
     background: rgba(255,255,255, 0.5);
+    background: rgba(61,98,66, 0.5);
     height: 25%;
   }
   .PositionW.is-short .MaxGain {
