@@ -33,7 +33,7 @@ Iro::Engine.routes.draw do
   get 'purses/:id/sync', to: 'purses#sync', as: :sync_purse
   get 'purses/:id/gameui', to: 'purses#show', as: :purse_gameui, defaults: { template: 'gameui' }
   get 'purses/:id/table',  to: 'purses#show', as: :purse_table,  defaults: { template: 'table' }
-  get 'purses/:id',        to: 'purses#show', as: :purse
+  # get 'purses/:id',        to: 'purses#show', as: :purse
   resources :purses
 
   get 'schwab/sync',      to: 'application#schwab_sync',      as: :schwab_sync

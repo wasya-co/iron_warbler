@@ -35,24 +35,18 @@ class Iro::PursesController < Iro::ApplicationController
   def show
     @purse = Iro::Purse.unscoped.find(params[:id]) rescue Iro::Purse.unscoped.find_by( slug: params[:id] )
     authorize! :show, @purse
-    params[:template]    ||= 'show'
-    params[:view_status] ||= 'active'
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
     @n_dollars = 50 ## * unit * 2 = length of the grid
 
-    @positions = @purse.positions.where( status: params[:view_status]
+    @positions = @purse.positions.where( :status.in => params[:vcfg][:statuses]
       ).includes( :strategy
       ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
-
-    if 'all' == params[:view_status]
-      @positions = @positions.where( :status.in => Iro::Position::STATUSES )
-    end
 
     calc_summary
 
     @page_title = @purse.to_s
-    render params[:template]
+    render params[:vcfg][:template]
   end
 
   def sync
@@ -80,7 +74,7 @@ class Iro::PursesController < Iro::ApplicationController
       count = count+1
     end
 
-    flash[:notice] = 'Probably synced the purse.'
+    flash[:notice] = 'Synced the purse.'
     redirect_to request.referrer
   end
 

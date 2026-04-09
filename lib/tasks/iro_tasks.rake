@@ -189,6 +189,29 @@ namespace :iro do
     Iro::Position.active.where({ kind: 'covered_call' }).map &:refresh
   end
 
+  desc 'refresh all'
+  task refresh_all: :environment do
+    while true
+      Iro::Iro.schwab_sync
+      Iro::Iro.schwab_sync_exec
+      Iro::Stock.sync
+
+      Iro::Position.sync_all
+
+      Iro::Position.active.each do |position|
+        position.calc_rollp
+        if position.rollp > 0.5
+          position.calc_nxt
+        end
+        print 'eval.'
+      end
+
+      print 'refreshed.'
+      sleep 25.minutes
+    end
+  end
+
+
   desc 'sync schwab'
   task sync_schwab: :environment do
     Iro::Iro.schwab_sync

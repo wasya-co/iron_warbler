@@ -9,6 +9,7 @@ class Iro::ApplicationController < Wco::ApplicationController
   layout 'iro/application'
 
   before_action :set_lists, except: %i| schwab_sync |
+  before_action :set_vcfg
 
   def home
     authorize! :home, Iro
@@ -31,6 +32,14 @@ class Iro::ApplicationController < Wco::ApplicationController
 
   def set_lists
     @purses = Iro::Purse.all.order_by( slug: :asc )
+  end
+
+  def set_vcfg
+    params[:vcfg] ||= {
+      statuses: [ 'active', 'pending' ],
+      template: Iro::Purse::TEMPLATE_GAMEUI,
+    }
+    params[:vcfg].permit!
   end
 
 

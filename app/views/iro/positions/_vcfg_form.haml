@@ -1,0 +1,19 @@
+
+.positions--vcfg-form.bordered
+
+  = form_tag nil, method: :get do
+
+    .poss-selector.d-flex
+      %label statuses:
+      - Iro::Position::STATUSES.compact.each do |st|
+        .item.bordered
+          = check_box_tag 'vcfg[statuses][]', st, params[:vcfg][:statuses]&.include?(st)
+          %label= st
+    .poss-selector.d-flex
+      %label template:
+      = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_TABLE, params[:vcfg][:template] == Iro::Purse::TEMPLATE_TABLE
+      %label= Iro::Purse::TEMPLATE_TABLE
+      = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_GAMEUI, params[:vcfg][:template] == Iro::Purse::TEMPLATE_GAMEUI
+      %label= Iro::Purse::TEMPLATE_GAMEUI
+
+    = submit_tag '>'

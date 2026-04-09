@@ -30,13 +30,13 @@
           = link_to "Purses (#{Iro::Purse.all.length})", purses_path
           = link_to '[+]', purses_path
           %ul
-            - @purses.each do |p|
+            - @purses.each do |purse|
               %li
-                = p
+                = purse
                 &nbsp;
-                = link_to '[#]', purse_path(p)
+                = link_to '[#]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
                 &nbsp;
-                = link_to '[ui]', purse_gameui_path(p)
+                = link_to '[oo]', purse_path(purse, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
 
         -#
           = link_to 'Strategies', strategies_path

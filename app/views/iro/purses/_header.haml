@@ -12,9 +12,9 @@
         &nbsp;
         = link_to '[~]', edit_purse_path(purse)
         &nbsp;
-        = link_to '[#]', purse_path(purse,  template: 'show', view_status: params[:view_status] )
+        = link_to '[#]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
         &nbsp;
-        = link_to '[ui]', purse_path(purse, template: 'gameui', view_status: params[:view_status] )
+        = link_to '[oo]', purse_path(purse, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
 
       .row
         .col-12
@@ -39,12 +39,7 @@
           = f.submit '>'
         %br
 
-      .d-flex
-        %h5 view_status
-        = form_tag purse_path( @purse ), method: :get do
-          = select_tag :view_status, options_for_select(Iro::Position::STATUSES, selected: params[:view_status] )
-          = hidden_field_tag :template, params[:template]
-          = submit_tag '>'
+      = render 'iro/positions/vcfg_form'
 
     .col-md-6
       - if @max_loss_short || @max_loss_long

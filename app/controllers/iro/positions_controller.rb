@@ -118,15 +118,15 @@ class Iro::PositionsController < Iro::ApplicationController
 
   def index
     authorize! :index, Iro::Position
-    params[:poss] ||= {}
-    template = params[:poss][:template] || Iro::Purse::TEMPLATE_TABLE
+    params[:vcfg] ||= {} # "view config"
+    template = params[:vcfg][:template] || Iro::Purse::TEMPLATE_TABLE
 
     @purse = Iro::Purse.find_by( slug: 'all' )
     @positions = Iro::Position.all().includes( :strategy, :inner, :outer, :stock, :purse
       ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
 
-    if params[:poss][:statuses]
-      @positions = @positions.where( :status.in => params[:poss][:statuses] )
+    if params[:vcfg][:statuses]
+      @positions = @positions.where( :status.in => params[:vcfg][:statuses] )
     end
 
     puts! @positions
