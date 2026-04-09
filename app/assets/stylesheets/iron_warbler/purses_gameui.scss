@@ -59,9 +59,41 @@
     background: rgba(0,255,255, 0.25);
     position: absolute;
     height: 100%;
+
+    .Position {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      .Quantities {
+        // background: rgba(0,0,0, 0.1);
+
+        width: 33%;
+        height:  100%;
+        position: absolute;
+
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+
+        .item {
+          width: 100%;
+          border-bottom: 1px solid #333;
+        }
+
+      }
+
+    }
   }
   .PositionW.short_credit_call_spread {
     background: rgba(255,153,0, 0.25);
+
+    .Quantities {
+      right: 0;
+    }
   }
   .reviewing {
     .PositionW {
@@ -70,18 +102,7 @@
     }
   }
 
-  .Position {
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-  }
-
-
-  .MaxGain,
-  .Breakeven {
+  .MaxGain {
     position: absolute;
     right: 0;
     bottom: 0;

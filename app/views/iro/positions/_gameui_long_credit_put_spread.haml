@@ -28,6 +28,9 @@
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }
             .RollGuide
+            .Quantities
+              - (pos.q-1).times do
+                .item
 
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px;" }
