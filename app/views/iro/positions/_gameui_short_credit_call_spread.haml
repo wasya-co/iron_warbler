@@ -10,8 +10,7 @@
 -## 2026-04-05 move loss inside, gain outside
 -##
 
-.collapse-expand.d-flex.--gameui-short-credit-call-spread{ id: "gameui-pos-#{pos.id}" }
-  [<>]
+.d-flex.--gameui-short-credit-call-spread{ id: "gameui-pos-#{pos.id}" }
   .maxwidth= render "/iro/positions/header", pos: pos
 .--gameui-short-credit-call-spread
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos

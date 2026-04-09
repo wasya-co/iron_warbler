@@ -8,8 +8,7 @@
 -# 2026-02-16 I have not verified any of this
 -#
 
-.collapse-expand.d-flex.--gameui-long-credit-put-spread{ id: "gameui-pos-#{pos.id}" }
-  [<>]
+.d-flex.--gameui-long-credit-put-spread{ id: "gameui-pos-#{pos.id}" }
   .maxwidth= render "/iro/positions/header", pos: pos
 .--gameui-long-credit-put-spread
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos

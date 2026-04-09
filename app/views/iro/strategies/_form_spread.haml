@@ -56,6 +56,11 @@
         .field
           %label intent
           = f.select :intent, options_for_select(Iro::Strategy::INTENTS, selected: strategy.intent)
+        .field
+          %label tgt_exposure
+          = f.text_field :tgt_exposure
+
+
       .col-6
         .field
           = f.label :next_inner_delta

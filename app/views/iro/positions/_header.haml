@@ -4,10 +4,8 @@
   = pos
   -# = render '/iro/strategies/show', collapse_key: pos.id, strategy: pos.strategy
   = link_to '[prepare]', position_prepare_to_roll_path(pos) if pos.persisted?
-  -# .d-inline-block= button_to 'close', close_position_path(pos), data: { confirm: 'Are you sure?' }
   = link_to '[close]', close_position_path(pos)
   = link_to '[~]',    edit_position_path(pos) if pos.persisted?
-  -# = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
-
+  .d-inline-block= button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
   .gray &nbsp;<i>#{pos.status}</i>&nbsp;
 

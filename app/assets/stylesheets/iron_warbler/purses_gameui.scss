@@ -56,7 +56,7 @@
   .PositionW {
     top: 0;
     border: 2px solid black;
-    background: rgba(0,255,255, 0.25);
+
     position: absolute;
     height: 100%;
 
@@ -88,9 +88,17 @@
 
     }
   }
+  .PositionW.long_credit_put_spread {
+    // background: linear-gradient(to left, rgba(0,255,255, 0.5), transparent);
+    background: linear-gradient(to left, rgba(0,0,0, 0.5), transparent);
+    .Quantities {
+      left: 0;
+    }
+  }
   .PositionW.short_credit_call_spread {
-    background: rgba(255,153,0, 0.25);
-
+    // background: linear-gradient(to right, rgba(151,41,125, 0.5), transparent);
+    background: linear-gradient(to right, rgba(0,255,255, 0.5), transparent);
+    background: linear-gradient(to right, rgba(0,0,0, 0.5), transparent);
     .Quantities {
       right: 0;
     }
@@ -106,8 +114,8 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    border: 2px dotted green;
-    background: rgba(50,55,55, 0.5);
+    border: 2px dotted #eee;
+    background: rgba(255,255,255, 0.5);
     height: 25%;
   }
   .PositionW.is-short .MaxGain {

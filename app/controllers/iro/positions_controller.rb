@@ -228,23 +228,19 @@ class Iro::PositionsController < Iro::ApplicationController
 
   ## Manually selected one, I suppose
   ## _TODO: pos is autonext position, but should be this position?
+  ## rename to: def select ?
   def prepare2
+    if params[:prev_id]
+      prev = Iro::Position.find params[:prev_id]
+      prev.update({ autonxt_id: params[:id] })
+      Iro::Position.where( prev_id: params[:prev_id], status: 'proposed' ).update_all( status: 'prepare' )
+    end
+
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
     @position.update({
       status: Iro::Position::STATUS_PROPOSED,
     })
-    if params[:prev_id]
-      prev = Iro::Position.find params[:prev_id]
-      prev.update({ autonxt_id: params[:id] })
-      @position.reload
-    else
-      if @position.autoprev
-        ;
-      else
-        throw 'Must pass prev_id here.'
-      end
-    end
 
     @query = case @position.strategy.kind
       when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,

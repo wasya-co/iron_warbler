@@ -9,7 +9,6 @@
         %th.actions &nbsp;
         %th stock
         %th kind
-        %th descr
         %th long or short
         %th put_call
         %th next inner delta
@@ -19,6 +18,7 @@
         %th next inner strike
         %th next spread amount
         %th intent
+        %th tgt_exposure
 
 
     %tbody
@@ -29,9 +29,11 @@
               = link_to '[~]', edit_strategy_path(sss)
               = button_to 'x', strategy_path(sss), method: :delete, data: { confirm: 'Are you sure?' }
           %td.stock= sss.stock
-          %td.kind= sss.kind
-          %td.descr
-            = sss.descr
+          %td.kind
+            = sss.kind
+            - if sss.descr.present?
+              .descr
+                = sss.descr
           %td.long-or-short= sss.long_or_short
           %td.put-call= sss.put_call
           %td= sss.next_inner_delta
@@ -47,6 +49,8 @@
             = sss.next_spread_amount
           %td.intent
             .text-nowrap= sss.intent
+          %td.tgt_exposure
+            = pp_amount sss.tgt_exposure
 
 
   .h-50px

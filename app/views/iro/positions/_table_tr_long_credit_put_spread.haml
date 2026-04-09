@@ -13,7 +13,7 @@
 
     .d-flex
       = check_box_tag 'positions_xmulti', pos.id , false, { class: 'positions-xmulti' }
-      = button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
+      .d-inline-block= button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
       = link_to '[~]', edit_position_path(pos)
       = link_to '[place2]', place2_position_path(pos)
     - if 'pending' == pos.status
@@ -32,8 +32,8 @@
       = link_to '[check]', check_position_path(pos)
 
   %td.intent
-    .text-nowrap= position.intent
-    Pending price: #{pp_amount position.pending_price}
+    .text-nowrap `#{position.intent}`
+    .text-nowrap pending_price: #{pp_amount position.pending_price}
 
   %td.ticker
     = position.stock.ticker
