@@ -1,5 +1,5 @@
 -##
--## same for long and short spreads, soft link
+-## soft link, same for long and short spreads
 -##
 - pos = position
 
@@ -31,6 +31,9 @@
         `#{position.schwab_status}`
       = link_to '[check]', check_position_path(pos)
 
+  %td.intent
+    .text-nowrap= position.intent
+    Pending price: #{pp_amount position.pending_price}
 
   %td.ticker
     = position.stock.ticker

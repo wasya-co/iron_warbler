@@ -8,15 +8,14 @@
 
 namespace :positions do
 
-  desc 'recommend position actions'
+  desc 'recommend positions actions'
   task eval: :environment do
     while true
 
       Iro::Position.active.includes( :strategy ).each do |position|
-        if position.strategy.intent
+        if position.strategy.intent.present?
           position.calc_rollp
           if position.rollp > 0.5
-            puts! position, '#positions_eval'
 
             case position.strategy.intent
             when Iro::Strategy::INTENT_CLOSE
@@ -24,12 +23,14 @@ namespace :positions do
               position.inner.sync
               position.outer.sync
               position.update({ pending_price: position.close_price, intent: Iro::Strategy::INTENT_CLOSE })
-              print '^'
+              print 'close^'
 
             when Iro::Strategy::INTENT_ROLL
               position.calc_nxt
+              print 'roll^'
+
             else
-              puts "+++ no intent - iio"
+              puts "+++ no such intent `#{position.strategy.intent}`- iio"
             end
           end
         end
@@ -44,9 +45,7 @@ namespace :positions do
   task place_order: :environment do
     while true
 
-      Iro::Iro.schwab_sync_exec
-
-      Iro::Position.active.where( :intent.ne => nil, status: 'active' ).each do |position|
+      Iro::Position.active.where( :intent.nin => ['', nil], status: 'active' ).each do |position|
         puts! position, '#positions_place_order'
 
         case position.intent
@@ -66,10 +65,10 @@ namespace :positions do
             schwab_status: outs[:schwab_status],
             status: Iro::Position::STATUS_PENDING,
           })
-          print '^'
+          print 'placed^'
 
         else
-          puts "+++ no intent - izo"
+          puts "+++ no such intent `#{position.intent}` - mzo"
         end
       end
 
@@ -81,9 +80,8 @@ namespace :positions do
   desc 'positions_check_status'
   task check_status: :environment do
     while true
-      Iro::Iro.schwab_sync_exec
 
-      Iro::Position.where({ status: 'active', schwab_status: 'WORKING' }).each do |position|
+      Iro::Position.where({ status: 'pending', schwab_status: 'WORKING' }).each do |position|
 
         outs = Tda::Order.check_status position.schwab_order_id
         puts! outs, 'outs'
@@ -109,7 +107,7 @@ namespace :positions do
           end
           puts! attrs,' attrs'
           position.update!(attrs)
-          print '^'
+          print 'checked^'
         end
       end
 

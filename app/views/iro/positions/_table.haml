@@ -8,6 +8,9 @@
           = form_tag positions_path, method: :delete, id: 'positionsXmultiSubmit' do
             = hidden_field_tag "positions_xmulti", ''
             = submit_tag 'X-multi', data: { confirm: 'Are you sure?' }
+
+        %th.intent
+          Intent
         %th.ticker
           .a Stock
         %th
@@ -52,6 +55,7 @@
             %td{ colspan: 18 }
               .h-50px
 
+        -## Renders the same thing regardless of strategy!
         = render "iro/positions/table_tr_#{position.strategy.kind}", position: position
 
 

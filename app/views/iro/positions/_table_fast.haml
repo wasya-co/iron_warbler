@@ -44,6 +44,7 @@
 
     %tbody
       - positions.each_with_index do |position, idx|
+        - pos = position
 
         - if idx > 0
           - prev_position = positions[idx-1]
@@ -52,7 +53,95 @@
             %td{ colspan: 18 }
               .h-50px
 
-        = render "iro/positions/table_tr_#{position.strategy.kind}_fast", position: position
+        %tr{ 'data-pos-id' => pos.id, |
+          class: [ position.strategy.kind, |
+                    position.strategy.long_or_short == 'long' ? 'is-long' : 'is-short' ] }
+
+        %td.actions
+          .small.gray= position.id
+          = position.status
+
+          .d-flex
+            = check_box_tag 'positions_xmulti', pos.id , false, { class: 'positions-xmulti' }
+            = button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
+            = link_to '[~]', edit_position_path(pos)
+            = link_to '[place2]', place2_position_path(pos)
+          - if 'pending' == pos.status
+            .d-flex
+              = form_tag( reprice_position_path(pos), class: 'd-flex' ) do
+                = text_field_tag :pending_price, pos.pending_price
+                = submit_tag 'Reprice', data: { confirm: 'Are you sure?' }
+          .d-flex
+            = link_to '[sync]', sync_position_path(pos)
+            = link_to '[prepare]', position_prepare_to_roll_path(pos) if pos.persisted?
+            = link_to '[eval]', position_eval_path(pos)
+          .d-flex.flex-nowrap
+            .text-nowrap
+              = position.schwab_order_id
+              `#{position.schwab_status}`
+            = link_to '[check]', check_position_path(pos)
+
+
+        %td.ticker
+          = position.stock.ticker
+
+          %br
+          = pp_amount position.stock.last
+
+        %td.status.strategy.w-200px
+          %b
+            = position.expires_on.to_datetime.strftime("%b %d")
+            [#{ ( position.expires_on.to_date - Time.now.to_date ).to_i }&nbsp;DTE]
+
+        %td.q
+          <b>#{position.quantity}</b>
+        %td.strikes
+          .long-or-short-item
+            .outer-strike= pp_amount position.outer.strike
+            .inner-strike= pp_amount position.inner.strike
+
+        %td.begin_price
+          .long-or-short-item
+            .begin-outer-price
+              = pp_amount position.outer.begin_price
+              &nbsp;<b>D</b>&nbsp; #{pp_delta position.outer.begin_delta}
+            .begin-inner-price
+              = pp_amount position.inner.begin_price
+              &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.begin_delta}
+        %td
+          .max-loss= pp_amount position.max_loss * pos.q * 100, precision: 0
+        -# %td
+        -#   .max-gain= pp_amount position.max_gain * pos.q * 100, precision: 0
+        -#   .max-gainp
+        -#     -# = pp_percent( -1 * position.max_gain / position.max_loss ) rescue '-' # undef. for covered calls
+
+        %td.end
+          .long-or-short-item
+            .end-outer-price
+              = pp_amount position.outer.end_price
+              &nbsp;<b>D</b>&nbsp; #{pp_delta position.outer.end_delta}
+            .end-inner-price
+              = pp_amount position.inner.end_price
+              &nbsp;<b>D</b>&nbsp; #{pp_delta position.inner.end_delta}
+        %td.net
+          .a= pp_amount position.net_amount * pos.q * 100, precision: 0 rescue '_TODO-net_amount'
+          .a <i>#{pp_percent position.net_amount / position.max_gain rescue '_TODO-net-amount-percent' }</i>
+        %td.breakeven
+          = pp_amount pos.breakeven rescue '_TODO-breakeven'
+
+
+
+        %td.should_rollp
+          <i> #{pp_percent position.rollp, precision: 0}</i>
+        %td.next_position
+          - if position.next_reasons.present?
+            %i.fa.fa-expand.collapse-expand{ id: "pos-reasons-#{position.id}" } reasons
+          - if pos.autonxt
+            .bordered= position.autonxt
+            = link_to '[prepare2 autonxt]', prepare2_position_path(pos.autonxt)
+            <b>outcome:</b> #{pp_amount pos.autonxt.next_gain_loss_amount}
+
+
 
 
 
