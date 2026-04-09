@@ -1,0 +1,114 @@
+
+namespace :iro do
+
+  desc 'alerts'
+  task alerts: :environment do
+    print 'iro:alerts'
+    while true
+      Iro::Alert.active.each do |alert|
+        alert.do_run
+      end
+
+      print '.'
+      sleep Rails.env.production? ? 60 : 15
+    end
+  end
+
+  desc 'Get BTC, ETH price from coinmarketcap'
+  task :get_coins => :environment do
+    while true
+
+      ::Iro::Iro.get_coins
+
+      print '.'
+      # sleep 5 * 60 ## 5 minutes
+      sleep 55 * 60 ## 1 hr
+    end
+  end
+
+  desc 'get coins once'
+  task :get_coins_once => :environment do
+    ::Iro::Iro.get_coins
+    print '^'
+  end
+
+  desc 'get treasuries'
+  task :get_treasuries => :environment do
+    ::Iro::Iro.get_treasuries
+    print '^'
+  end
+
+  desc 'import historic treasuries'
+  task :import_1990_2023_treasuries => :environment do
+    ::Iro::Iro.import_1990_2023_treasuries
+  end
+
+  desc 'import 2024 treasuries'
+  task :import_2024_treasuries => :environment do
+    ::Iro::Iro.import_2024_treasuries
+  end
+
+  desc 'refresh all'
+  task refresh_all: :environment do
+    while true
+      Iro::Iro.schwab_sync
+      Iro::Iro.schwab_sync_exec
+      Iro::Stock.sync
+
+      Iro::Position.sync_all
+
+      Iro::Position.active.each do |position|
+        position.calc_rollp
+        if position.rollp > 0.5
+          position.calc_nxt
+        end
+        print 'eval.'
+      end
+
+      print 'refreshed.'
+      sleep 5.minutes
+    end
+  end
+
+end
+
+
+
+  # desc 'watch positions'
+  # task watch_positions: :environment do
+  #   while true
+  #     if in_business
+  #       positions = Iro::Position.active.where({ kind: 'covered_call' })
+  #       positions.each do |position|
+  #         out = Tda::Option.get_quote({
+  #           contractType:   'CALL',
+  #           strike:         position.strike,
+  #           expirationDate: position.expires_on,
+  #           ticker:         position.ticker,
+  #         })
+  #         position.update({
+  #           end_delta: out[:delta],
+  #           end_price: out[:last],
+  #         })
+  #       end
+  #       print '.'
+  #     end
+  #     sleep 60 # seconds
+  #   end
+  # end
+
+  # desc 'watch stocks'
+  # task watch_stocks: :environment do
+  #   while true
+  #     begin
+  #       Timeout::timeout( 10 ) do
+  #         outs = Tda::Stock.get_quotes Iro::Stock.active.map(&:ticker).join(",")
+  #       end
+  #     rescue Exception => e
+  #       puts! e, 'Error in iro:watch_stocks'
+  #       # Wco::Exceptionist.notify(e, 'Error in iro:watch_stocks')
+  #     end
+  #     print '.'
+  #     sleep 15 # *60 # 15 min
+  #   end
+  # end
