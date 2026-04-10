@@ -12,28 +12,21 @@
         &nbsp;
         = link_to '[~]', edit_purse_path(purse)
         &nbsp;
-        = link_to '[#]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
+        = link_to '[=]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
         &nbsp;
         = link_to '[oo]', purse_path(purse, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
 
-      .row
-        .col-12
-          %ul
-            -# %li <b>Balance:</b> #{pp_amount purse.balance}
-            %li <b>Available:</b> #{pp_amount purse.available_amount}
-
-          .strategies--list
-            %label strategies:
-            %ul
-              - purse.strategies.each do |st|
-                %li
-                  = link_to '[~]', iro.edit_strategy_path(st)
-                  = render 'iro/strategies/show', strategy: st, collapse_key: st.id
-
-
       = render '/iro/positions/new', purse: purse
 
-      %i.fa.fa-expand.collapse-expand#units units
+      .a
+        %i.fa.fa-expand.collapse-expand#strategies &nbsp;strategies
+        %ul.strategies--list
+          - purse.strategies.each do |st|
+            %li
+              = link_to '[~]', iro.edit_strategy_path(st)
+              = render 'iro/strategies/show', strategy: st, collapse_key: st.id
+
+      %i.fa.fa-expand.collapse-expand#units &nbsp;units
       .mini-inputs
         = form_for purse, html: { class: 'd-flex align-items-stretch' } do |f|
           = render '/iro/purses/form_extra_fields', f: f
@@ -43,6 +36,4 @@
 
     .col-md-6
       - if @max_loss_short || @max_loss_long
-        .summaries
-          -# = render '/iro/purses/summary', purse: @purse, collapse_key: 'views-gameui-summary'
-          = render '/iro/purses/summary2', purse: @purse, collapse_key: 'views-gameui-summary2'
+        = render '/iro/purses/summary2', purse: @purse, collapse_key: 'views-gameui-summary2'

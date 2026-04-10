@@ -223,6 +223,7 @@ class Iro::PositionsController < Iro::ApplicationController
     # puts! quotes_params, 'quotes_params'
     @quotes = Tda::Option.get_quotes(quotes_params)
 
+    @page_title = "Prepare #{@position}"
     self.send("_prepare_#{@position.strategy.kind}")
   end
 
@@ -245,14 +246,16 @@ class Iro::PositionsController < Iro::ApplicationController
     })
 
     @query = case @position.strategy.kind
-      when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,
-           Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
-        Tda::Order.roll_credit_call_spread_q @position
-      when Iro::Strategy::KIND_COVERED_CALL
-        Tda::Order.roll_covered_call_q @position
-      else
-        throw 'pp0 - not implemented'
-      end
+    when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,
+          Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+      Tda::Order.roll_credit_call_spread_q @position
+    when Iro::Strategy::KIND_COVERED_CALL
+      Tda::Order.roll_covered_call_q @position
+    else
+      throw 'pp0 - not implemented'
+    end
+
+    @page_title = "Prepare #{@position.stock.ticker} - #{@position}"
   end
 
   ## 2026-04-08 try-close only so far.
@@ -261,18 +264,18 @@ class Iro::PositionsController < Iro::ApplicationController
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
     case @position.strategy.intent
-      when Iro::Strategy::INTENT_CLOSE
+    when Iro::Strategy::INTENT_CLOSE
 
-        @position.inner.sync
-        @position.inner.update({ begin_price: @position.inner.end_price })
-        @position.outer.sync
-        @position.outer.update({ begin_price: @position.outer.end_price })
-        @position.update({ pending_price: @position.close_price, intent: Iro::Position::INTENT_CLOSE })
-        # @query = Tda::Order.close_credit_spread_q @position
+      @position.inner.sync
+      @position.inner.update({ begin_price: @position.inner.end_price })
+      @position.outer.sync
+      @position.outer.update({ begin_price: @position.outer.end_price })
+      @position.update({ pending_price: @position.close_price, intent: Iro::Position::INTENT_CLOSE })
+      # @query = Tda::Order.close_credit_spread_q @position
 
-      else
-        throw 'unknown intent - trt'
-      end
+    else
+      throw 'unknown intent - trt'
+    end
 
   end
 

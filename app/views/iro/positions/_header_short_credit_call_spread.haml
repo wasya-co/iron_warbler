@@ -9,11 +9,10 @@
       <b>begin $:</b> [#{pp_amount pos.inner.begin_price} >> #{pp_amount pos.outer.begin_price}]
       <b>D:</b> [[#{pos.inner.begin_delta} >> #{pos.outer.begin_delta}]]
       <b>net_ea/max_gain_ea:</b> #{pp_amount pos.net_amount * 100}/#{pp_amount pos.max_gain * 100} :: #{pp_percent pos.net_percent}
-      <b>breakeven:</b> #{pp_amount pos.breakeven}
-      <b>max_loss:</b> #{pp_amount pos.max_loss * 100*q}
     %li
       <b>end $:</b> [#{pp_amount pos.inner.end_price} >> #{pp_amount pos.outer.end_price}]
       <b>D:</b> [[#{pos.inner.end_delta} >> #{pos.outer.end_delta}]]
-      <b>net*q</b> #{pp_amount pos.net_amount * 100*q}
-      <b>max_gain*q:</b> #{pp_amount pos.max_gain * 100*q}
-
+      <b>net*q/max_gain*q:</b> #{pp_amount pos.net_amount * 100*q}/#{pp_amount pos.max_gain * 100*q}
+    -# %li
+    -#   <b>breakeven:</b> #{pp_amount pos.breakeven}
+    -#   <b>max_loss:</b> #{pp_amount pos.max_loss * 100*q}
