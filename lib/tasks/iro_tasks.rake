@@ -20,6 +20,7 @@ namespace :iro do
       Iro::Iro.schwab_sync
       Iro::Iro.schwab_sync_exec
       Iro::Stock.sync
+      Iro::Position.sync_all
 
       print '.'
       sleep 5.minutes
@@ -32,7 +33,6 @@ namespace :iro do
       Iro::Iro.schwab_sync
       Iro::Iro.schwab_sync_exec
       Iro::Stock.sync
-
       Iro::Position.sync_all
 
       Iro::Position.active.each do |position|

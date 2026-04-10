@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: b1a372a09785d03c8a0da92417d8432f47375851
+  revision: 4795d532b49e64bbeea60959087e3783e1f5d0f6
   branch: 3.3.1
   specs:
-    wco_models (3.1.0.266)
+    wco_models (3.1.0.270)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    iron_warbler (2.0.7.51)
+    iron_warbler (2.0.7.52)
       business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
@@ -120,7 +120,7 @@ GEM
       device_detector
       safely_block (>= 0.2.1)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1236.0)
+    aws-partitions (1.1237.0)
     aws-sdk-core (3.244.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)

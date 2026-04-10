@@ -1,24 +1,28 @@
 
-.positions--vcfg-form.bordered
+.positions--vcfg-form
+  %i.fa.fa-expand.collapse-expand#vcfg vcfg
+  .bordered
 
-  = form_tag nil, method: :get do
+    = form_tag nil, method: :get, class: 'd-flex align-items-stretch' do
 
-    .poss-selector.d-flex
-      %label statuses:
-      - Iro::Position::STATUSES.compact.each do |st|
-        .item.bordered
-          %label
-            = check_box_tag 'vcfg[statuses][]', st, params[:vcfg][:statuses]&.include?(st)
-            = st
-    .poss-selector.d-flex
-      %label template:
+      %div{ style: "flex-grow: 1" }
+        .poss-selector.d-flex
+          %label statuses:
+          - Iro::Position::STATUSES.compact.each do |st|
+            .item.m-1
+              %label.bordered
+                = check_box_tag 'vcfg[statuses][]', st, params[:vcfg][:statuses]&.include?(st)
+                = st
 
-      %label
-        = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_TABLE, params[:vcfg][:template] == Iro::Purse::TEMPLATE_TABLE
-        = Iro::Purse::TEMPLATE_TABLE
+        .poss-selector.d-flex
+          %label template:
 
-      %label
-        = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_GAMEUI, params[:vcfg][:template] == Iro::Purse::TEMPLATE_GAMEUI
-        = Iro::Purse::TEMPLATE_GAMEUI
+          %label.p-2.m-1.bordered
+            = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_TABLE, params[:vcfg][:template] == Iro::Purse::TEMPLATE_TABLE
+            = Iro::Purse::TEMPLATE_TABLE
 
-    = submit_tag '>'
+          %label.p-2.m-1.bordered
+            = radio_button_tag 'vcfg[template]', Iro::Purse::TEMPLATE_GAMEUI, params[:vcfg][:template] == Iro::Purse::TEMPLATE_GAMEUI
+            = Iro::Purse::TEMPLATE_GAMEUI
+
+      = submit_tag '>'

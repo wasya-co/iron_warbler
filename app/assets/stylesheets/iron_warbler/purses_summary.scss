@@ -5,6 +5,13 @@
 .purses--summary2 {
   // border: 1px solid yellow;
 
+
+  .collapse-expand {
+    transform-origin: left bottom;
+    transform: rotate(270deg);
+    width: 0;
+  }
+
   label {
     position: absolute;
   }
@@ -22,7 +29,7 @@
     z-index: 11;
     height: 400px;
     position: relative;
-    background: rgba(255,255,255, 0.75);
+    // background: rgba(255,255,255, 0.75);
 
   }
   .PurseSummary {
