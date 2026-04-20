@@ -32,15 +32,16 @@
             .Quantities
               - (pos.q-1).times do
                 .item
+            .net-label
+              .labelC net #{pp_amount pos.net_amount}
 
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ pos.net_amount*u }px; left: #{-1* pos.net_amount() *u + border_px}px" }
-                .label
-                  .labelC net #{pp_amount pos.net_amount}
             - else
-              -# .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px; left: #{pos.net_amount() *u + border_px}px" }
-              .Net.NetNegative{ style: "width: #{ -1 * pos.net_amount*u }px;" }
-                .label
-                  .labelC net #{pp_amount pos.net_amount}
+              - if stock.last > pos.breakeven
+                .Net.NetNegative{ style: "left: #{pos.max_gain*u}px; width: #{ -1 * pos.net_amount*u }px;" }
+              - else
+                .Net.NetNegative{ style: "left: 0; width: #{ -1 * pos.net_amount*u }px;" }
+
 .c
 

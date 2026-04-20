@@ -37,7 +37,7 @@ class Iro::PursesController < Iro::ApplicationController
     authorize! :show, @purse
     @unit      = @purse.unit # 12  ## pixels per dollar
     @height    = @purse.height # 100  ## pixels
-    @n_dollars = 50 ## * unit * 2 = length of the grid
+    @n_dollars = 30 ## * unit * 2 = length of the grid
 
     @positions = @purse.positions.where( :status.in => params[:vcfg][:statuses]
       ).includes( :strategy
@@ -53,7 +53,7 @@ class Iro::PursesController < Iro::ApplicationController
     @purse = Iro::Purse.find(params[:id])
     authorize! :show, @purse
 
-    @positions = @purse.positions
+    @positions = @purse.positions.active
     expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
     quotes_h = Tda::Option.get_quotes_h({
       contractType: 'ALL',
@@ -61,6 +61,8 @@ class Iro::PursesController < Iro::ApplicationController
       fromDate: expiration_dates.first,
       toDate: expiration_dates.last,
     })
+    # byebug
+
     count = 1
     @positions.each do |pos|
       pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]

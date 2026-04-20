@@ -4,4 +4,5 @@
 2.2.0 :: 2024-03-15 :: now, lets visualize debit call spreads
 2.2.1 :: 2024-05-09 :: continue
 2.3.0 :: 2024-11-29 :: many changes
-
+      :: 2026-04-15 :: it looks pretty good
+2.3.1 :: 2026-04-15 :: let's gamify, the red stripe on short positions moves to the other side (right side) as if the wind is devouring the truck.

@@ -112,7 +112,7 @@
 
   .MaxGain {
     position: absolute;
-    right: 0;
+
     bottom: 0;
     border: 2px dotted #eee;
     border: 2px dotted rgb(61,98,66);
@@ -121,10 +121,11 @@
     height: 25%;
   }
   .PositionW.is-short .MaxGain {
-    right: auto;
     left: 0;
   }
-
+  .PositionW.is-long .MaxGain {
+    right: 0;
+  }
 
   .sprite {
     position: absolute;
@@ -134,11 +135,7 @@
   }
 
   .StockCoordinatesW {
-    // width: 500px;
-
-    // background: var(--iro-color-bg2);
-    // border: 1px solid red;
-    margin-top: 1em;
+    padding-top: 20px;
     margin-bottom: 2em;
 
     position: relative;
@@ -165,12 +162,12 @@
 
     .PositionW.is-short {
       .NetNegative {
-        left: 0;
+        // left: 0;
       }
       .NetPositive {
         right: 0;
       }
-      .Net .label {
+      .net-label {
         text-align: right;
         left: 0;
         .labelC {
@@ -180,12 +177,12 @@
     }
     .PositionW.is-long {
       .NetNegative {
-        right: 0;
+        // right: 0;
       }
       .NetPositive {
         left: 100%;
       }
-      .Net .label {
+      .net-label {
         text-align: left;
         right: 0;
         .labelC {
@@ -193,21 +190,20 @@
         }
       }
     }
+    .net-label {
+      color: white;
+      text-shadow: 2px 2px black;
+      width: 0;
+      position: absolute;
+
+      .labelC {
+        width: 200px;
+        position: absolute;
+      }
+    }
     .Net {
       position: absolute;
       height: 70%;
-
-      .label {
-        color: white;
-        text-shadow: 1px 1px black;
-        width: 0;
-        position: absolute;
-
-        .labelC {
-          width: 200px;
-          position: absolute;
-        }
-      }
     }
     .NetNegative {
       background: rgba(255,0,0, 0.75);

@@ -25,13 +25,11 @@
         .Position
           .MaxGain{ style: "width: #{pos.max_gain * u}px" }
           .select= button_to 'select', prepare2_position_path({id: pos.id, prev_id: prevpos.id })
+          .net-label
+            .labelC net #{pp_amount amnt}
 
           - if amnt >= 0
             .Net.NetPositive{ style: "width: #{ amnt*u }px; left: -#{amnt*u + border_px}px" }
-              .label
-                .labelC net #{pp_amount amnt}
           - else
             .Net.NetNegative{ style: "width: #{ -amnt*u }px; left: 0" }
-              .label
-                .labelC net #{pp_amount amnt}
     .c
