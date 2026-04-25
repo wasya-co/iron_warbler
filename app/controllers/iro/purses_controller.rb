@@ -41,7 +41,7 @@ class Iro::PursesController < Iro::ApplicationController
 
     @positions = @purse.positions.where( :status.in => params[:vcfg][:statuses]
       ).includes( :strategy
-      ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
+      ).order_by( expires_on: :desc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
 
     calc_summary
 

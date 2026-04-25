@@ -36,10 +36,13 @@
             - if pos.net_amount >= 0
               .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px;" }
             - else
-              - if stock.last < pos.inner.strike
-                .Net.NetNegative{ style: "left: 0; width: #{ -1 * pos.net_amount*u }px;" }
+              - if stock.last < pos.breakeven
+                .Net.NetNegative{ style: "right: #{pos.max_gain*u}px; width: #{ -1 * pos.net_amount*u }px;" }
               - else
                 .Net.NetNegative{ style: "right: 0; width: #{ -1 * pos.net_amount*u }px;" }
+
+            .SingleDelta
+              .end{ style: "width: #{100.0 * pos.end_delta / pos.begin_delta}%; background: #{pos.end_delta.abs > pos.begin_delta.abs ? 'rgba(255,0,0, 0.2)' : 'rgba(0,0,0, 0.2)' }" }
 
 .c
 

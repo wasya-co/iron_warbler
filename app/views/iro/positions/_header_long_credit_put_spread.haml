@@ -4,17 +4,36 @@
 
 %i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
 .maxwidth.positions--header.--header-long-credit-put-spread
-  %ul
-    %li
-      <b>begin $:</b> [#{pp_amount pos.outer.begin_price} << #{pp_amount pos.inner.begin_price}]
-      <b>D:</b> [[#{pos.outer.begin_delta} << #{pos.inner.begin_delta}]]
-      <b>net_ea/max_gain_ea:</b> #{pp_amount pos.net_amount * 100}/#{pp_amount pos.max_gain * 100} :: <i>#{pp_percent pos.net_percent}</i>
-    %li
-      <b>end $:</b> [#{pp_amount pos.outer.end_price} << #{pp_amount pos.inner.end_price}]
-      <b>D:</b> [[#{pos.outer.end_delta} << #{pos.inner.end_delta}]]
-      <b>net*q/max_gain*q:</b> #{pp_amount pos.net_amount * 100*q}/#{pp_amount pos.max_gain * 100*q}
-    -# %li
-    -#   <b>breakeven:</b> #{pp_amount pos.breakeven}
-    -#   <b>max_loss:</b> #{pp_amount pos.max_loss * 100*q}
+  %table.bordered.no-padding
+    %tr
+      %td
+        <b>end $:</b>
+      %td.text-center.pl-1.pr-1
+        [#{pp_amount pos.outer.end_price} << #{pp_amount pos.inner.end_price}]
+      %td
+        <b>max_gain * q:</b>
+      %td.text-center.pl-1.pr-1
+        #{pp_amount pos.max_gain * 100} *= #{pp_amount pos.max_gain * 100*q}
+      %td
+        &nbsp;
+      %td
+        <b>D:</b>
+      %td.text-center.pl-1.pr-1
+        [[ #{pos.outer.end_delta} << #{pos.inner.end_delta} ]]
+    %tr
+      %td
+        <b>begin $:</b>
+      %td.text-center.pl-1.pr-1
+        [#{pp_amount pos.outer.begin_price} << #{pp_amount pos.inner.begin_price}]
+      %td.text-center.pl-1.pr-1
+        <b>net_ea * q:</b>
+      %td.text-center.pl-1.pr-1
+        #{pp_amount pos.net_amount * 100} *= #{pp_amount pos.net_amount * 100*q}
+      %td.text-center.pl-1.pr-1
+        <i>#{pp_percent pos.net_percent}</i>
+      %td
+        <b>D:</b>
+      %td.text-center.pl-1.pr-1
+        [[ #{pos.outer.begin_delta} << #{pos.inner.begin_delta} ]]
 
 

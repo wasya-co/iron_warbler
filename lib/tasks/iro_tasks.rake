@@ -23,7 +23,7 @@ namespace :iro do
       Iro::Position.sync_all
 
       print '.'
-      sleep 5.minutes
+      sleep 3.minutes
     end
   end
 

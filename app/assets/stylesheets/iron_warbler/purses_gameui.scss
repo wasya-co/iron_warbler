@@ -127,6 +127,29 @@
     right: 0;
   }
 
+  .SingleDelta {
+    height: 10px;
+
+    // background: rgba(0,0,0, 0.25);
+
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: -10px;
+
+    display: flex;
+    justify-content: center;
+
+    .end {
+      // background: black;
+      // background: rgba(128,0,128, 0.5);
+      height: 10px;
+
+      position: absolute;
+      bottom: 5px;
+    }
+  }
+
   .sprite {
     position: absolute;
   }
