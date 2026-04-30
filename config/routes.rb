@@ -27,6 +27,7 @@ Iro::Engine.routes.draw do
   get    'positions/:id/check',       to: 'positions#check',       as: :check_position
   post   'positions/:id/place-order', to: 'positions#place_order',  as: :position_place_order
   get    'positions/:id/prepare2-intent', to: 'positions#prepare2_intent', as: :position_prepare2_intent
+  get 'positions/:id/roll-inner', to: 'positions#roll_inner', as: :position_roll_inner
   resources :positions
   resources :profiles
 

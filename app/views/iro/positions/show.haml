@@ -1,0 +1,15 @@
+
+.positions-show.maxwidth
+  .header
+  %ul.actions
+    %li= link_to '[~]', edit_position_path(@position)
+
+  = @position.inspect
+
+  %hr
+  %label Inner:
+  .a= @position.inner.inspect
+
+  %hr
+  %label Outer:
+  .a= @position.outer.inspect

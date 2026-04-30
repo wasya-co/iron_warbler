@@ -63,7 +63,16 @@ class Iro::PositionsController < Iro::ApplicationController
     @position.inner.sync
     @position.inner.begin_price = @position.inner.end_price
     @position.inner.begin_delta = @position.inner.end_delta
-    if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( @position.strategy.kind )
+
+    case @position.strategy.kind
+    when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,
+         Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
+      @position.outer = Iro::Option.create!({ strike: params[:position][:outer_strike] }.merge( o_attrs ))
+      @position.outer.sync
+      @position.outer.begin_price = @position.outer.end_price
+      @position.outer.begin_delta = @position.outer.end_delta
+    when Iro::Strategy::KIND_DIAG_LONG_CALL_SPREAD,
+         Iro::Strategy::KIND_DIAG_SHORT_PUT_SPREAD
       @position.outer = Iro::Option.create!({ strike: params[:position][:outer_strike] }.merge( o_attrs ))
       @position.outer.sync
       @position.outer.begin_price = @position.outer.end_price
@@ -151,25 +160,17 @@ class Iro::PositionsController < Iro::ApplicationController
     set_position_lists
   end
 
-  ## only open   credit-spread,
-  ##      roll a credit-spread
-  def reprice
+
+  ## credit-spread
+  def open
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
-    flash_notice @position.update({ pending_price: params[:pending_price] })
-
-    if @position.schwab_order_id
-      Tda::Order.cancel_order!( @position.schwab_order_id )
-      outs = Tda::Order.place_order!( @position.schwab_query )
-      flag = @position.update({
-        schwab_order_id: outs[:schwab_order_id],
-        schwab_status:   outs[:schwab_status],
-        status:          Iro::Position::STATUS_PENDING,
-      })
-      flash_notice "Updated schwab order!"
-    end
-
-    redirect_to request.referrer
+    @position.inner.sync
+    @position.inner.update({ begin_price: @position.inner.end_price })
+    @position.outer.sync
+    @position.outer.update({ begin_price: @position.outer.end_price })
+    @position.update({ pending_price: @position.open_price })
+    @query = @position.schwab_query # Tda::Order.credit_spread_q @position
   end
 
   def place_order
@@ -194,16 +195,36 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to controller: :purses, action: :show, template: 'show', view_status: 'pending', id: @position.purse_id
   end
 
-  ## credit-spread
-  def open
+    ## only open   credit-spread,
+  ##      roll a credit-spread
+  def reprice
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
-    @position.inner.sync
-    @position.inner.update({ begin_price: @position.inner.end_price })
-    @position.outer.sync
-    @position.outer.update({ begin_price: @position.outer.end_price })
-    @position.update({ pending_price: @position.open_price })
-    @query = @position.schwab_query # Tda::Order.credit_spread_q @position
+    flash_notice @position.update({ pending_price: params[:pending_price] })
+
+    if @position.schwab_order_id
+      Tda::Order.cancel_order!( @position.schwab_order_id )
+      outs = Tda::Order.place_order!( @position.schwab_query )
+      flag = @position.update({
+        schwab_order_id: outs[:schwab_order_id],
+        schwab_status:   outs[:schwab_status],
+        status:          Iro::Position::STATUS_PENDING,
+      })
+      flash_notice "Updated schwab order!"
+    end
+
+    redirect_to request.referrer
+  end
+
+  def roll_inner
+    @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+  end
+
+
+  def show
+    @position = Iro::Position.find params[:id]
+    authorize! :show, @position
   end
 
   ## 2025-10-14 long_credit_put_spread
@@ -533,20 +554,16 @@ class Iro::PositionsController < Iro::ApplicationController
     redirect_to request.referrer || purse_path( @position.purse )
   end
 
-  ##
-  ## only updates some attributes
-  ##
+
   def update
     pos = @position = Iro::Position.find params[:id]
     authorize! :update, @position
 
     if @position.update pos_params
-      o_attrs = {
-        expires_on: pos.expires_on,
-      }
-      pos.inner.update params[:inner].permit!.merge( o_attrs )
+
+      pos.inner.update params[:inner].permit!
       if pos.outer
-        pos.outer.update params[:outer].permit!.merge( o_attrs )
+        pos.outer.update params[:outer].permit!
       end
 
       flash_notice @position
@@ -556,7 +573,6 @@ class Iro::PositionsController < Iro::ApplicationController
       redirect_to request.referrer
     end
   end
-
 
 
   ##
@@ -572,6 +588,7 @@ class Iro::PositionsController < Iro::ApplicationController
       :outer_strike,
       :purse_id, :put_call,
       :quantity,
+      :realized_gain_loss_amount,
       :status, :stock_id, :strategy_id,
     )
   end
@@ -582,3 +599,32 @@ class Iro::PositionsController < Iro::ApplicationController
   end
 
 end
+
+
+
+
+
+
+  ##
+  ## only updates some attributes
+  ## 2026-04-29 :: not sure what it was about - but outer cannot inherit positions's expires_on, if I'm in a diagonal spread
+  ##
+  # def update
+  #   pos = @position = Iro::Position.find params[:id]
+  #   authorize! :update, @position
+  #   if @position.update pos_params
+  #     o_attrs = {
+  #       expires_on: pos.expires_on,
+  #     }
+  #     pos.inner.update params[:inner].permit!.merge( o_attrs )
+  #     if pos.outer
+  #       pos.outer.update params[:outer].permit!.merge( o_attrs )
+  #     end
+  #     flash_notice @position
+  #     redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
+  #   else
+  #     flash_alert @position
+  #     redirect_to request.referrer
+  #   end
+  # end
+

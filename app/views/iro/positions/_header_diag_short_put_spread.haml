@@ -1,0 +1,49 @@
+
+- collapse_key ||= pos.id
+- q = pos.quantity
+
+%i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
+.maxwidth.positions--header.--header-diag-long-call-spread
+  diag weeks: #{ pos.diag_weeks }
+  = link_to '[roll inner]', position_roll_inner_path(pos)
+  = link_to '[view]', position_path(pos)
+  <b>Max gain:</b> #{pp_amount pos.max_gain * 100 }
+  %table.bordered.no-padding
+    %tr
+      %td <b>expires_on:</b>
+      %td= pos.inner.expires_on
+      %td
+        <b>end $:</b>
+      %td.text-center.pl-1.pr-1
+        [#{pp_amount pos.inner.end_price} >> #{pp_amount pos.outer.end_price}]
+      %td
+        <b>max_gain * q:</b>
+      %td.text-center.pl-1.pr-1
+        #{pp_amount pos.max_gain * 100} *= #{pp_amount pos.max_gain * 100*q}
+      %td.text-center.pl-1.pr-1
+        <b>Unreal:</b>
+        #{pp_amount pos.inner.begin_price - pos.inner.end_price }
+      %td
+        <b>D:</b>
+      %td.text-center.pl-1.pr-1
+        [[ #{pos.inner.end_delta} >> #{pos.outer.end_delta} ]]
+    %tr
+      %td <b>expires_on:</b>
+      %td= pos.outer.expires_on
+      %td
+        <b>begin $:</b>
+      %td.text-center.pl-1.pr-1
+        [#{pp_amount pos.inner.begin_price} >> #{pp_amount pos.outer.begin_price}]
+      %td.text-center.pl-1.pr-1
+        <b>net_ea * q:</b>
+      %td.text-center.pl-1.pr-1
+        #{pp_amount pos.net_amount * 100} *= #{pp_amount pos.net_amount * 100*q}
+      %td.text-center.pl-1.pr-1
+        <b>Real:</b>
+        #{pp_amount pos.realized_gain_loss_amount}
+      %td
+        <b>D:</b>
+      %td.text-center.pl-1.pr-1
+        [[ #{pos.inner.begin_delta} >> #{pos.outer.begin_delta} ]]
+
+

@@ -1,0 +1,16 @@
+
+- pos = @position
+- new_option = Iro::Option.new
+
+.positions-roll-inner.maxwidth
+  %h5 Roll inner
+
+  = form_for position_roll_inner_path(pos) do |f|
+    %label old
+    .a= render 'iro/options/form_partial', option: pos.inner, inner_or_outer: :old
+
+    %label new
+    .a= render 'iro/options/form_partial', option: new_option, inner_or_outer: :old
+
+    .actions
+      = f.submit 'Submit'

@@ -21,9 +21,9 @@
         .c
 
         - left  = "#{ ( pos.outer.strike - stock.last ) *u}px"
-        - width = "#{ ( pos.inner.strike - pos.outer.strike ).abs() *u}px"
+        - width = ( pos.inner.strike - pos.outer.strike ).abs() *u
         - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
-        .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "left: #{left}; width: #{width}; " }
+        .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "left: #{left}; width: #{width}px; " }
           .Position
             .MaxGain{ style: "width: #{pos.max_gain * u}px" }
             .RollGuide

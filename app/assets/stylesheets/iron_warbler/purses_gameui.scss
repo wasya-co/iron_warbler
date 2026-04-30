@@ -7,6 +7,40 @@
 }
 
 .purses-gameui {
+  .purses-gameuiC {
+    padding-bottom: 100px;
+  }
+
+  .Breakeven {
+    position: absolute;
+
+    height: 20px;
+    width: 2px;
+    background: white;
+  }
+
+  .DiagWeeks {
+    // border: 1px solid blue;
+
+    position: absolute;
+    bottom: -3px; // border-width
+    height: 0;
+
+    display: flex;
+
+    label {
+      // position: absolute;
+      bottom: 0;
+      left: -20px;
+      margin: 0;
+    }
+
+
+    .DiagWeek {
+      height: 10px;
+      border: 1px solid red;
+    }
+  }
 
   .divider-expiry {
     height: 5px;

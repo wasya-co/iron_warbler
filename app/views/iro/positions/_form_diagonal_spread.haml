@@ -30,12 +30,13 @@
     .field
       %label Strategy
       = f.select :strategy_id, options_for_select( @strategies_list, selected: position.strategy_id )
+      .comment For diagonals, outer is far future, long leg
 
     .d-flex
       .field
         %label Expires on
         = f.select :expires_on, options_for_select( Iro::Option.expirations_list, selected: position.expires_on.to_date )
-        -# = position.expires_on
+        .comment expiration of the position is the inner leg, closer to "now"
       .field
         %label Quantity
         = f.text_field :quantity
@@ -51,15 +52,7 @@
 
     - if %w| edit update |.include? params[:action]
       %hr
-      - case @position.strategy.kind
-      - when Iro::Strategy::KIND_DIAG_LONG_CALL_SPREAD,
-             Iro::Strategy::KIND_DIAG_SHORT_PUT_SPREAD
-        .field
-          %label realized_gain_loss_amount
-          = f.text_field :realized_gain_loss_amount
-        = render 'formpart_4data_diag', f: f, position: position
-      - else
-        = render 'formpart_4data', f: f, position: position
+      = render 'formpart_4data_diag', f: f, position: position
 
     .actions
       = f.submit

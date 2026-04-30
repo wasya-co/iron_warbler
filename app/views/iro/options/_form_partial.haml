@@ -1,0 +1,22 @@
+
+.options--form-partial
+  .d-flex
+    = fields_for inner_or_outer, option do |f_partial|
+      .a
+        %label Strike
+        = f_partial.number_field :strike, step: 0.01
+      .a
+        %label expires_on
+        = f_partial.text_field :expires_on
+      .a
+        %label Begin price
+        = f_partial.text_field :begin_price
+      .a
+        %label Begin delta
+        = f_partial.text_field :begin_delta
+      .a
+        %label end price
+        = f_partial.text_field :end_price
+      .a
+        %label end delta
+        = f_partial.text_field :end_delta

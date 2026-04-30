@@ -4,5 +4,8 @@
   - case @position.strategy.kind
   - when Iro::Strategy::KIND_COVERED_CALL
     = render 'form_credit_call', position: @position
+  - when Iro::Strategy::KIND_DIAG_LONG_CALL_SPREAD,
+         Iro::Strategy::KIND_DIAG_SHORT_PUT_SPREAD
+    = render 'form_diagonal_spread', position: @position
   - else
     = render 'form_spread', position: @position

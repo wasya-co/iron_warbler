@@ -1,3 +1,6 @@
+
+-# this one has more fields than _formpart_4data
+
 .field
   %label Begin on
   = f.text_field :begin_on, value: position.begin_on || Time.now.to_date.to_s
@@ -6,25 +9,44 @@
 
   .d-flex
     = fields_for :outer, position.outer do |f_outer|
-      .field
+
+      .a
         %label Outer Strike
         = f_outer.number_field :strike, step: 0.01
-      .field
+      .a
+        %label Outer expires_on
+        = f_outer.text_field :expires_on
+      .a
         %label Begin outer price
         = f_outer.text_field :begin_price
-      .field
+      .a
         %label Begin outer delta
         = f_outer.text_field :begin_delta
 
+      .a
+        %label end outer price
+        = f_outer.text_field :end_price
+      .a
+        %label end outer delta
+        = f_outer.text_field :end_delta
+
   .d-flex
     = fields_for :inner, position.inner do |f_inner|
-      .field
+      .a
         %label Inner Strike
         = f_inner.number_field :strike, step: 0.01
-      .field
+      .a
+        %label Inner expires_on
+        = f_inner.text_field :expires_on
+      .a
         %label Begin inner price
         = f_inner.text_field :begin_price
-      .field
+      .a
         %label Begin inner delta
         = f_inner.text_field :begin_delta
-
+      .a
+        %label end inner price
+        = f_inner.text_field :end_price
+      .a
+        %label end inner delta
+        = f_inner.text_field :end_delta
