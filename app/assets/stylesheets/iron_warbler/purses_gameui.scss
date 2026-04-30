@@ -218,12 +218,7 @@
     }
 
     .PositionW.is-short {
-      .NetNegative {
-        // left: 0;
-      }
-      .NetPositive {
-        right: 0;
-      }
+
       .net-label {
         text-align: right;
         left: 0;
@@ -233,12 +228,7 @@
       }
     }
     .PositionW.is-long {
-      .NetNegative {
-        // right: 0;
-      }
-      .NetPositive {
-        left: 100%;
-      }
+
       .net-label {
         text-align: left;
         right: 0;

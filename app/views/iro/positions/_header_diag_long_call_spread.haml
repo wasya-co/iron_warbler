@@ -8,6 +8,7 @@
   = link_to '[roll inner]', position_roll_inner_path(pos)
   = link_to '[view]', position_path(pos)
   <b>Max gain:</b> #{pp_amount pos.max_gain * 100 }
+  <b>Breakeven:</b> #{pp_amount pos.breakeven}
   %table.bordered.no-padding
     %tr
       %td <b>expires_on:</b>
