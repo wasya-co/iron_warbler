@@ -25,7 +25,7 @@
         - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
         .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "left: #{left}; width: #{width}px; " }
           .Position
-            .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+            .MaxGL.MaxGain{ style: "width: #{pos.max_gain * u}px" }
             .RollGuide
             .Quantities
               - (pos.q-1).times do

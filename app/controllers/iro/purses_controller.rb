@@ -65,12 +65,13 @@ class Iro::PursesController < Iro::ApplicationController
 
     count = 1
     @positions.each do |pos|
-      pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
-      pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
+      pos.inner.end_price = quotes_h[pos.expires_on.to_date.to_s][pos.put_call][pos.inner.strike][:price]
+      pos.inner.end_delta = quotes_h[pos.expires_on.to_date.to_s][pos.put_call][pos.inner.strike][:delta]
       pos.inner.save ? print("#{count}^") : print("#{count}X")
-      if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
-        pos.outer.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:price]
-        pos.outer.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:delta]
+      # if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
+      if pos.outer
+        pos.outer.end_price = quotes_h[pos.expires_on.to_date.to_s][pos.put_call][pos.outer.strike][:price]
+        pos.outer.end_delta = quotes_h[pos.expires_on.to_date.to_s][pos.put_call][pos.outer.strike][:delta]
         pos.outer.save ? print('^') : print('X')
       end
       count = count+1
@@ -114,6 +115,8 @@ class Iro::PursesController < Iro::ApplicationController
     @delta_short_end = 0
 
     @positions.each do |pos|
+      puts! pos, 'pos'
+
       if Iro::Strategy::LONG == pos.strategy.long_or_short
         @max_loss_long += pos.max_loss * pos.q * 100
         @max_gain_long += pos.max_gain * pos.q * 100
@@ -158,30 +161,5 @@ end
 
 
 
-
-
-    ## lets only sync when I say.
-    ## 2026-02-24
-=begin
-    expiration_dates = @positions.map { |p| p.expires_on.to_s }.sort
-    quotes_h = Tda::Option.get_quotes_h({
-      contractType: 'ALL',
-      ticker:  @positions[0].ticker,
-      fromDate: expiration_dates.first,
-      toDate: expiration_dates.last,
-    })
-    count = 1
-    @positions.each do |pos|
-      pos.inner.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:price]
-      pos.inner.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.inner.strike][:delta]
-      pos.inner.save ? print("#{count}^") : print("#{count}X")
-      if [ Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD, Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD ].include?( pos.strategy.kind )
-        pos.outer.end_price = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:price]
-        pos.outer.end_delta = quotes_h[pos.expires_on.to_s][pos.put_call][pos.outer.strike][:delta]
-        pos.outer.save ? print('^') : print('X')
-      end
-      count = count+1
-    end
-=end
 
 

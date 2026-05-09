@@ -20,14 +20,15 @@ Iro::Engine.routes.draw do
   post   'positions/:id/roll',        to: 'positions#do_roll',     as: :roll_position
   get    'positions/:id/sync',        to: 'positions#sync',        as: :sync_position
   get    'positions/:id/eval',        to: 'positions#eval',        as: :position_eval
-  get    'positions/:id/place2',      to: 'positions#open',      as: :open_position
+  get    'positions/:id/place2',      to: 'positions#open',        as: :open_position
   post   'positions/:id/place3',      to: 'positions#place3',      as: :place3_position
   post   'positions/:id/reprice',     to: 'positions#reprice',     as: :reprice_position
   delete 'positions',                 to: 'positions#destroy_multi'
   get    'positions/:id/check',       to: 'positions#check',       as: :check_position
-  post   'positions/:id/place-order', to: 'positions#place_order',  as: :position_place_order
+  post   'positions/:id/place-order', to: 'positions#place_order', as: :position_place_order
   get    'positions/:id/prepare2-intent', to: 'positions#prepare2_intent', as: :position_prepare2_intent
-  get 'positions/:id/roll-inner', to: 'positions#roll_inner', as: :position_roll_inner
+  get    'positions/:id/roll-inner', to: 'positions#roll_inner',   as: :position_roll_inner
+  post   'positions/:id/roll-inner', to: 'positions#roll_inner_commit'
   resources :positions
   resources :profiles
 
@@ -43,6 +44,7 @@ Iro::Engine.routes.draw do
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   match 'stocks/:id/get-historic-data', to: 'stocks#get_historic_data', as: :stock_get_historic_data, via: [ :get, :post ]
   match 'stocks/:id/recompute-volatility', to: 'stocks#recompute_volatility', as: :stock_recompute_volatility, via: [ :get, :post ]
+  get 'stocks/:id/expires_on/:expires_on/viz-1', to: 'stocks#viz_1', as: :viz_1
   resources :stocks
 
   resources :strategies

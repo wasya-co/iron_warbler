@@ -29,10 +29,14 @@
     display: flex;
 
     label {
-      // position: absolute;
-      bottom: 0;
-      left: -20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      background: white;
+
       margin: 0;
+      z-index: -1;
     }
 
 
@@ -122,14 +126,16 @@
 
     }
   }
-  .PositionW.long_credit_put_spread {
+  // .PositionW.long_credit_put_spread,
+  .PositionW.is-long {
     background: linear-gradient(to left, rgba(0,255,255, 0.6), transparent);
     // background: linear-gradient(to left, rgba(0,0,0, 0.5), transparent);
     .Quantities {
       left: 0;
     }
   }
-  .PositionW.short_credit_call_spread {
+  // .PositionW.short_credit_call_spread,
+  .PositionW.is-short {
     background: linear-gradient(to right, rgba(0,255,255, 0.5), transparent);
     background: linear-gradient(to right, rgba(0,0,0, 0.5), transparent);
     background: linear-gradient(to right, rgba(236,164,60, 0.6), transparent);
@@ -144,16 +150,24 @@
     }
   }
 
-  .MaxGain {
+  .MaxGL {
     position: absolute;
-
+    height: 25%;
     bottom: 0;
+  }
+  .MaxGain {
     border: 2px dotted #eee;
     border: 2px dotted rgb(61,98,66);
     background: rgba(255,255,255, 0.5);
     background: rgba(61,98,66, 0.5);
-    height: 25%;
   }
+  .MaxLoss {
+    border: 2px dotted #ffcccc;
+    background: red;
+
+    right: 0; // short debit put spread
+  }
+
   .PositionW.is-short .MaxGain {
     left: 0;
   }

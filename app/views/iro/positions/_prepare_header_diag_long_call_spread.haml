@@ -1,0 +1,16 @@
+
+
+- collapse_key ||= pos.id
+%i.fa.fa-expand.collapse-expand.floaty-collapse{ id: "gameui-pos-detail-#{collapse_key}" }
+.maxwidth.--prepare-header-long-credit-put-spread
+  %ul.m-0.p-0
+    %li
+      #{pos.expires_on} [#{pp_amount pos.outer.strike} << #{pp_amount pos.inner.strike}] &nbsp;
+      -# <b>net_ea:</b> #{pp_amount pos.next_gain_loss_amount} &nbsp;
+      -# <b>max_loss_ea:</b> #{pp_amount pos.max_loss * 100} &nbsp;
+    %li
+      -# <b>begin $:</b> [#{pp_amount pos.outer.begin_price} << #{pp_amount pos.inner.begin_price}] &nbsp;
+      -# <b>D:</b> [[#{pos.outer.begin_delta} << #{pos.inner.begin_delta}]] &nbsp;
+      -# <b>max_gain_ea:</b> #{pp_amount pos.max_gain * 100} &nbsp;
+      -# <b>breakeven:</b> #{pp_amount pos.breakeven} &nbsp;
+

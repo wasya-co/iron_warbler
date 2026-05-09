@@ -4,10 +4,13 @@
     %h3.title
       = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
 
-  = form_tag stock_get_historic_data_path(@stock) do
-    get historic data:
-    = text_field_tag :date_from
-    = submit_tag 'Go'
+  %ul.actions
+    %li
+      = form_tag stock_get_historic_data_path(@stock) do
+        get historic data:
+        = text_field_tag :date_from
+        = submit_tag 'Go'
+    %li= link_to '[expiry-viz]', viz_1_path(@stock, '2026-05-22')
 
   .row
 

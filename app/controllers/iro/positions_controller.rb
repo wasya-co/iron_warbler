@@ -64,15 +64,7 @@ class Iro::PositionsController < Iro::ApplicationController
     @position.inner.begin_price = @position.inner.end_price
     @position.inner.begin_delta = @position.inner.end_delta
 
-    case @position.strategy.kind
-    when Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD,
-         Iro::Strategy::KIND_SHORT_CREDIT_CALL_SPREAD
-      @position.outer = Iro::Option.create!({ strike: params[:position][:outer_strike] }.merge( o_attrs ))
-      @position.outer.sync
-      @position.outer.begin_price = @position.outer.end_price
-      @position.outer.begin_delta = @position.outer.end_delta
-    when Iro::Strategy::KIND_DIAG_LONG_CALL_SPREAD,
-         Iro::Strategy::KIND_DIAG_SHORT_PUT_SPREAD
+    if params[:position][:outer_strike]
       @position.outer = Iro::Option.create!({ strike: params[:position][:outer_strike] }.merge( o_attrs ))
       @position.outer.sync
       @position.outer.begin_price = @position.outer.end_price
@@ -152,8 +144,6 @@ class Iro::PositionsController < Iro::ApplicationController
     @position ||= Iro::Position.new( params[:position].permit!.merge({
       put_call: strategy.put_call,
       status:   Iro::Position::STATUS_PROPOSED,
-      # inner:    Iro::Option.new,
-      # outer:    Iro::Option.new,
       stock_id: strategy.stock_id,
     }) )
 
@@ -219,6 +209,27 @@ class Iro::PositionsController < Iro::ApplicationController
   def roll_inner
     @position = Iro::Position.find params[:id]
     authorize! :roll, @position
+  end
+  def roll_inner_commit
+    pos = @position = Iro::Position.find params[:id]
+    authorize! :roll, @position
+
+    old = pos.inner
+    pos.inners.push old
+    new_params = params[:new].permit!.merge({
+      put_call:   pos.put_call,
+      stock_id:   pos.stock_id,
+    })
+    pos.inner = Iro::Option.create!( new_params )
+    pos.inner.sync
+    pos.inner.begin_price ||= pos.inner.end_price
+    pos.inner.begin_delta ||= pos.inner.end_delta
+    pos.realized_gain_loss_amount = pos.realized_gl + old.begin_price - old.end_price
+    pos.expires_on = pos.inner.expires_on
+    pos.save
+
+    flash_notice "Probably ok."
+    redirect_to purse_path(pos.purse)
   end
 
 
@@ -539,6 +550,48 @@ class Iro::PositionsController < Iro::ApplicationController
     @positions = @positions.reverse
   end
 
+
+
+
+
+  ## 2026-05-01 continue
+  def _prepare_diag_long_call_spread
+    @positions = []
+    (-@nn..@nn).each do |idx|
+      inner_strike = @prev.inner.strike - idx*@stock.options_price_increment
+
+      next_inner = Iro::Option.new({
+        expires_on:   @position[:expires_on],
+        put_call:     @position.put_call,
+        stock_id:     @position[:stock_id],
+        strike:       inner_strike,
+      })
+
+      @quotes.map do |quote|
+        if quote[:strikePrice] == next_inner.strike
+          price = ( quote[:bid] + quote[:ask] )/2
+          next_inner.begin_price = price
+          next_inner.end_price   = price
+          next_inner.begin_delta = quote[:delta]
+          next_inner.end_delta   = quote[:delta]
+          # next_inner.save
+        end
+      end
+
+      # puts! next_inner.begin_price, 'next_inner.begin_price'
+      # byebug
+
+      @positions.push Iro::Position.new({ inner: next_inner,
+        long_or_short: @prev.long_or_short,
+        next_gain_loss_amount: next_inner.begin_price - @prev.inner.end_price,
+        outer: @prev.outer,
+        purse: @prev.purse,
+        strategy: @prev.strategy, stock: @prev.stock,
+
+      })
+    end
+  end
+
   def sync
     @position = Iro::Position.find params[:id]
     authorize! :refresh, @position
@@ -551,6 +604,7 @@ class Iro::PositionsController < Iro::ApplicationController
     #   @position.calc_nxt
     # end
 
+    flash_notice 'did sync and calc_rollp'
     redirect_to request.referrer || purse_path( @position.purse )
   end
 

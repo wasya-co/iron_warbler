@@ -4,13 +4,10 @@
 - nearest_strike = stock.last.round
 - u = pos.purse.unit # pixels per dollar
 
--#
--# 2026-02-16 I have not verified any of this
--#
 
-.d-flex.--gameui-long-credit-put-spread{ id: "gameui-pos-#{pos.id}" }
+.d-flex{ id: "gameui-pos-#{pos.id}" }
   .maxwidth= render "/iro/positions/header", pos: pos
-.--gameui-long-credit-put-spread
+.--gameui-short-debit-put-spread
   = render "/iro/positions/header_#{pos.strategy.kind}", pos: pos
   .StockCoordinatesW
     .StockCoordinates{ style: "height: #{pos.q() *pos.purse.height}px " }
@@ -25,7 +22,11 @@
         - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
         .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "left: #{left}; width: #{width}px; " }
           .Position
-            .MaxGL.MaxGain{ style: "width: #{pos.max_gain * u}px" }
+            - if pos.credit_or_debit == 'debit'
+              .MaxGL.MaxLoss{ style: "width: #{pos.max_loss * u}px" }
+            - else
+              .MaxGL.MaxGain{ style: "width: #{pos.max_gain * u}px" }
+
             .RollGuide
             .Quantities
               - (pos.q-1).times do
@@ -35,7 +36,7 @@
 
             - if pos.net_amount >= 0
               - if stock.last < pos.inner.strike
-                .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px; right: #{(pos.max_gain-pos.net_amount) *u}px;" }
+                .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px; right: #{(pos.max_loss) *u}px;" }
               - else
                 .Net.NetPositive{ style: "width: #{ pos.net_amount() *u}px; left: 100%;                  " }
             - else

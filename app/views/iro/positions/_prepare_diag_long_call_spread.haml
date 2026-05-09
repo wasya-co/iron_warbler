@@ -4,18 +4,18 @@
 - nearest_strike = pos.stock.last.round
 - stock          = pos.stock
 - border_px = 2.00
+- long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
 
-.StockCoordinatesW.--prepare-long-credit-put-spread
+.StockCoordinatesW.--prepare-diag-long-call-spread
   .StockCoordinates{ style: "height: #{@position.q * @position.purse.height}px " }
     .grid= render "/iro/stocks/grid_#{pos.strategy.long_or_short}", stock: stock, position: pos
     .Origin{ style: "left: #{ ( nearest_strike - pos.stock.last )* u}px" }
       -# .label Last: #{pp_amount pos.stock.last }
 
       - amnt   = pos.next_gain_loss_amount
-      - border = amnt >= 0 ? "#{amnt * u}px solid green" : "#{amnt * -1*u}px solid red"
-      - width  = "#{ ( pos.inner_strike - pos.outer_strike ) * u}px"
-      - left   = "#{ ( pos.outer_strike - pos.stock.last ) * u}px"
-      - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
+      - width  = "#{ ( pos.inner.strike - pos.outer.strike ) * u}px"
+      - left   = "#{ ( pos.outer.strike - pos.stock.last ) * u}px"
+
       .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "width: #{width}; left: #{left}; " }
         .Position
           .MaxGL.MaxGain{ style: "width: #{pos.max_gain * u}px" }

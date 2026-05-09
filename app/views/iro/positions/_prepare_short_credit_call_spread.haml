@@ -23,7 +23,7 @@
       - long_or_short = pos.long_or_short == 'long' ? 'is-long' : 'is-short'
       .PositionW{ class: [ pos.strategy.kind, long_or_short ], style: "width: #{width}; left: #{left}; " }
         .Position
-          .MaxGain{ style: "width: #{pos.max_gain * u}px" }
+          .MaxGL.MaxGain{ style: "width: #{pos.max_gain * u}px" }
           .select= button_to 'select', prepare2_position_path({id: pos.id, prev_id: prevpos.id })
           .net-label
             .labelC net #{pp_amount amnt}

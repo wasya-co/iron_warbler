@@ -111,6 +111,16 @@ class Iro::StocksController < Iro::ApplicationController
     redirect_to request.referrer
   end
 
+  def viz_1
+    @stock = Iro::Stock.find params[:id]
+    authorize! :show, @stock
+
+    @quotes = Tda::Option.get_quotes({ contractType: 'CALL', ticker: @stock.ticker, expirationDate: params[:expires_on] })
+    puts! @quotes, 'qqq'
+
+    # get all options at this expiration. call only.
+    # plot price + premium.
+  end
 
   ##
   ## private
