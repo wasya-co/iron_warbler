@@ -229,8 +229,6 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
-    jsbundling-rails (1.3.1)
-      railties (>= 6.0.0)
     json-jwt (1.17.0)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -484,7 +482,6 @@ DEPENDENCIES
   factory_bot_rails
   irb (>= 1.2.8)
   iron_warbler!
-  jsbundling-rails (~> 1.3)
   mocha
   omniauth-rails_csrf_protection (~> 1.0.1)
   rack-cors

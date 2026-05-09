@@ -7,4 +7,6 @@ Rails.application.config.assets.precompile += %w(
 
   iron_warbler/application.js
   iron_warbler/application.css
+
+  builds/app.js
 );
