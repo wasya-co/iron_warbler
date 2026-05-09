@@ -37,6 +37,8 @@
     -# %script{src: "https://unpkg.com/axios/dist/axios.min.js"}
     -# %script{src: "https://unpkg.com/recharts/umd/Recharts.js"}
 
+    = javascript_include_tag "builds/app"
+
     = csrf_meta_tags
     = csp_meta_tag
   %body{ class: [ params[:controller].gsub("wco_email/",""), "#{params[:controller].gsub("wco_email/","")}-#{params[:action]}", params[:action], "application-fullwidth" ] }
@@ -45,6 +47,7 @@
     = render "/iro/main_header"
     = render '/wco/application/alerts_notices' if notice || alert
     .spacer-small
+
 
     = yield
 

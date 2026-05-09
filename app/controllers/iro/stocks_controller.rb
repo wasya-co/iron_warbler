@@ -115,8 +115,71 @@ class Iro::StocksController < Iro::ApplicationController
     @stock = Iro::Stock.find params[:id]
     authorize! :show, @stock
 
+    @chart_data = { puts: [], puts_1: [], calls: [], calls_1: [] }
+
     @quotes = Tda::Option.get_quotes({ contractType: 'CALL', ticker: @stock.ticker, expirationDate: params[:expires_on] })
-    puts! @quotes, 'qqq'
+    # @quotes = @quotes.reverse
+    # puts! @quotes, '@quotes'
+    @quotes.each do |q|
+      implied = q[:strikePrice] + ( q[:bid] + q[:ask] )/2
+      obj = {
+        strike: q[:strikePrice],
+        iv: implied,
+        price: ( q[:bid] + q[:ask] )/2,
+        put_call: q[:putCall],
+      }
+      # puts! obj, 'obj'
+      @chart_data[:calls].push(obj)
+    end
+
+    exp_1 = (params[:expires_on].to_date+21.days).to_date
+    puts! exp_1, 'exp_1'
+    @quotes = Tda::Option.get_quotes({ contractType: 'CALL', ticker: @stock.ticker, expirationDate: exp_1 })
+    # @quotes = @quotes.reverse
+    # puts! @quotes, '@quotes'
+    @quotes.each do |q|
+      implied = q[:strikePrice] + ( q[:bid] + q[:ask] )/2
+      obj = {
+        strike: q[:strikePrice],
+        iv: implied,
+        price: ( q[:bid] + q[:ask] )/2,
+        put_call: "#{q[:putCall]}-1",
+      }
+      # puts! obj, 'obj'
+      @chart_data[:calls_1].push(obj)
+    end
+
+
+
+
+    @quotes = Tda::Option.get_quotes({ contractType: 'PUT', ticker: @stock.ticker, expirationDate: params[:expires_on] })
+    # puts! @quotes, '@quotes'
+    @quotes.each do |q|
+      implied = q[:strikePrice] - ( q[:bid] + q[:ask] )/2
+      obj = {
+        strike: q[:strikePrice],
+        iv: implied,
+        price: ( q[:bid] + q[:ask] )/2,
+        put_call: q[:putCall],
+      }
+      # puts! obj, 'obj'
+      @chart_data[:puts].push(obj)
+    end
+    @quotes = Tda::Option.get_quotes({ contractType: 'PUT', ticker: @stock.ticker, expirationDate: exp_1 })
+    # puts! @quotes, '@quotes'
+    @quotes.each do |q|
+      implied = q[:strikePrice] - ( q[:bid] + q[:ask] )/2
+      obj = {
+        strike: q[:strikePrice],
+        iv: implied,
+        price: ( q[:bid] + q[:ask] )/2,
+        put_call: q[:putCall],
+      }
+      # puts! obj, 'obj'
+      @chart_data[:puts_1].push(obj)
+    end
+
+    puts! @chart_data, '@chart_data'
 
     # get all options at this expiration. call only.
     # plot price + premium.
