@@ -67,7 +67,7 @@ var require_react_development = __commonJS({
       }
       function ComponentDummy() {
       }
-      function PureComponent(props, context, updater) {
+      function PureComponent2(props, context, updater) {
         this.props = props;
         this.context = context;
         this.refs = emptyObject;
@@ -243,9 +243,9 @@ var require_react_development = __commonJS({
         return newKey;
       }
       function validateChildKeys(node) {
-        isValidElement14(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement14(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
+        isValidElement13(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement13(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
       }
-      function isValidElement14(object) {
+      function isValidElement13(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
       }
       function escape(key) {
@@ -314,13 +314,13 @@ var require_react_development = __commonJS({
           var childKey = "" === nameSoFar ? "." + getElementKey(invokeCallback, 0) : nameSoFar;
           isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c2) {
             return c2;
-          })) : null != callback && (isValidElement14(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
+          })) : null != callback && (isValidElement13(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
             callback,
             escapedPrefix + (null == callback.key || invokeCallback && invokeCallback.key === callback.key ? "" : ("" + callback.key).replace(
               userProvidedKeyEscapeRegex,
               "$&/"
             ) + "/") + childKey
-          ), "" !== nameSoFar && null != invokeCallback && isValidElement14(invokeCallback) && null == invokeCallback.key && invokeCallback._store && !invokeCallback._store.validated && (escapedPrefix._store.validated = 2), callback = escapedPrefix), array.push(callback));
+          ), "" !== nameSoFar && null != invokeCallback && isValidElement13(invokeCallback) && null == invokeCallback.key && invokeCallback._store && !invokeCallback._store.validated && (escapedPrefix._store.validated = 2), callback = escapedPrefix), array.push(callback));
           return 1;
         }
         invokeCallback = 0;
@@ -536,8 +536,8 @@ var require_react_development = __commonJS({
       for (fnName in deprecatedAPIs)
         deprecatedAPIs.hasOwnProperty(fnName) && defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
       ComponentDummy.prototype = Component.prototype;
-      deprecatedAPIs = PureComponent.prototype = new ComponentDummy();
-      deprecatedAPIs.constructor = PureComponent;
+      deprecatedAPIs = PureComponent2.prototype = new ComponentDummy();
+      deprecatedAPIs.constructor = PureComponent2;
       assign2(deprecatedAPIs, Component.prototype);
       deprecatedAPIs.isPureReactComponent = true;
       var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = {
@@ -617,7 +617,7 @@ var require_react_development = __commonJS({
           }) || [];
         },
         only: function(children) {
-          if (!isValidElement14(children))
+          if (!isValidElement13(children))
             throw Error(
               "React.Children.only expected to receive a single React element child."
             );
@@ -629,7 +629,7 @@ var require_react_development = __commonJS({
       exports.Component = Component;
       exports.Fragment = REACT_FRAGMENT_TYPE;
       exports.Profiler = REACT_PROFILER_TYPE;
-      exports.PureComponent = PureComponent;
+      exports.PureComponent = PureComponent2;
       exports.StrictMode = REACT_STRICT_MODE_TYPE;
       exports.Suspense = REACT_SUSPENSE_TYPE;
       exports.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = ReactSharedInternals;
@@ -851,7 +851,7 @@ var require_react_development = __commonJS({
         });
         return elementType;
       };
-      exports.isValidElement = isValidElement14;
+      exports.isValidElement = isValidElement13;
       exports.lazy = function(ctor) {
         ctor = { _status: -1, _result: ctor };
         var lazyType = {
@@ -1061,7 +1061,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), Internals = {
+      var React40 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -1079,7 +1079,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React39.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React40.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -2404,7 +2404,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React39.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React40.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -2426,7 +2426,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect19(
+        useEffect20(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -2452,8 +2452,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState14 = React39.useState, useEffect19 = React39.useEffect, useLayoutEffect9 = React39.useLayoutEffect, useDebugValue2 = React39.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React39.useSyncExternalStore ? React39.useSyncExternalStore : shim;
+      var React40 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState14 = React40.useState, useEffect20 = React40.useEffect, useLayoutEffect9 = React40.useLayoutEffect, useDebugValue2 = React40.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React40.useSyncExternalStore ? React40.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -2480,7 +2480,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef19 = React39.useRef, useEffect19 = React39.useEffect, useMemo11 = React39.useMemo, useDebugValue2 = React39.useDebugValue;
+      var React40 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef19 = React40.useRef, useEffect20 = React40.useEffect, useMemo11 = React40.useMemo, useDebugValue2 = React40.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef19(null);
         if (null === instRef.current) {
@@ -2523,7 +2523,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-        useEffect19(
+        useEffect20(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -2934,7 +2934,7 @@ var require_use_sync_external_store_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React39.useSyncExternalStore, useRef19 = React39.useRef, useEffect19 = React39.useEffect, useMemo11 = React39.useMemo, useDebugValue2 = React39.useDebugValue;
+      var React40 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React40.useSyncExternalStore, useRef19 = React40.useRef, useEffect20 = React40.useEffect, useMemo11 = React40.useMemo, useDebugValue2 = React40.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef19(null);
         if (null === instRef.current) {
@@ -2977,7 +2977,7 @@ var require_use_sync_external_store_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-        useEffect19(
+        useEffect20(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -4070,12 +4070,12 @@ var require_eventemitter3 = __commonJS({
   "node_modules/eventemitter3/index.js"(exports, module) {
     "use strict";
     var has3 = Object.prototype.hasOwnProperty;
-    var prefix = "~";
+    var prefix2 = "~";
     function Events() {
     }
     if (Object.create) {
       Events.prototype = /* @__PURE__ */ Object.create(null);
-      if (!new Events().__proto__) prefix = false;
+      if (!new Events().__proto__) prefix2 = false;
     }
     function EE(fn, context, once) {
       this.fn = fn;
@@ -4086,7 +4086,7 @@ var require_eventemitter3 = __commonJS({
       if (typeof fn !== "function") {
         throw new TypeError("The listener must be a function");
       }
-      var listener2 = new EE(fn, context || emitter, once), evt = prefix ? prefix + event : event;
+      var listener2 = new EE(fn, context || emitter, once), evt = prefix2 ? prefix2 + event : event;
       if (!emitter._events[evt]) emitter._events[evt] = listener2, emitter._eventsCount++;
       else if (!emitter._events[evt].fn) emitter._events[evt].push(listener2);
       else emitter._events[evt] = [emitter._events[evt], listener2];
@@ -4104,7 +4104,7 @@ var require_eventemitter3 = __commonJS({
       var names = [], events, name;
       if (this._eventsCount === 0) return names;
       for (name in events = this._events) {
-        if (has3.call(events, name)) names.push(prefix ? name.slice(1) : name);
+        if (has3.call(events, name)) names.push(prefix2 ? name.slice(1) : name);
       }
       if (Object.getOwnPropertySymbols) {
         return names.concat(Object.getOwnPropertySymbols(events));
@@ -4112,7 +4112,7 @@ var require_eventemitter3 = __commonJS({
       return names;
     };
     EventEmitter2.prototype.listeners = function listeners(event) {
-      var evt = prefix ? prefix + event : event, handlers = this._events[evt];
+      var evt = prefix2 ? prefix2 + event : event, handlers = this._events[evt];
       if (!handlers) return [];
       if (handlers.fn) return [handlers.fn];
       for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
@@ -4121,13 +4121,13 @@ var require_eventemitter3 = __commonJS({
       return ee;
     };
     EventEmitter2.prototype.listenerCount = function listenerCount(event) {
-      var evt = prefix ? prefix + event : event, listeners = this._events[evt];
+      var evt = prefix2 ? prefix2 + event : event, listeners = this._events[evt];
       if (!listeners) return 0;
       if (listeners.fn) return 1;
       return listeners.length;
     };
     EventEmitter2.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
-      var evt = prefix ? prefix + event : event;
+      var evt = prefix2 ? prefix2 + event : event;
       if (!this._events[evt]) return false;
       var listeners = this._events[evt], len = arguments.length, args, i;
       if (listeners.fn) {
@@ -4184,7 +4184,7 @@ var require_eventemitter3 = __commonJS({
       return addListener2(this, event, fn, context, true);
     };
     EventEmitter2.prototype.removeListener = function removeListener2(event, fn, context, once) {
-      var evt = prefix ? prefix + event : event;
+      var evt = prefix2 ? prefix2 + event : event;
       if (!this._events[evt]) return this;
       if (!fn) {
         clearEvent(this, evt);
@@ -4209,7 +4209,7 @@ var require_eventemitter3 = __commonJS({
     EventEmitter2.prototype.removeAllListeners = function removeAllListeners(event) {
       var evt;
       if (event) {
-        evt = prefix ? prefix + event : event;
+        evt = prefix2 ? prefix2 + event : event;
         if (this._events[evt]) clearEvent(this, evt);
       } else {
         this._events = new Events();
@@ -4219,7 +4219,7 @@ var require_eventemitter3 = __commonJS({
     };
     EventEmitter2.prototype.off = EventEmitter2.prototype.removeListener;
     EventEmitter2.prototype.addListener = EventEmitter2.prototype.on;
-    EventEmitter2.prefixed = prefix;
+    EventEmitter2.prefixed = prefix2;
     EventEmitter2.EventEmitter = EventEmitter2;
     if ("undefined" !== typeof module) {
       module.exports = EventEmitter2;
@@ -4375,8 +4375,8 @@ var require_isPlainObject2 = __commonJS({
   }
 });
 
-// app/assets/react/chart.jsx
-var import_react50 = __toESM(require_react());
+// app/assets/react/stock_histogram.jsx
+var import_react51 = __toESM(require_react());
 
 // node_modules/recharts/es6/container/Surface.js
 var React = __toESM(require_react());
@@ -5896,9 +5896,9 @@ var isPercent = (value) => typeof value === "string" && value.indexOf("%") === v
 var isNumber = (value) => (typeof value === "number" || value instanceof Number) && !isNan(value);
 var isNumOrStr = (value) => isNumber(value) || typeof value === "string";
 var idCounter = 0;
-var uniqueId = (prefix) => {
+var uniqueId = (prefix2) => {
   var id = ++idCounter;
-  return "".concat(prefix || "").concat(id);
+  return "".concat(prefix2 || "").concat(id);
 };
 var getPercentValue = function getPercentValue2(percent, totalValue) {
   var defaultValue = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 0;
@@ -5951,35 +5951,6 @@ function findEntryInArray(ary, specifiedKey, specifiedValue) {
   }
   return ary.find((entry) => entry && (typeof specifiedKey === "function" ? specifiedKey(entry) : (0, import_get.default)(entry, specifiedKey)) === specifiedValue);
 }
-var getLinearRegression = (data) => {
-  var len = data.length;
-  var xsum = 0;
-  var ysum = 0;
-  var xysum = 0;
-  var xxsum = 0;
-  var xmin = Infinity;
-  var xmax = -Infinity;
-  var xcurrent = 0;
-  var ycurrent = 0;
-  for (var i = 0; i < len; i++) {
-    var _data$i, _data$i2;
-    xcurrent = ((_data$i = data[i]) === null || _data$i === void 0 ? void 0 : _data$i.cx) || 0;
-    ycurrent = ((_data$i2 = data[i]) === null || _data$i2 === void 0 ? void 0 : _data$i2.cy) || 0;
-    xsum += xcurrent;
-    ysum += ycurrent;
-    xysum += xcurrent * ycurrent;
-    xxsum += xcurrent * xcurrent;
-    xmin = Math.min(xmin, xcurrent);
-    xmax = Math.max(xmax, xcurrent);
-  }
-  var a2 = len * xxsum !== xsum * xsum ? (len * xysum - xsum * ysum) / (len * xxsum - xsum * xsum) : 0;
-  return {
-    xmin,
-    xmax,
-    a: a2,
-    b: (ysum - a2 * xsum) / len
-  };
-};
 var isNullish = (value) => {
   return value === null || typeof value === "undefined";
 };
@@ -6184,9 +6155,6 @@ var adaptEventsOfChild = (props, data, index) => {
     }
   });
   return out;
-};
-var isNonEmptyArray = (arr) => {
-  return Array.isArray(arr) && arr.length > 0;
 };
 
 // node_modules/recharts/es6/util/resolveDefaultProps.js
@@ -9630,6 +9598,27 @@ var getTicksOfAxis = (axis, isGrid, isAll) => {
     };
   }).filter(isNotNil);
 };
+var truncateByDomain = (value, domain) => {
+  if (!domain || domain.length !== 2 || !isNumber(domain[0]) || !isNumber(domain[1])) {
+    return value;
+  }
+  var minValue = Math.min(domain[0], domain[1]);
+  var maxValue = Math.max(domain[0], domain[1]);
+  var result = [value[0], value[1]];
+  if (!isNumber(value[0]) || value[0] < minValue) {
+    result[0] = minValue;
+  }
+  if (!isNumber(value[1]) || value[1] > maxValue) {
+    result[1] = maxValue;
+  }
+  if (result[0] > maxValue) {
+    result[0] = maxValue;
+  }
+  if (result[1] < minValue) {
+    result[1] = minValue;
+  }
+  return result;
+};
 var offsetSign = (series) => {
   var _series$;
   var n = series.length;
@@ -9722,31 +9711,49 @@ var getStackedData = (data, dataKeys, offsetType) => {
   });
   return result;
 };
-function getCateCoordinateOfLine(_ref2) {
+function getNormalizedStackId(publicStackId) {
+  return publicStackId == null ? void 0 : String(publicStackId);
+}
+var getCateCoordinateOfBar = (_ref2) => {
   var {
     axis,
     ticks: ticks2,
+    offset,
     bandSize,
     entry,
-    index,
-    dataKey
+    index
   } = _ref2;
   if (axis.type === "category") {
-    if (!axis.allowDuplicatedCategory && axis.dataKey && !isNullish(entry[axis.dataKey])) {
-      var matchedTick = findEntryInArray(ticks2, "value", entry[axis.dataKey]);
-      if (matchedTick) {
-        return matchedTick.coordinate + bandSize / 2;
-      }
-    }
-    return ticks2 !== null && ticks2 !== void 0 && ticks2[index] ? ticks2[index].coordinate + bandSize / 2 : null;
+    return ticks2[index] ? ticks2[index].coordinate + offset : null;
   }
-  var value = getValueByDataKey(entry, !isNullish(dataKey) ? dataKey : axis.dataKey);
+  var value = getValueByDataKey(entry, axis.dataKey, axis.scale.domain()[index]);
+  if (isNullish(value)) {
+    return null;
+  }
   var scaled = axis.scale.map(value);
   if (!isNumber(scaled)) {
     return null;
   }
-  return scaled;
-}
+  return scaled - bandSize / 2 + offset;
+};
+var getBaseValueOfBar = (_ref3) => {
+  var {
+    numericAxis
+  } = _ref3;
+  var domain = numericAxis.scale.domain();
+  if (numericAxis.type === "number") {
+    var minValue = Math.min(domain[0], domain[1]);
+    var maxValue = Math.max(domain[0], domain[1]);
+    if (minValue <= 0 && maxValue >= 0) {
+      return 0;
+    }
+    if (maxValue < 0) {
+      return maxValue;
+    }
+    return minValue;
+  }
+  return domain[0];
+};
 var getDomainOfSingle = (data) => {
   var flat = data.flat(2).filter(isNumber);
   return [Math.min(...flat), Math.max(...flat)];
@@ -12722,11 +12729,11 @@ function JavascriptAnimate(outsideProps) {
 // node_modules/recharts/es6/util/useAnimationId.js
 var import_react15 = __toESM(require_react());
 function useAnimationId(input) {
-  var prefix = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "animation-";
-  var animationId = (0, import_react15.useRef)(uniqueId(prefix));
+  var prefix2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "animation-";
+  var animationId = (0, import_react15.useRef)(uniqueId(prefix2));
   var prevProps = (0, import_react15.useRef)(input);
   if (prevProps.current !== input) {
-    animationId.current = uniqueId(prefix);
+    animationId.current = uniqueId(prefix2);
     prevProps.current = input;
   }
   return animationId.current;
@@ -13469,6 +13476,12 @@ var selectChartDataWithIndexesIfNotInPanoramaPosition4 = (state, _unused1, _unus
   }
   return selectChartDataWithIndexes(state);
 };
+var selectChartDataWithIndexesIfNotInPanoramaPosition3 = (state, _unused1, isPanorama) => {
+  if (isPanorama) {
+    return selectChartDataAndAlwaysIgnoreIndexes(state);
+  }
+  return selectChartDataWithIndexes(state);
+};
 var selectChartDataSliceIfNotInPanorama = createSelector([selectChartDataWithIndexesIfNotInPanoramaPosition4], (_ref2) => {
   var {
     chartData,
@@ -13786,7 +13799,10 @@ var getTickValuesFixedDomain = function getTickValuesFixedDomain2(_ref3, tickCou
 };
 
 // node_modules/recharts/es6/state/selectors/rootPropsSelectors.js
+var selectRootMaxBarSize = (state) => state.rootProps.maxBarSize;
+var selectBarGap = (state) => state.rootProps.barGap;
 var selectBarCategoryGap = (state) => state.rootProps.barCategoryGap;
+var selectRootBarSize = (state) => state.rootProps.barSize;
 var selectStackOffsetType = (state) => state.rootProps.stackOffset;
 var selectReverseStackOrder = (state) => state.rootProps.reverseStackOrder;
 var selectChartName = (state) => state.options.chartName;
@@ -15539,11 +15555,11 @@ function locale_default(locale3) {
     if (type === "n") comma = true, type = "g";
     else if (!formatTypes_default[type]) precision === void 0 && (precision = 12), trim = true, type = "g";
     if (zero3 || fill === "0" && align === "=") zero3 = true, fill = "0", align = "=";
-    var prefix = (options && options.prefix !== void 0 ? options.prefix : "") + (symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : ""), suffix2 = (symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "") + (options && options.suffix !== void 0 ? options.suffix : "");
+    var prefix2 = (options && options.prefix !== void 0 ? options.prefix : "") + (symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : ""), suffix2 = (symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "") + (options && options.suffix !== void 0 ? options.suffix : "");
     var formatType = formatTypes_default[type], maybeSuffix = /[defgprs%]/.test(type);
     precision = precision === void 0 ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
     function format2(value) {
-      var valuePrefix = prefix, valueSuffix = suffix2, i, n, c2;
+      var valuePrefix = prefix2, valueSuffix = suffix2, i, n, c2;
       if (type === "c") {
         valueSuffix = formatType(value) + valueSuffix;
         value = "";
@@ -18264,6 +18280,19 @@ var selectYAxisSize = createSelector(selectChartOffsetInternal, selectYAxisSetti
     height: offset.height
   };
 });
+var selectCartesianAxisSize = (state, axisType, axisId) => {
+  switch (axisType) {
+    case "xAxis": {
+      return selectXAxisSize(state, axisId).width;
+    }
+    case "yAxis": {
+      return selectYAxisSize(state, axisId).height;
+    }
+    default: {
+      return void 0;
+    }
+  }
+};
 var combineDuplicateDomain = (chartLayout, appliedValues, axis, axisType) => {
   if (axis == null) {
     return void 0;
@@ -22248,12 +22277,12 @@ var useIdFallback = () => {
 var useId = (_ref = React20["useId".toString()]) !== null && _ref !== void 0 ? _ref : useIdFallback;
 
 // node_modules/recharts/es6/util/useUniqueId.js
-function useUniqueId(prefix, customId) {
+function useUniqueId(prefix2, customId) {
   var generatedId = useId();
   if (customId) {
     return customId;
   }
-  return prefix ? "".concat(prefix, "-").concat(generatedId) : generatedId;
+  return prefix2 ? "".concat(prefix2, "-").concat(generatedId) : generatedId;
 }
 
 // node_modules/recharts/es6/context/RegisterGraphicalItemId.js
@@ -22416,6 +22445,7 @@ function _toPrimitive31(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
+var defaultAxisId = 0;
 var initialState8 = {
   xAxis: {},
   yAxis: {},
@@ -22568,6 +22598,210 @@ var selectPlotArea = createSelector([selectChartOffset, selectChartWidth, select
 var usePlotArea = () => {
   return useAppSelector(selectPlotArea);
 };
+
+// node_modules/recharts/es6/state/selectors/combiners/combineBarSizeList.js
+var getBarSize = (globalSize, totalSize, selfSize) => {
+  var barSize = selfSize !== null && selfSize !== void 0 ? selfSize : globalSize;
+  if (isNullish(barSize)) {
+    return void 0;
+  }
+  return getPercentValue(barSize, totalSize, 0);
+};
+var combineBarSizeList = (allBars, globalSize, totalSize) => {
+  var initialValue = {};
+  var stackedBars = allBars.filter(isStacked);
+  var unstackedBars = allBars.filter((b) => b.stackId == null);
+  var groupByStack = stackedBars.reduce((acc, bar) => {
+    var s2 = acc[bar.stackId];
+    if (s2 == null) {
+      s2 = [];
+    }
+    s2.push(bar);
+    acc[bar.stackId] = s2;
+    return acc;
+  }, initialValue);
+  var stackedSizeList = Object.entries(groupByStack).map((_ref2) => {
+    var _bars$;
+    var [stackId, bars] = _ref2;
+    var dataKeys = bars.map((b) => b.dataKey);
+    var barSize = getBarSize(globalSize, totalSize, (_bars$ = bars[0]) === null || _bars$ === void 0 ? void 0 : _bars$.barSize);
+    return {
+      stackId,
+      dataKeys,
+      barSize
+    };
+  });
+  var unstackedSizeList = unstackedBars.map((b) => {
+    var dataKeys = [b.dataKey].filter((dk) => dk != null);
+    var barSize = getBarSize(globalSize, totalSize, b.barSize);
+    return {
+      stackId: void 0,
+      dataKeys,
+      barSize
+    };
+  });
+  return [...stackedSizeList, ...unstackedSizeList];
+};
+
+// node_modules/recharts/es6/state/selectors/combiners/combineAllBarPositions.js
+function ownKeys30(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread30(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys30(Object(t), true).forEach(function(r3) {
+      _defineProperty32(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys30(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty32(e, r2, t) {
+  return (r2 = _toPropertyKey32(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey32(t) {
+  var i = _toPrimitive32(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive32(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
+function getBarPositions(barGap, barCategoryGap, bandSize, sizeList, maxBarSize) {
+  var _sizeList$;
+  var len = sizeList.length;
+  if (len < 1) {
+    return void 0;
+  }
+  var realBarGap = getPercentValue(barGap, bandSize, 0, true);
+  var result;
+  var initialValue = [];
+  if (isWellBehavedNumber((_sizeList$ = sizeList[0]) === null || _sizeList$ === void 0 ? void 0 : _sizeList$.barSize)) {
+    var useFull = false;
+    var fullBarSize = bandSize / len;
+    var sum = sizeList.reduce((res, entry) => res + (entry.barSize || 0), 0);
+    sum += (len - 1) * realBarGap;
+    if (sum >= bandSize) {
+      sum -= (len - 1) * realBarGap;
+      realBarGap = 0;
+    }
+    if (sum >= bandSize && fullBarSize > 0) {
+      useFull = true;
+      fullBarSize *= 0.9;
+      sum = len * fullBarSize;
+    }
+    var offset = (bandSize - sum) / 2 >> 0;
+    var prev = {
+      offset: offset - realBarGap,
+      size: 0
+    };
+    result = sizeList.reduce((res, entry) => {
+      var _entry$barSize;
+      var newPosition = {
+        stackId: entry.stackId,
+        dataKeys: entry.dataKeys,
+        position: {
+          offset: prev.offset + prev.size + realBarGap,
+          size: useFull ? fullBarSize : (_entry$barSize = entry.barSize) !== null && _entry$barSize !== void 0 ? _entry$barSize : 0
+        }
+      };
+      var newRes = [...res, newPosition];
+      prev = newPosition.position;
+      return newRes;
+    }, initialValue);
+  } else {
+    var _offset = getPercentValue(barCategoryGap, bandSize, 0, true);
+    if (bandSize - 2 * _offset - (len - 1) * realBarGap <= 0) {
+      realBarGap = 0;
+    }
+    var originalSize = (bandSize - 2 * _offset - (len - 1) * realBarGap) / len;
+    if (originalSize > 1) {
+      originalSize >>= 0;
+    }
+    var size = isWellBehavedNumber(maxBarSize) ? Math.min(originalSize, maxBarSize) : originalSize;
+    result = sizeList.reduce((res, entry, i) => [...res, {
+      stackId: entry.stackId,
+      dataKeys: entry.dataKeys,
+      position: {
+        offset: _offset + (originalSize + realBarGap) * i + (originalSize - size) / 2,
+        size
+      }
+    }], initialValue);
+  }
+  return result;
+}
+var combineAllBarPositions = (sizeList, globalMaxBarSize, barGap, barCategoryGap, barBandSize, bandSize, childMaxBarSize) => {
+  var maxBarSize = isNullish(childMaxBarSize) ? globalMaxBarSize : childMaxBarSize;
+  var allBarPositions = getBarPositions(barGap, barCategoryGap, barBandSize !== bandSize ? barBandSize : bandSize, sizeList, maxBarSize);
+  if (barBandSize !== bandSize && allBarPositions != null) {
+    allBarPositions = allBarPositions.map((pos) => _objectSpread30(_objectSpread30({}, pos), {}, {
+      position: _objectSpread30(_objectSpread30({}, pos.position), {}, {
+        offset: pos.position.offset - barBandSize / 2
+      })
+    }));
+  }
+  return allBarPositions;
+};
+
+// node_modules/recharts/es6/state/selectors/combiners/combineStackedData.js
+var combineStackedData = (stackGroups, barSettings) => {
+  var stackSeriesIdentifier = getStackSeriesIdentifier(barSettings);
+  if (!stackGroups || stackSeriesIdentifier == null || barSettings == null) {
+    return void 0;
+  }
+  var {
+    stackId
+  } = barSettings;
+  if (stackId == null) {
+    return void 0;
+  }
+  var stackGroup = stackGroups[stackId];
+  if (!stackGroup) {
+    return void 0;
+  }
+  var {
+    stackedData
+  } = stackGroup;
+  if (!stackedData) {
+    return void 0;
+  }
+  return stackedData.find((sd) => sd.key === stackSeriesIdentifier);
+};
+
+// node_modules/recharts/es6/state/selectors/combiners/combineBarPosition.js
+var combineBarPosition = (allBarPositions, barSettings) => {
+  if (allBarPositions == null || barSettings == null) {
+    return void 0;
+  }
+  var position = allBarPositions.find((p) => p.stackId === barSettings.stackId && barSettings.dataKey != null && p.dataKeys.includes(barSettings.dataKey));
+  if (position == null) {
+    return void 0;
+  }
+  return position.position;
+};
+
+// node_modules/recharts/es6/zIndex/getZIndexFromUnknown.js
+function getZIndexFromUnknown(input, defaultZIndex) {
+  if (input && typeof input === "object" && "zIndex" in input && typeof input.zIndex === "number" && isWellBehavedNumber(input.zIndex)) {
+    return input.zIndex;
+  }
+  return defaultZIndex;
+}
 
 // node_modules/recharts/es6/context/chartDataContext.js
 var import_react32 = __toESM(require_react());
@@ -22878,7 +23112,7 @@ function getEquidistantPreserveEndTicks(sign2, boundaries, getTickSize, ticks2, 
 }
 
 // node_modules/recharts/es6/cartesian/getTicks.js
-function ownKeys30(e, r2) {
+function ownKeys31(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -22888,25 +23122,25 @@ function ownKeys30(e, r2) {
   }
   return t;
 }
-function _objectSpread30(e) {
+function _objectSpread31(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys30(Object(t), true).forEach(function(r3) {
-      _defineProperty32(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys30(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys31(Object(t), true).forEach(function(r3) {
+      _defineProperty33(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys31(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty32(e, r2, t) {
-  return (r2 = _toPropertyKey32(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty33(e, r2, t) {
+  return (r2 = _toPropertyKey33(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey32(t) {
-  var i = _toPrimitive32(t, "string");
+function _toPropertyKey33(t) {
+  var i = _toPrimitive33(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive32(t, r2) {
+function _toPrimitive33(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -22940,11 +23174,11 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
     };
     if (i2 === len - 1) {
       var gap = sign2 * (entry.coordinate + sign2 * getSize() / 2 - end);
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread31(_objectSpread31({}, entry), {}, {
         tickCoord: gap > 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread31(_objectSpread31({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -22952,7 +23186,7 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
       var isShow = isVisible(sign2, entry.tickCoord, getSize, start, end);
       if (isShow) {
         end = entry.tickCoord - sign2 * (getSize() / 2 + minTickGap);
-        result[i2] = _objectSpread30(_objectSpread30({}, entry), {}, {
+        result[i2] = _objectSpread31(_objectSpread31({}, entry), {}, {
           isShow: true
         });
       }
@@ -22975,14 +23209,14 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     if (tail != null) {
       var tailSize = getTickSize(tail, len - 1);
       var tailGap = sign2 * (tail.coordinate + sign2 * tailSize / 2 - end);
-      result[len - 1] = tail = _objectSpread30(_objectSpread30({}, tail), {}, {
+      result[len - 1] = tail = _objectSpread31(_objectSpread31({}, tail), {}, {
         tickCoord: tailGap > 0 ? tail.coordinate - tailGap * sign2 : tail.coordinate
       });
       if (tail.tickCoord != null) {
         var isTailShow = isVisible(sign2, tail.tickCoord, () => tailSize, start, end);
         if (isTailShow) {
           end = tail.tickCoord - sign2 * (tailSize / 2 + minTickGap);
-          result[len - 1] = _objectSpread30(_objectSpread30({}, tail), {}, {
+          result[len - 1] = _objectSpread31(_objectSpread31({}, tail), {}, {
             isShow: true
           });
         }
@@ -23005,11 +23239,11 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     };
     if (i2 === 0) {
       var gap = sign2 * (entry.coordinate - sign2 * getSize() / 2 - start);
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread31(_objectSpread31({}, entry), {}, {
         tickCoord: gap < 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread31(_objectSpread31({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -23017,7 +23251,7 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
       var isShow = isVisible(sign2, entry.tickCoord, getSize, start, end);
       if (isShow) {
         start = entry.tickCoord + sign2 * (getSize() / 2 + minTickGap);
-        result[i2] = _objectSpread30(_objectSpread30({}, entry), {}, {
+        result[i2] = _objectSpread31(_objectSpread31({}, entry), {}, {
           isShow: true
         });
       }
@@ -23173,7 +23407,7 @@ function _extends15() {
     return n;
   }, _extends15.apply(null, arguments);
 }
-function ownKeys31(e, r2) {
+function ownKeys32(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -23183,25 +23417,25 @@ function ownKeys31(e, r2) {
   }
   return t;
 }
-function _objectSpread31(e) {
+function _objectSpread32(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys31(Object(t), true).forEach(function(r3) {
-      _defineProperty33(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys31(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys32(Object(t), true).forEach(function(r3) {
+      _defineProperty34(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys32(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty33(e, r2, t) {
-  return (r2 = _toPropertyKey33(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty34(e, r2, t) {
+  return (r2 = _toPropertyKey34(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey33(t) {
-  var i = _toPrimitive33(t, "string");
+function _toPropertyKey34(t) {
+  var i = _toPrimitive34(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive33(t, r2) {
+function _toPrimitive34(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -23252,12 +23486,12 @@ function AxisLine(axisLineProps) {
   if (!axisLine) {
     return null;
   }
-  var props = _objectSpread31(_objectSpread31(_objectSpread31({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
+  var props = _objectSpread32(_objectSpread32(_objectSpread32({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
     fill: "none"
   });
   if (orientation === "top" || orientation === "bottom") {
     var needHeight = +(orientation === "top" && !mirror || orientation === "bottom" && mirror);
-    props = _objectSpread31(_objectSpread31({}, props), {}, {
+    props = _objectSpread32(_objectSpread32({}, props), {}, {
       x1: x2,
       y1: y2 + needHeight * height,
       x2: x2 + width,
@@ -23265,7 +23499,7 @@ function AxisLine(axisLineProps) {
     });
   } else {
     var needWidth = +(orientation === "left" && !mirror || orientation === "right" && mirror);
-    props = _objectSpread31(_objectSpread31({}, props), {}, {
+    props = _objectSpread32(_objectSpread32({}, props), {}, {
       x1: x2 + needWidth * width,
       y1: y2,
       x2: x2 + needWidth * width,
@@ -23354,11 +23588,11 @@ function TickItem(props) {
   var tickItem;
   var combinedClassName = clsx(tickProps.className, "recharts-cartesian-axis-tick-value");
   if (/* @__PURE__ */ React23.isValidElement(option)) {
-    tickItem = /* @__PURE__ */ React23.cloneElement(option, _objectSpread31(_objectSpread31({}, tickProps), {}, {
+    tickItem = /* @__PURE__ */ React23.cloneElement(option, _objectSpread32(_objectSpread32({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else if (typeof option === "function") {
-    tickItem = option(_objectSpread31(_objectSpread31({}, tickProps), {}, {
+    tickItem = option(_objectSpread32(_objectSpread32({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else {
@@ -23428,7 +23662,7 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
     axisType,
     axisId
   } = props;
-  var finalTicks = getTicks(_objectSpread31(_objectSpread31({}, getTicksConfig), {}, {
+  var finalTicks = getTicks(_objectSpread32(_objectSpread32({}, getTicksConfig), {}, {
     ticks: ticks2
   }), fontSize, letterSpacing);
   var axisProps = svgPropertiesNoEvents(getTicksConfig);
@@ -23439,10 +23673,10 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
   if (typeof tickLine === "object") {
     tickLinePropsObject = tickLine;
   }
-  var tickLineProps = _objectSpread31(_objectSpread31({}, axisProps), {}, {
+  var tickLineProps = _objectSpread32(_objectSpread32({}, axisProps), {}, {
     fill: "none"
   }, tickLinePropsObject);
-  var tickLineCoords = finalTicks.map((entry) => _objectSpread31({
+  var tickLineCoords = finalTicks.map((entry) => _objectSpread32({
     entry
   }, getTickLineCoord(entry, x2, y2, width, height, orientation, tickSize, mirror, tickMargin)));
   var tickLines = tickLineCoords.map((_ref2) => {
@@ -23463,7 +23697,7 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
       entry,
       tick: tickCoord
     } = _ref3;
-    var tickProps = _objectSpread31(_objectSpread31(_objectSpread31(_objectSpread31({
+    var tickProps = _objectSpread32(_objectSpread32(_objectSpread32(_objectSpread32({
       verticalAnchor
     }, axisProps), {}, {
       textAnchor,
@@ -23478,7 +23712,7 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
     }, tickTextProps), {}, {
       angle: (_ref4 = (_tickTextProps$angle = tickTextProps === null || tickTextProps === void 0 ? void 0 : tickTextProps.angle) !== null && _tickTextProps$angle !== void 0 ? _tickTextProps$angle : axisProps.angle) !== null && _ref4 !== void 0 ? _ref4 : 0
     });
-    var finalTickProps = _objectSpread31(_objectSpread31({}, tickProps), customTickProps);
+    var finalTickProps = _objectSpread32(_objectSpread32({}, tickProps), customTickProps);
     return /* @__PURE__ */ React23.createElement(Layer, _extends15({
       className: "recharts-cartesian-axis-tick-label",
       key: "tick-label-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
@@ -23614,7 +23848,7 @@ var _excluded12 = ["x1", "y1", "x2", "y2", "key"];
 var _excluded26 = ["offset"];
 var _excluded32 = ["xAxisId", "yAxisId"];
 var _excluded42 = ["xAxisId", "yAxisId"];
-function ownKeys32(e, r2) {
+function ownKeys33(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -23624,25 +23858,25 @@ function ownKeys32(e, r2) {
   }
   return t;
 }
-function _objectSpread32(e) {
+function _objectSpread33(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys32(Object(t), true).forEach(function(r3) {
-      _defineProperty34(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys32(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys33(Object(t), true).forEach(function(r3) {
+      _defineProperty35(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys33(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty34(e, r2, t) {
-  return (r2 = _toPropertyKey34(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty35(e, r2, t) {
+  return (r2 = _toPropertyKey35(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey34(t) {
-  var i = _toPrimitive34(t, "string");
+function _toPropertyKey35(t) {
+  var i = _toPrimitive35(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive34(t, r2) {
+function _toPrimitive35(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -23754,7 +23988,7 @@ function HorizontalGridLines(props) {
     yAxisId
   } = props, otherLineItemProps = _objectWithoutProperties12(props, _excluded32);
   var items = horizontalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread32(_objectSpread32({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread33(_objectSpread33({}, otherLineItemProps), {}, {
       x1: x2,
       y1: entry,
       x2: x2 + width,
@@ -23787,7 +24021,7 @@ function VerticalGridLines(props) {
     yAxisId
   } = props, otherLineItemProps = _objectWithoutProperties12(props, _excluded42);
   var items = verticalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread32(_objectSpread32({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread33(_objectSpread33({}, otherLineItemProps), {}, {
       x1: entry,
       y1: y2,
       x2: entry,
@@ -23896,7 +24130,7 @@ var defaultVerticalCoordinatesGenerator = (_ref3, syncWithTicks) => {
     height,
     offset
   } = _ref3;
-  return getCoordinatesOfGrid(getTicks(_objectSpread32(_objectSpread32(_objectSpread32({}, defaultCartesianAxisProps), xAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread33(_objectSpread33(_objectSpread33({}, defaultCartesianAxisProps), xAxis), {}, {
     ticks: getTicksOfAxis(xAxis, true),
     viewBox: {
       x: 0,
@@ -23913,7 +24147,7 @@ var defaultHorizontalCoordinatesGenerator = (_ref4, syncWithTicks) => {
     height,
     offset
   } = _ref4;
-  return getCoordinatesOfGrid(getTicks(_objectSpread32(_objectSpread32(_objectSpread32({}, defaultCartesianAxisProps), yAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread33(_objectSpread33(_objectSpread33({}, defaultCartesianAxisProps), yAxis), {}, {
     ticks: getTicksOfAxis(yAxis, true),
     viewBox: {
       x: 0,
@@ -23944,7 +24178,7 @@ function CartesianGrid(props) {
   var chartWidth = useChartWidth();
   var chartHeight = useChartHeight();
   var offset = useOffsetInternal();
-  var propsIncludingDefaults = _objectSpread32(_objectSpread32({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
+  var propsIncludingDefaults = _objectSpread33(_objectSpread33({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
     x: isNumber(props.x) ? props.x : offset.left,
     y: isNumber(props.y) ? props.y : offset.top,
     width: isNumber(props.width) ? props.width : offset.width,
@@ -23976,7 +24210,7 @@ function CartesianGrid(props) {
   if ((!horizontalPoints || !horizontalPoints.length) && typeof horizontalCoordinatesGenerator === "function") {
     var isHorizontalValues = horizontalValues && horizontalValues.length;
     var generatorResult = horizontalCoordinatesGenerator({
-      yAxis: yAxis ? _objectSpread32(_objectSpread32({}, yAxis), {}, {
+      yAxis: yAxis ? _objectSpread33(_objectSpread33({}, yAxis), {}, {
         ticks: isHorizontalValues ? horizontalValues : yAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -23991,7 +24225,7 @@ function CartesianGrid(props) {
   if ((!verticalPoints || !verticalPoints.length) && typeof verticalCoordinatesGenerator === "function") {
     var isVerticalValues = verticalValues && verticalValues.length;
     var _generatorResult = verticalCoordinatesGenerator({
-      xAxis: xAxis ? _objectSpread32(_objectSpread32({}, xAxis), {}, {
+      xAxis: xAxis ? _objectSpread33(_objectSpread33({}, xAxis), {}, {
         ticks: isVerticalValues ? verticalValues : xAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -24168,13 +24402,39 @@ function GraphicalItemClipPath(_ref2) {
   }));
 }
 
-// node_modules/recharts/es6/cartesian/Scatter.js
-var React28 = __toESM(require_react());
-var import_react36 = __toESM(require_react());
+// node_modules/recharts/es6/state/selectors/graphicalItemSelectors.js
+function selectXAxisIdFromGraphicalItemId(state, id) {
+  var _state$graphicalItems, _state$graphicalItems2;
+  return (_state$graphicalItems = (_state$graphicalItems2 = state.graphicalItems.cartesianItems.find((item) => item.id === id)) === null || _state$graphicalItems2 === void 0 ? void 0 : _state$graphicalItems2.xAxisId) !== null && _state$graphicalItems !== void 0 ? _state$graphicalItems : defaultAxisId;
+}
+function selectYAxisIdFromGraphicalItemId(state, id) {
+  var _state$graphicalItems3, _state$graphicalItems4;
+  return (_state$graphicalItems3 = (_state$graphicalItems4 = state.graphicalItems.cartesianItems.find((item) => item.id === id)) === null || _state$graphicalItems4 === void 0 ? void 0 : _state$graphicalItems4.yAxisId) !== null && _state$graphicalItems3 !== void 0 ? _state$graphicalItems3 : defaultAxisId;
+}
 
-// node_modules/recharts/es6/util/ScatterUtils.js
+// node_modules/recharts/es6/cartesian/Bar.js
+var React29 = __toESM(require_react());
+var import_react37 = __toESM(require_react());
+
+// node_modules/recharts/es6/util/BarUtils.js
 var React27 = __toESM(require_react());
-var _excluded14 = ["option", "isActive"];
+
+// node_modules/tiny-invariant/dist/esm/tiny-invariant.js
+var isProduction = false;
+var prefix = "Invariant failed";
+function invariant(condition, message) {
+  if (condition) {
+    return;
+  }
+  if (isProduction) {
+    throw new Error(prefix);
+  }
+  var provided = typeof message === "function" ? message() : message;
+  var value = provided ? "".concat(prefix, ": ").concat(provided) : prefix;
+  throw new Error(value);
+}
+
+// node_modules/recharts/es6/util/BarUtils.js
 function _extends17() {
   return _extends17 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
@@ -24183,6 +24443,190 @@ function _extends17() {
     }
     return n;
   }, _extends17.apply(null, arguments);
+}
+function BarRectangle(props) {
+  return /* @__PURE__ */ React27.createElement(Shape, _extends17({
+    shapeType: "rectangle",
+    activeClassName: "recharts-active-bar",
+    inActiveClassName: "recharts-inactive-bar"
+  }, props));
+}
+var minPointSizeCallback = function minPointSizeCallback2(minPointSize) {
+  var defaultValue = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
+  return (value, index) => {
+    if (isNumber(minPointSize)) return minPointSize;
+    var isValueNumberOrNil = isNumber(value) || isNullish(value);
+    if (isValueNumberOrNil) {
+      return minPointSize(value, index);
+    }
+    !isValueNumberOrNil ? true ? invariant(false, "minPointSize callback function received a value with type of ".concat(typeof value, ". Currently only numbers or null/undefined are supported.")) : invariant(false) : void 0;
+    return defaultValue;
+  };
+};
+
+// node_modules/recharts/es6/state/selectors/barSelectors.js
+var pickIsPanorama = (_state, _id, isPanorama) => isPanorama;
+var pickBarId = (_state, id) => id;
+var selectSynchronisedBarSettings = createSelector([selectUnfilteredCartesianItems, pickBarId], (graphicalItems, id) => graphicalItems.filter((item) => item.type === "bar").find((item) => item.id === id));
+var selectMaxBarSize = createSelector([selectSynchronisedBarSettings], (barSettings) => barSettings === null || barSettings === void 0 ? void 0 : barSettings.maxBarSize);
+var pickCells = (_state, _id, _isPanorama, cells) => cells;
+var selectAllVisibleBars = createSelector([selectChartLayout, selectUnfilteredCartesianItems, selectXAxisIdFromGraphicalItemId, selectYAxisIdFromGraphicalItemId, pickIsPanorama], (layout, allItems, xAxisId, yAxisId, isPanorama) => allItems.filter((i) => {
+  if (layout === "horizontal") {
+    return i.xAxisId === xAxisId;
+  }
+  return i.yAxisId === yAxisId;
+}).filter((i) => i.isPanorama === isPanorama).filter((i) => i.hide === false).filter((i) => i.type === "bar"));
+var selectBarStackGroups = (state, id, isPanorama) => {
+  var layout = selectChartLayout(state);
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null || yAxisId == null) {
+    return void 0;
+  }
+  if (layout === "horizontal") {
+    return selectStackGroups(state, "yAxis", yAxisId, isPanorama);
+  }
+  return selectStackGroups(state, "xAxis", xAxisId, isPanorama);
+};
+var selectBarCartesianAxisSize = (state, id) => {
+  var layout = selectChartLayout(state);
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null || yAxisId == null) {
+    return void 0;
+  }
+  if (layout === "horizontal") {
+    return selectCartesianAxisSize(state, "xAxis", xAxisId);
+  }
+  return selectCartesianAxisSize(state, "yAxis", yAxisId);
+};
+var selectBarSizeList = createSelector([selectAllVisibleBars, selectRootBarSize, selectBarCartesianAxisSize], combineBarSizeList);
+var selectBarBandSize = (state, id, isPanorama) => {
+  var _ref2, _getBandSizeOfAxis;
+  var barSettings = selectSynchronisedBarSettings(state, id);
+  if (barSettings == null) {
+    return 0;
+  }
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null || yAxisId == null) {
+    return 0;
+  }
+  var layout = selectChartLayout(state);
+  var globalMaxBarSize = selectRootMaxBarSize(state);
+  var {
+    maxBarSize: childMaxBarSize
+  } = barSettings;
+  var maxBarSize = isNullish(childMaxBarSize) ? globalMaxBarSize : childMaxBarSize;
+  var axis, ticks2;
+  if (layout === "horizontal") {
+    axis = selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
+    ticks2 = selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
+  } else {
+    axis = selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
+    ticks2 = selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
+  }
+  return (_ref2 = (_getBandSizeOfAxis = getBandSizeOfAxis(axis, ticks2, true)) !== null && _getBandSizeOfAxis !== void 0 ? _getBandSizeOfAxis : maxBarSize) !== null && _ref2 !== void 0 ? _ref2 : 0;
+};
+var selectAxisBandSize = (state, id, isPanorama) => {
+  var layout = selectChartLayout(state);
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null || yAxisId == null) {
+    return void 0;
+  }
+  var axis, ticks2;
+  if (layout === "horizontal") {
+    axis = selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
+    ticks2 = selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
+  } else {
+    axis = selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
+    ticks2 = selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
+  }
+  return getBandSizeOfAxis(axis, ticks2);
+};
+var selectAllBarPositions = createSelector([selectBarSizeList, selectRootMaxBarSize, selectBarGap, selectBarCategoryGap, selectBarBandSize, selectAxisBandSize, selectMaxBarSize], combineAllBarPositions);
+var selectXAxisWithScale = (state, id, isPanorama) => {
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null) {
+    return void 0;
+  }
+  return selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
+};
+var selectYAxisWithScale = (state, id, isPanorama) => {
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (yAxisId == null) {
+    return void 0;
+  }
+  return selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
+};
+var selectXAxisTicks = (state, id, isPanorama) => {
+  var xAxisId = selectXAxisIdFromGraphicalItemId(state, id);
+  if (xAxisId == null) {
+    return void 0;
+  }
+  return selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
+};
+var selectYAxisTicks = (state, id, isPanorama) => {
+  var yAxisId = selectYAxisIdFromGraphicalItemId(state, id);
+  if (yAxisId == null) {
+    return void 0;
+  }
+  return selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
+};
+var selectBarPosition = createSelector([selectAllBarPositions, selectSynchronisedBarSettings], combineBarPosition);
+var selectStackedDataOfItem = createSelector([selectBarStackGroups, selectSynchronisedBarSettings], combineStackedData);
+var selectBarRectangles = createSelector([selectChartOffsetInternal, selectAxisViewBox, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks, selectBarPosition, selectChartLayout, selectChartDataWithIndexesIfNotInPanoramaPosition3, selectAxisBandSize, selectStackedDataOfItem, selectSynchronisedBarSettings, pickCells], (offset, axisViewBox, xAxis, yAxis, xAxisTicks, yAxisTicks, pos, layout, _ref2, bandSize, stackedData, barSettings, cells) => {
+  var {
+    chartData,
+    dataStartIndex,
+    dataEndIndex
+  } = _ref2;
+  if (barSettings == null || pos == null || axisViewBox == null || layout !== "horizontal" && layout !== "vertical" || xAxis == null || yAxis == null || xAxisTicks == null || yAxisTicks == null || bandSize == null) {
+    return void 0;
+  }
+  var {
+    data
+  } = barSettings;
+  var displayedData;
+  if (data != null && data.length > 0) {
+    displayedData = data;
+  } else {
+    displayedData = chartData === null || chartData === void 0 ? void 0 : chartData.slice(dataStartIndex, dataEndIndex + 1);
+  }
+  if (displayedData == null) {
+    return void 0;
+  }
+  return computeBarRectangles({
+    layout,
+    barSettings,
+    pos,
+    parentViewBox: axisViewBox,
+    bandSize,
+    xAxis,
+    yAxis,
+    xAxisTicks,
+    yAxisTicks,
+    stackedData,
+    displayedData,
+    offset,
+    cells,
+    dataStartIndex
+  });
+});
+
+// node_modules/recharts/es6/cartesian/BarStack.js
+var React28 = __toESM(require_react());
+var import_react36 = __toESM(require_react());
+var _excluded14 = ["index"];
+function _extends18() {
+  return _extends18 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends18.apply(null, arguments);
 }
 function _objectWithoutProperties14(e, t) {
   if (null == e) return {};
@@ -24202,73 +24646,93 @@ function _objectWithoutPropertiesLoose14(r2, e) {
   }
   return t;
 }
-function ScatterSymbol(_ref2) {
-  var {
-    option,
-    isActive
-  } = _ref2, props = _objectWithoutProperties14(_ref2, _excluded14);
-  if (typeof option === "string") {
-    return /* @__PURE__ */ React27.createElement(Shape, _extends17({
-      option: /* @__PURE__ */ React27.createElement(Symbols, _extends17({
-        type: option
-      }, props)),
-      isActive,
-      shapeType: "symbols"
-    }, props));
+var BarStackContext = /* @__PURE__ */ (0, import_react36.createContext)(void 0);
+var useStackId = (childStackId) => {
+  var stackSettings = (0, import_react36.useContext)(BarStackContext);
+  if (stackSettings != null) {
+    return stackSettings.stackId;
   }
-  return /* @__PURE__ */ React27.createElement(Shape, _extends17({
-    option,
-    isActive,
-    shapeType: "symbols"
-  }, props));
+  if (childStackId == null) {
+    return void 0;
+  }
+  return getNormalizedStackId(childStackId);
+};
+var getClipPathId = (stackId, index) => {
+  return "recharts-bar-stack-clip-path-".concat(stackId, "-").concat(index);
+};
+var useBarStackClipPathUrl = (index) => {
+  var barStackContext = (0, import_react36.useContext)(BarStackContext);
+  if (barStackContext == null) {
+    return void 0;
+  }
+  var {
+    stackId
+  } = barStackContext;
+  return "url(#".concat(getClipPathId(stackId, index), ")");
+};
+var BarStackClipLayer = (_ref2) => {
+  var {
+    index
+  } = _ref2, rest = _objectWithoutProperties14(_ref2, _excluded14);
+  var clipPathUrl = useBarStackClipPathUrl(index);
+  return /* @__PURE__ */ React28.createElement(Layer, _extends18({
+    className: "recharts-bar-stack-layer",
+    clipPath: clipPathUrl
+  }, rest));
+};
+
+// node_modules/recharts/es6/cartesian/Bar.js
+var _excluded15 = ["onMouseEnter", "onMouseLeave", "onClick"];
+var _excluded27 = ["value", "background", "tooltipPosition"];
+var _excluded33 = ["id"];
+var _excluded43 = ["onMouseEnter", "onClick", "onMouseLeave"];
+function _extends19() {
+  return _extends19 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends19.apply(null, arguments);
 }
-
-// node_modules/recharts/es6/state/selectors/scatterSelectors.js
-var selectXAxisWithScale = (state, xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
-var selectXAxisTicks = (state, xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
-var selectYAxisWithScale = (state, _xAxisId, yAxisId, _zAxisId, _id, _cells, isPanorama) => selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
-var selectYAxisTicks = (state, _xAxisId, yAxisId, _zAxisId, _id, _cells, isPanorama) => selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
-var selectZAxis = (state, _xAxisId, _yAxisId, zAxisId) => selectZAxisWithScale(state, "zAxis", zAxisId, false);
-var pickScatterId = (_state, _xAxisId, _yAxisId, _zAxisId, id) => id;
-var pickCells = (_state, _xAxisId, _yAxisId, _zAxisId, _id, cells) => cells;
-var scatterChartDataSelector = (state, _xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectChartDataWithIndexesIfNotInPanoramaPosition4(state, void 0, void 0, isPanorama);
-var selectSynchronisedScatterSettings = createSelector([selectUnfilteredCartesianItems, pickScatterId], (graphicalItems, id) => {
-  return graphicalItems.filter((item) => item.type === "scatter").find((item) => item.id === id);
-});
-var selectScatterPoints = createSelector([scatterChartDataSelector, selectXAxisWithScale, selectXAxisTicks, selectYAxisWithScale, selectYAxisTicks, selectZAxis, selectSynchronisedScatterSettings, pickCells], (_ref2, xAxis, xAxisTicks, yAxis, yAxisTicks, zAxis, scatterSettings, cells) => {
-  var {
-    chartData,
-    dataStartIndex,
-    dataEndIndex
-  } = _ref2;
-  if (scatterSettings == null) {
-    return void 0;
+function ownKeys34(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
   }
-  var displayedData;
-  if ((scatterSettings === null || scatterSettings === void 0 ? void 0 : scatterSettings.data) != null && scatterSettings.data.length > 0) {
-    displayedData = scatterSettings.data;
-  } else {
-    displayedData = chartData === null || chartData === void 0 ? void 0 : chartData.slice(dataStartIndex, dataEndIndex + 1);
+  return t;
+}
+function _objectSpread34(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys34(Object(t), true).forEach(function(r3) {
+      _defineProperty36(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys34(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
   }
-  if (displayedData == null || xAxis == null || yAxis == null || xAxisTicks == null || yAxisTicks == null || (xAxisTicks === null || xAxisTicks === void 0 ? void 0 : xAxisTicks.length) === 0 || (yAxisTicks === null || yAxisTicks === void 0 ? void 0 : yAxisTicks.length) === 0) {
-    return void 0;
+  return e;
+}
+function _defineProperty36(e, r2, t) {
+  return (r2 = _toPropertyKey36(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey36(t) {
+  var i = _toPrimitive36(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive36(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return computeScatterPoints({
-    displayedData,
-    xAxis,
-    yAxis,
-    zAxis,
-    scatterSettings,
-    xAxisTicks,
-    yAxisTicks,
-    cells
-  });
-});
-
-// node_modules/recharts/es6/cartesian/Scatter.js
-var _excluded15 = ["id"];
-var _excluded27 = ["onMouseEnter", "onClick", "onMouseLeave"];
-var _excluded33 = ["animationBegin", "animationDuration", "animationEasing", "hide", "isAnimationActive", "legendType", "lineJointType", "lineType", "shape", "xAxisId", "yAxisId", "zAxisId"];
+  return ("string" === r2 ? String : Number)(t);
+}
 function _objectWithoutProperties15(e, t) {
   if (null == e) return {};
   var o, r2, i = _objectWithoutPropertiesLoose15(e, t);
@@ -24287,54 +24751,7 @@ function _objectWithoutPropertiesLoose15(r2, e) {
   }
   return t;
 }
-function _extends18() {
-  return _extends18 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends18.apply(null, arguments);
-}
-function ownKeys33(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread33(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys33(Object(t), true).forEach(function(r3) {
-      _defineProperty35(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys33(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty35(e, r2, t) {
-  return (r2 = _toPropertyKey35(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey35(t) {
-  var i = _toPrimitive35(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive35(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2 || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-var computeLegendPayloadFromScatterProps = (props) => {
+var computeLegendPayloadFromBarData = (props) => {
   var {
     dataKey,
     name,
@@ -24351,228 +24768,295 @@ var computeLegendPayloadFromScatterProps = (props) => {
     payload: props
   }];
 };
-var SetScatterTooltipEntrySettings = /* @__PURE__ */ React28.memo((_ref2) => {
+var SetBarTooltipEntrySettings = /* @__PURE__ */ React29.memo((_ref2) => {
   var {
     dataKey,
-    points,
     stroke,
     strokeWidth,
     fill,
     name,
     hide,
+    unit: unit2,
     tooltipType,
     id
   } = _ref2;
   var tooltipEntrySettings = {
-    dataDefinedOnItem: points === null || points === void 0 ? void 0 : points.map((p) => p.tooltipPayload),
-    getPosition: (index) => {
-      var _points$Number;
-      return points === null || points === void 0 || (_points$Number = points[Number(index)]) === null || _points$Number === void 0 ? void 0 : _points$Number.tooltipPosition;
-    },
+    dataDefinedOnItem: void 0,
+    getPosition: noop,
     settings: {
       stroke,
       strokeWidth,
       fill,
-      nameKey: void 0,
       dataKey,
+      nameKey: void 0,
       name: getTooltipNameProp(name, dataKey),
       hide,
       type: tooltipType,
       color: fill,
-      unit: "",
-      // why doesn't Scatter support unit?
+      unit: unit2,
       graphicalItemId: id
     }
   };
-  return /* @__PURE__ */ React28.createElement(SetTooltipEntrySettings, {
+  return /* @__PURE__ */ React29.createElement(SetTooltipEntrySettings, {
     tooltipEntrySettings
   });
 });
-function ScatterLine(_ref2) {
+function BarBackground(props) {
+  var activeIndex = useAppSelector(selectActiveTooltipIndex);
   var {
-    points,
-    props
-  } = _ref2;
-  var {
-    line,
-    lineType,
-    lineJointType
+    data,
+    dataKey,
+    background: backgroundFromProps,
+    allOtherBarProps
   } = props;
-  if (!line) {
+  var {
+    onMouseEnter: onMouseEnterFromProps,
+    onMouseLeave: onMouseLeaveFromProps,
+    onClick: onItemClickFromProps
+  } = allOtherBarProps, restOfAllOtherProps = _objectWithoutProperties15(allOtherBarProps, _excluded15);
+  var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, dataKey, allOtherBarProps.id);
+  var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
+  var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, dataKey, allOtherBarProps.id);
+  if (!backgroundFromProps || data == null) {
     return null;
   }
-  var scatterProps = svgPropertiesNoEvents(props);
-  var customLineProps = svgPropertiesNoEventsFromUnknown(line);
-  var linePoints, lineItem;
-  if (lineType === "joint") {
-    linePoints = points.map((entry) => {
-      var _entry$cx, _entry$cy;
-      return {
-        x: (_entry$cx = entry.cx) !== null && _entry$cx !== void 0 ? _entry$cx : null,
-        y: (_entry$cy = entry.cy) !== null && _entry$cy !== void 0 ? _entry$cy : null
-      };
-    });
-  } else if (lineType === "fitting") {
+  var backgroundProps = svgPropertiesNoEventsFromUnknown(backgroundFromProps);
+  return /* @__PURE__ */ React29.createElement(ZIndexLayer, {
+    zIndex: getZIndexFromUnknown(backgroundFromProps, DefaultZIndexes.barBackground)
+  }, data.map((entry, i) => {
     var {
-      xmin,
-      xmax,
-      a: a2,
-      b
-    } = getLinearRegression(points);
-    var linearExp = (x2) => a2 * x2 + b;
-    linePoints = [{
-      x: xmin,
-      y: linearExp(xmin)
-    }, {
-      x: xmax,
-      y: linearExp(xmax)
-    }];
-  }
-  var lineProps = _objectSpread33(_objectSpread33(_objectSpread33({}, scatterProps), {}, {
-    // @ts-expect-error customLineProps is contributing unknown props
-    fill: "none",
-    // @ts-expect-error customLineProps is contributing unknown props
-    stroke: scatterProps && scatterProps.fill
-  }, customLineProps), {}, {
-    // @ts-expect-error linePoints is used before it is assigned (???)
-    points: linePoints
-  });
-  if (/* @__PURE__ */ React28.isValidElement(line)) {
-    lineItem = /* @__PURE__ */ React28.cloneElement(line, lineProps);
-  } else if (typeof line === "function") {
-    lineItem = line(lineProps);
-  } else {
-    lineItem = /* @__PURE__ */ React28.createElement(Curve, _extends18({}, lineProps, {
-      type: lineJointType
-    }));
-  }
-  return /* @__PURE__ */ React28.createElement(Layer, {
-    className: "recharts-scatter-line",
-    key: "recharts-scatter-line"
-  }, lineItem);
+      value,
+      background: backgroundFromDataEntry,
+      tooltipPosition
+    } = entry, rest = _objectWithoutProperties15(entry, _excluded27);
+    if (!backgroundFromDataEntry) {
+      return null;
+    }
+    var onMouseEnter = onMouseEnterFromContext(entry, i);
+    var onMouseLeave = onMouseLeaveFromContext(entry, i);
+    var onClick = onClickFromContext(entry, i);
+    var barRectangleProps = _objectSpread34(_objectSpread34(_objectSpread34(_objectSpread34(_objectSpread34({
+      option: backgroundFromProps,
+      isActive: String(i) === activeIndex
+    }, rest), {}, {
+      // @ts-expect-error backgroundProps is contributing unknown props
+      fill: "#eee"
+    }, backgroundFromDataEntry), backgroundProps), adaptEventsOfChild(restOfAllOtherProps, entry, i)), {}, {
+      onMouseEnter,
+      onMouseLeave,
+      onClick,
+      dataKey,
+      index: i,
+      className: "recharts-bar-background-rectangle"
+    });
+    return /* @__PURE__ */ React29.createElement(BarRectangle, _extends19({
+      key: "background-bar-".concat(i)
+    }, barRectangleProps));
+  }));
 }
-function ScatterLabelListProvider(_ref3) {
+function BarLabelListProvider(_ref2) {
   var {
     showLabels,
-    points,
-    children
-  } = _ref3;
-  var chartViewBox = useViewBox();
-  var labelListEntries = (0, import_react36.useMemo)(() => {
-    return points === null || points === void 0 ? void 0 : points.map((point4) => {
-      var _point$x, _point$y;
-      var viewBox = {
-        /*
-         * Scatter label uses x and y as the reference point for the label,
-         * not cx and cy.
-         */
-        x: (_point$x = point4.x) !== null && _point$x !== void 0 ? _point$x : 0,
-        /*
-         * Scatter label uses x and y as the reference point for the label,
-         * not cx and cy.
-         */
-        y: (_point$y = point4.y) !== null && _point$y !== void 0 ? _point$y : 0,
-        width: point4.width,
-        height: point4.height,
-        lowerWidth: point4.width,
-        upperWidth: point4.width
-      };
-      return _objectSpread33(_objectSpread33({}, viewBox), {}, {
-        /*
-         * Here we put undefined because Scatter shows two values usually, one for X and one for Y.
-         * LabelList will see this undefined and will use its own `dataKey` prop to determine which value to show,
-         * using the payload below.
-         */
-        value: void 0,
-        payload: point4.payload,
-        viewBox,
-        parentViewBox: chartViewBox,
-        fill: void 0
-      });
+    children,
+    rects
+  } = _ref2;
+  var labelListEntries = rects === null || rects === void 0 ? void 0 : rects.map((entry) => {
+    var viewBox = {
+      x: entry.x,
+      y: entry.y,
+      width: entry.width,
+      lowerWidth: entry.width,
+      upperWidth: entry.width,
+      height: entry.height
+    };
+    return _objectSpread34(_objectSpread34({}, viewBox), {}, {
+      value: entry.value,
+      payload: entry.payload,
+      parentViewBox: entry.parentViewBox,
+      viewBox,
+      fill: entry.fill
     });
-  }, [chartViewBox, points]);
-  return /* @__PURE__ */ React28.createElement(CartesianLabelListContextProvider, {
+  });
+  return /* @__PURE__ */ React29.createElement(CartesianLabelListContextProvider, {
     value: showLabels ? labelListEntries : void 0
   }, children);
 }
-function ScatterSymbols(props) {
-  var {
-    points,
-    allOtherScatterProps
-  } = props;
+function BarRectangleWithActiveState(props) {
   var {
     shape,
-    activeShape,
+    activeBar,
+    baseProps,
+    entry,
+    index,
     dataKey
-  } = allOtherScatterProps;
-  var {
-    id
-  } = allOtherScatterProps, allOtherPropsWithoutId = _objectWithoutProperties15(allOtherScatterProps, _excluded15);
+  } = props;
   var activeIndex = useAppSelector(selectActiveTooltipIndex);
+  var activeDataKey = useAppSelector(selectActiveTooltipDataKey);
+  var isActive = activeBar && String(entry.originalDataIndex) === activeIndex && (activeDataKey == null || dataKey === activeDataKey);
+  var [stayInLayer, setStayInLayer] = (0, import_react37.useState)(false);
+  var [hasMountedActive, setHasMountedActive] = (0, import_react37.useState)(false);
+  (0, import_react37.useEffect)(() => {
+    var rafId4;
+    if (isActive) {
+      setStayInLayer(true);
+      rafId4 = requestAnimationFrame(() => {
+        setHasMountedActive(true);
+      });
+    } else {
+      setHasMountedActive(false);
+    }
+    return () => {
+      cancelAnimationFrame(rafId4);
+    };
+  }, [isActive]);
+  var handleTransitionEnd = (0, import_react37.useCallback)(() => {
+    if (!isActive) {
+      setStayInLayer(false);
+    }
+  }, [isActive]);
+  var isVisuallyActive = isActive && hasMountedActive;
+  var shouldRenderInLayer = isActive || stayInLayer;
+  var option;
+  if (isActive) {
+    if (activeBar === true) {
+      option = shape;
+    } else {
+      option = activeBar;
+    }
+  } else {
+    option = shape;
+  }
+  var content = /* @__PURE__ */ React29.createElement(BarRectangle, _extends19({}, baseProps, {
+    name: String(baseProps.name)
+  }, entry, {
+    isActive: isVisuallyActive,
+    option,
+    index,
+    dataKey,
+    onTransitionEnd: handleTransitionEnd
+  }));
+  if (shouldRenderInLayer) {
+    return /* @__PURE__ */ React29.createElement(ZIndexLayer, {
+      zIndex: DefaultZIndexes.activeBar
+    }, /* @__PURE__ */ React29.createElement(BarStackClipLayer, {
+      index: entry.originalDataIndex
+    }, content));
+  }
+  return content;
+}
+function BarRectangleNeverActive(props) {
+  var {
+    shape,
+    baseProps,
+    entry,
+    index,
+    dataKey
+  } = props;
+  return /* @__PURE__ */ React29.createElement(BarRectangle, _extends19({}, baseProps, {
+    name: String(baseProps.name)
+  }, entry, {
+    isActive: false,
+    option: shape,
+    index,
+    dataKey
+  }));
+}
+function BarRectangles(_ref3) {
+  var _svgPropertiesNoEvent;
+  var {
+    data,
+    props
+  } = _ref3;
+  var _ref4 = (_svgPropertiesNoEvent = svgPropertiesNoEvents(props)) !== null && _svgPropertiesNoEvent !== void 0 ? _svgPropertiesNoEvent : {}, {
+    id
+  } = _ref4, baseProps = _objectWithoutProperties15(_ref4, _excluded33);
+  var {
+    shape,
+    dataKey,
+    activeBar
+  } = props;
   var {
     onMouseEnter: onMouseEnterFromProps,
     onClick: onItemClickFromProps,
     onMouseLeave: onMouseLeaveFromProps
-  } = allOtherScatterProps, restOfAllOtherProps = _objectWithoutProperties15(allOtherScatterProps, _excluded27);
+  } = props, restOfAllOtherProps = _objectWithoutProperties15(props, _excluded43);
   var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, dataKey, id);
   var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
   var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, dataKey, id);
-  if (!isNonEmptyArray(points)) {
+  if (!data) {
     return null;
   }
-  var baseProps = svgPropertiesNoEvents(allOtherPropsWithoutId);
-  return /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(ScatterLine, {
-    points,
-    props: allOtherPropsWithoutId
-  }), points.map((entry, i) => {
-    var hasActiveShape = activeShape != null && activeShape !== false;
-    var isActive = hasActiveShape && activeIndex === String(i);
-    var option = hasActiveShape && isActive ? activeShape : shape;
-    var symbolProps = _objectSpread33(_objectSpread33(_objectSpread33({}, baseProps), entry), {}, {
-      index: i,
-      [DATA_ITEM_GRAPHICAL_ITEM_ID_ATTRIBUTE_NAME]: String(id)
-    });
-    return /* @__PURE__ */ React28.createElement(ZIndexLayer, {
-      key: "symbol-".concat(entry === null || entry === void 0 ? void 0 : entry.cx, "-").concat(entry === null || entry === void 0 ? void 0 : entry.cy, "-").concat(entry === null || entry === void 0 ? void 0 : entry.size, "-").concat(i),
-      zIndex: isActive ? DefaultZIndexes.activeDot : void 0
-    }, /* @__PURE__ */ React28.createElement(Layer, _extends18({
-      className: "recharts-scatter-symbol"
+  return /* @__PURE__ */ React29.createElement(React29.Fragment, null, data.map((entry, i) => {
+    return /* @__PURE__ */ React29.createElement(BarStackClipLayer, _extends19({
+      index: entry.originalDataIndex,
+      key: "rectangle-".concat(entry === null || entry === void 0 ? void 0 : entry.x, "-").concat(entry === null || entry === void 0 ? void 0 : entry.y, "-").concat(entry === null || entry === void 0 ? void 0 : entry.value, "-").concat(i),
+      className: "recharts-bar-rectangle"
     }, adaptEventsOfChild(restOfAllOtherProps, entry, i), {
       onMouseEnter: onMouseEnterFromContext(entry, i),
       onMouseLeave: onMouseLeaveFromContext(entry, i),
       onClick: onClickFromContext(entry, i)
-    }), /* @__PURE__ */ React28.createElement(ScatterSymbol, _extends18({
-      option,
-      isActive
-    }, symbolProps))));
+    }), activeBar ? /* @__PURE__ */ React29.createElement(BarRectangleWithActiveState, {
+      shape,
+      activeBar,
+      baseProps,
+      entry,
+      index: i,
+      dataKey
+    }) : (
+      /*
+       * If the `activeBar` prop is falsy, then let's call the variant without hooks.
+       * Using the `selectActiveTooltipIndex` selector is usually fast
+       * but in charts with large-ish amount of data even the few nanoseconds add up to a noticeable jank.
+       * If the activeBar is false then we don't need to know which index is active - because we won't use it anyway.
+       * So let's just skip the hooks altogether. That way, React can skip rendering the component,
+       * and can skip the tree reconciliation for its children too.
+       * Because we can't call hooks conditionally, we need to have a separate component for that.
+       */
+      /* @__PURE__ */ React29.createElement(BarRectangleNeverActive, {
+        shape,
+        baseProps,
+        entry,
+        index: i,
+        dataKey
+      })
+    ));
   }));
 }
-function SymbolsWithAnimation(_ref4) {
+function RectanglesWithAnimation(_ref5) {
   var {
-    previousPointsRef,
-    props
-  } = _ref4;
+    props,
+    previousRectanglesRef
+  } = _ref5;
   var {
-    points,
+    data,
+    layout,
     isAnimationActive,
     animationBegin,
     animationDuration,
-    animationEasing
+    animationEasing,
+    onAnimationEnd,
+    onAnimationStart
   } = props;
-  var prevPoints = previousPointsRef.current;
-  var animationId = useAnimationId(props, "recharts-scatter-");
-  var [isAnimating, setIsAnimating] = (0, import_react36.useState)(false);
-  var handleAnimationEnd = (0, import_react36.useCallback)(() => {
-    setIsAnimating(false);
-  }, []);
-  var handleAnimationStart = (0, import_react36.useCallback)(() => {
-    setIsAnimating(true);
-  }, []);
+  var prevData = previousRectanglesRef.current;
+  var animationId = useAnimationId(props, "recharts-bar-");
+  var [isAnimating, setIsAnimating] = (0, import_react37.useState)(false);
   var showLabels = !isAnimating;
-  return /* @__PURE__ */ React28.createElement(ScatterLabelListProvider, {
+  var handleAnimationEnd = (0, import_react37.useCallback)(() => {
+    if (typeof onAnimationEnd === "function") {
+      onAnimationEnd();
+    }
+    setIsAnimating(false);
+  }, [onAnimationEnd]);
+  var handleAnimationStart = (0, import_react37.useCallback)(() => {
+    if (typeof onAnimationStart === "function") {
+      onAnimationStart();
+    }
+    setIsAnimating(true);
+  }, [onAnimationStart]);
+  return /* @__PURE__ */ React29.createElement(BarLabelListProvider, {
     showLabels,
-    points
-  }, props.children, /* @__PURE__ */ React28.createElement(JavascriptAnimate, {
+    rects: data
+  }, /* @__PURE__ */ React29.createElement(JavascriptAnimate, {
     animationId,
     begin: animationBegin,
     duration: animationDuration,
@@ -24582,276 +25066,334 @@ function SymbolsWithAnimation(_ref4) {
     onAnimationStart: handleAnimationStart,
     key: animationId
   }, (t) => {
-    var stepData = t === 1 ? points : points === null || points === void 0 ? void 0 : points.map((entry, index) => {
-      var prev = prevPoints && prevPoints[index];
+    var stepData = t === 1 ? data : data === null || data === void 0 ? void 0 : data.map((entry, index) => {
+      var prev = prevData && prevData[index];
       if (prev) {
-        return _objectSpread33(_objectSpread33({}, entry), {}, {
-          cx: entry.cx == null ? void 0 : interpolate(prev.cx, entry.cx, t),
-          cy: entry.cy == null ? void 0 : interpolate(prev.cy, entry.cy, t),
-          size: interpolate(prev.size, entry.size, t)
+        return _objectSpread34(_objectSpread34({}, entry), {}, {
+          x: interpolate(prev.x, entry.x, t),
+          y: interpolate(prev.y, entry.y, t),
+          width: interpolate(prev.width, entry.width, t),
+          height: interpolate(prev.height, entry.height, t)
         });
       }
-      return _objectSpread33(_objectSpread33({}, entry), {}, {
-        size: interpolate(0, entry.size, t)
+      if (layout === "horizontal") {
+        var height = interpolate(0, entry.height, t);
+        var y2 = interpolate(entry.stackedBarStart, entry.y, t);
+        return _objectSpread34(_objectSpread34({}, entry), {}, {
+          y: y2,
+          height
+        });
+      }
+      var w = interpolate(0, entry.width, t);
+      var x2 = interpolate(entry.stackedBarStart, entry.x, t);
+      return _objectSpread34(_objectSpread34({}, entry), {}, {
+        width: w,
+        x: x2
       });
     });
     if (t > 0) {
-      previousPointsRef.current = stepData;
+      previousRectanglesRef.current = stepData !== null && stepData !== void 0 ? stepData : null;
     }
-    return /* @__PURE__ */ React28.createElement(Layer, null, /* @__PURE__ */ React28.createElement(ScatterSymbols, {
-      points: stepData,
-      allOtherScatterProps: props,
-      showLabels
+    if (stepData == null) {
+      return null;
+    }
+    return /* @__PURE__ */ React29.createElement(Layer, null, /* @__PURE__ */ React29.createElement(BarRectangles, {
+      props,
+      data: stepData
     }));
-  }), /* @__PURE__ */ React28.createElement(LabelListFromLabelProp, {
+  }), /* @__PURE__ */ React29.createElement(LabelListFromLabelProp, {
     label: props.label
-  }));
+  }), props.children);
 }
-function computeScatterPoints(_ref5) {
-  var {
-    displayedData,
-    xAxis,
-    yAxis,
-    zAxis,
-    scatterSettings,
-    xAxisTicks,
-    yAxisTicks,
-    cells
-  } = _ref5;
-  var xAxisDataKey = isNullish(xAxis.dataKey) ? scatterSettings.dataKey : xAxis.dataKey;
-  var yAxisDataKey = isNullish(yAxis.dataKey) ? scatterSettings.dataKey : yAxis.dataKey;
-  var zAxisDataKey = zAxis && zAxis.dataKey;
-  var defaultRangeZ = zAxis ? zAxis.range : implicitZAxis.range;
-  var defaultZ = defaultRangeZ && defaultRangeZ[0];
-  var xBandSize = xAxis.scale.bandwidth ? xAxis.scale.bandwidth() : 0;
-  var yBandSize = yAxis.scale.bandwidth ? yAxis.scale.bandwidth() : 0;
-  return displayedData.map((entry, index) => {
-    var x2 = getValueByDataKey(entry, xAxisDataKey);
-    var y2 = getValueByDataKey(entry, yAxisDataKey);
-    var z = !isNullish(zAxisDataKey) && getValueByDataKey(entry, zAxisDataKey) || "-";
-    var tooltipPayload = [{
-      name: isNullish(xAxis.dataKey) ? scatterSettings.name : xAxis.name || String(xAxis.dataKey),
-      unit: xAxis.unit || "",
-      // @ts-expect-error getValueByDataKey does not validate the output type
-      value: x2,
-      payload: entry,
-      dataKey: xAxisDataKey,
-      type: scatterSettings.tooltipType,
-      graphicalItemId: scatterSettings.id
-    }, {
-      name: isNullish(yAxis.dataKey) ? scatterSettings.name : yAxis.name || String(yAxis.dataKey),
-      unit: yAxis.unit || "",
-      // @ts-expect-error getValueByDataKey does not validate the output type
-      value: y2,
-      payload: entry,
-      dataKey: yAxisDataKey,
-      type: scatterSettings.tooltipType,
-      graphicalItemId: scatterSettings.id
-    }];
-    if (z !== "-" && zAxis != null) {
-      tooltipPayload.push({
-        // @ts-expect-error name prop should not have dataKey in it
-        name: zAxis.name || zAxis.dataKey,
-        unit: zAxis.unit || "",
-        // @ts-expect-error getValueByDataKey does not validate the output type
-        value: z,
-        payload: entry,
-        dataKey: zAxisDataKey,
-        type: scatterSettings.tooltipType,
-        graphicalItemId: scatterSettings.id
-      });
-    }
-    var cx = getCateCoordinateOfLine({
-      axis: xAxis,
-      ticks: xAxisTicks,
-      bandSize: xBandSize,
-      entry,
-      index,
-      dataKey: xAxisDataKey
-    });
-    var cy = getCateCoordinateOfLine({
-      axis: yAxis,
-      ticks: yAxisTicks,
-      bandSize: yBandSize,
-      entry,
-      index,
-      dataKey: yAxisDataKey
-    });
-    var size = z !== "-" && zAxis != null ? zAxis.scale.map(z) : defaultZ;
-    var radius = size == null ? 0 : Math.sqrt(Math.max(size, 0) / Math.PI);
-    return _objectSpread33(_objectSpread33({}, entry), {}, {
-      cx,
-      cy,
-      x: cx == null ? void 0 : cx - radius,
-      y: cy == null ? void 0 : cy - radius,
-      width: 2 * radius,
-      height: 2 * radius,
-      size,
-      node: {
-        x: x2,
-        y: y2,
-        z
-      },
-      tooltipPayload,
-      tooltipPosition: {
-        x: cx,
-        y: cy
-      },
-      payload: entry
-    }, cells && cells[index] && cells[index].props);
+function RenderRectangles(props) {
+  var previousRectanglesRef = (0, import_react37.useRef)(null);
+  return /* @__PURE__ */ React29.createElement(RectanglesWithAnimation, {
+    previousRectanglesRef,
+    props
   });
 }
-var errorBarDataPointFormatter = (dataPoint, dataKey, direction) => {
+var defaultMinPointSize = 0;
+var errorBarDataPointFormatter = (dataPoint, dataKey) => {
+  var value = Array.isArray(dataPoint.value) ? dataPoint.value[1] : dataPoint.value;
   return {
-    x: dataPoint.cx,
-    y: dataPoint.cy,
-    value: direction === "x" ? Number(dataPoint.node.x) : Number(dataPoint.node.y),
-    // @ts-expect-error getValueByDataKey does not validate the output type
+    x: dataPoint.x,
+    y: dataPoint.y,
+    value,
+    // getValueByDataKey does not validate the output type
     errorVal: getValueByDataKey(dataPoint, dataKey)
   };
 };
-function ScatterWithId(props) {
-  var {
-    hide,
-    points,
-    className,
-    needClip,
-    xAxisId,
-    yAxisId,
-    id
-  } = props;
-  var previousPointsRef = (0, import_react36.useRef)(null);
-  if (hide) {
-    return null;
+var BarWithState = class extends import_react37.PureComponent {
+  render() {
+    var {
+      hide,
+      data,
+      dataKey,
+      className,
+      xAxisId,
+      yAxisId,
+      needClip,
+      background,
+      id
+    } = this.props;
+    if (hide || data == null) {
+      return null;
+    }
+    var layerClass = clsx("recharts-bar", className);
+    var clipPathId = id;
+    return /* @__PURE__ */ React29.createElement(Layer, {
+      className: layerClass,
+      id
+    }, needClip && /* @__PURE__ */ React29.createElement("defs", null, /* @__PURE__ */ React29.createElement(GraphicalItemClipPath, {
+      clipPathId,
+      xAxisId,
+      yAxisId
+    })), /* @__PURE__ */ React29.createElement(Layer, {
+      className: "recharts-bar-rectangles",
+      clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : void 0
+    }, /* @__PURE__ */ React29.createElement(BarBackground, {
+      data,
+      dataKey,
+      background,
+      allOtherBarProps: this.props
+    }), /* @__PURE__ */ React29.createElement(RenderRectangles, this.props)));
   }
-  var layerClass = clsx("recharts-scatter", className);
-  var clipPathId = id;
-  return /* @__PURE__ */ React28.createElement(ZIndexLayer, {
-    zIndex: props.zIndex
-  }, /* @__PURE__ */ React28.createElement(Layer, {
-    className: layerClass,
-    clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : void 0,
-    id
-  }, needClip && /* @__PURE__ */ React28.createElement("defs", null, /* @__PURE__ */ React28.createElement(GraphicalItemClipPath, {
-    clipPathId,
-    xAxisId,
-    yAxisId
-  })), /* @__PURE__ */ React28.createElement(SetErrorBarContext, {
-    xAxisId,
-    yAxisId,
-    data: points,
-    dataPointFormatter: errorBarDataPointFormatter,
-    errorBarOffset: 0
-  }, /* @__PURE__ */ React28.createElement(Layer, {
-    key: "recharts-scatter-symbols"
-  }, /* @__PURE__ */ React28.createElement(SymbolsWithAnimation, {
-    props,
-    previousPointsRef
-  })))));
-}
-var defaultScatterProps = {
-  xAxisId: 0,
-  yAxisId: 0,
-  zAxisId: 0,
-  label: false,
-  line: false,
-  legendType: "circle",
-  lineType: "joint",
-  lineJointType: "linear",
-  shape: "circle",
-  hide: false,
-  isAnimationActive: "auto",
+};
+var defaultBarProps = {
+  activeBar: false,
   animationBegin: 0,
   animationDuration: 400,
-  animationEasing: "linear",
-  zIndex: DefaultZIndexes.scatter
+  animationEasing: "ease",
+  background: false,
+  hide: false,
+  isAnimationActive: "auto",
+  label: false,
+  legendType: "rect",
+  minPointSize: defaultMinPointSize,
+  xAxisId: 0,
+  yAxisId: 0,
+  zIndex: DefaultZIndexes.bar
 };
-function ScatterImpl(props) {
-  var _resolveDefaultProps = resolveDefaultProps(props, defaultScatterProps), {
+function BarImpl(props) {
+  var {
+    xAxisId,
+    yAxisId,
+    hide,
+    legendType,
+    minPointSize,
+    activeBar,
     animationBegin,
     animationDuration,
     animationEasing,
-    hide,
-    isAnimationActive,
-    legendType,
-    lineJointType,
-    lineType,
-    shape,
-    xAxisId,
-    yAxisId,
-    zAxisId
-  } = _resolveDefaultProps, everythingElse = _objectWithoutProperties15(_resolveDefaultProps, _excluded33);
+    isAnimationActive
+  } = props;
   var {
     needClip
   } = useNeedsClip(xAxisId, yAxisId);
-  var cells = (0, import_react36.useMemo)(() => findAllByType(props.children, Cell), [props.children]);
+  var layout = useChartLayout();
   var isPanorama = useIsPanorama();
-  var points = useAppSelector((state) => {
-    return selectScatterPoints(state, xAxisId, yAxisId, zAxisId, props.id, cells, isPanorama);
+  var cells = findAllByType(props.children, Cell);
+  var rects = useAppSelector((state) => selectBarRectangles(state, props.id, isPanorama, cells));
+  if (layout !== "vertical" && layout !== "horizontal") {
+    return null;
+  }
+  var errorBarOffset;
+  var firstDataPoint = rects === null || rects === void 0 ? void 0 : rects[0];
+  if (firstDataPoint == null || firstDataPoint.height == null || firstDataPoint.width == null) {
+    errorBarOffset = 0;
+  } else {
+    errorBarOffset = layout === "vertical" ? firstDataPoint.height / 2 : firstDataPoint.width / 2;
+  }
+  return /* @__PURE__ */ React29.createElement(SetErrorBarContext, {
+    xAxisId,
+    yAxisId,
+    data: rects,
+    dataPointFormatter: errorBarDataPointFormatter,
+    errorBarOffset
+  }, /* @__PURE__ */ React29.createElement(BarWithState, _extends19({}, props, {
+    layout,
+    needClip,
+    data: rects,
+    xAxisId,
+    yAxisId,
+    hide,
+    legendType,
+    minPointSize,
+    activeBar,
+    animationBegin,
+    animationDuration,
+    animationEasing,
+    isAnimationActive
+  })));
+}
+function computeBarRectangles(_ref6) {
+  var {
+    layout,
+    barSettings: {
+      dataKey,
+      minPointSize: minPointSizeProp,
+      hasCustomShape
+    },
+    pos,
+    bandSize,
+    xAxis,
+    yAxis,
+    xAxisTicks,
+    yAxisTicks,
+    stackedData,
+    displayedData,
+    offset,
+    cells,
+    parentViewBox,
+    dataStartIndex
+  } = _ref6;
+  var numericAxis = layout === "horizontal" ? yAxis : xAxis;
+  var stackedDomain = stackedData ? numericAxis.scale.domain() : null;
+  var baseValue = getBaseValueOfBar({
+    numericAxis
   });
-  if (needClip == null) {
-    return null;
-  }
-  if (points == null) {
-    return null;
-  }
-  return /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(SetScatterTooltipEntrySettings, {
+  var stackedBarStart = numericAxis.scale.map(baseValue);
+  return displayedData.map((entry, index) => {
+    var value, x2, y2, width, height, background;
+    if (stackedData) {
+      var untruncatedValue = stackedData[index + dataStartIndex];
+      if (untruncatedValue == null) {
+        return null;
+      }
+      value = truncateByDomain(untruncatedValue, stackedDomain);
+    } else {
+      value = getValueByDataKey(entry, dataKey);
+      if (!Array.isArray(value)) {
+        value = [baseValue, value];
+      }
+    }
+    var minPointSize = minPointSizeCallback(minPointSizeProp, defaultMinPointSize)(value[1], index);
+    if (layout === "horizontal") {
+      var _ref7;
+      var baseValueScale = yAxis.scale.map(value[0]);
+      var currentValueScale = yAxis.scale.map(value[1]);
+      if (baseValueScale == null || currentValueScale == null) {
+        return null;
+      }
+      x2 = getCateCoordinateOfBar({
+        axis: xAxis,
+        ticks: xAxisTicks,
+        bandSize,
+        offset: pos.offset,
+        entry,
+        index
+      });
+      y2 = (_ref7 = currentValueScale !== null && currentValueScale !== void 0 ? currentValueScale : baseValueScale) !== null && _ref7 !== void 0 ? _ref7 : void 0;
+      width = pos.size;
+      var computedHeight = baseValueScale - currentValueScale;
+      height = isNan(computedHeight) ? 0 : computedHeight;
+      background = {
+        x: x2,
+        y: offset.top,
+        width,
+        height: offset.height
+      };
+      if (Math.abs(minPointSize) > 0 && Math.abs(height) < Math.abs(minPointSize)) {
+        var delta = mathSign(height || minPointSize) * (Math.abs(minPointSize) - Math.abs(height));
+        y2 -= delta;
+        height += delta;
+      }
+    } else {
+      var _baseValueScale = xAxis.scale.map(value[0]);
+      var _currentValueScale = xAxis.scale.map(value[1]);
+      if (_baseValueScale == null || _currentValueScale == null) {
+        return null;
+      }
+      x2 = _baseValueScale;
+      y2 = getCateCoordinateOfBar({
+        axis: yAxis,
+        ticks: yAxisTicks,
+        bandSize,
+        offset: pos.offset,
+        entry,
+        index
+      });
+      width = _currentValueScale - _baseValueScale;
+      height = pos.size;
+      background = {
+        x: offset.left,
+        y: y2,
+        width: offset.width,
+        height
+      };
+      if (Math.abs(minPointSize) > 0 && Math.abs(width) < Math.abs(minPointSize)) {
+        var _delta = mathSign(width || minPointSize) * (Math.abs(minPointSize) - Math.abs(width));
+        width += _delta;
+      }
+    }
+    if (x2 == null || y2 == null || width == null || height == null || !hasCustomShape && (width === 0 || height === 0)) {
+      return null;
+    }
+    var barRectangleItem = _objectSpread34(_objectSpread34({}, entry), {}, {
+      stackedBarStart,
+      x: x2,
+      y: y2,
+      width,
+      height,
+      value: stackedData ? value : value[1],
+      payload: entry,
+      background,
+      tooltipPosition: {
+        x: x2 + width / 2,
+        y: y2 + height / 2
+      },
+      parentViewBox,
+      originalDataIndex: index
+    }, cells && cells[index] && cells[index].props);
+    return barRectangleItem;
+  }).filter(Boolean);
+}
+function BarFn(outsideProps) {
+  var props = resolveDefaultProps(outsideProps, defaultBarProps);
+  var stackId = useStackId(props.stackId);
+  var isPanorama = useIsPanorama();
+  return /* @__PURE__ */ React29.createElement(RegisterGraphicalItemId, {
+    id: props.id,
+    type: "bar"
+  }, (id) => /* @__PURE__ */ React29.createElement(React29.Fragment, null, /* @__PURE__ */ React29.createElement(SetLegendPayload, {
+    legendPayload: computeLegendPayloadFromBarData(props)
+  }), /* @__PURE__ */ React29.createElement(SetBarTooltipEntrySettings, {
     dataKey: props.dataKey,
-    points,
     stroke: props.stroke,
     strokeWidth: props.strokeWidth,
     fill: props.fill,
     name: props.name,
     hide: props.hide,
+    unit: props.unit,
     tooltipType: props.tooltipType,
-    id: props.id
-  }), /* @__PURE__ */ React28.createElement(ScatterWithId, _extends18({}, everythingElse, {
-    xAxisId,
-    yAxisId,
-    zAxisId,
-    lineType,
-    lineJointType,
-    legendType,
-    shape,
-    hide,
-    isAnimationActive,
-    animationBegin,
-    animationDuration,
-    animationEasing,
-    points,
-    needClip
-  })));
-}
-function ScatterFn(outsideProps) {
-  var props = resolveDefaultProps(outsideProps, defaultScatterProps);
-  var isPanorama = useIsPanorama();
-  return /* @__PURE__ */ React28.createElement(RegisterGraphicalItemId, {
-    id: props.id,
-    type: "scatter"
-  }, (id) => /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(SetLegendPayload, {
-    legendPayload: computeLegendPayloadFromScatterProps(props)
-  }), /* @__PURE__ */ React28.createElement(SetCartesianGraphicalItem, {
-    type: "scatter",
+    id
+  }), /* @__PURE__ */ React29.createElement(SetCartesianGraphicalItem, {
+    type: "bar",
     id,
-    data: props.data,
+    data: void 0,
     xAxisId: props.xAxisId,
     yAxisId: props.yAxisId,
-    zAxisId: props.zAxisId,
+    zAxisId: 0,
     dataKey: props.dataKey,
+    stackId,
     hide: props.hide,
-    name: props.name,
-    tooltipType: props.tooltipType,
-    isPanorama
-  }), /* @__PURE__ */ React28.createElement(ScatterImpl, _extends18({}, props, {
+    barSize: props.barSize,
+    minPointSize: props.minPointSize,
+    maxBarSize: props.maxBarSize,
+    isPanorama,
+    hasCustomShape: props.shape != null
+  }), /* @__PURE__ */ React29.createElement(ZIndexLayer, {
+    zIndex: props.zIndex
+  }, /* @__PURE__ */ React29.createElement(BarImpl, _extends19({}, props, {
     id
-  }))));
+  })))));
 }
-var Scatter = /* @__PURE__ */ React28.memo(ScatterFn, propsAreEqual);
-Scatter.displayName = "Scatter";
+var Bar = /* @__PURE__ */ React29.memo(BarFn, propsAreEqual);
+Bar.displayName = "Bar";
 
 // node_modules/recharts/es6/cartesian/XAxis.js
-var React29 = __toESM(require_react());
-var import_react37 = __toESM(require_react());
+var React30 = __toESM(require_react());
+var import_react38 = __toESM(require_react());
 
 // node_modules/recharts/es6/util/axisPropsAreEqual.js
 var _excluded16 = ["domain", "range"];
@@ -24908,211 +25450,6 @@ function axisPropsAreEqual(prevProps, nextProps) {
 var _excluded17 = ["type"];
 var _excluded29 = ["dangerouslySetInnerHTML", "ticks", "scale"];
 var _excluded34 = ["id", "scale"];
-function _extends19() {
-  return _extends19 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends19.apply(null, arguments);
-}
-function ownKeys34(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread34(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys34(Object(t), true).forEach(function(r3) {
-      _defineProperty36(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys34(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty36(e, r2, t) {
-  return (r2 = _toPropertyKey36(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey36(t) {
-  var i = _toPrimitive36(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive36(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2 || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-function _objectWithoutProperties17(e, t) {
-  if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose17(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose17(r2, e) {
-  if (null == r2) return {};
-  var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
-  }
-  return t;
-}
-function SetXAxisSettings(props) {
-  var dispatch = useAppDispatch();
-  var prevSettingsRef = (0, import_react37.useRef)(null);
-  var layout = useCartesianChartLayout();
-  var {
-    type: typeFromProps
-  } = props, restProps = _objectWithoutProperties17(props, _excluded17);
-  var evaluatedType = getAxisTypeBasedOnLayout(layout, "xAxis", typeFromProps);
-  var settings = (0, import_react37.useMemo)(() => {
-    if (evaluatedType == null) {
-      return void 0;
-    }
-    return _objectSpread34(_objectSpread34({}, restProps), {}, {
-      type: evaluatedType
-    });
-  }, [restProps, evaluatedType]);
-  (0, import_react37.useLayoutEffect)(() => {
-    if (settings == null) {
-      return;
-    }
-    if (prevSettingsRef.current === null) {
-      dispatch(addXAxis(settings));
-    } else if (prevSettingsRef.current !== settings) {
-      dispatch(replaceXAxis({
-        prev: prevSettingsRef.current,
-        next: settings
-      }));
-    }
-    prevSettingsRef.current = settings;
-  }, [settings, dispatch]);
-  (0, import_react37.useLayoutEffect)(() => {
-    return () => {
-      if (prevSettingsRef.current) {
-        dispatch(removeXAxis(prevSettingsRef.current));
-        prevSettingsRef.current = null;
-      }
-    };
-  }, [dispatch]);
-  return null;
-}
-var XAxisImpl = (props) => {
-  var {
-    xAxisId,
-    className
-  } = props;
-  var viewBox = useAppSelector(selectAxisViewBox);
-  var isPanorama = useIsPanorama();
-  var axisType = "xAxis";
-  var cartesianTickItems = useAppSelector((state) => selectTicksOfAxis(state, axisType, xAxisId, isPanorama));
-  var axisSize = useAppSelector((state) => selectXAxisSize(state, xAxisId));
-  var position = useAppSelector((state) => selectXAxisPosition(state, xAxisId));
-  var synchronizedSettings = useAppSelector((state) => selectXAxisSettingsNoDefaults(state, xAxisId));
-  if (axisSize == null || position == null || synchronizedSettings == null) {
-    return null;
-  }
-  var {
-    dangerouslySetInnerHTML,
-    ticks: ticks2,
-    scale: del
-  } = props, allOtherProps = _objectWithoutProperties17(props, _excluded29);
-  var {
-    id,
-    scale: del2
-  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties17(synchronizedSettings, _excluded34);
-  return /* @__PURE__ */ React29.createElement(CartesianAxis, _extends19({}, allOtherProps, restSynchronizedSettings, {
-    x: position.x,
-    y: position.y,
-    width: axisSize.width,
-    height: axisSize.height,
-    className: clsx("recharts-".concat(axisType, " ").concat(axisType), className),
-    viewBox,
-    ticks: cartesianTickItems,
-    axisType,
-    axisId: xAxisId
-  }));
-};
-var xAxisDefaultProps = {
-  allowDataOverflow: implicitXAxis.allowDataOverflow,
-  allowDecimals: implicitXAxis.allowDecimals,
-  allowDuplicatedCategory: implicitXAxis.allowDuplicatedCategory,
-  angle: implicitXAxis.angle,
-  axisLine: defaultCartesianAxisProps.axisLine,
-  height: implicitXAxis.height,
-  hide: false,
-  includeHidden: implicitXAxis.includeHidden,
-  interval: implicitXAxis.interval,
-  label: false,
-  minTickGap: implicitXAxis.minTickGap,
-  mirror: implicitXAxis.mirror,
-  orientation: implicitXAxis.orientation,
-  padding: implicitXAxis.padding,
-  reversed: implicitXAxis.reversed,
-  scale: implicitXAxis.scale,
-  tick: implicitXAxis.tick,
-  tickCount: implicitXAxis.tickCount,
-  tickLine: defaultCartesianAxisProps.tickLine,
-  tickSize: defaultCartesianAxisProps.tickSize,
-  type: implicitXAxis.type,
-  niceTicks: implicitXAxis.niceTicks,
-  xAxisId: 0
-};
-var XAxisSettingsDispatcher = (outsideProps) => {
-  var props = resolveDefaultProps(outsideProps, xAxisDefaultProps);
-  return /* @__PURE__ */ React29.createElement(React29.Fragment, null, /* @__PURE__ */ React29.createElement(SetXAxisSettings, {
-    allowDataOverflow: props.allowDataOverflow,
-    allowDecimals: props.allowDecimals,
-    allowDuplicatedCategory: props.allowDuplicatedCategory,
-    angle: props.angle,
-    dataKey: props.dataKey,
-    domain: props.domain,
-    height: props.height,
-    hide: props.hide,
-    id: props.xAxisId,
-    includeHidden: props.includeHidden,
-    interval: props.interval,
-    minTickGap: props.minTickGap,
-    mirror: props.mirror,
-    name: props.name,
-    orientation: props.orientation,
-    padding: props.padding,
-    reversed: props.reversed,
-    scale: props.scale,
-    tick: props.tick,
-    tickCount: props.tickCount,
-    tickFormatter: props.tickFormatter,
-    ticks: props.ticks,
-    type: props.type,
-    unit: props.unit,
-    niceTicks: props.niceTicks
-  }), /* @__PURE__ */ React29.createElement(XAxisImpl, props));
-};
-var XAxis = /* @__PURE__ */ React29.memo(XAxisSettingsDispatcher, axisPropsAreEqual);
-XAxis.displayName = "XAxis";
-
-// node_modules/recharts/es6/cartesian/YAxis.js
-var React30 = __toESM(require_react());
-var import_react38 = __toESM(require_react());
-var _excluded18 = ["type"];
-var _excluded210 = ["dangerouslySetInnerHTML", "ticks", "scale"];
-var _excluded35 = ["id", "scale"];
 function _extends20() {
   return _extends20 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
@@ -25160,6 +25497,211 @@ function _toPrimitive37(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
+function _objectWithoutProperties17(e, t) {
+  if (null == e) return {};
+  var o, r2, i = _objectWithoutPropertiesLoose17(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var n = Object.getOwnPropertySymbols(e);
+    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose17(r2, e) {
+  if (null == r2) return {};
+  var t = {};
+  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r2[n];
+  }
+  return t;
+}
+function SetXAxisSettings(props) {
+  var dispatch = useAppDispatch();
+  var prevSettingsRef = (0, import_react38.useRef)(null);
+  var layout = useCartesianChartLayout();
+  var {
+    type: typeFromProps
+  } = props, restProps = _objectWithoutProperties17(props, _excluded17);
+  var evaluatedType = getAxisTypeBasedOnLayout(layout, "xAxis", typeFromProps);
+  var settings = (0, import_react38.useMemo)(() => {
+    if (evaluatedType == null) {
+      return void 0;
+    }
+    return _objectSpread35(_objectSpread35({}, restProps), {}, {
+      type: evaluatedType
+    });
+  }, [restProps, evaluatedType]);
+  (0, import_react38.useLayoutEffect)(() => {
+    if (settings == null) {
+      return;
+    }
+    if (prevSettingsRef.current === null) {
+      dispatch(addXAxis(settings));
+    } else if (prevSettingsRef.current !== settings) {
+      dispatch(replaceXAxis({
+        prev: prevSettingsRef.current,
+        next: settings
+      }));
+    }
+    prevSettingsRef.current = settings;
+  }, [settings, dispatch]);
+  (0, import_react38.useLayoutEffect)(() => {
+    return () => {
+      if (prevSettingsRef.current) {
+        dispatch(removeXAxis(prevSettingsRef.current));
+        prevSettingsRef.current = null;
+      }
+    };
+  }, [dispatch]);
+  return null;
+}
+var XAxisImpl = (props) => {
+  var {
+    xAxisId,
+    className
+  } = props;
+  var viewBox = useAppSelector(selectAxisViewBox);
+  var isPanorama = useIsPanorama();
+  var axisType = "xAxis";
+  var cartesianTickItems = useAppSelector((state) => selectTicksOfAxis(state, axisType, xAxisId, isPanorama));
+  var axisSize = useAppSelector((state) => selectXAxisSize(state, xAxisId));
+  var position = useAppSelector((state) => selectXAxisPosition(state, xAxisId));
+  var synchronizedSettings = useAppSelector((state) => selectXAxisSettingsNoDefaults(state, xAxisId));
+  if (axisSize == null || position == null || synchronizedSettings == null) {
+    return null;
+  }
+  var {
+    dangerouslySetInnerHTML,
+    ticks: ticks2,
+    scale: del
+  } = props, allOtherProps = _objectWithoutProperties17(props, _excluded29);
+  var {
+    id,
+    scale: del2
+  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties17(synchronizedSettings, _excluded34);
+  return /* @__PURE__ */ React30.createElement(CartesianAxis, _extends20({}, allOtherProps, restSynchronizedSettings, {
+    x: position.x,
+    y: position.y,
+    width: axisSize.width,
+    height: axisSize.height,
+    className: clsx("recharts-".concat(axisType, " ").concat(axisType), className),
+    viewBox,
+    ticks: cartesianTickItems,
+    axisType,
+    axisId: xAxisId
+  }));
+};
+var xAxisDefaultProps = {
+  allowDataOverflow: implicitXAxis.allowDataOverflow,
+  allowDecimals: implicitXAxis.allowDecimals,
+  allowDuplicatedCategory: implicitXAxis.allowDuplicatedCategory,
+  angle: implicitXAxis.angle,
+  axisLine: defaultCartesianAxisProps.axisLine,
+  height: implicitXAxis.height,
+  hide: false,
+  includeHidden: implicitXAxis.includeHidden,
+  interval: implicitXAxis.interval,
+  label: false,
+  minTickGap: implicitXAxis.minTickGap,
+  mirror: implicitXAxis.mirror,
+  orientation: implicitXAxis.orientation,
+  padding: implicitXAxis.padding,
+  reversed: implicitXAxis.reversed,
+  scale: implicitXAxis.scale,
+  tick: implicitXAxis.tick,
+  tickCount: implicitXAxis.tickCount,
+  tickLine: defaultCartesianAxisProps.tickLine,
+  tickSize: defaultCartesianAxisProps.tickSize,
+  type: implicitXAxis.type,
+  niceTicks: implicitXAxis.niceTicks,
+  xAxisId: 0
+};
+var XAxisSettingsDispatcher = (outsideProps) => {
+  var props = resolveDefaultProps(outsideProps, xAxisDefaultProps);
+  return /* @__PURE__ */ React30.createElement(React30.Fragment, null, /* @__PURE__ */ React30.createElement(SetXAxisSettings, {
+    allowDataOverflow: props.allowDataOverflow,
+    allowDecimals: props.allowDecimals,
+    allowDuplicatedCategory: props.allowDuplicatedCategory,
+    angle: props.angle,
+    dataKey: props.dataKey,
+    domain: props.domain,
+    height: props.height,
+    hide: props.hide,
+    id: props.xAxisId,
+    includeHidden: props.includeHidden,
+    interval: props.interval,
+    minTickGap: props.minTickGap,
+    mirror: props.mirror,
+    name: props.name,
+    orientation: props.orientation,
+    padding: props.padding,
+    reversed: props.reversed,
+    scale: props.scale,
+    tick: props.tick,
+    tickCount: props.tickCount,
+    tickFormatter: props.tickFormatter,
+    ticks: props.ticks,
+    type: props.type,
+    unit: props.unit,
+    niceTicks: props.niceTicks
+  }), /* @__PURE__ */ React30.createElement(XAxisImpl, props));
+};
+var XAxis = /* @__PURE__ */ React30.memo(XAxisSettingsDispatcher, axisPropsAreEqual);
+XAxis.displayName = "XAxis";
+
+// node_modules/recharts/es6/cartesian/YAxis.js
+var React31 = __toESM(require_react());
+var import_react39 = __toESM(require_react());
+var _excluded18 = ["type"];
+var _excluded210 = ["dangerouslySetInnerHTML", "ticks", "scale"];
+var _excluded35 = ["id", "scale"];
+function _extends21() {
+  return _extends21 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends21.apply(null, arguments);
+}
+function ownKeys36(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread36(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys36(Object(t), true).forEach(function(r3) {
+      _defineProperty38(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys36(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty38(e, r2, t) {
+  return (r2 = _toPropertyKey38(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey38(t) {
+  var i = _toPrimitive38(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive38(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
 function _objectWithoutProperties18(e, t) {
   if (null == e) return {};
   var o, r2, i = _objectWithoutPropertiesLoose18(e, t);
@@ -25180,21 +25722,21 @@ function _objectWithoutPropertiesLoose18(r2, e) {
 }
 function SetYAxisSettings(props) {
   var dispatch = useAppDispatch();
-  var prevSettingsRef = (0, import_react38.useRef)(null);
+  var prevSettingsRef = (0, import_react39.useRef)(null);
   var layout = useCartesianChartLayout();
   var {
     type: typeFromProps
   } = props, restProps = _objectWithoutProperties18(props, _excluded18);
   var evaluatedType = getAxisTypeBasedOnLayout(layout, "yAxis", typeFromProps);
-  var settings = (0, import_react38.useMemo)(() => {
+  var settings = (0, import_react39.useMemo)(() => {
     if (evaluatedType == null) {
       return void 0;
     }
-    return _objectSpread35(_objectSpread35({}, restProps), {}, {
+    return _objectSpread36(_objectSpread36({}, restProps), {}, {
       type: evaluatedType
     });
   }, [evaluatedType, restProps]);
-  (0, import_react38.useLayoutEffect)(() => {
+  (0, import_react39.useLayoutEffect)(() => {
     if (settings == null) {
       return;
     }
@@ -25208,7 +25750,7 @@ function SetYAxisSettings(props) {
     }
     prevSettingsRef.current = settings;
   }, [settings, dispatch]);
-  (0, import_react38.useLayoutEffect)(() => {
+  (0, import_react39.useLayoutEffect)(() => {
     return () => {
       if (prevSettingsRef.current) {
         dispatch(removeYAxis(prevSettingsRef.current));
@@ -25225,8 +25767,8 @@ function YAxisImpl(props) {
     width,
     label
   } = props;
-  var cartesianAxisRef = (0, import_react38.useRef)(null);
-  var labelRef = (0, import_react38.useRef)(null);
+  var cartesianAxisRef = (0, import_react39.useRef)(null);
+  var labelRef = (0, import_react39.useRef)(null);
   var viewBox = useAppSelector(selectAxisViewBox);
   var isPanorama = useIsPanorama();
   var dispatch = useAppDispatch();
@@ -25235,8 +25777,8 @@ function YAxisImpl(props) {
   var position = useAppSelector((state) => selectYAxisPosition(state, yAxisId));
   var cartesianTickItems = useAppSelector((state) => selectTicksOfAxis(state, axisType, yAxisId, isPanorama));
   var synchronizedSettings = useAppSelector((state) => selectYAxisSettingsNoDefaults(state, yAxisId));
-  (0, import_react38.useLayoutEffect)(() => {
-    if (width !== "auto" || !axisSize || isLabelContentAFunction(label) || /* @__PURE__ */ (0, import_react38.isValidElement)(label) || synchronizedSettings == null) {
+  (0, import_react39.useLayoutEffect)(() => {
+    if (width !== "auto" || !axisSize || isLabelContentAFunction(label) || /* @__PURE__ */ (0, import_react39.isValidElement)(label) || synchronizedSettings == null) {
       return;
     }
     var axisComponent = cartesianAxisRef.current;
@@ -25274,7 +25816,7 @@ function YAxisImpl(props) {
     id,
     scale: del2
   } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties18(synchronizedSettings, _excluded35);
-  return /* @__PURE__ */ React30.createElement(CartesianAxis, _extends20({}, allOtherProps, restSynchronizedSettings, {
+  return /* @__PURE__ */ React31.createElement(CartesianAxis, _extends21({}, allOtherProps, restSynchronizedSettings, {
     ref: cartesianAxisRef,
     labelRef,
     x: position.x,
@@ -25320,7 +25862,7 @@ var yAxisDefaultProps = {
 };
 var YAxisSettingsDispatcher = (outsideProps) => {
   var props = resolveDefaultProps(outsideProps, yAxisDefaultProps);
-  return /* @__PURE__ */ React30.createElement(React30.Fragment, null, /* @__PURE__ */ React30.createElement(SetYAxisSettings, {
+  return /* @__PURE__ */ React31.createElement(React31.Fragment, null, /* @__PURE__ */ React31.createElement(SetYAxisSettings, {
     interval: props.interval,
     id: props.yAxisId,
     scale: props.scale,
@@ -25346,18 +25888,18 @@ var YAxisSettingsDispatcher = (outsideProps) => {
     tick: props.tick,
     tickFormatter: props.tickFormatter,
     niceTicks: props.niceTicks
-  }), /* @__PURE__ */ React30.createElement(YAxisImpl, props));
+  }), /* @__PURE__ */ React31.createElement(YAxisImpl, props));
 };
-var YAxis = /* @__PURE__ */ React30.memo(YAxisSettingsDispatcher, axisPropsAreEqual);
+var YAxis = /* @__PURE__ */ React31.memo(YAxisSettingsDispatcher, axisPropsAreEqual);
 YAxis.displayName = "YAxis";
 
 // node_modules/recharts/es6/chart/CartesianChart.js
-var React36 = __toESM(require_react());
-var import_react48 = __toESM(require_react());
+var React37 = __toESM(require_react());
+var import_react49 = __toESM(require_react());
 
 // node_modules/recharts/es6/state/RechartsStoreProvider.js
-var React31 = __toESM(require_react());
-var import_react39 = __toESM(require_react());
+var React32 = __toESM(require_react());
+var import_react40 = __toESM(require_react());
 
 // node_modules/recharts/es6/state/selectors/selectActivePropsFromChartPointer.js
 var pickChartPointer = (_state, chartPointer) => chartPointer;
@@ -26062,7 +26604,7 @@ function RechartsStoreProvider(_ref2) {
     reduxStoreName
   } = _ref2;
   var isPanorama = useIsPanorama();
-  var storeRef = (0, import_react39.useRef)(null);
+  var storeRef = (0, import_react40.useRef)(null);
   if (isPanorama) {
     return children;
   }
@@ -26070,14 +26612,14 @@ function RechartsStoreProvider(_ref2) {
     storeRef.current = createRechartsStore(preloadedState, reduxStoreName);
   }
   var nonNullContext = RechartsReduxContext;
-  return /* @__PURE__ */ React31.createElement(Provider_default, {
+  return /* @__PURE__ */ React32.createElement(Provider_default, {
     context: nonNullContext,
     store: storeRef.current
   }, children);
 }
 
 // node_modules/recharts/es6/state/ReportMainChartProps.js
-var import_react40 = __toESM(require_react());
+var import_react41 = __toESM(require_react());
 function ReportMainChartPropsImpl(_ref2) {
   var {
     layout,
@@ -26085,7 +26627,7 @@ function ReportMainChartPropsImpl(_ref2) {
   } = _ref2;
   var dispatch = useAppDispatch();
   var isPanorama = useIsPanorama();
-  (0, import_react40.useEffect)(() => {
+  (0, import_react41.useEffect)(() => {
     if (!isPanorama) {
       dispatch(setLayout(layout));
       dispatch(setMargin(margin));
@@ -26093,48 +26635,48 @@ function ReportMainChartPropsImpl(_ref2) {
   }, [dispatch, isPanorama, layout, margin]);
   return null;
 }
-var ReportMainChartProps = /* @__PURE__ */ (0, import_react40.memo)(ReportMainChartPropsImpl, propsAreEqual);
+var ReportMainChartProps = /* @__PURE__ */ (0, import_react41.memo)(ReportMainChartPropsImpl, propsAreEqual);
 
 // node_modules/recharts/es6/state/ReportChartProps.js
-var import_react41 = __toESM(require_react());
+var import_react42 = __toESM(require_react());
 function ReportChartProps(props) {
   var dispatch = useAppDispatch();
-  (0, import_react41.useEffect)(() => {
+  (0, import_react42.useEffect)(() => {
     dispatch(updateOptions(props));
   }, [dispatch, props]);
   return null;
 }
 
 // node_modules/recharts/es6/state/ReportEventSettings.js
-var import_react42 = __toESM(require_react());
+var import_react43 = __toESM(require_react());
 var ReportEventSettingsImpl = (props) => {
   var dispatch = useAppDispatch();
-  (0, import_react42.useEffect)(() => {
+  (0, import_react43.useEffect)(() => {
     dispatch(setEventSettings(props));
   }, [dispatch, props]);
   return null;
 };
-var ReportEventSettings = /* @__PURE__ */ (0, import_react42.memo)(ReportEventSettingsImpl, propsAreEqual);
+var ReportEventSettings = /* @__PURE__ */ (0, import_react43.memo)(ReportEventSettingsImpl, propsAreEqual);
 
 // node_modules/recharts/es6/chart/CategoricalChart.js
-var React35 = __toESM(require_react());
-var import_react47 = __toESM(require_react());
+var React36 = __toESM(require_react());
+var import_react48 = __toESM(require_react());
 
 // node_modules/recharts/es6/container/RootSurface.js
-var React33 = __toESM(require_react());
-var import_react44 = __toESM(require_react());
+var React34 = __toESM(require_react());
+var import_react45 = __toESM(require_react());
 
 // node_modules/recharts/es6/zIndex/ZIndexPortal.js
-var React32 = __toESM(require_react());
-var import_react43 = __toESM(require_react());
+var React33 = __toESM(require_react());
+var import_react44 = __toESM(require_react());
 function ZIndexSvgPortal(_ref2) {
   var {
     zIndex,
     isPanorama
   } = _ref2;
-  var ref = (0, import_react43.useRef)(null);
+  var ref = (0, import_react44.useRef)(null);
   var dispatch = useAppDispatch();
-  (0, import_react43.useLayoutEffect)(() => {
+  (0, import_react44.useLayoutEffect)(() => {
     if (ref.current) {
       dispatch(registerZIndexPortalElement({
         zIndex,
@@ -26149,7 +26691,7 @@ function ZIndexSvgPortal(_ref2) {
       }));
     };
   }, [dispatch, zIndex, isPanorama]);
-  return /* @__PURE__ */ React32.createElement("g", {
+  return /* @__PURE__ */ React33.createElement("g", {
     tabIndex: -1,
     ref,
     className: "recharts-zIndex-layer_".concat(zIndex)
@@ -26166,11 +26708,11 @@ function AllZIndexPortals(_ref2) {
   }
   var allNegativeZIndexes = allRegisteredZIndexes.filter((zIndex) => zIndex < 0);
   var allPositiveZIndexes = allRegisteredZIndexes.filter((zIndex) => zIndex > 0);
-  return /* @__PURE__ */ React32.createElement(React32.Fragment, null, allNegativeZIndexes.map((zIndex) => /* @__PURE__ */ React32.createElement(ZIndexSvgPortal, {
+  return /* @__PURE__ */ React33.createElement(React33.Fragment, null, allNegativeZIndexes.map((zIndex) => /* @__PURE__ */ React33.createElement(ZIndexSvgPortal, {
     key: zIndex,
     zIndex,
     isPanorama
-  })), children, allPositiveZIndexes.map((zIndex) => /* @__PURE__ */ React32.createElement(ZIndexSvgPortal, {
+  })), children, allPositiveZIndexes.map((zIndex) => /* @__PURE__ */ React33.createElement(ZIndexSvgPortal, {
     key: zIndex,
     zIndex,
     isPanorama
@@ -26197,14 +26739,14 @@ function _objectWithoutPropertiesLoose19(r2, e) {
   }
   return t;
 }
-function _extends21() {
-  return _extends21 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends22() {
+  return _extends22 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends21.apply(null, arguments);
+  }, _extends22.apply(null, arguments);
 }
 var FULL_WIDTH_AND_HEIGHT = {
   width: "100%",
@@ -26220,7 +26762,7 @@ var FULL_WIDTH_AND_HEIGHT = {
    */
   display: "block"
 };
-var MainChartSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((props, ref) => {
+var MainChartSurface = /* @__PURE__ */ (0, import_react45.forwardRef)((props, ref) => {
   var width = useChartWidth();
   var height = useChartHeight();
   var hasAccessibilityLayer = useAccessibilityLayer();
@@ -26246,7 +26788,7 @@ var MainChartSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((props, re
       role = hasAccessibilityLayer ? "application" : void 0;
     }
   }
-  return /* @__PURE__ */ React33.createElement(Surface, _extends21({}, otherAttributes, {
+  return /* @__PURE__ */ React34.createElement(Surface, _extends22({}, otherAttributes, {
     title,
     desc,
     role,
@@ -26271,41 +26813,41 @@ var BrushPanoramaSurface = (_ref2) => {
     y: y2,
     x: x2
   } = brushDimensions;
-  return /* @__PURE__ */ React33.createElement(Surface, {
+  return /* @__PURE__ */ React34.createElement(Surface, {
     width,
     height,
     x: x2,
     y: y2
   }, children);
 };
-var RootSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((_ref2, ref) => {
+var RootSurface = /* @__PURE__ */ (0, import_react45.forwardRef)((_ref2, ref) => {
   var {
     children
   } = _ref2, rest = _objectWithoutProperties19(_ref2, _excluded19);
   var isPanorama = useIsPanorama();
   if (isPanorama) {
-    return /* @__PURE__ */ React33.createElement(BrushPanoramaSurface, null, /* @__PURE__ */ React33.createElement(AllZIndexPortals, {
+    return /* @__PURE__ */ React34.createElement(BrushPanoramaSurface, null, /* @__PURE__ */ React34.createElement(AllZIndexPortals, {
       isPanorama: true
     }, children));
   }
-  return /* @__PURE__ */ React33.createElement(MainChartSurface, _extends21({
+  return /* @__PURE__ */ React34.createElement(MainChartSurface, _extends22({
     ref
-  }, rest), /* @__PURE__ */ React33.createElement(AllZIndexPortals, {
+  }, rest), /* @__PURE__ */ React34.createElement(AllZIndexPortals, {
     isPanorama: false
   }, children));
 });
 
 // node_modules/recharts/es6/chart/RechartsWrapper.js
-var React34 = __toESM(require_react());
-var import_react46 = __toESM(require_react());
+var React35 = __toESM(require_react());
+var import_react47 = __toESM(require_react());
 
 // node_modules/recharts/es6/util/useReportScale.js
-var import_react45 = __toESM(require_react());
+var import_react46 = __toESM(require_react());
 function useReportScale() {
   var dispatch = useAppDispatch();
-  var [ref, setRef] = (0, import_react45.useState)(null);
+  var [ref, setRef] = (0, import_react46.useState)(null);
   var scale = useAppSelector(selectContainerScale);
-  (0, import_react45.useEffect)(() => {
+  (0, import_react46.useEffect)(() => {
     if (ref == null) {
       return;
     }
@@ -26319,447 +26861,6 @@ function useReportScale() {
 }
 
 // node_modules/recharts/es6/chart/RechartsWrapper.js
-function ownKeys36(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread36(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys36(Object(t), true).forEach(function(r3) {
-      _defineProperty38(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys36(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty38(e, r2, t) {
-  return (r2 = _toPropertyKey38(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey38(t) {
-  var i = _toPrimitive38(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive38(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2 || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-function _extends22() {
-  return _extends22 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends22.apply(null, arguments);
-}
-var EventSynchronizer = () => {
-  useSynchronisedEventsFromOtherCharts();
-  return null;
-};
-function getNumberOrZero(value) {
-  if (typeof value === "number") {
-    return value;
-  }
-  if (typeof value === "string") {
-    var parsed = parseFloat(value);
-    if (!Number.isNaN(parsed)) {
-      return parsed;
-    }
-  }
-  return 0;
-}
-var ResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
-  var _props$style, _props$style2;
-  var observerRef = (0, import_react46.useRef)(null);
-  var [sizes, setSizes] = (0, import_react46.useState)({
-    containerWidth: getNumberOrZero((_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.width),
-    containerHeight: getNumberOrZero((_props$style2 = props.style) === null || _props$style2 === void 0 ? void 0 : _props$style2.height)
-  });
-  var setContainerSize = (0, import_react46.useCallback)((newWidth, newHeight) => {
-    setSizes((prevState) => {
-      var roundedWidth = Math.round(newWidth);
-      var roundedHeight = Math.round(newHeight);
-      if (prevState.containerWidth === roundedWidth && prevState.containerHeight === roundedHeight) {
-        return prevState;
-      }
-      return {
-        containerWidth: roundedWidth,
-        containerHeight: roundedHeight
-      };
-    });
-  }, []);
-  var innerRef = (0, import_react46.useCallback)((node) => {
-    if (typeof ref === "function") {
-      ref(node);
-    }
-    if (observerRef.current != null) {
-      observerRef.current.disconnect();
-      observerRef.current = null;
-    }
-    if (node != null && typeof ResizeObserver !== "undefined") {
-      var {
-        width: containerWidth,
-        height: containerHeight
-      } = node.getBoundingClientRect();
-      setContainerSize(containerWidth, containerHeight);
-      var callback = (entries) => {
-        var entry = entries[0];
-        if (entry == null) {
-          return;
-        }
-        var {
-          width,
-          height
-        } = entry.contentRect;
-        setContainerSize(width, height);
-      };
-      var observer = new ResizeObserver(callback);
-      observer.observe(node);
-      observerRef.current = observer;
-    }
-  }, [ref, setContainerSize]);
-  (0, import_react46.useEffect)(() => {
-    return () => {
-      var observer = observerRef.current;
-      if (observer != null) {
-        observer.disconnect();
-      }
-    };
-  }, [setContainerSize]);
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
-    width: sizes.containerWidth,
-    height: sizes.containerHeight
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
-    ref: innerRef
-  }, props)));
-});
-var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
-  var {
-    width,
-    height
-  } = props;
-  var [sizes, setSizes] = (0, import_react46.useState)({
-    containerWidth: getNumberOrZero(width),
-    containerHeight: getNumberOrZero(height)
-  });
-  var setContainerSize = (0, import_react46.useCallback)((newWidth, newHeight) => {
-    setSizes((prevState) => {
-      var roundedWidth = Math.round(newWidth);
-      var roundedHeight = Math.round(newHeight);
-      if (prevState.containerWidth === roundedWidth && prevState.containerHeight === roundedHeight) {
-        return prevState;
-      }
-      return {
-        containerWidth: roundedWidth,
-        containerHeight: roundedHeight
-      };
-    });
-  }, []);
-  var innerRef = (0, import_react46.useCallback)((node) => {
-    if (typeof ref === "function") {
-      ref(node);
-    }
-    if (node != null) {
-      var {
-        width: containerWidth,
-        height: containerHeight
-      } = node.getBoundingClientRect();
-      setContainerSize(containerWidth, containerHeight);
-    }
-  }, [ref, setContainerSize]);
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
-    width: sizes.containerWidth,
-    height: sizes.containerHeight
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
-    ref: innerRef
-  }, props)));
-});
-var StaticDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
-  var {
-    width,
-    height
-  } = props;
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
-    width,
-    height
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
-    ref
-  }, props)));
-});
-var NonResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
-  var {
-    width,
-    height
-  } = props;
-  if (typeof width === "string" || typeof height === "string") {
-    return /* @__PURE__ */ React34.createElement(ReadSizeOnceDiv, _extends22({}, props, {
-      ref
-    }));
-  }
-  if (typeof width === "number" && typeof height === "number") {
-    return /* @__PURE__ */ React34.createElement(StaticDiv, _extends22({}, props, {
-      width,
-      height,
-      ref
-    }));
-  }
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
-    width,
-    height
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
-    ref
-  }, props)));
-});
-function getWrapperDivComponent(responsive) {
-  return responsive ? ResponsiveDiv : NonResponsiveDiv;
-}
-var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
-  var {
-    children,
-    className,
-    height: heightFromProps,
-    onClick,
-    onContextMenu,
-    onDoubleClick,
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseMove,
-    onMouseUp,
-    onTouchEnd,
-    onTouchMove,
-    onTouchStart,
-    style,
-    width: widthFromProps,
-    responsive,
-    dispatchTouchEvents = true
-  } = props;
-  var containerRef = (0, import_react46.useRef)(null);
-  var dispatch = useAppDispatch();
-  var [tooltipPortal, setTooltipPortal] = (0, import_react46.useState)(null);
-  var [legendPortal, setLegendPortal] = (0, import_react46.useState)(null);
-  var setScaleRef = useReportScale();
-  var responsiveContainerCalculations = useResponsiveContainerContext();
-  var width = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.width) > 0 ? responsiveContainerCalculations.width : widthFromProps;
-  var height = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.height) > 0 ? responsiveContainerCalculations.height : heightFromProps;
-  var innerRef = (0, import_react46.useCallback)((node) => {
-    setScaleRef(node);
-    if (typeof ref === "function") {
-      ref(node);
-    }
-    setTooltipPortal(node);
-    setLegendPortal(node);
-    if (node != null) {
-      containerRef.current = node;
-    }
-  }, [setScaleRef, ref, setTooltipPortal, setLegendPortal]);
-  var myOnClick = (0, import_react46.useCallback)((e) => {
-    dispatch(mouseClickAction(e));
-    dispatch(externalEventAction({
-      handler: onClick,
-      reactEvent: e
-    }));
-  }, [dispatch, onClick]);
-  var myOnMouseEnter = (0, import_react46.useCallback)((e) => {
-    dispatch(mouseMoveAction(e));
-    dispatch(externalEventAction({
-      handler: onMouseEnter,
-      reactEvent: e
-    }));
-  }, [dispatch, onMouseEnter]);
-  var myOnMouseLeave = (0, import_react46.useCallback)((e) => {
-    dispatch(mouseLeaveChart());
-    dispatch(externalEventAction({
-      handler: onMouseLeave,
-      reactEvent: e
-    }));
-  }, [dispatch, onMouseLeave]);
-  var myOnMouseMove = (0, import_react46.useCallback)((e) => {
-    dispatch(mouseMoveAction(e));
-    dispatch(externalEventAction({
-      handler: onMouseMove,
-      reactEvent: e
-    }));
-  }, [dispatch, onMouseMove]);
-  var onFocus = (0, import_react46.useCallback)(() => {
-    dispatch(focusAction());
-  }, [dispatch]);
-  var onBlur = (0, import_react46.useCallback)(() => {
-    dispatch(blurAction());
-  }, [dispatch]);
-  var onKeyDown = (0, import_react46.useCallback)((e) => {
-    dispatch(keyDownAction(e.key));
-  }, [dispatch]);
-  var myOnContextMenu = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onContextMenu,
-      reactEvent: e
-    }));
-  }, [dispatch, onContextMenu]);
-  var myOnDoubleClick = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onDoubleClick,
-      reactEvent: e
-    }));
-  }, [dispatch, onDoubleClick]);
-  var myOnMouseDown = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onMouseDown,
-      reactEvent: e
-    }));
-  }, [dispatch, onMouseDown]);
-  var myOnMouseUp = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onMouseUp,
-      reactEvent: e
-    }));
-  }, [dispatch, onMouseUp]);
-  var myOnTouchStart = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onTouchStart,
-      reactEvent: e
-    }));
-  }, [dispatch, onTouchStart]);
-  var myOnTouchMove = (0, import_react46.useCallback)((e) => {
-    if (dispatchTouchEvents) {
-      dispatch(touchEventAction(e));
-    }
-    dispatch(externalEventAction({
-      handler: onTouchMove,
-      reactEvent: e
-    }));
-  }, [dispatch, dispatchTouchEvents, onTouchMove]);
-  var myOnTouchEnd = (0, import_react46.useCallback)((e) => {
-    dispatch(externalEventAction({
-      handler: onTouchEnd,
-      reactEvent: e
-    }));
-  }, [dispatch, onTouchEnd]);
-  var WrapperDiv = getWrapperDivComponent(responsive);
-  return /* @__PURE__ */ React34.createElement(TooltipPortalContext.Provider, {
-    value: tooltipPortal
-  }, /* @__PURE__ */ React34.createElement(LegendPortalContext.Provider, {
-    value: legendPortal
-  }, /* @__PURE__ */ React34.createElement(WrapperDiv, {
-    width: width !== null && width !== void 0 ? width : style === null || style === void 0 ? void 0 : style.width,
-    height: height !== null && height !== void 0 ? height : style === null || style === void 0 ? void 0 : style.height,
-    className: clsx("recharts-wrapper", className),
-    style: _objectSpread36({
-      position: "relative",
-      cursor: "default",
-      width,
-      height
-    }, style),
-    onClick: myOnClick,
-    onContextMenu: myOnContextMenu,
-    onDoubleClick: myOnDoubleClick,
-    onFocus,
-    onBlur,
-    onKeyDown,
-    onMouseDown: myOnMouseDown,
-    onMouseEnter: myOnMouseEnter,
-    onMouseLeave: myOnMouseLeave,
-    onMouseMove: myOnMouseMove,
-    onMouseUp: myOnMouseUp,
-    onTouchEnd: myOnTouchEnd,
-    onTouchMove: myOnTouchMove,
-    onTouchStart: myOnTouchStart,
-    ref: innerRef
-  }, /* @__PURE__ */ React34.createElement(EventSynchronizer, null), children)));
-});
-
-// node_modules/recharts/es6/chart/CategoricalChart.js
-var _excluded20 = ["width", "height", "responsive", "children", "className", "style", "compact", "title", "desc"];
-function _objectWithoutProperties20(e, t) {
-  if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose20(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose20(r2, e) {
-  if (null == r2) return {};
-  var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
-  }
-  return t;
-}
-var CategoricalChart = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
-  var {
-    width,
-    height,
-    responsive,
-    children,
-    className,
-    style,
-    compact,
-    title,
-    desc
-  } = props, others = _objectWithoutProperties20(props, _excluded20);
-  var attrs = svgPropertiesNoEvents(others);
-  if (compact) {
-    return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
-      width,
-      height
-    }), /* @__PURE__ */ React35.createElement(RootSurface, {
-      otherAttributes: attrs,
-      title,
-      desc
-    }, children));
-  }
-  return /* @__PURE__ */ React35.createElement(RechartsWrapper, {
-    className,
-    style,
-    width,
-    height,
-    responsive: responsive !== null && responsive !== void 0 ? responsive : false,
-    onClick: props.onClick,
-    onMouseLeave: props.onMouseLeave,
-    onMouseEnter: props.onMouseEnter,
-    onMouseMove: props.onMouseMove,
-    onMouseDown: props.onMouseDown,
-    onMouseUp: props.onMouseUp,
-    onContextMenu: props.onContextMenu,
-    onDoubleClick: props.onDoubleClick,
-    onTouchStart: props.onTouchStart,
-    onTouchMove: props.onTouchMove,
-    onTouchEnd: props.onTouchEnd
-  }, /* @__PURE__ */ React35.createElement(RootSurface, {
-    otherAttributes: attrs,
-    title,
-    desc,
-    ref
-  }, /* @__PURE__ */ React35.createElement(ClipPathProvider, null, children)));
-});
-
-// node_modules/recharts/es6/chart/CartesianChart.js
-function _extends23() {
-  return _extends23 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends23.apply(null, arguments);
-}
 function ownKeys37(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
@@ -26798,13 +26899,454 @@ function _toPrimitive39(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
+function _extends23() {
+  return _extends23 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends23.apply(null, arguments);
+}
+var EventSynchronizer = () => {
+  useSynchronisedEventsFromOtherCharts();
+  return null;
+};
+function getNumberOrZero(value) {
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value === "string") {
+    var parsed = parseFloat(value);
+    if (!Number.isNaN(parsed)) {
+      return parsed;
+    }
+  }
+  return 0;
+}
+var ResponsiveDiv = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+  var _props$style, _props$style2;
+  var observerRef = (0, import_react47.useRef)(null);
+  var [sizes, setSizes] = (0, import_react47.useState)({
+    containerWidth: getNumberOrZero((_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.width),
+    containerHeight: getNumberOrZero((_props$style2 = props.style) === null || _props$style2 === void 0 ? void 0 : _props$style2.height)
+  });
+  var setContainerSize = (0, import_react47.useCallback)((newWidth, newHeight) => {
+    setSizes((prevState) => {
+      var roundedWidth = Math.round(newWidth);
+      var roundedHeight = Math.round(newHeight);
+      if (prevState.containerWidth === roundedWidth && prevState.containerHeight === roundedHeight) {
+        return prevState;
+      }
+      return {
+        containerWidth: roundedWidth,
+        containerHeight: roundedHeight
+      };
+    });
+  }, []);
+  var innerRef = (0, import_react47.useCallback)((node) => {
+    if (typeof ref === "function") {
+      ref(node);
+    }
+    if (observerRef.current != null) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+    if (node != null && typeof ResizeObserver !== "undefined") {
+      var {
+        width: containerWidth,
+        height: containerHeight
+      } = node.getBoundingClientRect();
+      setContainerSize(containerWidth, containerHeight);
+      var callback = (entries) => {
+        var entry = entries[0];
+        if (entry == null) {
+          return;
+        }
+        var {
+          width,
+          height
+        } = entry.contentRect;
+        setContainerSize(width, height);
+      };
+      var observer = new ResizeObserver(callback);
+      observer.observe(node);
+      observerRef.current = observer;
+    }
+  }, [ref, setContainerSize]);
+  (0, import_react47.useEffect)(() => {
+    return () => {
+      var observer = observerRef.current;
+      if (observer != null) {
+        observer.disconnect();
+      }
+    };
+  }, [setContainerSize]);
+  return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
+    width: sizes.containerWidth,
+    height: sizes.containerHeight
+  }), /* @__PURE__ */ React35.createElement("div", _extends23({
+    ref: innerRef
+  }, props)));
+});
+var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+  var {
+    width,
+    height
+  } = props;
+  var [sizes, setSizes] = (0, import_react47.useState)({
+    containerWidth: getNumberOrZero(width),
+    containerHeight: getNumberOrZero(height)
+  });
+  var setContainerSize = (0, import_react47.useCallback)((newWidth, newHeight) => {
+    setSizes((prevState) => {
+      var roundedWidth = Math.round(newWidth);
+      var roundedHeight = Math.round(newHeight);
+      if (prevState.containerWidth === roundedWidth && prevState.containerHeight === roundedHeight) {
+        return prevState;
+      }
+      return {
+        containerWidth: roundedWidth,
+        containerHeight: roundedHeight
+      };
+    });
+  }, []);
+  var innerRef = (0, import_react47.useCallback)((node) => {
+    if (typeof ref === "function") {
+      ref(node);
+    }
+    if (node != null) {
+      var {
+        width: containerWidth,
+        height: containerHeight
+      } = node.getBoundingClientRect();
+      setContainerSize(containerWidth, containerHeight);
+    }
+  }, [ref, setContainerSize]);
+  return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
+    width: sizes.containerWidth,
+    height: sizes.containerHeight
+  }), /* @__PURE__ */ React35.createElement("div", _extends23({
+    ref: innerRef
+  }, props)));
+});
+var StaticDiv = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+  var {
+    width,
+    height
+  } = props;
+  return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
+    width,
+    height
+  }), /* @__PURE__ */ React35.createElement("div", _extends23({
+    ref
+  }, props)));
+});
+var NonResponsiveDiv = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+  var {
+    width,
+    height
+  } = props;
+  if (typeof width === "string" || typeof height === "string") {
+    return /* @__PURE__ */ React35.createElement(ReadSizeOnceDiv, _extends23({}, props, {
+      ref
+    }));
+  }
+  if (typeof width === "number" && typeof height === "number") {
+    return /* @__PURE__ */ React35.createElement(StaticDiv, _extends23({}, props, {
+      width,
+      height,
+      ref
+    }));
+  }
+  return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
+    width,
+    height
+  }), /* @__PURE__ */ React35.createElement("div", _extends23({
+    ref
+  }, props)));
+});
+function getWrapperDivComponent(responsive) {
+  return responsive ? ResponsiveDiv : NonResponsiveDiv;
+}
+var RechartsWrapper = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+  var {
+    children,
+    className,
+    height: heightFromProps,
+    onClick,
+    onContextMenu,
+    onDoubleClick,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+    onMouseUp,
+    onTouchEnd,
+    onTouchMove,
+    onTouchStart,
+    style,
+    width: widthFromProps,
+    responsive,
+    dispatchTouchEvents = true
+  } = props;
+  var containerRef = (0, import_react47.useRef)(null);
+  var dispatch = useAppDispatch();
+  var [tooltipPortal, setTooltipPortal] = (0, import_react47.useState)(null);
+  var [legendPortal, setLegendPortal] = (0, import_react47.useState)(null);
+  var setScaleRef = useReportScale();
+  var responsiveContainerCalculations = useResponsiveContainerContext();
+  var width = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.width) > 0 ? responsiveContainerCalculations.width : widthFromProps;
+  var height = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.height) > 0 ? responsiveContainerCalculations.height : heightFromProps;
+  var innerRef = (0, import_react47.useCallback)((node) => {
+    setScaleRef(node);
+    if (typeof ref === "function") {
+      ref(node);
+    }
+    setTooltipPortal(node);
+    setLegendPortal(node);
+    if (node != null) {
+      containerRef.current = node;
+    }
+  }, [setScaleRef, ref, setTooltipPortal, setLegendPortal]);
+  var myOnClick = (0, import_react47.useCallback)((e) => {
+    dispatch(mouseClickAction(e));
+    dispatch(externalEventAction({
+      handler: onClick,
+      reactEvent: e
+    }));
+  }, [dispatch, onClick]);
+  var myOnMouseEnter = (0, import_react47.useCallback)((e) => {
+    dispatch(mouseMoveAction(e));
+    dispatch(externalEventAction({
+      handler: onMouseEnter,
+      reactEvent: e
+    }));
+  }, [dispatch, onMouseEnter]);
+  var myOnMouseLeave = (0, import_react47.useCallback)((e) => {
+    dispatch(mouseLeaveChart());
+    dispatch(externalEventAction({
+      handler: onMouseLeave,
+      reactEvent: e
+    }));
+  }, [dispatch, onMouseLeave]);
+  var myOnMouseMove = (0, import_react47.useCallback)((e) => {
+    dispatch(mouseMoveAction(e));
+    dispatch(externalEventAction({
+      handler: onMouseMove,
+      reactEvent: e
+    }));
+  }, [dispatch, onMouseMove]);
+  var onFocus = (0, import_react47.useCallback)(() => {
+    dispatch(focusAction());
+  }, [dispatch]);
+  var onBlur = (0, import_react47.useCallback)(() => {
+    dispatch(blurAction());
+  }, [dispatch]);
+  var onKeyDown = (0, import_react47.useCallback)((e) => {
+    dispatch(keyDownAction(e.key));
+  }, [dispatch]);
+  var myOnContextMenu = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onContextMenu,
+      reactEvent: e
+    }));
+  }, [dispatch, onContextMenu]);
+  var myOnDoubleClick = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onDoubleClick,
+      reactEvent: e
+    }));
+  }, [dispatch, onDoubleClick]);
+  var myOnMouseDown = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onMouseDown,
+      reactEvent: e
+    }));
+  }, [dispatch, onMouseDown]);
+  var myOnMouseUp = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onMouseUp,
+      reactEvent: e
+    }));
+  }, [dispatch, onMouseUp]);
+  var myOnTouchStart = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onTouchStart,
+      reactEvent: e
+    }));
+  }, [dispatch, onTouchStart]);
+  var myOnTouchMove = (0, import_react47.useCallback)((e) => {
+    if (dispatchTouchEvents) {
+      dispatch(touchEventAction(e));
+    }
+    dispatch(externalEventAction({
+      handler: onTouchMove,
+      reactEvent: e
+    }));
+  }, [dispatch, dispatchTouchEvents, onTouchMove]);
+  var myOnTouchEnd = (0, import_react47.useCallback)((e) => {
+    dispatch(externalEventAction({
+      handler: onTouchEnd,
+      reactEvent: e
+    }));
+  }, [dispatch, onTouchEnd]);
+  var WrapperDiv = getWrapperDivComponent(responsive);
+  return /* @__PURE__ */ React35.createElement(TooltipPortalContext.Provider, {
+    value: tooltipPortal
+  }, /* @__PURE__ */ React35.createElement(LegendPortalContext.Provider, {
+    value: legendPortal
+  }, /* @__PURE__ */ React35.createElement(WrapperDiv, {
+    width: width !== null && width !== void 0 ? width : style === null || style === void 0 ? void 0 : style.width,
+    height: height !== null && height !== void 0 ? height : style === null || style === void 0 ? void 0 : style.height,
+    className: clsx("recharts-wrapper", className),
+    style: _objectSpread37({
+      position: "relative",
+      cursor: "default",
+      width,
+      height
+    }, style),
+    onClick: myOnClick,
+    onContextMenu: myOnContextMenu,
+    onDoubleClick: myOnDoubleClick,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    onMouseDown: myOnMouseDown,
+    onMouseEnter: myOnMouseEnter,
+    onMouseLeave: myOnMouseLeave,
+    onMouseMove: myOnMouseMove,
+    onMouseUp: myOnMouseUp,
+    onTouchEnd: myOnTouchEnd,
+    onTouchMove: myOnTouchMove,
+    onTouchStart: myOnTouchStart,
+    ref: innerRef
+  }, /* @__PURE__ */ React35.createElement(EventSynchronizer, null), children)));
+});
+
+// node_modules/recharts/es6/chart/CategoricalChart.js
+var _excluded20 = ["width", "height", "responsive", "children", "className", "style", "compact", "title", "desc"];
+function _objectWithoutProperties20(e, t) {
+  if (null == e) return {};
+  var o, r2, i = _objectWithoutPropertiesLoose20(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var n = Object.getOwnPropertySymbols(e);
+    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose20(r2, e) {
+  if (null == r2) return {};
+  var t = {};
+  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r2[n];
+  }
+  return t;
+}
+var CategoricalChart = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
+  var {
+    width,
+    height,
+    responsive,
+    children,
+    className,
+    style,
+    compact,
+    title,
+    desc
+  } = props, others = _objectWithoutProperties20(props, _excluded20);
+  var attrs = svgPropertiesNoEvents(others);
+  if (compact) {
+    return /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement(ReportChartSize, {
+      width,
+      height
+    }), /* @__PURE__ */ React36.createElement(RootSurface, {
+      otherAttributes: attrs,
+      title,
+      desc
+    }, children));
+  }
+  return /* @__PURE__ */ React36.createElement(RechartsWrapper, {
+    className,
+    style,
+    width,
+    height,
+    responsive: responsive !== null && responsive !== void 0 ? responsive : false,
+    onClick: props.onClick,
+    onMouseLeave: props.onMouseLeave,
+    onMouseEnter: props.onMouseEnter,
+    onMouseMove: props.onMouseMove,
+    onMouseDown: props.onMouseDown,
+    onMouseUp: props.onMouseUp,
+    onContextMenu: props.onContextMenu,
+    onDoubleClick: props.onDoubleClick,
+    onTouchStart: props.onTouchStart,
+    onTouchMove: props.onTouchMove,
+    onTouchEnd: props.onTouchEnd
+  }, /* @__PURE__ */ React36.createElement(RootSurface, {
+    otherAttributes: attrs,
+    title,
+    desc,
+    ref
+  }, /* @__PURE__ */ React36.createElement(ClipPathProvider, null, children)));
+});
+
+// node_modules/recharts/es6/chart/CartesianChart.js
+function _extends24() {
+  return _extends24 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends24.apply(null, arguments);
+}
+function ownKeys38(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread38(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys38(Object(t), true).forEach(function(r3) {
+      _defineProperty40(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys38(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty40(e, r2, t) {
+  return (r2 = _toPropertyKey40(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey40(t) {
+  var i = _toPrimitive40(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive40(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
 var defaultMargin = {
   top: 5,
   right: 5,
   bottom: 5,
   left: 5
 };
-var defaultCartesianChartProps = _objectSpread37({
+var defaultCartesianChartProps = _objectSpread38({
   accessibilityLayer: true,
   barCategoryGap: "10%",
   barGap: 4,
@@ -26815,7 +27357,7 @@ var defaultCartesianChartProps = _objectSpread37({
   stackOffset: "none",
   syncMethod: "index"
 }, initialEventSettingsState);
-var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function CartesianChart2(props, ref) {
+var CartesianChart = /* @__PURE__ */ (0, import_react49.forwardRef)(function CartesianChart2(props, ref) {
   var _categoricalChartProp;
   var rootChartProps = resolveDefaultProps(props.categoricalChartProps, defaultCartesianChartProps);
   var {
@@ -26832,20 +27374,20 @@ var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function Car
     tooltipPayloadSearcher,
     eventEmitter: void 0
   };
-  return /* @__PURE__ */ React36.createElement(RechartsStoreProvider, {
+  return /* @__PURE__ */ React37.createElement(RechartsStoreProvider, {
     preloadedState: {
       options
     },
     reduxStoreName: (_categoricalChartProp = categoricalChartProps.id) !== null && _categoricalChartProp !== void 0 ? _categoricalChartProp : chartName
-  }, /* @__PURE__ */ React36.createElement(ChartDataContextProvider, {
+  }, /* @__PURE__ */ React37.createElement(ChartDataContextProvider, {
     chartData: categoricalChartProps.data
-  }), /* @__PURE__ */ React36.createElement(ReportMainChartProps, {
+  }), /* @__PURE__ */ React37.createElement(ReportMainChartProps, {
     layout: rootChartProps.layout,
     margin: rootChartProps.margin
-  }), /* @__PURE__ */ React36.createElement(ReportEventSettings, {
+  }), /* @__PURE__ */ React37.createElement(ReportEventSettings, {
     throttleDelay: rootChartProps.throttleDelay,
     throttledEvents: rootChartProps.throttledEvents
-  }), /* @__PURE__ */ React36.createElement(ReportChartProps, {
+  }), /* @__PURE__ */ React37.createElement(ReportChartProps, {
     baseValue: rootChartProps.baseValue,
     accessibilityLayer: rootChartProps.accessibilityLayer,
     barCategoryGap: rootChartProps.barCategoryGap,
@@ -26857,19 +27399,19 @@ var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function Car
     syncMethod: rootChartProps.syncMethod,
     className: rootChartProps.className,
     reverseStackOrder: rootChartProps.reverseStackOrder
-  }), /* @__PURE__ */ React36.createElement(CategoricalChart, _extends23({}, rootChartProps, {
+  }), /* @__PURE__ */ React37.createElement(CategoricalChart, _extends24({}, rootChartProps, {
     ref
   })));
 });
 
-// node_modules/recharts/es6/chart/ScatterChart.js
-var React37 = __toESM(require_react());
-var import_react49 = __toESM(require_react());
-var allowedTooltipTypes = ["item"];
-var ScatterChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) => {
-  return /* @__PURE__ */ React37.createElement(CartesianChart, {
-    chartName: "ScatterChart",
-    defaultTooltipEventType: "item",
+// node_modules/recharts/es6/chart/BarChart.js
+var React38 = __toESM(require_react());
+var import_react50 = __toESM(require_react());
+var allowedTooltipTypes = ["axis", "item"];
+var BarChart = /* @__PURE__ */ (0, import_react50.forwardRef)((props, ref) => {
+  return /* @__PURE__ */ React38.createElement(CartesianChart, {
+    chartName: "BarChart",
+    defaultTooltipEventType: "axis",
     validateTooltipEventTypes: allowedTooltipTypes,
     tooltipPayloadSearcher: arrayTooltipSearcher,
     categoricalChartProps: props,
@@ -26877,30 +27419,33 @@ var ScatterChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) =
   });
 });
 
-// app/assets/react/chart.jsx
-var TT = ({ active, payload, label }) => {
-  if (!payload.length) {
-    return;
-  }
-  const item = payload[0].payload;
-  return /* @__PURE__ */ import_react50.default.createElement("div", { className: "TT" }, /* @__PURE__ */ import_react50.default.createElement("ul", null, /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "strike:"), " ", item.strike, " "), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "price:"), " ", item.price), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "implied:"), " ", item.implied)));
-};
-function Chart({ data }) {
-  console.log("+++ Chart 2:", data);
-  const min2 = data.min;
-  const max2 = data.max;
-  const interval = 10;
-  const ticks2 = [];
-  for (let v = min2; v < max2; v += interval) {
-    ticks2.push(v);
-  }
-  const filtered = (which) => {
-    return which.filter((w) => w.strike > min2 && w.strike < max2);
-  };
-  return /* @__PURE__ */ import_react50.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react50.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react50.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react50.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react50.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react50.default.createElement(TT, null) }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+// app/assets/react/stock_histogram.jsx
+function StockHistogram({ data }) {
+  logg(data, "StockHist");
+  const { items, min: min2, max: max2 } = data;
+  return /* @__PURE__ */ import_react51.default.createElement("div", { style: { width: "400px", height: "200px" } }, /* @__PURE__ */ import_react51.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react51.default.createElement(BarChart, { data: items }, /* @__PURE__ */ import_react51.default.createElement(
+    CartesianGrid,
+    null
+  ), /* @__PURE__ */ import_react51.default.createElement(
+    XAxis,
+    {
+      dataKey: "bucket",
+      tick: { angle: -45, textAnchor: "end" },
+      height: 100
+    }
+  ), /* @__PURE__ */ import_react51.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react51.default.createElement(
+    Tooltip,
+    null
+  ), /* @__PURE__ */ import_react51.default.createElement(
+    Bar,
+    {
+      dataKey: "count",
+      barSize: 10
+    }
+  ))));
 }
 export {
-  Chart as default
+  StockHistogram as default
 };
 /*! Bundled license information:
 
@@ -26973,4 +27518,4 @@ react-is/cjs/react-is.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=/assets/chart.js.map
+//# sourceMappingURL=/assets/stock_histogram.js.map

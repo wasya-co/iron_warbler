@@ -1,4 +1,7 @@
 
 .stocks-edit.maxwidth
+  .header
+    %h4.text-center
+      = link_to @stock.ticker, iro.stock_path(@stock)
 
   = render 'form', stock: @stock

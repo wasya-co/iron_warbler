@@ -1,30 +1,66 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import Chart from "./chart"
-import Stock_1mo from "./stock_1mo"
+import ChartPrice from "./chart_price"
+import StockChart from "./stock_chart"
+import StockHistogram from "./stock_histogram"
 
 function mount() {
-  const el = document.getElementById("Chart")
-  if (!el) return
+  let el = document.getElementById("Chart")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<Chart data={data} />)
+  }
 
-  const data = JSON.parse( el.dataset.props )
-  // console.log('Chart data', data)
+  el = document.getElementById("ChartPrice")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<ChartPrice data={data} />)
+  }
 
-  createRoot(el).render(<Chart data={data} />)
+  el = document.getElementById("Stock_1mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockChart data={data} />)
+  }
+  el = document.getElementById("StockHist_1mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockHistogram data={data} />)
+  }
+
+  el = document.getElementById("Stock_3mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockChart data={data} />)
+  }
+  el = document.getElementById("StockHist_3mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockHistogram data={data} />)
+  }
+
+  el = document.getElementById("Stock_6mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockChart data={data} />)
+  }
+  el = document.getElementById("StockHist_6mo")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockHistogram data={data} />)
+  }
+
+  el = document.getElementById("Stock_1yr")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockChart data={data} />)
+  }
+  el = document.getElementById("StockHist_1yr")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<StockHistogram data={data} />)
+  }
 }
 document.addEventListener("DOMContentLoaded", mount)
-
-
-function mount_stock_1mo() {
-  const el = document.getElementById("stock_1mo")
-  if (!el) return
-
-  const data = JSON.parse( el.dataset.props )
-  // console.log('stock_1mo', data)
-
-  createRoot(el).render(<Stock_1mo data={data} />)
-}
-document.addEventListener("DOMContentLoaded", mount_stock_1mo)
-
-
 

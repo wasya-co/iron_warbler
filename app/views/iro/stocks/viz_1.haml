@@ -1,7 +1,17 @@
 
 .stocks-viz-1.maxwidth
+  .header
+    %h5.text-center
+      = link_to @stock, iro.stock_path(@stock)
+      Last: #{pp_amount @stock.last}
+      = link_to '[~]', iro.edit_stock_path(@stock)
 
-  = @stock
-
+  .text-center Chart
   #Chart{ data: { props: @chart_data.to_json } }
+
+  -# .text-center ChartPrice
+  -# #ChartPrice{ data: { props: @chart_data.to_json } }
+
+  .text-center 1mo
+  #Stock_1mo{ data: { props: @datapoints_1mo.to_json } }
 

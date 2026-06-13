@@ -4375,7 +4375,7 @@ var require_isPlainObject2 = __commonJS({
   }
 });
 
-// app/assets/react/chart.jsx
+// app/assets/react/chart_price.jsx
 var import_react50 = __toESM(require_react());
 
 // node_modules/recharts/es6/container/Surface.js
@@ -26877,7 +26877,7 @@ var ScatterChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) =
   });
 });
 
-// app/assets/react/chart.jsx
+// app/assets/react/chart_price.jsx
 var TT = ({ active, payload, label }) => {
   if (!payload.length) {
     return;
@@ -26885,22 +26885,32 @@ var TT = ({ active, payload, label }) => {
   const item = payload[0].payload;
   return /* @__PURE__ */ import_react50.default.createElement("div", { className: "TT" }, /* @__PURE__ */ import_react50.default.createElement("ul", null, /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "strike:"), " ", item.strike, " "), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "price:"), " ", item.price), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "implied:"), " ", item.implied)));
 };
-function Chart({ data }) {
+function ChartPrice({ data }) {
   console.log("+++ Chart 2:", data);
   const min2 = data.min;
   const max2 = data.max;
-  const interval = 10;
-  const ticks2 = [];
-  for (let v = min2; v < max2; v += interval) {
-    ticks2.push(v);
-  }
   const filtered = (which) => {
     return which.filter((w) => w.strike > min2 && w.strike < max2);
   };
-  return /* @__PURE__ */ import_react50.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react50.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react50.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react50.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react50.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react50.default.createElement(TT, null) }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+  return /* @__PURE__ */ import_react50.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react50.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react50.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react50.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react50.default.createElement(
+    XAxis,
+    {
+      type: "number",
+      dataKey: "price",
+      domain: [min2, max2]
+    }
+  ), /* @__PURE__ */ import_react50.default.createElement(
+    YAxis,
+    {
+      reversed: true,
+      type: "number",
+      dataKey: "strike",
+      domain: [min2, max2]
+    }
+  ), /* @__PURE__ */ import_react50.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react50.default.createElement(TT, null) }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
 }
 export {
-  Chart as default
+  ChartPrice as default
 };
 /*! Bundled license information:
 
@@ -26973,4 +26983,4 @@ react-is/cjs/react-is.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=/assets/chart.js.map
+//# sourceMappingURL=/assets/chart_price.js.map

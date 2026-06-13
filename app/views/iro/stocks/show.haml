@@ -1,26 +1,27 @@
 
-.stocks-show.maxwidth
+.stocks-show.padded
   .header
-    %h3.title
-      = select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
+    %h5.text-center
+      .d-inline-block= select_tag :stock_selector, options_for_select( @stocks_list, selected: @stock.ticker ), class: 'select2'
+      = link_to '[~]', edit_stock_path(@stock)
 
-  %ul.actions
-    %li
-      = form_tag stock_get_historic_data_path(@stock) do
-        get historic data from:
-        = text_field_tag :date_from, nil, placeholder: 'yyyy-mm-dd'
-        = submit_tag 'Go'
-    %li
-      = form_tag viz_1_path(@stock), method: :get do
-        - nxt = Date.current.next_occurring(:friday).to_date
-        - nxt = Time.previous_business_day(nxt) if !nxt.workday?
-        = text_field_tag :expires_on, nxt, placeholder: 'yyyy-mm-dd'
-        = submit_tag 'expiry-viz'
-
+  .collapse-expand#Actions [&lt;>] Actions
   .row
-
-    .col-md-6
-      %hr
+    .col-6
+      %ul.actions
+        %li Current Price: #{@stock.last}
+        %li
+          = form_tag stock_get_historic_data_path(@stock) do
+            get historic data from:
+            = text_field_tag :date_from, nil, placeholder: 'yyyy-mm-dd'
+            = submit_tag 'Go'
+        %li
+          = form_tag viz_1_path(@stock), method: :get do
+            - nxt = Date.current.next_occurring(:friday).to_date
+            - nxt = Time.previous_business_day(nxt) if !nxt.workday?
+            = text_field_tag :expires_on, nxt, placeholder: 'yyyy-mm-dd'
+            = submit_tag 'expiry-viz'
+    .col-6
       = button_to 'recompute', stock_recompute_volatility_path(@stock)
       %ul
         %li
@@ -32,8 +33,9 @@
         %li
           %b daily <br />
           = @stock.volatility_daily
+  .c
 
-  %h4.text-center.collapse-expand#datapoints_0 [&lt;>] Review Datapoints
+  .collapse-expand#datapoints_0 [&lt;>] Review Datapoints
   .row
     .col-md-6
       - date_oldest = @datapoints.last.date
@@ -63,19 +65,38 @@
                       .red .
                     - else
                       h
+  .c
 
-  %h4.text-center [&lt;>] Some Plots
-  .row
+  .collapse-expand#stockChart_0 [&lt;>] Line Charts
+  .a
+    .d-flex
+      .a
+        .text-center 1yr
+        #Stock_1yr{ data: { props: @datapoints_1yr.to_json } }
+      .a
+        .text-center 6mo
+        #Stock_6mo{ data: { props: @datapoints_6mo.to_json } }
+      .a
+        .text-center 3mo
+        #Stock_3mo{ data: { props: @datapoints_3mo.to_json } }
+      .a
+        .text-center 1mo
+        #Stock_1mo{ data: { props: @datapoints_1mo.to_json } }
+  .c
 
-    .col-4
-
-      .a20260612-stock-vizualization
-        = @stock
-        #stock_1mo{ data: { props: @datapoints_arr.to_json } }
-
-
-    .col-4
-      hm
-    .col-4
-      hm
-
+  .collapse-expand#stockHistogram_0 [&lt;>] Histograms
+  .a
+    .d-flex
+      .a
+        .text-center 1yr
+        #StockHist_1yr{ data: { props: @histogram_1yr.to_json } }
+      .a
+        .text-center 6mo
+        #StockHist_6mo{ data: { props: @histogram_6mo.to_json } }
+      .a
+        .text-center 3mo
+        #StockHist_3mo{ data: { props: @histogram_3mo.to_json } }
+      .a
+        .text-center 1mo
+        #StockHist_1mo{ data: { props: @histogram_1mo.to_json } }
+  .c

@@ -23,20 +23,18 @@ const TT = ({ active, payload, label }) => {
   </div>
 }
 
-/*
- * this was an attempt at option volatility pricing.
-**/
-export default function Chart({ data }) {
+
+export default function ChartPrice({ data }) {
   console.log('+++ Chart 2:', data)
 
   const min = data.min
   const max = data.max
 
-  const interval = 10
-  const ticks = []
-  for (let v=min; v<max; v+=interval) {
-    ticks.push(v)
-  }
+  // const interval = 10
+  // const ticks = []
+  // for (let v=min; v<max; v+=interval) {
+  //   ticks.push(v)
+  // }
 
   const filtered = (which) => {
     return which.filter( w =>  w.strike > min && w.strike < max )
@@ -49,8 +47,12 @@ export default function Chart({ data }) {
         <ScatterChart >
           <CartesianGrid />
 
-          <XAxis type='number' dataKey='implied' ticks={ticks} domain={[min,max]} />
-          <YAxis reversed type='number' dataKey="strike" ticks={ticks} domain={[min,max]} />
+          <XAxis type='number' dataKey='price'
+            // ticks={ticks}
+            domain={[min,max]} />
+          <YAxis reversed type='number' dataKey="strike"
+            // ticks={ticks}
+            domain={[min,max]} />
 
           <Tooltip content={<TT />} />
           <Scatter data={filtered( data.puts )} fill='#666666' />

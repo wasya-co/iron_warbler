@@ -5,6 +5,15 @@ From: https://docs.galpy.org/en/latest/installation.html
 
   brew install gsl
 
+== Develop ==
+
+=== recharts ===
+
+run this on every change:
+
+  yarn run build
+
+
 = Use =
 
 calculator: https://www.omnicalculator.com/finance/black-scholes
@@ -18,3 +27,4 @@ From: https://pythoninoffice.com/calculate-black-scholes-option-price-in-python/
 == swagger ==
 
 * https://developer.schwab.com/products/trader-api--individual
+

@@ -93,6 +93,250 @@ class Iro::StocksController < Iro::ApplicationController
     end
     @datapoints_arr = @datapoints.map { |dp| { date: dp.date, value: dp.value } }
 
+    min = (@stock.min / @stock.step) * @stock.step
+    max = @stock.max
+
+
+    @datapoints_1mo = {
+      items: Iro::Datapoint.where({
+        symbol: @stock.ticker,
+        :date.gte => Time.now - 1.month,
+      }).order_by({ date: :asc }),
+      min: @stock.min,
+      max: @stock.max,
+    };
+    pipeline = [
+      { "$match" => { symbol: @stock.ticker,
+                      date: { "$gte" => Time.now - 1.month } } },
+      {
+        "$project" => {
+          bucket: {
+            "$let" => {
+              vars: {
+                b: { "$multiply" => [
+                  { "$floor" => { "$divide" => ["$value", @stock.step] } },
+                  @stock.step
+                ] }
+              },
+              in: {
+                "$cond" => [
+                  { "$lt" => ["$$b", @stock.min] },
+                  @stock.min,
+                  {
+                    "$cond" => [
+                      { "$gt" => ["$$b", @stock.max] },
+                      @stock.max,
+                      "$$b"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      { "$group" => { _id: "$bucket",
+                      count: { "$sum" => 1 } } },
+      { "$sort" => { "_id" => 1 } },
+    ]
+    result = Iro::Datapoint.collection.aggregate(pipeline).to_a
+    map = result.to_h { |r| [r["_id"].to_i, r["count"]] }
+    puts! map, '1mo map'
+    filled = (@stock.min..@stock.max).step(@stock.step).map do |bucket|
+      {
+        bucket: bucket,
+        count: map[bucket] || 0,
+      }
+    end
+    @histogram_1mo = {
+      items: filled,
+      label: '1mo',
+      min: 0,
+      max: 10,
+    };
+    # puts! @histogram_1mo, '@histogram_1mo'
+
+
+
+    @datapoints_3mo = {
+      items: Iro::Datapoint.where({
+        symbol: @stock.ticker,
+        :date.gte => Time.now - 3.months,
+      }).order_by({ date: :asc }),
+      min: @stock.min,
+      max: @stock.max,
+    };
+    pipeline = [
+      { "$match" => { symbol: @stock.ticker,
+                      date: { "$gte" => Time.now - 3.months } } },
+      {
+        "$project" => {
+          bucket: {
+            "$let" => {
+              vars: {
+                b: { "$multiply" => [
+                  { "$floor" => { "$divide" => ["$value", @stock.step] } },
+                  @stock.step
+                ] }
+              },
+              in: {
+                "$cond" => [
+                  { "$lt" => ["$$b", @stock.min] },
+                  @stock.min,
+                  {
+                    "$cond" => [
+                      { "$gt" => ["$$b", @stock.max] },
+                      @stock.max,
+                      "$$b"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      { "$group" => { _id: "$bucket",
+                      count: { "$sum" => 1 } } },
+      { "$sort" => { "_id" => 1 } },
+    ]
+    result = Iro::Datapoint.collection.aggregate(pipeline).to_a
+    puts! result, '3mo result'
+    map = result.to_h { |r| [r["_id"].to_i, r["count"]] }
+    puts! map, '3mo map'
+    filled = (@stock.min..@stock.max).step(@stock.step).map do |bucket|
+      puts! bucket, 'a 3mo bucket'
+      {
+        bucket: bucket,
+        count: map[bucket] || 0,
+      }
+    end
+    puts! filled, '3mo filled'
+    @histogram_3mo = {
+      items: filled,
+      label: '3mo',
+      min: 0,
+      max: 10,
+    };
+    # puts! @histogram_3mo, '@histogram_3mo'
+
+
+
+    @datapoints_6mo = {
+      items: Iro::Datapoint.where({
+        symbol: @stock.ticker,
+        :date.gte => Time.now - 6.months,
+      }).order_by({ date: :asc }),
+      min: @stock.min,
+      max: @stock.max,
+    };
+    pipeline = [
+      { "$match" => { symbol: @stock.ticker,
+                      date: { "$gte" => Time.now - 6.months } } },
+      {
+        "$project" => {
+          bucket: {
+            "$let" => {
+              vars: {
+                b: { "$multiply" => [
+                  { "$floor" => { "$divide" => ["$value", @stock.step] } },
+                  @stock.step
+                ] }
+              },
+              in: {
+                "$cond" => [
+                  { "$lt" => ["$$b", @stock.min] },
+                  @stock.min,
+                  {
+                    "$cond" => [
+                      { "$gt" => ["$$b", @stock.max] },
+                      @stock.max,
+                      "$$b"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      { "$group" => { _id: "$bucket",
+                      count: { "$sum" => 1 } } },
+      { "$sort" => { "_id" => 1 } },
+    ]
+    result = Iro::Datapoint.collection.aggregate(pipeline).to_a
+    map = result.to_h { |r| [r["_id"].to_i, r["count"]] }
+    filled = (@stock.min..@stock.max).step(@stock.step).map do |bucket|
+      {
+        bucket: bucket,
+        count: map[bucket] || 0,
+      }
+    end
+    @histogram_6mo = {
+      items: filled,
+      label: '6mo',
+      min: 0,
+      max: 10,
+    };
+
+
+    @datapoints_1yr = {
+      items: Iro::Datapoint.where({
+        symbol: @stock.ticker,
+        :date.gte => Time.now - 1.year,
+      }).order_by({ date: :asc }),
+      min: min,
+      max: max,
+    };
+    pipeline = [
+      { "$match" => { symbol: @stock.ticker,
+                      date: { "$gte" => Time.now - 1.year } } },
+      {
+        "$project" => {
+          bucket: {
+            "$let" => {
+              vars: {
+                b: { "$multiply" => [
+                  { "$floor" => { "$divide" => ["$value", @stock.step] } },
+                  @stock.step
+                ] }
+              },
+              in: {
+                "$cond" => [
+                  { "$lt" => ["$$b", @stock.min] },
+                  @stock.min,
+                  {
+                    "$cond" => [
+                      { "$gt" => ["$$b", @stock.max] },
+                      @stock.max,
+                      "$$b"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      { "$group" => { _id: "$bucket",
+                      count: { "$sum" => 1 } } },
+      { "$sort" => { "_id" => 1 } },
+    ]
+    result = Iro::Datapoint.collection.aggregate(pipeline).to_a
+    map = result.to_h { |r| [r["_id"].to_i, r["count"]] }
+    filled = (@stock.min..@stock.max).step(@stock.step).map do |bucket|
+      {
+        bucket: bucket,
+        count: map[bucket] || 0,
+      }
+    end
+    @histogram_1yr = {
+      items: filled,
+      label: '1yr',
+      min: 0,
+      max: 10,
+    };
+
 
     respond_to do |format|
       format.html
@@ -117,7 +361,18 @@ class Iro::StocksController < Iro::ApplicationController
     @stock = Iro::Stock.find params[:id]
     authorize! :show, @stock
 
-    @chart_data = { puts: [], puts_1: [], calls: [], calls_1: [] }
+    @chart_data = {
+      calls: [],
+      calls_1: [],
+
+      min:  @stock.min,
+      max:  @stock.max,
+
+      last: [{ strike: @stock.last, implied: @stock.last }],
+
+      puts: [],
+      puts_1: [],
+    };
 
     @quotes = Tda::Option.get_quotes({ contractType: 'CALL', ticker: @stock.ticker, expirationDate: params[:expires_on] })
     # @quotes = @quotes.reverse
@@ -126,7 +381,7 @@ class Iro::StocksController < Iro::ApplicationController
       implied = q[:strikePrice] + ( q[:bid] + q[:ask] )/2
       obj = {
         strike: q[:strikePrice],
-        iv: implied,
+        implied: implied,
         price: ( q[:bid] + q[:ask] )/2,
         put_call: q[:putCall],
       }
@@ -136,6 +391,7 @@ class Iro::StocksController < Iro::ApplicationController
 
     exp_1 = (params[:expires_on].to_date+21.days).to_date
     puts! exp_1, 'exp_1'
+
     @quotes = Tda::Option.get_quotes({ contractType: 'CALL', ticker: @stock.ticker, expirationDate: exp_1 })
     # @quotes = @quotes.reverse
     # puts! @quotes, '@quotes'
@@ -143,7 +399,7 @@ class Iro::StocksController < Iro::ApplicationController
       implied = q[:strikePrice] + ( q[:bid] + q[:ask] )/2
       obj = {
         strike: q[:strikePrice],
-        iv: implied,
+        implied: implied,
         price: ( q[:bid] + q[:ask] )/2,
         put_call: "#{q[:putCall]}-1",
       }
@@ -152,15 +408,13 @@ class Iro::StocksController < Iro::ApplicationController
     end
 
 
-
-
     @quotes = Tda::Option.get_quotes({ contractType: 'PUT', ticker: @stock.ticker, expirationDate: params[:expires_on] })
     # puts! @quotes, '@quotes'
     @quotes.each do |q|
       implied = q[:strikePrice] - ( q[:bid] + q[:ask] )/2
       obj = {
         strike: q[:strikePrice],
-        iv: implied,
+        implied: implied,
         price: ( q[:bid] + q[:ask] )/2,
         put_call: q[:putCall],
       }
@@ -173,7 +427,7 @@ class Iro::StocksController < Iro::ApplicationController
       implied = q[:strikePrice] - ( q[:bid] + q[:ask] )/2
       obj = {
         strike: q[:strikePrice],
-        iv: implied,
+        implied: implied,
         price: ( q[:bid] + q[:ask] )/2,
         put_call: q[:putCall],
       }
@@ -181,7 +435,8 @@ class Iro::StocksController < Iro::ApplicationController
       @chart_data[:puts_1].push(obj)
     end
 
-    puts! @chart_data, '@chart_data'
+
+    # puts! @chart_data, '@chart_data'
 
     # get all options at this expiration. call only.
     # plot price + premium.

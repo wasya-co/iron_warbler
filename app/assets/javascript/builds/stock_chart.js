@@ -34,7 +34,7 @@ var require_react_development = __commonJS({
     "use strict";
     (function() {
       function defineDeprecationWarning(methodName, info) {
-        Object.defineProperty(Component.prototype, methodName, {
+        Object.defineProperty(Component2.prototype, methodName, {
           get: function() {
             console.warn(
               "%s(...) is deprecated in plain JavaScript React classes. %s",
@@ -59,7 +59,7 @@ var require_react_development = __commonJS({
           publicInstance
         ), didWarnStateUpdateForUnmountedComponent[warningKey] = true);
       }
-      function Component(props, context, updater) {
+      function Component2(props, context, updater) {
         this.props = props;
         this.context = context;
         this.refs = emptyObject;
@@ -243,9 +243,9 @@ var require_react_development = __commonJS({
         return newKey;
       }
       function validateChildKeys(node) {
-        isValidElement14(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement14(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
+        isValidElement15(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement15(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
       }
-      function isValidElement14(object) {
+      function isValidElement15(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
       }
       function escape(key) {
@@ -314,13 +314,13 @@ var require_react_development = __commonJS({
           var childKey = "" === nameSoFar ? "." + getElementKey(invokeCallback, 0) : nameSoFar;
           isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c2) {
             return c2;
-          })) : null != callback && (isValidElement14(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
+          })) : null != callback && (isValidElement15(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
             callback,
             escapedPrefix + (null == callback.key || invokeCallback && invokeCallback.key === callback.key ? "" : ("" + callback.key).replace(
               userProvidedKeyEscapeRegex,
               "$&/"
             ) + "/") + childKey
-          ), "" !== nameSoFar && null != invokeCallback && isValidElement14(invokeCallback) && null == invokeCallback.key && invokeCallback._store && !invokeCallback._store.validated && (escapedPrefix._store.validated = 2), callback = escapedPrefix), array.push(callback));
+          ), "" !== nameSoFar && null != invokeCallback && isValidElement15(invokeCallback) && null == invokeCallback.key && invokeCallback._store && !invokeCallback._store.validated && (escapedPrefix._store.validated = 2), callback = escapedPrefix), array.push(callback));
           return 1;
         }
         invokeCallback = 0;
@@ -512,15 +512,15 @@ var require_react_development = __commonJS({
         }
       }, assign2 = Object.assign, emptyObject = {};
       Object.freeze(emptyObject);
-      Component.prototype.isReactComponent = {};
-      Component.prototype.setState = function(partialState, callback) {
+      Component2.prototype.isReactComponent = {};
+      Component2.prototype.setState = function(partialState, callback) {
         if ("object" !== typeof partialState && "function" !== typeof partialState && null != partialState)
           throw Error(
             "takes an object of state variables to update or a function which returns an object of state variables."
           );
         this.updater.enqueueSetState(this, partialState, callback, "setState");
       };
-      Component.prototype.forceUpdate = function(callback) {
+      Component2.prototype.forceUpdate = function(callback) {
         this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
       };
       var deprecatedAPIs = {
@@ -535,10 +535,10 @@ var require_react_development = __commonJS({
       };
       for (fnName in deprecatedAPIs)
         deprecatedAPIs.hasOwnProperty(fnName) && defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-      ComponentDummy.prototype = Component.prototype;
+      ComponentDummy.prototype = Component2.prototype;
       deprecatedAPIs = PureComponent.prototype = new ComponentDummy();
       deprecatedAPIs.constructor = PureComponent;
-      assign2(deprecatedAPIs, Component.prototype);
+      assign2(deprecatedAPIs, Component2.prototype);
       deprecatedAPIs.isPureReactComponent = true;
       var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = {
         H: null,
@@ -617,7 +617,7 @@ var require_react_development = __commonJS({
           }) || [];
         },
         only: function(children) {
-          if (!isValidElement14(children))
+          if (!isValidElement15(children))
             throw Error(
               "React.Children.only expected to receive a single React element child."
             );
@@ -626,7 +626,7 @@ var require_react_development = __commonJS({
       };
       exports.Activity = REACT_ACTIVITY_TYPE;
       exports.Children = fnName;
-      exports.Component = Component;
+      exports.Component = Component2;
       exports.Fragment = REACT_FRAGMENT_TYPE;
       exports.Profiler = REACT_PROFILER_TYPE;
       exports.PureComponent = PureComponent;
@@ -851,7 +851,7 @@ var require_react_development = __commonJS({
         });
         return elementType;
       };
-      exports.isValidElement = isValidElement14;
+      exports.isValidElement = isValidElement15;
       exports.lazy = function(ctor) {
         ctor = { _status: -1, _result: ctor };
         var lazyType = {
@@ -1061,7 +1061,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), Internals = {
+      var React41 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -1079,7 +1079,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React39.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React41.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -1429,7 +1429,7 @@ var require_get = __commonJS({
     var isDeepKey = require_isDeepKey();
     var toKey = require_toKey();
     var toPath = require_toPath();
-    function get6(object, path2, defaultValue) {
+    function get5(object, path2, defaultValue) {
       if (object == null) {
         return defaultValue;
       }
@@ -1441,7 +1441,7 @@ var require_get = __commonJS({
           const result = object[path2];
           if (result === void 0) {
             if (isDeepKey.isDeepKey(path2)) {
-              return get6(object, toPath.toPath(path2), defaultValue);
+              return get5(object, toPath.toPath(path2), defaultValue);
             } else {
               return defaultValue;
             }
@@ -1498,7 +1498,7 @@ var require_get = __commonJS({
       }
       return current3;
     }
-    exports.get = get6;
+    exports.get = get5;
   }
 });
 
@@ -1611,10 +1611,10 @@ var require_property = __commonJS({
   "node_modules/es-toolkit/dist/compat/object/property.js"(exports) {
     "use strict";
     Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-    var get6 = require_get();
+    var get5 = require_get();
     function property(path2) {
       return function(object) {
-        return get6.get(object, path2);
+        return get5.get(object, path2);
       };
     }
     exports.property = property;
@@ -2303,7 +2303,7 @@ var require_matchesProperty = __commonJS({
     var isMatch = require_isMatch();
     var toKey = require_toKey();
     var cloneDeep = require_cloneDeep2();
-    var get6 = require_get();
+    var get5 = require_get();
     var has3 = require_has();
     function matchesProperty(property, source) {
       switch (typeof property) {
@@ -2320,7 +2320,7 @@ var require_matchesProperty = __commonJS({
       }
       source = cloneDeep.cloneDeep(source);
       return function(target) {
-        const result = get6.get(target, property);
+        const result = get5.get(target, property);
         if (result === void 0) {
           return has3.has(target, property);
         }
@@ -2404,7 +2404,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React39.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React41.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -2452,8 +2452,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState14 = React39.useState, useEffect19 = React39.useEffect, useLayoutEffect9 = React39.useLayoutEffect, useDebugValue2 = React39.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React39.useSyncExternalStore ? React39.useSyncExternalStore : shim;
+      var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState14 = React41.useState, useEffect19 = React41.useEffect, useLayoutEffect9 = React41.useLayoutEffect, useDebugValue2 = React41.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React41.useSyncExternalStore ? React41.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -2480,7 +2480,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef19 = React39.useRef, useEffect19 = React39.useEffect, useMemo11 = React39.useMemo, useDebugValue2 = React39.useDebugValue;
+      var React41 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef19 = React41.useRef, useEffect19 = React41.useEffect, useMemo11 = React41.useMemo, useDebugValue2 = React41.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef19(null);
         if (null === instRef.current) {
@@ -2934,7 +2934,7 @@ var require_use_sync_external_store_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React39 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React39.useSyncExternalStore, useRef19 = React39.useRef, useEffect19 = React39.useEffect, useMemo11 = React39.useMemo, useDebugValue2 = React39.useDebugValue;
+      var React41 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React41.useSyncExternalStore, useRef19 = React41.useRef, useEffect19 = React41.useEffect, useMemo11 = React41.useMemo, useDebugValue2 = React41.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef19(null);
         if (null === instRef.current) {
@@ -4227,111 +4227,6 @@ var require_eventemitter3 = __commonJS({
   }
 });
 
-// node_modules/react-is/cjs/react-is.development.js
-var require_react_is_development = __commonJS({
-  "node_modules/react-is/cjs/react-is.development.js"(exports) {
-    "use strict";
-    (function() {
-      function typeOf(object) {
-        if ("object" === typeof object && null !== object) {
-          var $$typeof = object.$$typeof;
-          switch ($$typeof) {
-            case REACT_ELEMENT_TYPE:
-              switch (object = object.type, object) {
-                case REACT_FRAGMENT_TYPE:
-                case REACT_PROFILER_TYPE:
-                case REACT_STRICT_MODE_TYPE:
-                case REACT_SUSPENSE_TYPE:
-                case REACT_SUSPENSE_LIST_TYPE:
-                case REACT_VIEW_TRANSITION_TYPE:
-                  return object;
-                default:
-                  switch (object = object && object.$$typeof, object) {
-                    case REACT_CONTEXT_TYPE:
-                    case REACT_FORWARD_REF_TYPE2:
-                    case REACT_LAZY_TYPE:
-                    case REACT_MEMO_TYPE2:
-                      return object;
-                    case REACT_CONSUMER_TYPE:
-                      return object;
-                    default:
-                      return $$typeof;
-                  }
-              }
-            case REACT_PORTAL_TYPE:
-              return $$typeof;
-          }
-        }
-      }
-      var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE2 = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE2 = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_VIEW_TRANSITION_TYPE = /* @__PURE__ */ Symbol.for("react.view_transition"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference");
-      exports.ContextConsumer = REACT_CONSUMER_TYPE;
-      exports.ContextProvider = REACT_CONTEXT_TYPE;
-      exports.Element = REACT_ELEMENT_TYPE;
-      exports.ForwardRef = REACT_FORWARD_REF_TYPE2;
-      exports.Fragment = REACT_FRAGMENT_TYPE;
-      exports.Lazy = REACT_LAZY_TYPE;
-      exports.Memo = REACT_MEMO_TYPE2;
-      exports.Portal = REACT_PORTAL_TYPE;
-      exports.Profiler = REACT_PROFILER_TYPE;
-      exports.StrictMode = REACT_STRICT_MODE_TYPE;
-      exports.Suspense = REACT_SUSPENSE_TYPE;
-      exports.SuspenseList = REACT_SUSPENSE_LIST_TYPE;
-      exports.isContextConsumer = function(object) {
-        return typeOf(object) === REACT_CONSUMER_TYPE;
-      };
-      exports.isContextProvider = function(object) {
-        return typeOf(object) === REACT_CONTEXT_TYPE;
-      };
-      exports.isElement = function(object) {
-        return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
-      };
-      exports.isForwardRef = function(object) {
-        return typeOf(object) === REACT_FORWARD_REF_TYPE2;
-      };
-      exports.isFragment = function(object) {
-        return typeOf(object) === REACT_FRAGMENT_TYPE;
-      };
-      exports.isLazy = function(object) {
-        return typeOf(object) === REACT_LAZY_TYPE;
-      };
-      exports.isMemo = function(object) {
-        return typeOf(object) === REACT_MEMO_TYPE2;
-      };
-      exports.isPortal = function(object) {
-        return typeOf(object) === REACT_PORTAL_TYPE;
-      };
-      exports.isProfiler = function(object) {
-        return typeOf(object) === REACT_PROFILER_TYPE;
-      };
-      exports.isStrictMode = function(object) {
-        return typeOf(object) === REACT_STRICT_MODE_TYPE;
-      };
-      exports.isSuspense = function(object) {
-        return typeOf(object) === REACT_SUSPENSE_TYPE;
-      };
-      exports.isSuspenseList = function(object) {
-        return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
-      };
-      exports.isValidElementType = function(type) {
-        return "string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || "object" === typeof type && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE2 || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE2 || type.$$typeof === REACT_CLIENT_REFERENCE || void 0 !== type.getModuleId) ? true : false;
-      };
-      exports.typeOf = typeOf;
-    })();
-  }
-});
-
-// node_modules/react-is/index.js
-var require_react_is = __commonJS({
-  "node_modules/react-is/index.js"(exports, module) {
-    "use strict";
-    if (false) {
-      module.exports = null;
-    } else {
-      module.exports = require_react_is_development();
-    }
-  }
-});
-
 // node_modules/es-toolkit/dist/compat/predicate/isPlainObject.js
 var require_isPlainObject = __commonJS({
   "node_modules/es-toolkit/dist/compat/predicate/isPlainObject.js"(exports) {
@@ -4375,8 +4270,8 @@ var require_isPlainObject2 = __commonJS({
   }
 });
 
-// app/assets/react/chart.jsx
-var import_react50 = __toESM(require_react());
+// app/assets/react/stock_chart.jsx
+var import_react52 = __toESM(require_react());
 
 // node_modules/recharts/es6/container/Surface.js
 var React = __toESM(require_react());
@@ -4771,6 +4666,18 @@ function svgPropertiesAndEvents(obj) {
     }
   }
   return result;
+}
+function svgPropertiesAndEventsFromUnknown(input) {
+  if (input == null) {
+    return null;
+  }
+  if (/* @__PURE__ */ (0, import_react2.isValidElement)(input)) {
+    return svgPropertiesAndEvents(input.props);
+  }
+  if (typeof input === "object" && !Array.isArray(input)) {
+    return svgPropertiesAndEvents(input);
+  }
+  return null;
 }
 
 // node_modules/recharts/es6/container/Surface.js
@@ -5951,35 +5858,6 @@ function findEntryInArray(ary, specifiedKey, specifiedValue) {
   }
   return ary.find((entry) => entry && (typeof specifiedKey === "function" ? specifiedKey(entry) : (0, import_get.default)(entry, specifiedKey)) === specifiedValue);
 }
-var getLinearRegression = (data) => {
-  var len = data.length;
-  var xsum = 0;
-  var ysum = 0;
-  var xysum = 0;
-  var xxsum = 0;
-  var xmin = Infinity;
-  var xmax = -Infinity;
-  var xcurrent = 0;
-  var ycurrent = 0;
-  for (var i = 0; i < len; i++) {
-    var _data$i, _data$i2;
-    xcurrent = ((_data$i = data[i]) === null || _data$i === void 0 ? void 0 : _data$i.cx) || 0;
-    ycurrent = ((_data$i2 = data[i]) === null || _data$i2 === void 0 ? void 0 : _data$i2.cy) || 0;
-    xsum += xcurrent;
-    ysum += ycurrent;
-    xysum += xcurrent * ycurrent;
-    xxsum += xcurrent * xcurrent;
-    xmin = Math.min(xmin, xcurrent);
-    xmax = Math.max(xmax, xcurrent);
-  }
-  var a2 = len * xxsum !== xsum * xsum ? (len * xysum - xsum * ysum) / (len * xxsum - xsum * xsum) : 0;
-  return {
-    xmin,
-    xmax,
-    a: a2,
-    b: (ysum - a2 * xsum) / len
-  };
-};
 var isNullish = (value) => {
   return value === null || typeof value === "undefined";
 };
@@ -6184,9 +6062,6 @@ var adaptEventsOfChild = (props, data, index) => {
     }
   });
   return out;
-};
-var isNonEmptyArray = (arr) => {
-  return Array.isArray(arr) && arr.length > 0;
 };
 
 // node_modules/recharts/es6/util/resolveDefaultProps.js
@@ -6419,7 +6294,7 @@ function createCacheNode() {
 function weakMapMemoize(func, options = {}) {
   let fnNode = createCacheNode();
   const { resultEqualityCheck } = options;
-  let lastResult2;
+  let lastResult;
   let resultsCount = 0;
   function memoized() {
     let cacheNode = fnNode;
@@ -6460,13 +6335,13 @@ function weakMapMemoize(func, options = {}) {
       result = func.apply(null, arguments);
       resultsCount++;
       if (resultEqualityCheck) {
-        const lastResultValue = lastResult2?.deref?.() ?? lastResult2;
+        const lastResultValue = lastResult?.deref?.() ?? lastResult;
         if (lastResultValue != null && resultEqualityCheck(lastResultValue, result)) {
           result = lastResultValue;
           resultsCount !== 0 && resultsCount--;
         }
         const needsWeakRef = typeof result === "object" && result !== null || typeof result === "function";
-        lastResult2 = needsWeakRef ? new Ref(result) : result;
+        lastResult = needsWeakRef ? new Ref(result) : result;
       }
     }
     terminatedNode.s = TERMINATED;
@@ -6491,7 +6366,7 @@ function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
   const createSelector2 = (...createSelectorArgs) => {
     let recomputations = 0;
     let dependencyRecomputations = 0;
-    let lastResult2;
+    let lastResult;
     let directlyPassedOptions = {};
     let resultFunc = createSelectorArgs.pop();
     if (typeof resultFunc === "object") {
@@ -6530,14 +6405,14 @@ function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
         dependencies,
         arguments
       );
-      lastResult2 = memoizedResultFunc.apply(null, inputSelectorResults);
+      lastResult = memoizedResultFunc.apply(null, inputSelectorResults);
       if (true) {
         const { identityFunctionCheck, inputStabilityCheck } = getDevModeChecksExecutionInfo(firstRun, devModeChecks);
         if (identityFunctionCheck.shouldRun) {
           identityFunctionCheck.run(
             resultFunc,
             inputSelectorResults,
-            lastResult2
+            lastResult
           );
         }
         if (inputStabilityCheck.shouldRun) {
@@ -6554,7 +6429,7 @@ function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
         if (firstRun)
           firstRun = false;
       }
-      return lastResult2;
+      return lastResult;
     }, ...finalArgsMemoizeOptions);
     return Object.assign(selector, {
       resultFunc,
@@ -6564,7 +6439,7 @@ function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
       resetDependencyRecomputations: () => {
         dependencyRecomputations = 0;
       },
-      lastResult: () => lastResult2,
+      lastResult: () => lastResult,
       recomputations: () => recomputations,
       resetRecomputations: () => {
         recomputations = 0;
@@ -20409,10 +20284,6 @@ function Tooltip(outsideProps) {
   }));
 }
 
-// node_modules/recharts/es6/component/Cell.js
-var Cell = (_props) => null;
-Cell.displayName = "Cell";
-
 // node_modules/recharts/es6/component/Text.js
 var React15 = __toESM(require_react());
 var import_react22 = __toESM(require_react());
@@ -21744,6 +21615,36 @@ function LabelListFromLabelProp(_ref2) {
   return null;
 }
 
+// node_modules/recharts/es6/shape/Dot.js
+var React18 = __toESM(require_react());
+function _extends14() {
+  return _extends14 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends14.apply(null, arguments);
+}
+var Dot = (props) => {
+  var {
+    cx,
+    cy,
+    r: r2,
+    className
+  } = props;
+  var layerClass = clsx("recharts-dot", className);
+  if (isNumber(cx) && isNumber(cy) && isNumber(r2)) {
+    return /* @__PURE__ */ React18.createElement("circle", _extends14({}, svgPropertiesNoEvents(props), adaptEventHandlers(props), {
+      className: layerClass,
+      cx,
+      cy,
+      r: r2
+    }));
+  }
+  return null;
+};
+
 // node_modules/recharts/es6/state/polarAxisSlice.js
 var initialState6 = {
   radiusAxis: {},
@@ -21784,61 +21685,21 @@ function getClassNameFromUnknown(u) {
 }
 
 // node_modules/recharts/es6/util/ReactUtils.js
-var import_get3 = __toESM(require_get2());
 var import_react25 = __toESM(require_react());
-var import_react_is = __toESM(require_react_is());
-var getDisplayName = (Comp) => {
-  if (typeof Comp === "string") {
-    return Comp;
+var isClipDot = (dot) => {
+  if (dot && typeof dot === "object" && "clipDot" in dot) {
+    return Boolean(dot.clipDot);
   }
-  if (!Comp) {
-    return "";
-  }
-  return Comp.displayName || Comp.name || "Component";
+  return true;
 };
-var lastChildren = null;
-var lastResult = null;
-var toArray = (children) => {
-  if (children === lastChildren && Array.isArray(lastResult)) {
-    return lastResult;
-  }
-  var result = [];
-  import_react25.Children.forEach(children, (child) => {
-    if (isNullish(child)) return;
-    if ((0, import_react_is.isFragment)(child)) {
-      result = result.concat(toArray(child.props.children));
-    } else {
-      result.push(child);
-    }
-  });
-  lastResult = result;
-  lastChildren = children;
-  return result;
-};
-function findAllByType(children, type) {
-  var result = [];
-  var types = [];
-  if (Array.isArray(type)) {
-    types = type.map((t) => getDisplayName(t));
-  } else {
-    types = [getDisplayName(type)];
-  }
-  toArray(children).forEach((child) => {
-    var childType = (0, import_get3.default)(child, "type.displayName") || (0, import_get3.default)(child, "type.name");
-    if (childType && types.indexOf(childType) !== -1) {
-      result.push(child);
-    }
-  });
-  return result;
-}
 
 // node_modules/recharts/es6/util/ActiveShapeUtils.js
-var React19 = __toESM(require_react());
+var React20 = __toESM(require_react());
 var import_react27 = __toESM(require_react());
 var import_isPlainObject = __toESM(require_isPlainObject2());
 
 // node_modules/recharts/es6/shape/Trapezoid.js
-var React18 = __toESM(require_react());
+var React19 = __toESM(require_react());
 var import_react26 = __toESM(require_react());
 var _templateObject11;
 var _templateObject23;
@@ -21883,14 +21744,14 @@ function _toPrimitive29(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends14() {
-  return _extends14 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends15() {
+  return _extends15 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends14.apply(null, arguments);
+  }, _extends15.apply(null, arguments);
 }
 function _taggedTemplateLiteral3(e, t) {
   return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
@@ -21956,7 +21817,7 @@ var Trapezoid = (outsideProps) => {
   }
   var layerClass = clsx("recharts-trapezoid", className);
   if (!isUpdateAnimationActive) {
-    return /* @__PURE__ */ React18.createElement("g", null, /* @__PURE__ */ React18.createElement("path", _extends14({}, svgPropertiesAndEvents(trapezoidProps), {
+    return /* @__PURE__ */ React19.createElement("g", null, /* @__PURE__ */ React19.createElement("path", _extends15({}, svgPropertiesAndEvents(trapezoidProps), {
       className: layerClass,
       d: getTrapezoidPath(x2, y2, upperWidth, lowerWidth, height)
     })));
@@ -21969,7 +21830,7 @@ var Trapezoid = (outsideProps) => {
   var from2 = "0px ".concat(totalLength === -1 ? 1 : totalLength, "px");
   var to2 = "".concat(totalLength, "px ").concat(totalLength, "px");
   var transition = getTransitionVal(["strokeDasharray"], animationDuration, animationEasing);
-  return /* @__PURE__ */ React18.createElement(JavascriptAnimate, {
+  return /* @__PURE__ */ React19.createElement(JavascriptAnimate, {
     animationId,
     key: animationId,
     canBegin: totalLength > 0,
@@ -21996,7 +21857,7 @@ var Trapezoid = (outsideProps) => {
     } : {
       strokeDasharray: from2
     };
-    return /* @__PURE__ */ React18.createElement("path", _extends14({}, svgPropertiesAndEvents(trapezoidProps), {
+    return /* @__PURE__ */ React19.createElement("path", _extends15({}, svgPropertiesAndEvents(trapezoidProps), {
       className: layerClass,
       d: getTrapezoidPath(currX, currY, currUpperWidth, currLowerWidth, currHeight),
       ref: pathRef,
@@ -22076,18 +21937,18 @@ function ShapeSelector(_ref2) {
   } = _ref2;
   switch (shapeType) {
     case "rectangle":
-      return /* @__PURE__ */ React19.createElement(Rectangle, elementProps);
+      return /* @__PURE__ */ React20.createElement(Rectangle, elementProps);
     case "trapezoid":
-      return /* @__PURE__ */ React19.createElement(Trapezoid, elementProps);
+      return /* @__PURE__ */ React20.createElement(Trapezoid, elementProps);
     case "sector":
-      return /* @__PURE__ */ React19.createElement(Sector, elementProps);
+      return /* @__PURE__ */ React20.createElement(Sector, elementProps);
     case "symbols":
       if (isSymbolsProps(shapeType, elementProps)) {
-        return /* @__PURE__ */ React19.createElement(Symbols, elementProps);
+        return /* @__PURE__ */ React20.createElement(Symbols, elementProps);
       }
       break;
     case "curve":
-      return /* @__PURE__ */ React19.createElement(Curve, elementProps);
+      return /* @__PURE__ */ React20.createElement(Curve, elementProps);
     default:
       return null;
   }
@@ -22112,59 +21973,26 @@ function Shape(_ref2) {
     shape = option(props, props.index);
   } else if ((0, import_isPlainObject.default)(option) && typeof option !== "boolean") {
     var nextProps = defaultPropTransformer(option, props);
-    shape = /* @__PURE__ */ React19.createElement(ShapeSelector, {
+    shape = /* @__PURE__ */ React20.createElement(ShapeSelector, {
       shapeType,
       elementProps: nextProps
     });
   } else {
     var elementProps = props;
-    shape = /* @__PURE__ */ React19.createElement(ShapeSelector, {
+    shape = /* @__PURE__ */ React20.createElement(ShapeSelector, {
       shapeType,
       elementProps
     });
   }
   if (props.isActive) {
-    return /* @__PURE__ */ React19.createElement(Layer, {
+    return /* @__PURE__ */ React20.createElement(Layer, {
       className: activeClassName
     }, shape);
   }
-  return /* @__PURE__ */ React19.createElement(Layer, {
+  return /* @__PURE__ */ React20.createElement(Layer, {
     className: inActiveClassName
   }, shape);
 }
-
-// node_modules/recharts/es6/context/tooltipContext.js
-var useMouseEnterItemDispatch = (onMouseEnterFromProps, dataKey, graphicalItemId) => {
-  var dispatch = useAppDispatch();
-  return (data, index) => (event) => {
-    onMouseEnterFromProps === null || onMouseEnterFromProps === void 0 || onMouseEnterFromProps(data, index, event);
-    dispatch(setActiveMouseOverItemIndex({
-      activeIndex: String(index),
-      activeDataKey: dataKey,
-      activeCoordinate: data.tooltipPosition,
-      activeGraphicalItemId: graphicalItemId
-    }));
-  };
-};
-var useMouseLeaveItemDispatch = (onMouseLeaveFromProps) => {
-  var dispatch = useAppDispatch();
-  return (data, index) => (event) => {
-    onMouseLeaveFromProps === null || onMouseLeaveFromProps === void 0 || onMouseLeaveFromProps(data, index, event);
-    dispatch(mouseLeaveItem());
-  };
-};
-var useMouseClickItemDispatch = (onMouseClickFromProps, dataKey, graphicalItemId) => {
-  var dispatch = useAppDispatch();
-  return (data, index) => (event) => {
-    onMouseClickFromProps === null || onMouseClickFromProps === void 0 || onMouseClickFromProps(data, index, event);
-    dispatch(setActiveClickItemIndex({
-      activeIndex: String(index),
-      activeDataKey: dataKey,
-      activeCoordinate: data.tooltipPosition,
-      activeGraphicalItemId: graphicalItemId
-    }));
-  };
-};
 
 // node_modules/recharts/es6/state/SetTooltipEntrySettings.js
 var import_react28 = __toESM(require_react());
@@ -22235,17 +22063,17 @@ function SetLegendPayload(_ref2) {
 }
 
 // node_modules/recharts/es6/context/RegisterGraphicalItemId.js
-var React21 = __toESM(require_react());
+var React22 = __toESM(require_react());
 var import_react30 = __toESM(require_react());
 
 // node_modules/recharts/es6/util/useId.js
-var React20 = __toESM(require_react());
+var React21 = __toESM(require_react());
 var _ref;
 var useIdFallback = () => {
-  var [id] = React20.useState(() => uniqueId("uid-"));
+  var [id] = React21.useState(() => uniqueId("uid-"));
   return id;
 };
-var useId = (_ref = React20["useId".toString()]) !== null && _ref !== void 0 ? _ref : useIdFallback;
+var useId = (_ref = React21["useId".toString()]) !== null && _ref !== void 0 ? _ref : useIdFallback;
 
 // node_modules/recharts/es6/util/useUniqueId.js
 function useUniqueId(prefix, customId) {
@@ -22265,7 +22093,7 @@ var RegisterGraphicalItemId = (_ref2) => {
     children
   } = _ref2;
   var resolvedId = useUniqueId("recharts-".concat(type), id);
-  return /* @__PURE__ */ React21.createElement(GraphicalItemIdContext.Provider, {
+  return /* @__PURE__ */ React22.createElement(GraphicalItemIdContext.Provider, {
     value: resolvedId
   }, children(resolvedId));
 };
@@ -22377,7 +22205,10 @@ var SetCartesianGraphicalItemImpl = (props) => {
 };
 var SetCartesianGraphicalItem = /* @__PURE__ */ (0, import_react31.memo)(SetCartesianGraphicalItemImpl);
 
-// node_modules/recharts/es6/state/cartesianAxisSlice.js
+// node_modules/recharts/es6/component/Dots.js
+var React23 = __toESM(require_react());
+var import_react32 = __toESM(require_react());
+var _excluded11 = ["points"];
 function ownKeys29(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
@@ -22407,6 +22238,153 @@ function _toPropertyKey31(t) {
   return "symbol" == typeof i ? i : i + "";
 }
 function _toPrimitive31(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
+function _extends16() {
+  return _extends16 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends16.apply(null, arguments);
+}
+function _objectWithoutProperties11(e, t) {
+  if (null == e) return {};
+  var o, r2, i = _objectWithoutPropertiesLoose11(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var n = Object.getOwnPropertySymbols(e);
+    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose11(r2, e) {
+  if (null == r2) return {};
+  var t = {};
+  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r2[n];
+  }
+  return t;
+}
+function DotItem(_ref2) {
+  var {
+    option,
+    dotProps,
+    className
+  } = _ref2;
+  if (/* @__PURE__ */ (0, import_react32.isValidElement)(option)) {
+    return /* @__PURE__ */ (0, import_react32.cloneElement)(option, dotProps);
+  }
+  if (typeof option === "function") {
+    return option(dotProps);
+  }
+  var finalClassName = clsx(className, typeof option !== "boolean" ? option.className : "");
+  var _ref22 = dotProps !== null && dotProps !== void 0 ? dotProps : {}, {
+    points
+  } = _ref22, props = _objectWithoutProperties11(_ref22, _excluded11);
+  return /* @__PURE__ */ React23.createElement(Dot, _extends16({}, props, {
+    className: finalClassName
+  }));
+}
+function shouldRenderDots(points, dot) {
+  if (points == null) {
+    return false;
+  }
+  if (dot) {
+    return true;
+  }
+  return points.length === 1;
+}
+function Dots(_ref3) {
+  var {
+    points,
+    dot,
+    className,
+    dotClassName,
+    dataKey,
+    baseProps,
+    needClip,
+    clipPathId,
+    zIndex = DefaultZIndexes.scatter
+  } = _ref3;
+  if (!shouldRenderDots(points, dot)) {
+    return null;
+  }
+  var clipDot = isClipDot(dot);
+  var customDotProps = svgPropertiesAndEventsFromUnknown(dot);
+  var dots = points.map((entry, i) => {
+    var _entry$x, _entry$y;
+    var dotProps = _objectSpread29(_objectSpread29(_objectSpread29({
+      r: 3
+    }, baseProps), customDotProps), {}, {
+      index: i,
+      cx: (_entry$x = entry.x) !== null && _entry$x !== void 0 ? _entry$x : void 0,
+      cy: (_entry$y = entry.y) !== null && _entry$y !== void 0 ? _entry$y : void 0,
+      dataKey,
+      value: entry.value,
+      payload: entry.payload,
+      points
+    });
+    return /* @__PURE__ */ React23.createElement(DotItem, {
+      key: "dot-".concat(i),
+      option: dot,
+      dotProps,
+      className: dotClassName
+    });
+  });
+  var layerProps = {};
+  if (needClip && clipPathId != null) {
+    layerProps.clipPath = "url(#clipPath-".concat(clipDot ? "" : "dots-").concat(clipPathId, ")");
+  }
+  return /* @__PURE__ */ React23.createElement(ZIndexLayer, {
+    zIndex
+  }, /* @__PURE__ */ React23.createElement(Layer, _extends16({
+    className
+  }, layerProps), dots));
+}
+
+// node_modules/recharts/es6/component/ActivePoints.js
+var React24 = __toESM(require_react());
+var import_react33 = __toESM(require_react());
+
+// node_modules/recharts/es6/state/cartesianAxisSlice.js
+function ownKeys30(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread30(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys30(Object(t), true).forEach(function(r3) {
+      _defineProperty32(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys30(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty32(e, r2, t) {
+  return (r2 = _toPropertyKey32(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey32(t) {
+  var i = _toPrimitive32(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive32(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -22519,7 +22497,7 @@ var cartesianAxisSlice = createSlice({
           return;
         }
         var newHistory = [...history, width].slice(-3);
-        state.yAxis[id] = _objectSpread29(_objectSpread29({}, axis), {}, {
+        state.yAxis[id] = _objectSpread30(_objectSpread30({}, axis), {}, {
           width,
           widthHistory: newHistory
         });
@@ -22568,16 +22546,126 @@ var selectPlotArea = createSelector([selectChartOffset, selectChartWidth, select
 var usePlotArea = () => {
   return useAppSelector(selectPlotArea);
 };
+var useActiveTooltipDataPoints = () => {
+  return useAppSelector(selectActiveTooltipDataPoints);
+};
+
+// node_modules/recharts/es6/component/ActivePoints.js
+function ownKeys31(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread31(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys31(Object(t), true).forEach(function(r3) {
+      _defineProperty33(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys31(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty33(e, r2, t) {
+  return (r2 = _toPropertyKey33(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey33(t) {
+  var i = _toPrimitive33(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive33(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
+var ActivePoint = (_ref2) => {
+  var {
+    point: point4,
+    childIndex,
+    mainColor,
+    activeDot,
+    dataKey,
+    clipPath
+  } = _ref2;
+  if (activeDot === false || point4.x == null || point4.y == null) {
+    return null;
+  }
+  var dotPropsTyped = {
+    index: childIndex,
+    dataKey,
+    cx: point4.x,
+    cy: point4.y,
+    r: 4,
+    fill: mainColor !== null && mainColor !== void 0 ? mainColor : "none",
+    strokeWidth: 2,
+    stroke: "#fff",
+    payload: point4.payload,
+    value: point4.value
+  };
+  var dotProps = _objectSpread31(_objectSpread31(_objectSpread31({}, dotPropsTyped), svgPropertiesNoEventsFromUnknown(activeDot)), adaptEventHandlers(activeDot));
+  var dot;
+  if (/* @__PURE__ */ (0, import_react33.isValidElement)(activeDot)) {
+    dot = /* @__PURE__ */ (0, import_react33.cloneElement)(activeDot, dotProps);
+  } else if (typeof activeDot === "function") {
+    dot = activeDot(dotProps);
+  } else {
+    dot = /* @__PURE__ */ React24.createElement(Dot, dotProps);
+  }
+  return /* @__PURE__ */ React24.createElement(Layer, {
+    className: "recharts-active-dot",
+    clipPath
+  }, dot);
+};
+function ActivePoints(_ref2) {
+  var {
+    points,
+    mainColor,
+    activeDot,
+    itemDataKey,
+    clipPath,
+    zIndex = DefaultZIndexes.activeDot
+  } = _ref2;
+  var activeTooltipIndex = useAppSelector(selectActiveTooltipIndex);
+  var activeDataPoints = useActiveTooltipDataPoints();
+  if (points == null || activeDataPoints == null) {
+    return null;
+  }
+  var activePoint = points.find((p) => activeDataPoints.includes(p.payload));
+  if (isNullish(activePoint)) {
+    return null;
+  }
+  return /* @__PURE__ */ React24.createElement(ZIndexLayer, {
+    zIndex
+  }, /* @__PURE__ */ React24.createElement(ActivePoint, {
+    point: activePoint,
+    childIndex: Number(activeTooltipIndex),
+    mainColor,
+    dataKey: itemDataKey,
+    activeDot,
+    clipPath
+  }));
+}
 
 // node_modules/recharts/es6/context/chartDataContext.js
-var import_react32 = __toESM(require_react());
+var import_react34 = __toESM(require_react());
 var ChartDataContextProvider = (props) => {
   var {
     chartData
   } = props;
   var dispatch = useAppDispatch();
   var isPanorama = useIsPanorama();
-  (0, import_react32.useEffect)(() => {
+  (0, import_react34.useEffect)(() => {
     if (isPanorama) {
       return () => {
       };
@@ -22687,14 +22775,14 @@ var {
 var referenceElementsReducer = referenceElementsSlice.reducer;
 
 // node_modules/recharts/es6/container/ClipPathProvider.js
-var React22 = __toESM(require_react());
-var import_react33 = __toESM(require_react());
-var ClipPathIdContext = /* @__PURE__ */ (0, import_react33.createContext)(void 0);
+var React25 = __toESM(require_react());
+var import_react35 = __toESM(require_react());
+var ClipPathIdContext = /* @__PURE__ */ (0, import_react35.createContext)(void 0);
 var ClipPathProvider = (_ref2) => {
   var {
     children
   } = _ref2;
-  var [clipPathId] = (0, import_react33.useState)("".concat(uniqueId("recharts"), "-clip"));
+  var [clipPathId] = (0, import_react35.useState)("".concat(uniqueId("recharts"), "-clip"));
   var plotArea = usePlotArea();
   if (plotArea == null) {
     return null;
@@ -22705,11 +22793,11 @@ var ClipPathProvider = (_ref2) => {
     width,
     height
   } = plotArea;
-  return /* @__PURE__ */ React22.createElement(ClipPathIdContext.Provider, {
+  return /* @__PURE__ */ React25.createElement(ClipPathIdContext.Provider, {
     value: clipPathId
-  }, /* @__PURE__ */ React22.createElement("defs", null, /* @__PURE__ */ React22.createElement("clipPath", {
+  }, /* @__PURE__ */ React25.createElement("defs", null, /* @__PURE__ */ React25.createElement("clipPath", {
     id: clipPathId
-  }, /* @__PURE__ */ React22.createElement("rect", {
+  }, /* @__PURE__ */ React25.createElement("rect", {
     x: x2,
     y: y2,
     height,
@@ -22718,9 +22806,9 @@ var ClipPathProvider = (_ref2) => {
 };
 
 // node_modules/recharts/es6/cartesian/CartesianAxis.js
-var React23 = __toESM(require_react());
-var import_react34 = __toESM(require_react());
-var import_get4 = __toESM(require_get2());
+var React26 = __toESM(require_react());
+var import_react36 = __toESM(require_react());
+var import_get3 = __toESM(require_get2());
 
 // node_modules/recharts/es6/util/getEveryNth.js
 function getEveryNth(array, n) {
@@ -22878,7 +22966,7 @@ function getEquidistantPreserveEndTicks(sign2, boundaries, getTickSize, ticks2, 
 }
 
 // node_modules/recharts/es6/cartesian/getTicks.js
-function ownKeys30(e, r2) {
+function ownKeys32(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -22888,25 +22976,25 @@ function ownKeys30(e, r2) {
   }
   return t;
 }
-function _objectSpread30(e) {
+function _objectSpread32(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys30(Object(t), true).forEach(function(r3) {
-      _defineProperty32(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys30(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys32(Object(t), true).forEach(function(r3) {
+      _defineProperty34(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys32(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty32(e, r2, t) {
-  return (r2 = _toPropertyKey32(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty34(e, r2, t) {
+  return (r2 = _toPropertyKey34(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey32(t) {
-  var i = _toPrimitive32(t, "string");
+function _toPropertyKey34(t) {
+  var i = _toPrimitive34(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive32(t, r2) {
+function _toPrimitive34(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -22940,11 +23028,11 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
     };
     if (i2 === len - 1) {
       var gap = sign2 * (entry.coordinate + sign2 * getSize() / 2 - end);
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread32(_objectSpread32({}, entry), {}, {
         tickCoord: gap > 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread32(_objectSpread32({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -22952,7 +23040,7 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
       var isShow = isVisible(sign2, entry.tickCoord, getSize, start, end);
       if (isShow) {
         end = entry.tickCoord - sign2 * (getSize() / 2 + minTickGap);
-        result[i2] = _objectSpread30(_objectSpread30({}, entry), {}, {
+        result[i2] = _objectSpread32(_objectSpread32({}, entry), {}, {
           isShow: true
         });
       }
@@ -22975,14 +23063,14 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     if (tail != null) {
       var tailSize = getTickSize(tail, len - 1);
       var tailGap = sign2 * (tail.coordinate + sign2 * tailSize / 2 - end);
-      result[len - 1] = tail = _objectSpread30(_objectSpread30({}, tail), {}, {
+      result[len - 1] = tail = _objectSpread32(_objectSpread32({}, tail), {}, {
         tickCoord: tailGap > 0 ? tail.coordinate - tailGap * sign2 : tail.coordinate
       });
       if (tail.tickCoord != null) {
         var isTailShow = isVisible(sign2, tail.tickCoord, () => tailSize, start, end);
         if (isTailShow) {
           end = tail.tickCoord - sign2 * (tailSize / 2 + minTickGap);
-          result[len - 1] = _objectSpread30(_objectSpread30({}, tail), {}, {
+          result[len - 1] = _objectSpread32(_objectSpread32({}, tail), {}, {
             isShow: true
           });
         }
@@ -23005,11 +23093,11 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     };
     if (i2 === 0) {
       var gap = sign2 * (entry.coordinate - sign2 * getSize() / 2 - start);
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread32(_objectSpread32({}, entry), {}, {
         tickCoord: gap < 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread30(_objectSpread30({}, entry), {}, {
+      result[i2] = entry = _objectSpread32(_objectSpread32({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -23017,7 +23105,7 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
       var isShow = isVisible(sign2, entry.tickCoord, getSize, start, end);
       if (isShow) {
         start = entry.tickCoord + sign2 * (getSize() / 2 + minTickGap);
-        result[i2] = _objectSpread30(_objectSpread30({}, entry), {}, {
+        result[i2] = _objectSpread32(_objectSpread32({}, entry), {}, {
           isShow: true
         });
       }
@@ -23145,17 +23233,17 @@ var {
 var renderedTicksReducer = renderedTicksSlice.reducer;
 
 // node_modules/recharts/es6/cartesian/CartesianAxis.js
-var _excluded11 = ["axisLine", "width", "height", "className", "hide", "ticks", "axisType", "axisId"];
-function _objectWithoutProperties11(e, t) {
+var _excluded12 = ["axisLine", "width", "height", "className", "hide", "ticks", "axisType", "axisId"];
+function _objectWithoutProperties12(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose11(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose12(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose11(r2, e) {
+function _objectWithoutPropertiesLoose12(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -23164,16 +23252,16 @@ function _objectWithoutPropertiesLoose11(r2, e) {
   }
   return t;
 }
-function _extends15() {
-  return _extends15 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends17() {
+  return _extends17 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends15.apply(null, arguments);
+  }, _extends17.apply(null, arguments);
 }
-function ownKeys31(e, r2) {
+function ownKeys33(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -23183,25 +23271,25 @@ function ownKeys31(e, r2) {
   }
   return t;
 }
-function _objectSpread31(e) {
+function _objectSpread33(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys31(Object(t), true).forEach(function(r3) {
-      _defineProperty33(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys31(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys33(Object(t), true).forEach(function(r3) {
+      _defineProperty35(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys33(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty33(e, r2, t) {
-  return (r2 = _toPropertyKey33(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty35(e, r2, t) {
+  return (r2 = _toPropertyKey35(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey33(t) {
-  var i = _toPrimitive33(t, "string");
+function _toPropertyKey35(t) {
+  var i = _toPrimitive35(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive33(t, r2) {
+function _toPrimitive35(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -23252,12 +23340,12 @@ function AxisLine(axisLineProps) {
   if (!axisLine) {
     return null;
   }
-  var props = _objectSpread31(_objectSpread31(_objectSpread31({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
+  var props = _objectSpread33(_objectSpread33(_objectSpread33({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
     fill: "none"
   });
   if (orientation === "top" || orientation === "bottom") {
     var needHeight = +(orientation === "top" && !mirror || orientation === "bottom" && mirror);
-    props = _objectSpread31(_objectSpread31({}, props), {}, {
+    props = _objectSpread33(_objectSpread33({}, props), {}, {
       x1: x2,
       y1: y2 + needHeight * height,
       x2: x2 + width,
@@ -23265,15 +23353,15 @@ function AxisLine(axisLineProps) {
     });
   } else {
     var needWidth = +(orientation === "left" && !mirror || orientation === "right" && mirror);
-    props = _objectSpread31(_objectSpread31({}, props), {}, {
+    props = _objectSpread33(_objectSpread33({}, props), {}, {
       x1: x2 + needWidth * width,
       y1: y2,
       x2: x2 + needWidth * width,
       y2: y2 + height
     });
   }
-  return /* @__PURE__ */ React23.createElement("line", _extends15({}, props, {
-    className: clsx("recharts-cartesian-axis-line", (0, import_get4.default)(axisLine, "className"))
+  return /* @__PURE__ */ React26.createElement("line", _extends17({}, props, {
+    className: clsx("recharts-cartesian-axis-line", (0, import_get3.default)(axisLine, "className"))
   }));
 }
 function getTickLineCoord(data, x2, y2, width, height, orientation, tickSize, mirror, tickMargin) {
@@ -23353,12 +23441,12 @@ function TickItem(props) {
   } = props;
   var tickItem;
   var combinedClassName = clsx(tickProps.className, "recharts-cartesian-axis-tick-value");
-  if (/* @__PURE__ */ React23.isValidElement(option)) {
-    tickItem = /* @__PURE__ */ React23.cloneElement(option, _objectSpread31(_objectSpread31({}, tickProps), {}, {
+  if (/* @__PURE__ */ React26.isValidElement(option)) {
+    tickItem = /* @__PURE__ */ React26.cloneElement(option, _objectSpread33(_objectSpread33({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else if (typeof option === "function") {
-    tickItem = option(_objectSpread31(_objectSpread31({}, tickProps), {}, {
+    tickItem = option(_objectSpread33(_objectSpread33({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else {
@@ -23366,7 +23454,7 @@ function TickItem(props) {
     if (typeof option !== "boolean") {
       className = clsx(className, getClassNameFromUnknown(option));
     }
-    tickItem = /* @__PURE__ */ React23.createElement(Text, _extends15({}, tickProps, {
+    tickItem = /* @__PURE__ */ React26.createElement(Text, _extends17({}, tickProps, {
       className
     }), value);
   }
@@ -23379,7 +23467,7 @@ function RenderedTicksReporter(_ref2) {
     axisId
   } = _ref2;
   var dispatch = useAppDispatch();
-  (0, import_react34.useEffect)(() => {
+  (0, import_react36.useEffect)(() => {
     if (axisId == null || axisType == null) {
       return noop;
     }
@@ -23403,7 +23491,7 @@ function RenderedTicksReporter(_ref2) {
   }, [dispatch, ticks2, axisId, axisType]);
   return null;
 }
-var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
+var Ticks = /* @__PURE__ */ (0, import_react36.forwardRef)((props, ref) => {
   var {
     ticks: ticks2 = [],
     tick,
@@ -23428,7 +23516,7 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
     axisType,
     axisId
   } = props;
-  var finalTicks = getTicks(_objectSpread31(_objectSpread31({}, getTicksConfig), {}, {
+  var finalTicks = getTicks(_objectSpread33(_objectSpread33({}, getTicksConfig), {}, {
     ticks: ticks2
   }), fontSize, letterSpacing);
   var axisProps = svgPropertiesNoEvents(getTicksConfig);
@@ -23439,10 +23527,10 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
   if (typeof tickLine === "object") {
     tickLinePropsObject = tickLine;
   }
-  var tickLineProps = _objectSpread31(_objectSpread31({}, axisProps), {}, {
+  var tickLineProps = _objectSpread33(_objectSpread33({}, axisProps), {}, {
     fill: "none"
   }, tickLinePropsObject);
-  var tickLineCoords = finalTicks.map((entry) => _objectSpread31({
+  var tickLineCoords = finalTicks.map((entry) => _objectSpread33({
     entry
   }, getTickLineCoord(entry, x2, y2, width, height, orientation, tickSize, mirror, tickMargin)));
   var tickLines = tickLineCoords.map((_ref2) => {
@@ -23450,11 +23538,11 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
       entry,
       line: lineCoord
     } = _ref2;
-    return /* @__PURE__ */ React23.createElement(Layer, {
+    return /* @__PURE__ */ React26.createElement(Layer, {
       className: "recharts-cartesian-axis-tick",
       key: "tick-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
-    }, tickLine && /* @__PURE__ */ React23.createElement("line", _extends15({}, tickLineProps, lineCoord, {
-      className: clsx("recharts-cartesian-axis-tick-line", (0, import_get4.default)(tickLine, "className"))
+    }, tickLine && /* @__PURE__ */ React26.createElement("line", _extends17({}, tickLineProps, lineCoord, {
+      className: clsx("recharts-cartesian-axis-tick-line", (0, import_get3.default)(tickLine, "className"))
     })));
   });
   var tickLabels = tickLineCoords.map((_ref3, i) => {
@@ -23463,7 +23551,7 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
       entry,
       tick: tickCoord
     } = _ref3;
-    var tickProps = _objectSpread31(_objectSpread31(_objectSpread31(_objectSpread31({
+    var tickProps = _objectSpread33(_objectSpread33(_objectSpread33(_objectSpread33({
       verticalAnchor
     }, axisProps), {}, {
       textAnchor,
@@ -23478,32 +23566,32 @@ var Ticks = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
     }, tickTextProps), {}, {
       angle: (_ref4 = (_tickTextProps$angle = tickTextProps === null || tickTextProps === void 0 ? void 0 : tickTextProps.angle) !== null && _tickTextProps$angle !== void 0 ? _tickTextProps$angle : axisProps.angle) !== null && _ref4 !== void 0 ? _ref4 : 0
     });
-    var finalTickProps = _objectSpread31(_objectSpread31({}, tickProps), customTickProps);
-    return /* @__PURE__ */ React23.createElement(Layer, _extends15({
+    var finalTickProps = _objectSpread33(_objectSpread33({}, tickProps), customTickProps);
+    return /* @__PURE__ */ React26.createElement(Layer, _extends17({
       className: "recharts-cartesian-axis-tick-label",
       key: "tick-label-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
-    }, adaptEventsOfChild(events, entry, i)), tick && /* @__PURE__ */ React23.createElement(TickItem, {
+    }, adaptEventsOfChild(events, entry, i)), tick && /* @__PURE__ */ React26.createElement(TickItem, {
       option: tick,
       tickProps: finalTickProps,
       value: "".concat(typeof tickFormatter === "function" ? tickFormatter(entry.value, i) : entry.value).concat(unit2 || "")
     }));
   });
-  return /* @__PURE__ */ React23.createElement("g", {
+  return /* @__PURE__ */ React26.createElement("g", {
     className: "recharts-cartesian-axis-ticks recharts-".concat(axisType, "-ticks")
-  }, /* @__PURE__ */ React23.createElement(RenderedTicksReporter, {
+  }, /* @__PURE__ */ React26.createElement(RenderedTicksReporter, {
     ticks: finalTicks,
     axisId,
     axisType
-  }), tickLabels.length > 0 && /* @__PURE__ */ React23.createElement(ZIndexLayer, {
+  }), tickLabels.length > 0 && /* @__PURE__ */ React26.createElement(ZIndexLayer, {
     zIndex: DefaultZIndexes.label
-  }, /* @__PURE__ */ React23.createElement("g", {
+  }, /* @__PURE__ */ React26.createElement("g", {
     className: "recharts-cartesian-axis-tick-labels recharts-".concat(axisType, "-tick-labels"),
     ref
-  }, tickLabels)), tickLines.length > 0 && /* @__PURE__ */ React23.createElement("g", {
+  }, tickLabels)), tickLines.length > 0 && /* @__PURE__ */ React26.createElement("g", {
     className: "recharts-cartesian-axis-tick-lines recharts-".concat(axisType, "-tick-lines")
   }, tickLines));
 });
-var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((props, ref) => {
+var CartesianAxisComponent = /* @__PURE__ */ (0, import_react36.forwardRef)((props, ref) => {
   var {
     axisLine,
     width,
@@ -23513,11 +23601,11 @@ var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((pro
     ticks: ticks2,
     axisType,
     axisId
-  } = props, rest = _objectWithoutProperties11(props, _excluded11);
-  var [fontSize, setFontSize] = (0, import_react34.useState)("");
-  var [letterSpacing, setLetterSpacing] = (0, import_react34.useState)("");
-  var tickRefs = (0, import_react34.useRef)(null);
-  (0, import_react34.useImperativeHandle)(ref, () => ({
+  } = props, rest = _objectWithoutProperties12(props, _excluded12);
+  var [fontSize, setFontSize] = (0, import_react36.useState)("");
+  var [letterSpacing, setLetterSpacing] = (0, import_react36.useState)("");
+  var tickRefs = (0, import_react36.useRef)(null);
+  (0, import_react36.useImperativeHandle)(ref, () => ({
     getCalculatedWidth: () => {
       var _props$labelRef;
       return getCalculatedYAxisWidth({
@@ -23529,7 +23617,7 @@ var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((pro
       });
     }
   }));
-  var layerRef = (0, import_react34.useCallback)((el) => {
+  var layerRef = (0, import_react36.useCallback)((el) => {
     if (el) {
       var tickNodes = el.getElementsByClassName("recharts-cartesian-axis-tick-value");
       tickRefs.current = tickNodes;
@@ -23551,11 +23639,11 @@ var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((pro
   if (width != null && width <= 0 || height != null && height <= 0) {
     return null;
   }
-  return /* @__PURE__ */ React23.createElement(ZIndexLayer, {
+  return /* @__PURE__ */ React26.createElement(ZIndexLayer, {
     zIndex: props.zIndex
-  }, /* @__PURE__ */ React23.createElement(Layer, {
+  }, /* @__PURE__ */ React26.createElement(Layer, {
     className: clsx("recharts-cartesian-axis", className)
-  }, /* @__PURE__ */ React23.createElement(AxisLine, {
+  }, /* @__PURE__ */ React26.createElement(AxisLine, {
     x: props.x,
     y: props.y,
     width,
@@ -23564,7 +23652,7 @@ var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((pro
     mirror: props.mirror,
     axisLine,
     otherSvgProps: svgPropertiesNoEvents(props)
-  }), /* @__PURE__ */ React23.createElement(Ticks, {
+  }), /* @__PURE__ */ React26.createElement(Ticks, {
     ref: layerRef,
     axisType,
     events: rest,
@@ -23588,33 +23676,33 @@ var CartesianAxisComponent = /* @__PURE__ */ (0, import_react34.forwardRef)((pro
     x: props.x,
     y: props.y,
     axisId
-  }), /* @__PURE__ */ React23.createElement(CartesianLabelContextProvider, {
+  }), /* @__PURE__ */ React26.createElement(CartesianLabelContextProvider, {
     x: props.x,
     y: props.y,
     width: props.width,
     height: props.height,
     lowerWidth: props.width,
     upperWidth: props.width
-  }, /* @__PURE__ */ React23.createElement(CartesianLabelFromLabelProp, {
+  }, /* @__PURE__ */ React26.createElement(CartesianLabelFromLabelProp, {
     label: props.label,
     labelRef: props.labelRef
   }), props.children)));
 });
-var CartesianAxis = /* @__PURE__ */ React23.forwardRef((outsideProps, ref) => {
+var CartesianAxis = /* @__PURE__ */ React26.forwardRef((outsideProps, ref) => {
   var props = resolveDefaultProps(outsideProps, defaultCartesianAxisProps);
-  return /* @__PURE__ */ React23.createElement(CartesianAxisComponent, _extends15({}, props, {
+  return /* @__PURE__ */ React26.createElement(CartesianAxisComponent, _extends17({}, props, {
     ref
   }));
 });
 CartesianAxis.displayName = "CartesianAxis";
 
 // node_modules/recharts/es6/cartesian/CartesianGrid.js
-var React24 = __toESM(require_react());
-var _excluded12 = ["x1", "y1", "x2", "y2", "key"];
+var React27 = __toESM(require_react());
+var _excluded13 = ["x1", "y1", "x2", "y2", "key"];
 var _excluded26 = ["offset"];
 var _excluded32 = ["xAxisId", "yAxisId"];
 var _excluded42 = ["xAxisId", "yAxisId"];
-function ownKeys32(e, r2) {
+function ownKeys34(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -23624,25 +23712,25 @@ function ownKeys32(e, r2) {
   }
   return t;
 }
-function _objectSpread32(e) {
+function _objectSpread34(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys32(Object(t), true).forEach(function(r3) {
-      _defineProperty34(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys32(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys34(Object(t), true).forEach(function(r3) {
+      _defineProperty36(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys34(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty34(e, r2, t) {
-  return (r2 = _toPropertyKey34(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty36(e, r2, t) {
+  return (r2 = _toPropertyKey36(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey34(t) {
-  var i = _toPrimitive34(t, "string");
+function _toPropertyKey36(t) {
+  var i = _toPrimitive36(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive34(t, r2) {
+function _toPrimitive36(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -23652,25 +23740,25 @@ function _toPrimitive34(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends16() {
-  return _extends16 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends18() {
+  return _extends18 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends16.apply(null, arguments);
+  }, _extends18.apply(null, arguments);
 }
-function _objectWithoutProperties12(e, t) {
+function _objectWithoutProperties13(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose12(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose13(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose12(r2, e) {
+function _objectWithoutPropertiesLoose13(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -23694,7 +23782,7 @@ var Background = (props) => {
     height,
     ry
   } = props;
-  return /* @__PURE__ */ React24.createElement("rect", {
+  return /* @__PURE__ */ React27.createElement("rect", {
     x: x2,
     y: y2,
     ry,
@@ -23712,8 +23800,8 @@ function LineItem(_ref2) {
     lineItemProps
   } = _ref2;
   var lineItem;
-  if (/* @__PURE__ */ React24.isValidElement(option)) {
-    lineItem = /* @__PURE__ */ React24.cloneElement(option, lineItemProps);
+  if (/* @__PURE__ */ React27.isValidElement(option)) {
+    lineItem = /* @__PURE__ */ React27.cloneElement(option, lineItemProps);
   } else if (typeof option === "function") {
     lineItem = option(lineItemProps);
   } else {
@@ -23724,11 +23812,11 @@ function LineItem(_ref2) {
       x2,
       y2,
       key
-    } = lineItemProps, others = _objectWithoutProperties12(lineItemProps, _excluded12);
+    } = lineItemProps, others = _objectWithoutProperties13(lineItemProps, _excluded13);
     var _ref22 = (_svgPropertiesNoEvent = svgPropertiesNoEvents(others)) !== null && _svgPropertiesNoEvent !== void 0 ? _svgPropertiesNoEvent : {}, {
       offset: __
-    } = _ref22, restOfFilteredProps = _objectWithoutProperties12(_ref22, _excluded26);
-    lineItem = /* @__PURE__ */ React24.createElement("line", _extends16({}, restOfFilteredProps, {
+    } = _ref22, restOfFilteredProps = _objectWithoutProperties13(_ref22, _excluded26);
+    lineItem = /* @__PURE__ */ React27.createElement("line", _extends18({}, restOfFilteredProps, {
       x1,
       y1,
       x2,
@@ -23752,9 +23840,9 @@ function HorizontalGridLines(props) {
   var {
     xAxisId,
     yAxisId
-  } = props, otherLineItemProps = _objectWithoutProperties12(props, _excluded32);
+  } = props, otherLineItemProps = _objectWithoutProperties13(props, _excluded32);
   var items = horizontalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread32(_objectSpread32({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread34(_objectSpread34({}, otherLineItemProps), {}, {
       x1: x2,
       y1: entry,
       x2: x2 + width,
@@ -23762,13 +23850,13 @@ function HorizontalGridLines(props) {
       key: "line-".concat(i),
       index: i
     });
-    return /* @__PURE__ */ React24.createElement(LineItem, {
+    return /* @__PURE__ */ React27.createElement(LineItem, {
       key: "line-".concat(i),
       option: horizontal,
       lineItemProps
     });
   });
-  return /* @__PURE__ */ React24.createElement("g", {
+  return /* @__PURE__ */ React27.createElement("g", {
     className: "recharts-cartesian-grid-horizontal"
   }, items);
 }
@@ -23785,9 +23873,9 @@ function VerticalGridLines(props) {
   var {
     xAxisId,
     yAxisId
-  } = props, otherLineItemProps = _objectWithoutProperties12(props, _excluded42);
+  } = props, otherLineItemProps = _objectWithoutProperties13(props, _excluded42);
   var items = verticalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread32(_objectSpread32({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread34(_objectSpread34({}, otherLineItemProps), {}, {
       x1: entry,
       y1: y2,
       x2: entry,
@@ -23795,13 +23883,13 @@ function VerticalGridLines(props) {
       key: "line-".concat(i),
       index: i
     });
-    return /* @__PURE__ */ React24.createElement(LineItem, {
+    return /* @__PURE__ */ React27.createElement(LineItem, {
       option: vertical,
       lineItemProps,
       key: "line-".concat(i)
     });
   });
-  return /* @__PURE__ */ React24.createElement("g", {
+  return /* @__PURE__ */ React27.createElement("g", {
     className: "recharts-cartesian-grid-vertical"
   }, items);
 }
@@ -23831,7 +23919,7 @@ function HorizontalStripes(props) {
       return null;
     }
     var colorIndex = i % horizontalFill.length;
-    return /* @__PURE__ */ React24.createElement("rect", {
+    return /* @__PURE__ */ React27.createElement("rect", {
       key: "react-".concat(i),
       y: entry,
       x: x2,
@@ -23843,7 +23931,7 @@ function HorizontalStripes(props) {
       className: "recharts-cartesian-grid-bg"
     });
   });
-  return /* @__PURE__ */ React24.createElement("g", {
+  return /* @__PURE__ */ React27.createElement("g", {
     className: "recharts-cartesian-gridstripes-horizontal"
   }, items);
 }
@@ -23873,7 +23961,7 @@ function VerticalStripes(props) {
       return null;
     }
     var colorIndex = i % verticalFill.length;
-    return /* @__PURE__ */ React24.createElement("rect", {
+    return /* @__PURE__ */ React27.createElement("rect", {
       key: "react-".concat(i),
       x: entry,
       y: y2,
@@ -23885,7 +23973,7 @@ function VerticalStripes(props) {
       className: "recharts-cartesian-grid-bg"
     });
   });
-  return /* @__PURE__ */ React24.createElement("g", {
+  return /* @__PURE__ */ React27.createElement("g", {
     className: "recharts-cartesian-gridstripes-vertical"
   }, items);
 }
@@ -23896,7 +23984,7 @@ var defaultVerticalCoordinatesGenerator = (_ref3, syncWithTicks) => {
     height,
     offset
   } = _ref3;
-  return getCoordinatesOfGrid(getTicks(_objectSpread32(_objectSpread32(_objectSpread32({}, defaultCartesianAxisProps), xAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread34(_objectSpread34(_objectSpread34({}, defaultCartesianAxisProps), xAxis), {}, {
     ticks: getTicksOfAxis(xAxis, true),
     viewBox: {
       x: 0,
@@ -23913,7 +24001,7 @@ var defaultHorizontalCoordinatesGenerator = (_ref4, syncWithTicks) => {
     height,
     offset
   } = _ref4;
-  return getCoordinatesOfGrid(getTicks(_objectSpread32(_objectSpread32(_objectSpread32({}, defaultCartesianAxisProps), yAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread34(_objectSpread34(_objectSpread34({}, defaultCartesianAxisProps), yAxis), {}, {
     ticks: getTicksOfAxis(yAxis, true),
     viewBox: {
       x: 0,
@@ -23944,7 +24032,7 @@ function CartesianGrid(props) {
   var chartWidth = useChartWidth();
   var chartHeight = useChartHeight();
   var offset = useOffsetInternal();
-  var propsIncludingDefaults = _objectSpread32(_objectSpread32({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
+  var propsIncludingDefaults = _objectSpread34(_objectSpread34({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
     x: isNumber(props.x) ? props.x : offset.left,
     y: isNumber(props.y) ? props.y : offset.top,
     width: isNumber(props.width) ? props.width : offset.width,
@@ -23976,7 +24064,7 @@ function CartesianGrid(props) {
   if ((!horizontalPoints || !horizontalPoints.length) && typeof horizontalCoordinatesGenerator === "function") {
     var isHorizontalValues = horizontalValues && horizontalValues.length;
     var generatorResult = horizontalCoordinatesGenerator({
-      yAxis: yAxis ? _objectSpread32(_objectSpread32({}, yAxis), {}, {
+      yAxis: yAxis ? _objectSpread34(_objectSpread34({}, yAxis), {}, {
         ticks: isHorizontalValues ? horizontalValues : yAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -23991,7 +24079,7 @@ function CartesianGrid(props) {
   if ((!verticalPoints || !verticalPoints.length) && typeof verticalCoordinatesGenerator === "function") {
     var isVerticalValues = verticalValues && verticalValues.length;
     var _generatorResult = verticalCoordinatesGenerator({
-      xAxis: xAxis ? _objectSpread32(_objectSpread32({}, xAxis), {}, {
+      xAxis: xAxis ? _objectSpread34(_objectSpread34({}, xAxis), {}, {
         ticks: isVerticalValues ? verticalValues : xAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -24003,11 +24091,11 @@ function CartesianGrid(props) {
       verticalPoints = _generatorResult;
     }
   }
-  return /* @__PURE__ */ React24.createElement(ZIndexLayer, {
+  return /* @__PURE__ */ React27.createElement(ZIndexLayer, {
     zIndex: propsIncludingDefaults.zIndex
-  }, /* @__PURE__ */ React24.createElement("g", {
+  }, /* @__PURE__ */ React27.createElement("g", {
     className: "recharts-cartesian-grid"
-  }, /* @__PURE__ */ React24.createElement(Background, {
+  }, /* @__PURE__ */ React27.createElement(Background, {
     fill: propsIncludingDefaults.fill,
     fillOpacity: propsIncludingDefaults.fillOpacity,
     x: propsIncludingDefaults.x,
@@ -24015,16 +24103,16 @@ function CartesianGrid(props) {
     width: propsIncludingDefaults.width,
     height: propsIncludingDefaults.height,
     ry: propsIncludingDefaults.ry
-  }), /* @__PURE__ */ React24.createElement(HorizontalStripes, _extends16({}, propsIncludingDefaults, {
+  }), /* @__PURE__ */ React27.createElement(HorizontalStripes, _extends18({}, propsIncludingDefaults, {
     horizontalPoints
-  })), /* @__PURE__ */ React24.createElement(VerticalStripes, _extends16({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React27.createElement(VerticalStripes, _extends18({}, propsIncludingDefaults, {
     verticalPoints
-  })), /* @__PURE__ */ React24.createElement(HorizontalGridLines, _extends16({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React27.createElement(HorizontalGridLines, _extends18({}, propsIncludingDefaults, {
     offset,
     horizontalPoints,
     xAxis,
     yAxis
-  })), /* @__PURE__ */ React24.createElement(VerticalGridLines, _extends16({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React27.createElement(VerticalGridLines, _extends18({}, propsIncludingDefaults, {
     offset,
     verticalPoints,
     xAxis,
@@ -24033,9 +24121,13 @@ function CartesianGrid(props) {
 }
 CartesianGrid.displayName = "CartesianGrid";
 
+// node_modules/recharts/es6/cartesian/Line.js
+var React30 = __toESM(require_react());
+var import_react38 = __toESM(require_react());
+
 // node_modules/recharts/es6/context/ErrorBarContext.js
-var React25 = __toESM(require_react());
-var import_react35 = __toESM(require_react());
+var React28 = __toESM(require_react());
+var import_react37 = __toESM(require_react());
 
 // node_modules/recharts/es6/state/errorBarSlice.js
 var initialState12 = {};
@@ -24082,17 +24174,17 @@ var {
 var errorBarReducer = errorBarSlice.reducer;
 
 // node_modules/recharts/es6/context/ErrorBarContext.js
-var _excluded13 = ["children"];
-function _objectWithoutProperties13(e, t) {
+var _excluded14 = ["children"];
+function _objectWithoutProperties14(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose13(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose14(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose13(r2, e) {
+function _objectWithoutPropertiesLoose14(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -24112,18 +24204,18 @@ var initialContextState = {
   }),
   errorBarOffset: 0
 };
-var ErrorBarContext = /* @__PURE__ */ (0, import_react35.createContext)(initialContextState);
+var ErrorBarContext = /* @__PURE__ */ (0, import_react37.createContext)(initialContextState);
 function SetErrorBarContext(props) {
   var {
     children
-  } = props, rest = _objectWithoutProperties13(props, _excluded13);
-  return /* @__PURE__ */ React25.createElement(ErrorBarContext.Provider, {
+  } = props, rest = _objectWithoutProperties14(props, _excluded14);
+  return /* @__PURE__ */ React28.createElement(ErrorBarContext.Provider, {
     value: rest
   }, children);
 }
 
 // node_modules/recharts/es6/cartesian/GraphicalItemClipPath.js
-var React26 = __toESM(require_react());
+var React29 = __toESM(require_react());
 function useNeedsClip(xAxisId, yAxisId) {
   var _xAxis$allowDataOverf, _yAxis$allowDataOverf;
   var xAxis = useAppSelector((state) => selectXAxisSettings(state, xAxisId));
@@ -24158,9 +24250,9 @@ function GraphicalItemClipPath(_ref2) {
     width,
     height
   } = plotArea;
-  return /* @__PURE__ */ React26.createElement("clipPath", {
+  return /* @__PURE__ */ React29.createElement("clipPath", {
     id: "clipPath-".concat(clipPathId)
-  }, /* @__PURE__ */ React26.createElement("rect", {
+  }, /* @__PURE__ */ React29.createElement("rect", {
     x: needClipX ? x2 : x2 - width / 2,
     y: needClipY ? y2 : y2 - height / 2,
     width: needClipX ? width : width * 2,
@@ -24168,107 +24260,136 @@ function GraphicalItemClipPath(_ref2) {
   }));
 }
 
-// node_modules/recharts/es6/cartesian/Scatter.js
-var React28 = __toESM(require_react());
-var import_react36 = __toESM(require_react());
-
-// node_modules/recharts/es6/util/ScatterUtils.js
-var React27 = __toESM(require_react());
-var _excluded14 = ["option", "isActive"];
-function _extends17() {
-  return _extends17 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends17.apply(null, arguments);
-}
-function _objectWithoutProperties14(e, t) {
-  if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose14(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+// node_modules/recharts/es6/state/selectors/lineSelectors.js
+var selectXAxisWithScale = (state, xAxisId, _yAxisId, isPanorama) => selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
+var selectXAxisTicks = (state, xAxisId, _yAxisId, isPanorama) => selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
+var selectYAxisWithScale = (state, _xAxisId, yAxisId, isPanorama) => selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
+var selectYAxisTicks = (state, _xAxisId, yAxisId, isPanorama) => selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
+var selectBandSize = createSelector([selectChartLayout, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks], (layout, xAxis, yAxis, xAxisTicks, yAxisTicks) => {
+  if (isCategoricalAxis(layout, "xAxis")) {
+    return getBandSizeOfAxis(xAxis, xAxisTicks, false);
   }
-  return i;
-}
-function _objectWithoutPropertiesLoose14(r2, e) {
-  if (null == r2) return {};
-  var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
-  }
-  return t;
-}
-function ScatterSymbol(_ref2) {
-  var {
-    option,
-    isActive
-  } = _ref2, props = _objectWithoutProperties14(_ref2, _excluded14);
-  if (typeof option === "string") {
-    return /* @__PURE__ */ React27.createElement(Shape, _extends17({
-      option: /* @__PURE__ */ React27.createElement(Symbols, _extends17({
-        type: option
-      }, props)),
-      isActive,
-      shapeType: "symbols"
-    }, props));
-  }
-  return /* @__PURE__ */ React27.createElement(Shape, _extends17({
-    option,
-    isActive,
-    shapeType: "symbols"
-  }, props));
-}
-
-// node_modules/recharts/es6/state/selectors/scatterSelectors.js
-var selectXAxisWithScale = (state, xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectAxisWithScale(state, "xAxis", xAxisId, isPanorama);
-var selectXAxisTicks = (state, xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectTicksOfGraphicalItem(state, "xAxis", xAxisId, isPanorama);
-var selectYAxisWithScale = (state, _xAxisId, yAxisId, _zAxisId, _id, _cells, isPanorama) => selectAxisWithScale(state, "yAxis", yAxisId, isPanorama);
-var selectYAxisTicks = (state, _xAxisId, yAxisId, _zAxisId, _id, _cells, isPanorama) => selectTicksOfGraphicalItem(state, "yAxis", yAxisId, isPanorama);
-var selectZAxis = (state, _xAxisId, _yAxisId, zAxisId) => selectZAxisWithScale(state, "zAxis", zAxisId, false);
-var pickScatterId = (_state, _xAxisId, _yAxisId, _zAxisId, id) => id;
-var pickCells = (_state, _xAxisId, _yAxisId, _zAxisId, _id, cells) => cells;
-var scatterChartDataSelector = (state, _xAxisId, _yAxisId, _zAxisId, _id, _cells, isPanorama) => selectChartDataWithIndexesIfNotInPanoramaPosition4(state, void 0, void 0, isPanorama);
-var selectSynchronisedScatterSettings = createSelector([selectUnfilteredCartesianItems, pickScatterId], (graphicalItems, id) => {
-  return graphicalItems.filter((item) => item.type === "scatter").find((item) => item.id === id);
+  return getBandSizeOfAxis(yAxis, yAxisTicks, false);
 });
-var selectScatterPoints = createSelector([scatterChartDataSelector, selectXAxisWithScale, selectXAxisTicks, selectYAxisWithScale, selectYAxisTicks, selectZAxis, selectSynchronisedScatterSettings, pickCells], (_ref2, xAxis, xAxisTicks, yAxis, yAxisTicks, zAxis, scatterSettings, cells) => {
+var pickLineId = (_state, _xAxisId, _yAxisId, _isPanorama, id) => id;
+function isLineSettings(item) {
+  return item.type === "line";
+}
+var selectSynchronisedLineSettings = createSelector([selectUnfilteredCartesianItems, pickLineId], (graphicalItems, id) => graphicalItems.filter(isLineSettings).find((x2) => x2.id === id));
+var selectLinePoints = createSelector([selectChartLayout, selectXAxisWithScale, selectYAxisWithScale, selectXAxisTicks, selectYAxisTicks, selectSynchronisedLineSettings, selectBandSize, selectChartDataWithIndexesIfNotInPanoramaPosition4], (layout, xAxis, yAxis, xAxisTicks, yAxisTicks, lineSettings, bandSize, _ref2) => {
   var {
     chartData,
     dataStartIndex,
     dataEndIndex
   } = _ref2;
-  if (scatterSettings == null) {
+  if (lineSettings == null || xAxis == null || yAxis == null || xAxisTicks == null || yAxisTicks == null || xAxisTicks.length === 0 || yAxisTicks.length === 0 || bandSize == null || layout !== "horizontal" && layout !== "vertical") {
     return void 0;
   }
+  var {
+    dataKey,
+    data
+  } = lineSettings;
   var displayedData;
-  if ((scatterSettings === null || scatterSettings === void 0 ? void 0 : scatterSettings.data) != null && scatterSettings.data.length > 0) {
-    displayedData = scatterSettings.data;
+  if (data != null && data.length > 0) {
+    displayedData = data;
   } else {
     displayedData = chartData === null || chartData === void 0 ? void 0 : chartData.slice(dataStartIndex, dataEndIndex + 1);
   }
-  if (displayedData == null || xAxis == null || yAxis == null || xAxisTicks == null || yAxisTicks == null || (xAxisTicks === null || xAxisTicks === void 0 ? void 0 : xAxisTicks.length) === 0 || (yAxisTicks === null || yAxisTicks === void 0 ? void 0 : yAxisTicks.length) === 0) {
+  if (displayedData == null) {
     return void 0;
   }
-  return computeScatterPoints({
-    displayedData,
+  return computeLinePoints({
+    layout,
     xAxis,
     yAxis,
-    zAxis,
-    scatterSettings,
     xAxisTicks,
     yAxisTicks,
-    cells
+    dataKey,
+    bandSize,
+    displayedData
   });
 });
 
-// node_modules/recharts/es6/cartesian/Scatter.js
+// node_modules/recharts/es6/util/getRadiusAndStrokeWidthFromDot.js
+function getRadiusAndStrokeWidthFromDot(dot) {
+  var props = svgPropertiesNoEventsFromUnknown(dot);
+  var defaultR = 3;
+  var defaultStrokeWidth = 2;
+  if (props != null) {
+    var {
+      r: r2,
+      strokeWidth
+    } = props;
+    var realR = Number(r2);
+    var realStrokeWidth = Number(strokeWidth);
+    if (Number.isNaN(realR) || realR < 0) {
+      realR = defaultR;
+    }
+    if (Number.isNaN(realStrokeWidth) || realStrokeWidth < 0) {
+      realStrokeWidth = defaultStrokeWidth;
+    }
+    return {
+      r: realR,
+      strokeWidth: realStrokeWidth
+    };
+  }
+  return {
+    r: defaultR,
+    strokeWidth: defaultStrokeWidth
+  };
+}
+
+// node_modules/recharts/es6/cartesian/Line.js
 var _excluded15 = ["id"];
-var _excluded27 = ["onMouseEnter", "onClick", "onMouseLeave"];
-var _excluded33 = ["animationBegin", "animationDuration", "animationEasing", "hide", "isAnimationActive", "legendType", "lineJointType", "lineType", "shape", "xAxisId", "yAxisId", "zAxisId"];
+var _excluded27 = ["type", "layout", "connectNulls", "needClip", "shape"];
+var _excluded33 = ["activeDot", "animateNewValues", "animationBegin", "animationDuration", "animationEasing", "connectNulls", "dot", "hide", "isAnimationActive", "label", "legendType", "xAxisId", "yAxisId", "id"];
+function _extends19() {
+  return _extends19 = Object.assign ? Object.assign.bind() : function(n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    }
+    return n;
+  }, _extends19.apply(null, arguments);
+}
+function ownKeys35(e, r2) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread35(e) {
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys35(Object(t), true).forEach(function(r3) {
+      _defineProperty37(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys35(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
+    });
+  }
+  return e;
+}
+function _defineProperty37(e, r2, t) {
+  return (r2 = _toPropertyKey37(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+}
+function _toPropertyKey37(t) {
+  var i = _toPrimitive37(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive37(t, r2) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r2 || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r2 ? String : Number)(t);
+}
 function _objectWithoutProperties15(e, t) {
   if (null == e) return {};
   var o, r2, i = _objectWithoutPropertiesLoose15(e, t);
@@ -24287,58 +24408,11 @@ function _objectWithoutPropertiesLoose15(r2, e) {
   }
   return t;
 }
-function _extends18() {
-  return _extends18 = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends18.apply(null, arguments);
-}
-function ownKeys33(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread33(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys33(Object(t), true).forEach(function(r3) {
-      _defineProperty35(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys33(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty35(e, r2, t) {
-  return (r2 = _toPropertyKey35(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey35(t) {
-  var i = _toPrimitive35(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive35(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2 || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-var computeLegendPayloadFromScatterProps = (props) => {
+var computeLegendPayloadFromAreaData = (props) => {
   var {
     dataKey,
     name,
-    fill,
+    stroke,
     legendType,
     hide
   } = props;
@@ -24346,233 +24420,227 @@ var computeLegendPayloadFromScatterProps = (props) => {
     inactive: hide,
     dataKey,
     type: legendType,
-    color: fill,
+    color: stroke,
     value: getTooltipNameProp(name, dataKey),
     payload: props
   }];
 };
-var SetScatterTooltipEntrySettings = /* @__PURE__ */ React28.memo((_ref2) => {
+var SetLineTooltipEntrySettings = /* @__PURE__ */ React30.memo((_ref2) => {
   var {
     dataKey,
-    points,
+    data,
     stroke,
     strokeWidth,
     fill,
     name,
     hide,
+    unit: unit2,
     tooltipType,
     id
   } = _ref2;
   var tooltipEntrySettings = {
-    dataDefinedOnItem: points === null || points === void 0 ? void 0 : points.map((p) => p.tooltipPayload),
-    getPosition: (index) => {
-      var _points$Number;
-      return points === null || points === void 0 || (_points$Number = points[Number(index)]) === null || _points$Number === void 0 ? void 0 : _points$Number.tooltipPosition;
-    },
+    dataDefinedOnItem: data,
+    getPosition: noop,
     settings: {
       stroke,
       strokeWidth,
       fill,
-      nameKey: void 0,
       dataKey,
+      nameKey: void 0,
       name: getTooltipNameProp(name, dataKey),
       hide,
       type: tooltipType,
-      color: fill,
-      unit: "",
-      // why doesn't Scatter support unit?
+      color: stroke,
+      unit: unit2,
       graphicalItemId: id
     }
   };
-  return /* @__PURE__ */ React28.createElement(SetTooltipEntrySettings, {
+  return /* @__PURE__ */ React30.createElement(SetTooltipEntrySettings, {
     tooltipEntrySettings
   });
 });
-function ScatterLine(_ref2) {
+var generateSimpleStrokeDasharray = (totalLength, length) => {
+  return "".concat(length, "px ").concat(totalLength, "px");
+};
+function repeat(lines, count) {
+  var linesUnit = lines.length % 2 !== 0 ? [...lines, 0] : lines;
+  var result = [];
+  for (var i = 0; i < count; ++i) {
+    result.push(...linesUnit);
+  }
+  return result;
+}
+var getStrokeDasharray = (length, totalLength, lines) => {
+  var lineLength = lines.reduce((pre, next) => pre + next, 0);
+  if (!lineLength) {
+    return generateSimpleStrokeDasharray(totalLength, length);
+  }
+  var count = Math.floor(length / lineLength);
+  var remainLength = length % lineLength;
+  var remainLines = [];
+  for (var i = 0, sum = 0; i < lines.length; sum += (_lines$i = lines[i]) !== null && _lines$i !== void 0 ? _lines$i : 0, ++i) {
+    var _lines$i;
+    var lineValue = lines[i];
+    if (lineValue != null && sum + lineValue > remainLength) {
+      remainLines = [...lines.slice(0, i), remainLength - sum];
+      break;
+    }
+  }
+  var emptyLines = remainLines.length % 2 === 0 ? [0, totalLength] : [totalLength];
+  return [...repeat(lines, count), ...remainLines, ...emptyLines].map((line) => "".concat(line, "px")).join(", ");
+};
+function LineDotsWrapper(_ref2) {
   var {
+    clipPathId,
     points,
     props
   } = _ref2;
   var {
-    line,
-    lineType,
-    lineJointType
+    dot,
+    dataKey,
+    needClip
   } = props;
-  if (!line) {
-    return null;
-  }
-  var scatterProps = svgPropertiesNoEvents(props);
-  var customLineProps = svgPropertiesNoEventsFromUnknown(line);
-  var linePoints, lineItem;
-  if (lineType === "joint") {
-    linePoints = points.map((entry) => {
-      var _entry$cx, _entry$cy;
-      return {
-        x: (_entry$cx = entry.cx) !== null && _entry$cx !== void 0 ? _entry$cx : null,
-        y: (_entry$cy = entry.cy) !== null && _entry$cy !== void 0 ? _entry$cy : null
-      };
-    });
-  } else if (lineType === "fitting") {
-    var {
-      xmin,
-      xmax,
-      a: a2,
-      b
-    } = getLinearRegression(points);
-    var linearExp = (x2) => a2 * x2 + b;
-    linePoints = [{
-      x: xmin,
-      y: linearExp(xmin)
-    }, {
-      x: xmax,
-      y: linearExp(xmax)
-    }];
-  }
-  var lineProps = _objectSpread33(_objectSpread33(_objectSpread33({}, scatterProps), {}, {
-    // @ts-expect-error customLineProps is contributing unknown props
-    fill: "none",
-    // @ts-expect-error customLineProps is contributing unknown props
-    stroke: scatterProps && scatterProps.fill
-  }, customLineProps), {}, {
-    // @ts-expect-error linePoints is used before it is assigned (???)
-    points: linePoints
+  var {
+    id
+  } = props, propsWithoutId = _objectWithoutProperties15(props, _excluded15);
+  var lineProps = svgPropertiesNoEvents(propsWithoutId);
+  return /* @__PURE__ */ React30.createElement(Dots, {
+    points,
+    dot,
+    className: "recharts-line-dots",
+    dotClassName: "recharts-line-dot",
+    dataKey,
+    baseProps: lineProps,
+    needClip,
+    clipPathId
   });
-  if (/* @__PURE__ */ React28.isValidElement(line)) {
-    lineItem = /* @__PURE__ */ React28.cloneElement(line, lineProps);
-  } else if (typeof line === "function") {
-    lineItem = line(lineProps);
-  } else {
-    lineItem = /* @__PURE__ */ React28.createElement(Curve, _extends18({}, lineProps, {
-      type: lineJointType
-    }));
-  }
-  return /* @__PURE__ */ React28.createElement(Layer, {
-    className: "recharts-scatter-line",
-    key: "recharts-scatter-line"
-  }, lineItem);
 }
-function ScatterLabelListProvider(_ref3) {
+function LineLabelListProvider(_ref3) {
   var {
     showLabels,
-    points,
-    children
+    children,
+    points
   } = _ref3;
-  var chartViewBox = useViewBox();
-  var labelListEntries = (0, import_react36.useMemo)(() => {
+  var labelListEntries = (0, import_react38.useMemo)(() => {
     return points === null || points === void 0 ? void 0 : points.map((point4) => {
       var _point$x, _point$y;
       var viewBox = {
-        /*
-         * Scatter label uses x and y as the reference point for the label,
-         * not cx and cy.
-         */
         x: (_point$x = point4.x) !== null && _point$x !== void 0 ? _point$x : 0,
-        /*
-         * Scatter label uses x and y as the reference point for the label,
-         * not cx and cy.
-         */
         y: (_point$y = point4.y) !== null && _point$y !== void 0 ? _point$y : 0,
-        width: point4.width,
-        height: point4.height,
-        lowerWidth: point4.width,
-        upperWidth: point4.width
+        width: 0,
+        lowerWidth: 0,
+        upperWidth: 0,
+        height: 0
       };
-      return _objectSpread33(_objectSpread33({}, viewBox), {}, {
-        /*
-         * Here we put undefined because Scatter shows two values usually, one for X and one for Y.
-         * LabelList will see this undefined and will use its own `dataKey` prop to determine which value to show,
-         * using the payload below.
-         */
-        value: void 0,
+      return _objectSpread35(_objectSpread35({}, viewBox), {}, {
+        value: point4.value,
         payload: point4.payload,
         viewBox,
-        parentViewBox: chartViewBox,
+        /*
+         * Line is not passing parentViewBox to the LabelList so the labels can escape - looks like a bug, should we pass parentViewBox?
+         * Or should this just be the root chart viewBox?
+         */
+        parentViewBox: void 0,
         fill: void 0
       });
     });
-  }, [chartViewBox, points]);
-  return /* @__PURE__ */ React28.createElement(CartesianLabelListContextProvider, {
+  }, [points]);
+  return /* @__PURE__ */ React30.createElement(CartesianLabelListContextProvider, {
     value: showLabels ? labelListEntries : void 0
   }, children);
 }
-function ScatterSymbols(props) {
+function StaticCurve(_ref4) {
   var {
+    clipPathId,
+    pathRef,
     points,
-    allOtherScatterProps
-  } = props;
-  var {
-    shape,
-    activeShape,
-    dataKey
-  } = allOtherScatterProps;
-  var {
-    id
-  } = allOtherScatterProps, allOtherPropsWithoutId = _objectWithoutProperties15(allOtherScatterProps, _excluded15);
-  var activeIndex = useAppSelector(selectActiveTooltipIndex);
-  var {
-    onMouseEnter: onMouseEnterFromProps,
-    onClick: onItemClickFromProps,
-    onMouseLeave: onMouseLeaveFromProps
-  } = allOtherScatterProps, restOfAllOtherProps = _objectWithoutProperties15(allOtherScatterProps, _excluded27);
-  var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, dataKey, id);
-  var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
-  var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, dataKey, id);
-  if (!isNonEmptyArray(points)) {
-    return null;
-  }
-  var baseProps = svgPropertiesNoEvents(allOtherPropsWithoutId);
-  return /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(ScatterLine, {
-    points,
-    props: allOtherPropsWithoutId
-  }), points.map((entry, i) => {
-    var hasActiveShape = activeShape != null && activeShape !== false;
-    var isActive = hasActiveShape && activeIndex === String(i);
-    var option = hasActiveShape && isActive ? activeShape : shape;
-    var symbolProps = _objectSpread33(_objectSpread33(_objectSpread33({}, baseProps), entry), {}, {
-      index: i,
-      [DATA_ITEM_GRAPHICAL_ITEM_ID_ATTRIBUTE_NAME]: String(id)
-    });
-    return /* @__PURE__ */ React28.createElement(ZIndexLayer, {
-      key: "symbol-".concat(entry === null || entry === void 0 ? void 0 : entry.cx, "-").concat(entry === null || entry === void 0 ? void 0 : entry.cy, "-").concat(entry === null || entry === void 0 ? void 0 : entry.size, "-").concat(i),
-      zIndex: isActive ? DefaultZIndexes.activeDot : void 0
-    }, /* @__PURE__ */ React28.createElement(Layer, _extends18({
-      className: "recharts-scatter-symbol"
-    }, adaptEventsOfChild(restOfAllOtherProps, entry, i), {
-      onMouseEnter: onMouseEnterFromContext(entry, i),
-      onMouseLeave: onMouseLeaveFromContext(entry, i),
-      onClick: onClickFromContext(entry, i)
-    }), /* @__PURE__ */ React28.createElement(ScatterSymbol, _extends18({
-      option,
-      isActive
-    }, symbolProps))));
-  }));
-}
-function SymbolsWithAnimation(_ref4) {
-  var {
-    previousPointsRef,
+    strokeDasharray,
     props
   } = _ref4;
   var {
+    type,
+    layout,
+    connectNulls,
+    needClip,
+    shape
+  } = props, others = _objectWithoutProperties15(props, _excluded27);
+  var curveProps = _objectSpread35(_objectSpread35({}, svgPropertiesAndEvents(others)), {}, {
+    fill: "none",
+    className: "recharts-line-curve",
+    clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : void 0,
     points,
+    type,
+    layout,
+    connectNulls,
+    strokeDasharray: strokeDasharray !== null && strokeDasharray !== void 0 ? strokeDasharray : props.strokeDasharray
+  });
+  return /* @__PURE__ */ React30.createElement(React30.Fragment, null, (points === null || points === void 0 ? void 0 : points.length) > 1 && /* @__PURE__ */ React30.createElement(Shape, _extends19({
+    shapeType: "curve",
+    option: shape
+  }, curveProps, {
+    pathRef
+  })), /* @__PURE__ */ React30.createElement(LineDotsWrapper, {
+    points,
+    clipPathId,
+    props
+  }));
+}
+function getTotalLength(mainCurve) {
+  try {
+    return mainCurve && mainCurve.getTotalLength && mainCurve.getTotalLength() || 0;
+  } catch (_unused) {
+    return 0;
+  }
+}
+function CurveWithAnimation(_ref5) {
+  var {
+    clipPathId,
+    props,
+    pathRef,
+    previousPointsRef,
+    longestAnimatedLengthRef
+  } = _ref5;
+  var {
+    points,
+    strokeDasharray,
     isAnimationActive,
     animationBegin,
     animationDuration,
-    animationEasing
+    animationEasing,
+    animateNewValues,
+    width,
+    height,
+    onAnimationEnd,
+    onAnimationStart
   } = props;
   var prevPoints = previousPointsRef.current;
-  var animationId = useAnimationId(props, "recharts-scatter-");
-  var [isAnimating, setIsAnimating] = (0, import_react36.useState)(false);
-  var handleAnimationEnd = (0, import_react36.useCallback)(() => {
-    setIsAnimating(false);
-  }, []);
-  var handleAnimationStart = (0, import_react36.useCallback)(() => {
-    setIsAnimating(true);
-  }, []);
+  var animationId = useAnimationId(points, "recharts-line-");
+  var animationIdRef = (0, import_react38.useRef)(animationId);
+  var [isAnimating, setIsAnimating] = (0, import_react38.useState)(false);
   var showLabels = !isAnimating;
-  return /* @__PURE__ */ React28.createElement(ScatterLabelListProvider, {
-    showLabels,
-    points
-  }, props.children, /* @__PURE__ */ React28.createElement(JavascriptAnimate, {
+  var handleAnimationEnd = (0, import_react38.useCallback)(() => {
+    if (typeof onAnimationEnd === "function") {
+      onAnimationEnd();
+    }
+    setIsAnimating(false);
+  }, [onAnimationEnd]);
+  var handleAnimationStart = (0, import_react38.useCallback)(() => {
+    if (typeof onAnimationStart === "function") {
+      onAnimationStart();
+    }
+    setIsAnimating(true);
+  }, [onAnimationStart]);
+  var totalLength = getTotalLength(pathRef.current);
+  var startingPointRef = (0, import_react38.useRef)(0);
+  if (animationIdRef.current !== animationId) {
+    startingPointRef.current = longestAnimatedLengthRef.current;
+    animationIdRef.current = animationId;
+  }
+  var startingPoint = startingPointRef.current;
+  return /* @__PURE__ */ React30.createElement(LineLabelListProvider, {
+    points,
+    showLabels
+  }, props.children, /* @__PURE__ */ React30.createElement(JavascriptAnimate, {
     animationId,
     begin: animationBegin,
     duration: animationDuration,
@@ -24582,276 +24650,317 @@ function SymbolsWithAnimation(_ref4) {
     onAnimationStart: handleAnimationStart,
     key: animationId
   }, (t) => {
-    var stepData = t === 1 ? points : points === null || points === void 0 ? void 0 : points.map((entry, index) => {
-      var prev = prevPoints && prevPoints[index];
-      if (prev) {
-        return _objectSpread33(_objectSpread33({}, entry), {}, {
-          cx: entry.cx == null ? void 0 : interpolate(prev.cx, entry.cx, t),
-          cy: entry.cy == null ? void 0 : interpolate(prev.cy, entry.cy, t),
-          size: interpolate(prev.size, entry.size, t)
-        });
+    var lengthInterpolated = interpolate(startingPoint, totalLength + startingPoint, t);
+    var curLength = Math.min(lengthInterpolated, totalLength);
+    var currentStrokeDasharray;
+    if (isAnimationActive) {
+      if (strokeDasharray) {
+        var lines = "".concat(strokeDasharray).split(/[,\s]+/gim).map((num) => parseFloat(num));
+        currentStrokeDasharray = getStrokeDasharray(curLength, totalLength, lines);
+      } else {
+        currentStrokeDasharray = generateSimpleStrokeDasharray(totalLength, curLength);
       }
-      return _objectSpread33(_objectSpread33({}, entry), {}, {
-        size: interpolate(0, entry.size, t)
-      });
-    });
-    if (t > 0) {
-      previousPointsRef.current = stepData;
+    } else {
+      currentStrokeDasharray = strokeDasharray == null ? void 0 : String(strokeDasharray);
     }
-    return /* @__PURE__ */ React28.createElement(Layer, null, /* @__PURE__ */ React28.createElement(ScatterSymbols, {
-      points: stepData,
-      allOtherScatterProps: props,
-      showLabels
-    }));
-  }), /* @__PURE__ */ React28.createElement(LabelListFromLabelProp, {
+    if (t > 0 && totalLength > 0) {
+      previousPointsRef.current = points;
+      longestAnimatedLengthRef.current = Math.max(longestAnimatedLengthRef.current, curLength);
+    }
+    if (prevPoints) {
+      var prevPointsDiffFactor = prevPoints.length / points.length;
+      var stepData = t === 1 ? points : points.map((entry, index) => {
+        var prevPointIndex = Math.floor(index * prevPointsDiffFactor);
+        if (prevPoints[prevPointIndex]) {
+          var prev = prevPoints[prevPointIndex];
+          return _objectSpread35(_objectSpread35({}, entry), {}, {
+            x: interpolate(prev.x, entry.x, t),
+            y: interpolate(prev.y, entry.y, t)
+          });
+        }
+        if (animateNewValues) {
+          return _objectSpread35(_objectSpread35({}, entry), {}, {
+            x: interpolate(width * 2, entry.x, t),
+            y: interpolate(height / 2, entry.y, t)
+          });
+        }
+        return _objectSpread35(_objectSpread35({}, entry), {}, {
+          x: entry.x,
+          y: entry.y
+        });
+      });
+      previousPointsRef.current = stepData;
+      return /* @__PURE__ */ React30.createElement(StaticCurve, {
+        props,
+        points: stepData,
+        clipPathId,
+        pathRef,
+        strokeDasharray: currentStrokeDasharray
+      });
+    }
+    return /* @__PURE__ */ React30.createElement(StaticCurve, {
+      props,
+      points,
+      clipPathId,
+      pathRef,
+      strokeDasharray: currentStrokeDasharray
+    });
+  }), /* @__PURE__ */ React30.createElement(LabelListFromLabelProp, {
     label: props.label
   }));
 }
-function computeScatterPoints(_ref5) {
+function RenderCurve(_ref6) {
   var {
-    displayedData,
-    xAxis,
-    yAxis,
-    zAxis,
-    scatterSettings,
-    xAxisTicks,
-    yAxisTicks,
-    cells
-  } = _ref5;
-  var xAxisDataKey = isNullish(xAxis.dataKey) ? scatterSettings.dataKey : xAxis.dataKey;
-  var yAxisDataKey = isNullish(yAxis.dataKey) ? scatterSettings.dataKey : yAxis.dataKey;
-  var zAxisDataKey = zAxis && zAxis.dataKey;
-  var defaultRangeZ = zAxis ? zAxis.range : implicitZAxis.range;
-  var defaultZ = defaultRangeZ && defaultRangeZ[0];
-  var xBandSize = xAxis.scale.bandwidth ? xAxis.scale.bandwidth() : 0;
-  var yBandSize = yAxis.scale.bandwidth ? yAxis.scale.bandwidth() : 0;
-  return displayedData.map((entry, index) => {
-    var x2 = getValueByDataKey(entry, xAxisDataKey);
-    var y2 = getValueByDataKey(entry, yAxisDataKey);
-    var z = !isNullish(zAxisDataKey) && getValueByDataKey(entry, zAxisDataKey) || "-";
-    var tooltipPayload = [{
-      name: isNullish(xAxis.dataKey) ? scatterSettings.name : xAxis.name || String(xAxis.dataKey),
-      unit: xAxis.unit || "",
-      // @ts-expect-error getValueByDataKey does not validate the output type
-      value: x2,
-      payload: entry,
-      dataKey: xAxisDataKey,
-      type: scatterSettings.tooltipType,
-      graphicalItemId: scatterSettings.id
-    }, {
-      name: isNullish(yAxis.dataKey) ? scatterSettings.name : yAxis.name || String(yAxis.dataKey),
-      unit: yAxis.unit || "",
-      // @ts-expect-error getValueByDataKey does not validate the output type
-      value: y2,
-      payload: entry,
-      dataKey: yAxisDataKey,
-      type: scatterSettings.tooltipType,
-      graphicalItemId: scatterSettings.id
-    }];
-    if (z !== "-" && zAxis != null) {
-      tooltipPayload.push({
-        // @ts-expect-error name prop should not have dataKey in it
-        name: zAxis.name || zAxis.dataKey,
-        unit: zAxis.unit || "",
-        // @ts-expect-error getValueByDataKey does not validate the output type
-        value: z,
-        payload: entry,
-        dataKey: zAxisDataKey,
-        type: scatterSettings.tooltipType,
-        graphicalItemId: scatterSettings.id
-      });
-    }
-    var cx = getCateCoordinateOfLine({
-      axis: xAxis,
-      ticks: xAxisTicks,
-      bandSize: xBandSize,
-      entry,
-      index,
-      dataKey: xAxisDataKey
-    });
-    var cy = getCateCoordinateOfLine({
-      axis: yAxis,
-      ticks: yAxisTicks,
-      bandSize: yBandSize,
-      entry,
-      index,
-      dataKey: yAxisDataKey
-    });
-    var size = z !== "-" && zAxis != null ? zAxis.scale.map(z) : defaultZ;
-    var radius = size == null ? 0 : Math.sqrt(Math.max(size, 0) / Math.PI);
-    return _objectSpread33(_objectSpread33({}, entry), {}, {
-      cx,
-      cy,
-      x: cx == null ? void 0 : cx - radius,
-      y: cy == null ? void 0 : cy - radius,
-      width: 2 * radius,
-      height: 2 * radius,
-      size,
-      node: {
-        x: x2,
-        y: y2,
-        z
-      },
-      tooltipPayload,
-      tooltipPosition: {
-        x: cx,
-        y: cy
-      },
-      payload: entry
-    }, cells && cells[index] && cells[index].props);
+    clipPathId,
+    props
+  } = _ref6;
+  var previousPointsRef = (0, import_react38.useRef)(null);
+  var longestAnimatedLengthRef = (0, import_react38.useRef)(0);
+  var pathRef = (0, import_react38.useRef)(null);
+  return /* @__PURE__ */ React30.createElement(CurveWithAnimation, {
+    props,
+    clipPathId,
+    previousPointsRef,
+    longestAnimatedLengthRef,
+    pathRef
   });
 }
-var errorBarDataPointFormatter = (dataPoint, dataKey, direction) => {
+var errorBarDataPointFormatter = (dataPoint, dataKey) => {
+  var _dataPoint$x, _dataPoint$y;
   return {
-    x: dataPoint.cx,
-    y: dataPoint.cy,
-    value: direction === "x" ? Number(dataPoint.node.x) : Number(dataPoint.node.y),
-    // @ts-expect-error getValueByDataKey does not validate the output type
-    errorVal: getValueByDataKey(dataPoint, dataKey)
+    x: (_dataPoint$x = dataPoint.x) !== null && _dataPoint$x !== void 0 ? _dataPoint$x : void 0,
+    y: (_dataPoint$y = dataPoint.y) !== null && _dataPoint$y !== void 0 ? _dataPoint$y : void 0,
+    value: dataPoint.value,
+    // getValueByDataKey does not validate the output type
+    errorVal: getValueByDataKey(dataPoint.payload, dataKey)
   };
 };
-function ScatterWithId(props) {
-  var {
-    hide,
-    points,
-    className,
-    needClip,
-    xAxisId,
-    yAxisId,
-    id
-  } = props;
-  var previousPointsRef = (0, import_react36.useRef)(null);
-  if (hide) {
-    return null;
+var LineWithState = class extends import_react38.Component {
+  render() {
+    var {
+      hide,
+      dot,
+      points,
+      className,
+      xAxisId,
+      yAxisId,
+      top,
+      left,
+      width,
+      height,
+      id,
+      needClip,
+      zIndex
+    } = this.props;
+    if (hide) {
+      return null;
+    }
+    var layerClass = clsx("recharts-line", className);
+    var clipPathId = id;
+    var {
+      r: r2,
+      strokeWidth
+    } = getRadiusAndStrokeWidthFromDot(dot);
+    var clipDot = isClipDot(dot);
+    var dotSize = r2 * 2 + strokeWidth;
+    var activePointsClipPath = needClip ? "url(#clipPath-".concat(clipDot ? "" : "dots-").concat(clipPathId, ")") : void 0;
+    return /* @__PURE__ */ React30.createElement(ZIndexLayer, {
+      zIndex
+    }, /* @__PURE__ */ React30.createElement(Layer, {
+      className: layerClass
+    }, needClip && /* @__PURE__ */ React30.createElement("defs", null, /* @__PURE__ */ React30.createElement(GraphicalItemClipPath, {
+      clipPathId,
+      xAxisId,
+      yAxisId
+    }), !clipDot && /* @__PURE__ */ React30.createElement("clipPath", {
+      id: "clipPath-dots-".concat(clipPathId)
+    }, /* @__PURE__ */ React30.createElement("rect", {
+      x: left - dotSize / 2,
+      y: top - dotSize / 2,
+      width: width + dotSize,
+      height: height + dotSize
+    }))), /* @__PURE__ */ React30.createElement(SetErrorBarContext, {
+      xAxisId,
+      yAxisId,
+      data: points,
+      dataPointFormatter: errorBarDataPointFormatter,
+      errorBarOffset: 0
+    }, /* @__PURE__ */ React30.createElement(RenderCurve, {
+      props: this.props,
+      clipPathId
+    }))), /* @__PURE__ */ React30.createElement(ActivePoints, {
+      activeDot: this.props.activeDot,
+      points,
+      mainColor: this.props.stroke,
+      itemDataKey: this.props.dataKey,
+      clipPath: activePointsClipPath
+    }));
   }
-  var layerClass = clsx("recharts-scatter", className);
-  var clipPathId = id;
-  return /* @__PURE__ */ React28.createElement(ZIndexLayer, {
-    zIndex: props.zIndex
-  }, /* @__PURE__ */ React28.createElement(Layer, {
-    className: layerClass,
-    clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : void 0,
-    id
-  }, needClip && /* @__PURE__ */ React28.createElement("defs", null, /* @__PURE__ */ React28.createElement(GraphicalItemClipPath, {
-    clipPathId,
-    xAxisId,
-    yAxisId
-  })), /* @__PURE__ */ React28.createElement(SetErrorBarContext, {
-    xAxisId,
-    yAxisId,
-    data: points,
-    dataPointFormatter: errorBarDataPointFormatter,
-    errorBarOffset: 0
-  }, /* @__PURE__ */ React28.createElement(Layer, {
-    key: "recharts-scatter-symbols"
-  }, /* @__PURE__ */ React28.createElement(SymbolsWithAnimation, {
-    props,
-    previousPointsRef
-  })))));
-}
-var defaultScatterProps = {
-  xAxisId: 0,
-  yAxisId: 0,
-  zAxisId: 0,
-  label: false,
-  line: false,
-  legendType: "circle",
-  lineType: "joint",
-  lineJointType: "linear",
-  shape: "circle",
+};
+var defaultLineProps = {
+  activeDot: true,
+  animateNewValues: true,
+  animationBegin: 0,
+  animationDuration: 1500,
+  animationEasing: "ease",
+  connectNulls: false,
+  dot: true,
+  fill: "#fff",
   hide: false,
   isAnimationActive: "auto",
-  animationBegin: 0,
-  animationDuration: 400,
-  animationEasing: "linear",
-  zIndex: DefaultZIndexes.scatter
+  label: false,
+  legendType: "line",
+  stroke: "#3182bd",
+  strokeWidth: 1,
+  xAxisId: 0,
+  yAxisId: 0,
+  zIndex: DefaultZIndexes.line,
+  type: "linear"
 };
-function ScatterImpl(props) {
-  var _resolveDefaultProps = resolveDefaultProps(props, defaultScatterProps), {
+function LineImpl(props) {
+  var _resolveDefaultProps = resolveDefaultProps(props, defaultLineProps), {
+    activeDot,
+    animateNewValues,
     animationBegin,
     animationDuration,
     animationEasing,
+    connectNulls,
+    dot,
     hide,
     isAnimationActive,
+    label,
     legendType,
-    lineJointType,
-    lineType,
-    shape,
     xAxisId,
     yAxisId,
-    zAxisId
+    id
   } = _resolveDefaultProps, everythingElse = _objectWithoutProperties15(_resolveDefaultProps, _excluded33);
   var {
     needClip
   } = useNeedsClip(xAxisId, yAxisId);
-  var cells = (0, import_react36.useMemo)(() => findAllByType(props.children, Cell), [props.children]);
+  var plotArea = usePlotArea();
+  var layout = useChartLayout();
   var isPanorama = useIsPanorama();
-  var points = useAppSelector((state) => {
-    return selectScatterPoints(state, xAxisId, yAxisId, zAxisId, props.id, cells, isPanorama);
-  });
-  if (needClip == null) {
+  var points = useAppSelector((state) => selectLinePoints(state, xAxisId, yAxisId, isPanorama, id));
+  if (layout !== "horizontal" && layout !== "vertical" || points == null || plotArea == null) {
     return null;
   }
-  if (points == null) {
-    return null;
-  }
-  return /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(SetScatterTooltipEntrySettings, {
-    dataKey: props.dataKey,
+  var {
+    height,
+    width,
+    x: left,
+    y: top
+  } = plotArea;
+  return /* @__PURE__ */ React30.createElement(LineWithState, _extends19({}, everythingElse, {
+    id,
+    connectNulls,
+    dot,
+    activeDot,
+    animateNewValues,
+    animationBegin,
+    animationDuration,
+    animationEasing,
+    isAnimationActive,
+    hide,
+    label,
+    legendType,
+    xAxisId,
+    yAxisId,
     points,
+    layout,
+    height,
+    width,
+    left,
+    top,
+    needClip
+  }));
+}
+function computeLinePoints(_ref7) {
+  var {
+    layout,
+    xAxis,
+    yAxis,
+    xAxisTicks,
+    yAxisTicks,
+    dataKey,
+    bandSize,
+    displayedData
+  } = _ref7;
+  return displayedData.map((entry, index) => {
+    var value = getValueByDataKey(entry, dataKey);
+    if (layout === "horizontal") {
+      var _x = getCateCoordinateOfLine({
+        axis: xAxis,
+        ticks: xAxisTicks,
+        bandSize,
+        entry,
+        index
+      });
+      var _y = isNullish(value) ? null : yAxis.scale.map(value);
+      return {
+        x: _x,
+        y: _y !== null && _y !== void 0 ? _y : null,
+        value,
+        payload: entry
+      };
+    }
+    var x2 = isNullish(value) ? null : xAxis.scale.map(value);
+    var y2 = getCateCoordinateOfLine({
+      axis: yAxis,
+      ticks: yAxisTicks,
+      bandSize,
+      entry,
+      index
+    });
+    if (x2 == null || y2 == null) {
+      return null;
+    }
+    return {
+      x: x2,
+      y: y2,
+      value,
+      payload: entry
+    };
+  }).filter(Boolean);
+}
+function LineFn(outsideProps) {
+  var props = resolveDefaultProps(outsideProps, defaultLineProps);
+  var isPanorama = useIsPanorama();
+  return /* @__PURE__ */ React30.createElement(RegisterGraphicalItemId, {
+    id: props.id,
+    type: "line"
+  }, (id) => /* @__PURE__ */ React30.createElement(React30.Fragment, null, /* @__PURE__ */ React30.createElement(SetLegendPayload, {
+    legendPayload: computeLegendPayloadFromAreaData(props)
+  }), /* @__PURE__ */ React30.createElement(SetLineTooltipEntrySettings, {
+    dataKey: props.dataKey,
+    data: props.data,
     stroke: props.stroke,
     strokeWidth: props.strokeWidth,
     fill: props.fill,
     name: props.name,
     hide: props.hide,
+    unit: props.unit,
     tooltipType: props.tooltipType,
-    id: props.id
-  }), /* @__PURE__ */ React28.createElement(ScatterWithId, _extends18({}, everythingElse, {
-    xAxisId,
-    yAxisId,
-    zAxisId,
-    lineType,
-    lineJointType,
-    legendType,
-    shape,
-    hide,
-    isAnimationActive,
-    animationBegin,
-    animationDuration,
-    animationEasing,
-    points,
-    needClip
-  })));
-}
-function ScatterFn(outsideProps) {
-  var props = resolveDefaultProps(outsideProps, defaultScatterProps);
-  var isPanorama = useIsPanorama();
-  return /* @__PURE__ */ React28.createElement(RegisterGraphicalItemId, {
-    id: props.id,
-    type: "scatter"
-  }, (id) => /* @__PURE__ */ React28.createElement(React28.Fragment, null, /* @__PURE__ */ React28.createElement(SetLegendPayload, {
-    legendPayload: computeLegendPayloadFromScatterProps(props)
-  }), /* @__PURE__ */ React28.createElement(SetCartesianGraphicalItem, {
-    type: "scatter",
+    id
+  }), /* @__PURE__ */ React30.createElement(SetCartesianGraphicalItem, {
+    type: "line",
     id,
     data: props.data,
     xAxisId: props.xAxisId,
     yAxisId: props.yAxisId,
-    zAxisId: props.zAxisId,
+    zAxisId: 0,
     dataKey: props.dataKey,
     hide: props.hide,
-    name: props.name,
-    tooltipType: props.tooltipType,
     isPanorama
-  }), /* @__PURE__ */ React28.createElement(ScatterImpl, _extends18({}, props, {
+  }), /* @__PURE__ */ React30.createElement(LineImpl, _extends19({}, props, {
     id
   }))));
 }
-var Scatter = /* @__PURE__ */ React28.memo(ScatterFn, propsAreEqual);
-Scatter.displayName = "Scatter";
+var Line = /* @__PURE__ */ React30.memo(LineFn, propsAreEqual);
+Line.displayName = "Line";
 
 // node_modules/recharts/es6/cartesian/XAxis.js
-var React29 = __toESM(require_react());
-var import_react37 = __toESM(require_react());
+var React31 = __toESM(require_react());
+var import_react39 = __toESM(require_react());
 
 // node_modules/recharts/es6/util/axisPropsAreEqual.js
 var _excluded16 = ["domain", "range"];
@@ -24908,16 +25017,16 @@ function axisPropsAreEqual(prevProps, nextProps) {
 var _excluded17 = ["type"];
 var _excluded29 = ["dangerouslySetInnerHTML", "ticks", "scale"];
 var _excluded34 = ["id", "scale"];
-function _extends19() {
-  return _extends19 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends20() {
+  return _extends20 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends19.apply(null, arguments);
+  }, _extends20.apply(null, arguments);
 }
-function ownKeys34(e, r2) {
+function ownKeys36(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -24927,25 +25036,25 @@ function ownKeys34(e, r2) {
   }
   return t;
 }
-function _objectSpread34(e) {
+function _objectSpread36(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys34(Object(t), true).forEach(function(r3) {
-      _defineProperty36(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys34(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys36(Object(t), true).forEach(function(r3) {
+      _defineProperty38(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys36(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty36(e, r2, t) {
-  return (r2 = _toPropertyKey36(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty38(e, r2, t) {
+  return (r2 = _toPropertyKey38(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey36(t) {
-  var i = _toPrimitive36(t, "string");
+function _toPropertyKey38(t) {
+  var i = _toPrimitive38(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive36(t, r2) {
+function _toPrimitive38(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -24975,21 +25084,21 @@ function _objectWithoutPropertiesLoose17(r2, e) {
 }
 function SetXAxisSettings(props) {
   var dispatch = useAppDispatch();
-  var prevSettingsRef = (0, import_react37.useRef)(null);
+  var prevSettingsRef = (0, import_react39.useRef)(null);
   var layout = useCartesianChartLayout();
   var {
     type: typeFromProps
   } = props, restProps = _objectWithoutProperties17(props, _excluded17);
   var evaluatedType = getAxisTypeBasedOnLayout(layout, "xAxis", typeFromProps);
-  var settings = (0, import_react37.useMemo)(() => {
+  var settings = (0, import_react39.useMemo)(() => {
     if (evaluatedType == null) {
       return void 0;
     }
-    return _objectSpread34(_objectSpread34({}, restProps), {}, {
+    return _objectSpread36(_objectSpread36({}, restProps), {}, {
       type: evaluatedType
     });
   }, [restProps, evaluatedType]);
-  (0, import_react37.useLayoutEffect)(() => {
+  (0, import_react39.useLayoutEffect)(() => {
     if (settings == null) {
       return;
     }
@@ -25003,7 +25112,7 @@ function SetXAxisSettings(props) {
     }
     prevSettingsRef.current = settings;
   }, [settings, dispatch]);
-  (0, import_react37.useLayoutEffect)(() => {
+  (0, import_react39.useLayoutEffect)(() => {
     return () => {
       if (prevSettingsRef.current) {
         dispatch(removeXAxis(prevSettingsRef.current));
@@ -25037,7 +25146,7 @@ var XAxisImpl = (props) => {
     id,
     scale: del2
   } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties17(synchronizedSettings, _excluded34);
-  return /* @__PURE__ */ React29.createElement(CartesianAxis, _extends19({}, allOtherProps, restSynchronizedSettings, {
+  return /* @__PURE__ */ React31.createElement(CartesianAxis, _extends20({}, allOtherProps, restSynchronizedSettings, {
     x: position.x,
     y: position.y,
     width: axisSize.width,
@@ -25076,7 +25185,7 @@ var xAxisDefaultProps = {
 };
 var XAxisSettingsDispatcher = (outsideProps) => {
   var props = resolveDefaultProps(outsideProps, xAxisDefaultProps);
-  return /* @__PURE__ */ React29.createElement(React29.Fragment, null, /* @__PURE__ */ React29.createElement(SetXAxisSettings, {
+  return /* @__PURE__ */ React31.createElement(React31.Fragment, null, /* @__PURE__ */ React31.createElement(SetXAxisSettings, {
     allowDataOverflow: props.allowDataOverflow,
     allowDecimals: props.allowDecimals,
     allowDuplicatedCategory: props.allowDuplicatedCategory,
@@ -25102,27 +25211,27 @@ var XAxisSettingsDispatcher = (outsideProps) => {
     type: props.type,
     unit: props.unit,
     niceTicks: props.niceTicks
-  }), /* @__PURE__ */ React29.createElement(XAxisImpl, props));
+  }), /* @__PURE__ */ React31.createElement(XAxisImpl, props));
 };
-var XAxis = /* @__PURE__ */ React29.memo(XAxisSettingsDispatcher, axisPropsAreEqual);
+var XAxis = /* @__PURE__ */ React31.memo(XAxisSettingsDispatcher, axisPropsAreEqual);
 XAxis.displayName = "XAxis";
 
 // node_modules/recharts/es6/cartesian/YAxis.js
-var React30 = __toESM(require_react());
-var import_react38 = __toESM(require_react());
+var React32 = __toESM(require_react());
+var import_react40 = __toESM(require_react());
 var _excluded18 = ["type"];
 var _excluded210 = ["dangerouslySetInnerHTML", "ticks", "scale"];
 var _excluded35 = ["id", "scale"];
-function _extends20() {
-  return _extends20 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends21() {
+  return _extends21 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends20.apply(null, arguments);
+  }, _extends21.apply(null, arguments);
 }
-function ownKeys35(e, r2) {
+function ownKeys37(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -25132,25 +25241,25 @@ function ownKeys35(e, r2) {
   }
   return t;
 }
-function _objectSpread35(e) {
+function _objectSpread37(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys35(Object(t), true).forEach(function(r3) {
-      _defineProperty37(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys35(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys37(Object(t), true).forEach(function(r3) {
+      _defineProperty39(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys37(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty37(e, r2, t) {
-  return (r2 = _toPropertyKey37(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty39(e, r2, t) {
+  return (r2 = _toPropertyKey39(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey37(t) {
-  var i = _toPrimitive37(t, "string");
+function _toPropertyKey39(t) {
+  var i = _toPrimitive39(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive37(t, r2) {
+function _toPrimitive39(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -25180,21 +25289,21 @@ function _objectWithoutPropertiesLoose18(r2, e) {
 }
 function SetYAxisSettings(props) {
   var dispatch = useAppDispatch();
-  var prevSettingsRef = (0, import_react38.useRef)(null);
+  var prevSettingsRef = (0, import_react40.useRef)(null);
   var layout = useCartesianChartLayout();
   var {
     type: typeFromProps
   } = props, restProps = _objectWithoutProperties18(props, _excluded18);
   var evaluatedType = getAxisTypeBasedOnLayout(layout, "yAxis", typeFromProps);
-  var settings = (0, import_react38.useMemo)(() => {
+  var settings = (0, import_react40.useMemo)(() => {
     if (evaluatedType == null) {
       return void 0;
     }
-    return _objectSpread35(_objectSpread35({}, restProps), {}, {
+    return _objectSpread37(_objectSpread37({}, restProps), {}, {
       type: evaluatedType
     });
   }, [evaluatedType, restProps]);
-  (0, import_react38.useLayoutEffect)(() => {
+  (0, import_react40.useLayoutEffect)(() => {
     if (settings == null) {
       return;
     }
@@ -25208,7 +25317,7 @@ function SetYAxisSettings(props) {
     }
     prevSettingsRef.current = settings;
   }, [settings, dispatch]);
-  (0, import_react38.useLayoutEffect)(() => {
+  (0, import_react40.useLayoutEffect)(() => {
     return () => {
       if (prevSettingsRef.current) {
         dispatch(removeYAxis(prevSettingsRef.current));
@@ -25225,8 +25334,8 @@ function YAxisImpl(props) {
     width,
     label
   } = props;
-  var cartesianAxisRef = (0, import_react38.useRef)(null);
-  var labelRef = (0, import_react38.useRef)(null);
+  var cartesianAxisRef = (0, import_react40.useRef)(null);
+  var labelRef = (0, import_react40.useRef)(null);
   var viewBox = useAppSelector(selectAxisViewBox);
   var isPanorama = useIsPanorama();
   var dispatch = useAppDispatch();
@@ -25235,8 +25344,8 @@ function YAxisImpl(props) {
   var position = useAppSelector((state) => selectYAxisPosition(state, yAxisId));
   var cartesianTickItems = useAppSelector((state) => selectTicksOfAxis(state, axisType, yAxisId, isPanorama));
   var synchronizedSettings = useAppSelector((state) => selectYAxisSettingsNoDefaults(state, yAxisId));
-  (0, import_react38.useLayoutEffect)(() => {
-    if (width !== "auto" || !axisSize || isLabelContentAFunction(label) || /* @__PURE__ */ (0, import_react38.isValidElement)(label) || synchronizedSettings == null) {
+  (0, import_react40.useLayoutEffect)(() => {
+    if (width !== "auto" || !axisSize || isLabelContentAFunction(label) || /* @__PURE__ */ (0, import_react40.isValidElement)(label) || synchronizedSettings == null) {
       return;
     }
     var axisComponent = cartesianAxisRef.current;
@@ -25274,7 +25383,7 @@ function YAxisImpl(props) {
     id,
     scale: del2
   } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties18(synchronizedSettings, _excluded35);
-  return /* @__PURE__ */ React30.createElement(CartesianAxis, _extends20({}, allOtherProps, restSynchronizedSettings, {
+  return /* @__PURE__ */ React32.createElement(CartesianAxis, _extends21({}, allOtherProps, restSynchronizedSettings, {
     ref: cartesianAxisRef,
     labelRef,
     x: position.x,
@@ -25320,7 +25429,7 @@ var yAxisDefaultProps = {
 };
 var YAxisSettingsDispatcher = (outsideProps) => {
   var props = resolveDefaultProps(outsideProps, yAxisDefaultProps);
-  return /* @__PURE__ */ React30.createElement(React30.Fragment, null, /* @__PURE__ */ React30.createElement(SetYAxisSettings, {
+  return /* @__PURE__ */ React32.createElement(React32.Fragment, null, /* @__PURE__ */ React32.createElement(SetYAxisSettings, {
     interval: props.interval,
     id: props.yAxisId,
     scale: props.scale,
@@ -25346,18 +25455,22 @@ var YAxisSettingsDispatcher = (outsideProps) => {
     tick: props.tick,
     tickFormatter: props.tickFormatter,
     niceTicks: props.niceTicks
-  }), /* @__PURE__ */ React30.createElement(YAxisImpl, props));
+  }), /* @__PURE__ */ React32.createElement(YAxisImpl, props));
 };
-var YAxis = /* @__PURE__ */ React30.memo(YAxisSettingsDispatcher, axisPropsAreEqual);
+var YAxis = /* @__PURE__ */ React32.memo(YAxisSettingsDispatcher, axisPropsAreEqual);
 YAxis.displayName = "YAxis";
 
+// node_modules/recharts/es6/chart/LineChart.js
+var React39 = __toESM(require_react());
+var import_react51 = __toESM(require_react());
+
 // node_modules/recharts/es6/chart/CartesianChart.js
-var React36 = __toESM(require_react());
-var import_react48 = __toESM(require_react());
+var React38 = __toESM(require_react());
+var import_react50 = __toESM(require_react());
 
 // node_modules/recharts/es6/state/RechartsStoreProvider.js
-var React31 = __toESM(require_react());
-var import_react39 = __toESM(require_react());
+var React33 = __toESM(require_react());
+var import_react41 = __toESM(require_react());
 
 // node_modules/recharts/es6/state/selectors/selectActivePropsFromChartPointer.js
 var pickChartPointer = (_state, chartPointer) => chartPointer;
@@ -26062,7 +26175,7 @@ function RechartsStoreProvider(_ref2) {
     reduxStoreName
   } = _ref2;
   var isPanorama = useIsPanorama();
-  var storeRef = (0, import_react39.useRef)(null);
+  var storeRef = (0, import_react41.useRef)(null);
   if (isPanorama) {
     return children;
   }
@@ -26070,14 +26183,14 @@ function RechartsStoreProvider(_ref2) {
     storeRef.current = createRechartsStore(preloadedState, reduxStoreName);
   }
   var nonNullContext = RechartsReduxContext;
-  return /* @__PURE__ */ React31.createElement(Provider_default, {
+  return /* @__PURE__ */ React33.createElement(Provider_default, {
     context: nonNullContext,
     store: storeRef.current
   }, children);
 }
 
 // node_modules/recharts/es6/state/ReportMainChartProps.js
-var import_react40 = __toESM(require_react());
+var import_react42 = __toESM(require_react());
 function ReportMainChartPropsImpl(_ref2) {
   var {
     layout,
@@ -26085,7 +26198,7 @@ function ReportMainChartPropsImpl(_ref2) {
   } = _ref2;
   var dispatch = useAppDispatch();
   var isPanorama = useIsPanorama();
-  (0, import_react40.useEffect)(() => {
+  (0, import_react42.useEffect)(() => {
     if (!isPanorama) {
       dispatch(setLayout(layout));
       dispatch(setMargin(margin));
@@ -26093,48 +26206,48 @@ function ReportMainChartPropsImpl(_ref2) {
   }, [dispatch, isPanorama, layout, margin]);
   return null;
 }
-var ReportMainChartProps = /* @__PURE__ */ (0, import_react40.memo)(ReportMainChartPropsImpl, propsAreEqual);
+var ReportMainChartProps = /* @__PURE__ */ (0, import_react42.memo)(ReportMainChartPropsImpl, propsAreEqual);
 
 // node_modules/recharts/es6/state/ReportChartProps.js
-var import_react41 = __toESM(require_react());
+var import_react43 = __toESM(require_react());
 function ReportChartProps(props) {
   var dispatch = useAppDispatch();
-  (0, import_react41.useEffect)(() => {
+  (0, import_react43.useEffect)(() => {
     dispatch(updateOptions(props));
   }, [dispatch, props]);
   return null;
 }
 
 // node_modules/recharts/es6/state/ReportEventSettings.js
-var import_react42 = __toESM(require_react());
+var import_react44 = __toESM(require_react());
 var ReportEventSettingsImpl = (props) => {
   var dispatch = useAppDispatch();
-  (0, import_react42.useEffect)(() => {
+  (0, import_react44.useEffect)(() => {
     dispatch(setEventSettings(props));
   }, [dispatch, props]);
   return null;
 };
-var ReportEventSettings = /* @__PURE__ */ (0, import_react42.memo)(ReportEventSettingsImpl, propsAreEqual);
+var ReportEventSettings = /* @__PURE__ */ (0, import_react44.memo)(ReportEventSettingsImpl, propsAreEqual);
 
 // node_modules/recharts/es6/chart/CategoricalChart.js
-var React35 = __toESM(require_react());
-var import_react47 = __toESM(require_react());
+var React37 = __toESM(require_react());
+var import_react49 = __toESM(require_react());
 
 // node_modules/recharts/es6/container/RootSurface.js
-var React33 = __toESM(require_react());
-var import_react44 = __toESM(require_react());
+var React35 = __toESM(require_react());
+var import_react46 = __toESM(require_react());
 
 // node_modules/recharts/es6/zIndex/ZIndexPortal.js
-var React32 = __toESM(require_react());
-var import_react43 = __toESM(require_react());
+var React34 = __toESM(require_react());
+var import_react45 = __toESM(require_react());
 function ZIndexSvgPortal(_ref2) {
   var {
     zIndex,
     isPanorama
   } = _ref2;
-  var ref = (0, import_react43.useRef)(null);
+  var ref = (0, import_react45.useRef)(null);
   var dispatch = useAppDispatch();
-  (0, import_react43.useLayoutEffect)(() => {
+  (0, import_react45.useLayoutEffect)(() => {
     if (ref.current) {
       dispatch(registerZIndexPortalElement({
         zIndex,
@@ -26149,7 +26262,7 @@ function ZIndexSvgPortal(_ref2) {
       }));
     };
   }, [dispatch, zIndex, isPanorama]);
-  return /* @__PURE__ */ React32.createElement("g", {
+  return /* @__PURE__ */ React34.createElement("g", {
     tabIndex: -1,
     ref,
     className: "recharts-zIndex-layer_".concat(zIndex)
@@ -26166,11 +26279,11 @@ function AllZIndexPortals(_ref2) {
   }
   var allNegativeZIndexes = allRegisteredZIndexes.filter((zIndex) => zIndex < 0);
   var allPositiveZIndexes = allRegisteredZIndexes.filter((zIndex) => zIndex > 0);
-  return /* @__PURE__ */ React32.createElement(React32.Fragment, null, allNegativeZIndexes.map((zIndex) => /* @__PURE__ */ React32.createElement(ZIndexSvgPortal, {
+  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, allNegativeZIndexes.map((zIndex) => /* @__PURE__ */ React34.createElement(ZIndexSvgPortal, {
     key: zIndex,
     zIndex,
     isPanorama
-  })), children, allPositiveZIndexes.map((zIndex) => /* @__PURE__ */ React32.createElement(ZIndexSvgPortal, {
+  })), children, allPositiveZIndexes.map((zIndex) => /* @__PURE__ */ React34.createElement(ZIndexSvgPortal, {
     key: zIndex,
     zIndex,
     isPanorama
@@ -26197,14 +26310,14 @@ function _objectWithoutPropertiesLoose19(r2, e) {
   }
   return t;
 }
-function _extends21() {
-  return _extends21 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends22() {
+  return _extends22 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends21.apply(null, arguments);
+  }, _extends22.apply(null, arguments);
 }
 var FULL_WIDTH_AND_HEIGHT = {
   width: "100%",
@@ -26220,7 +26333,7 @@ var FULL_WIDTH_AND_HEIGHT = {
    */
   display: "block"
 };
-var MainChartSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((props, ref) => {
+var MainChartSurface = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
   var width = useChartWidth();
   var height = useChartHeight();
   var hasAccessibilityLayer = useAccessibilityLayer();
@@ -26246,7 +26359,7 @@ var MainChartSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((props, re
       role = hasAccessibilityLayer ? "application" : void 0;
     }
   }
-  return /* @__PURE__ */ React33.createElement(Surface, _extends21({}, otherAttributes, {
+  return /* @__PURE__ */ React35.createElement(Surface, _extends22({}, otherAttributes, {
     title,
     desc,
     role,
@@ -26271,41 +26384,41 @@ var BrushPanoramaSurface = (_ref2) => {
     y: y2,
     x: x2
   } = brushDimensions;
-  return /* @__PURE__ */ React33.createElement(Surface, {
+  return /* @__PURE__ */ React35.createElement(Surface, {
     width,
     height,
     x: x2,
     y: y2
   }, children);
 };
-var RootSurface = /* @__PURE__ */ (0, import_react44.forwardRef)((_ref2, ref) => {
+var RootSurface = /* @__PURE__ */ (0, import_react46.forwardRef)((_ref2, ref) => {
   var {
     children
   } = _ref2, rest = _objectWithoutProperties19(_ref2, _excluded19);
   var isPanorama = useIsPanorama();
   if (isPanorama) {
-    return /* @__PURE__ */ React33.createElement(BrushPanoramaSurface, null, /* @__PURE__ */ React33.createElement(AllZIndexPortals, {
+    return /* @__PURE__ */ React35.createElement(BrushPanoramaSurface, null, /* @__PURE__ */ React35.createElement(AllZIndexPortals, {
       isPanorama: true
     }, children));
   }
-  return /* @__PURE__ */ React33.createElement(MainChartSurface, _extends21({
+  return /* @__PURE__ */ React35.createElement(MainChartSurface, _extends22({
     ref
-  }, rest), /* @__PURE__ */ React33.createElement(AllZIndexPortals, {
+  }, rest), /* @__PURE__ */ React35.createElement(AllZIndexPortals, {
     isPanorama: false
   }, children));
 });
 
 // node_modules/recharts/es6/chart/RechartsWrapper.js
-var React34 = __toESM(require_react());
-var import_react46 = __toESM(require_react());
+var React36 = __toESM(require_react());
+var import_react48 = __toESM(require_react());
 
 // node_modules/recharts/es6/util/useReportScale.js
-var import_react45 = __toESM(require_react());
+var import_react47 = __toESM(require_react());
 function useReportScale() {
   var dispatch = useAppDispatch();
-  var [ref, setRef] = (0, import_react45.useState)(null);
+  var [ref, setRef] = (0, import_react47.useState)(null);
   var scale = useAppSelector(selectContainerScale);
-  (0, import_react45.useEffect)(() => {
+  (0, import_react47.useEffect)(() => {
     if (ref == null) {
       return;
     }
@@ -26319,7 +26432,7 @@ function useReportScale() {
 }
 
 // node_modules/recharts/es6/chart/RechartsWrapper.js
-function ownKeys36(e, r2) {
+function ownKeys38(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -26329,25 +26442,25 @@ function ownKeys36(e, r2) {
   }
   return t;
 }
-function _objectSpread36(e) {
+function _objectSpread38(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys36(Object(t), true).forEach(function(r3) {
-      _defineProperty38(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys36(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys38(Object(t), true).forEach(function(r3) {
+      _defineProperty40(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys38(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty38(e, r2, t) {
-  return (r2 = _toPropertyKey38(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty40(e, r2, t) {
+  return (r2 = _toPropertyKey40(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey38(t) {
-  var i = _toPrimitive38(t, "string");
+function _toPropertyKey40(t) {
+  var i = _toPrimitive40(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive38(t, r2) {
+function _toPrimitive40(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -26357,14 +26470,14 @@ function _toPrimitive38(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends22() {
-  return _extends22 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends23() {
+  return _extends23 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends22.apply(null, arguments);
+  }, _extends23.apply(null, arguments);
 }
 var EventSynchronizer = () => {
   useSynchronisedEventsFromOtherCharts();
@@ -26382,14 +26495,14 @@ function getNumberOrZero(value) {
   }
   return 0;
 }
-var ResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
+var ResponsiveDiv = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
   var _props$style, _props$style2;
-  var observerRef = (0, import_react46.useRef)(null);
-  var [sizes, setSizes] = (0, import_react46.useState)({
+  var observerRef = (0, import_react48.useRef)(null);
+  var [sizes, setSizes] = (0, import_react48.useState)({
     containerWidth: getNumberOrZero((_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.width),
     containerHeight: getNumberOrZero((_props$style2 = props.style) === null || _props$style2 === void 0 ? void 0 : _props$style2.height)
   });
-  var setContainerSize = (0, import_react46.useCallback)((newWidth, newHeight) => {
+  var setContainerSize = (0, import_react48.useCallback)((newWidth, newHeight) => {
     setSizes((prevState) => {
       var roundedWidth = Math.round(newWidth);
       var roundedHeight = Math.round(newHeight);
@@ -26402,7 +26515,7 @@ var ResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) 
       };
     });
   }, []);
-  var innerRef = (0, import_react46.useCallback)((node) => {
+  var innerRef = (0, import_react48.useCallback)((node) => {
     if (typeof ref === "function") {
       ref(node);
     }
@@ -26432,7 +26545,7 @@ var ResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) 
       observerRef.current = observer;
     }
   }, [ref, setContainerSize]);
-  (0, import_react46.useEffect)(() => {
+  (0, import_react48.useEffect)(() => {
     return () => {
       var observer = observerRef.current;
       if (observer != null) {
@@ -26440,23 +26553,23 @@ var ResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) 
       }
     };
   }, [setContainerSize]);
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
+  return /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement(ReportChartSize, {
     width: sizes.containerWidth,
     height: sizes.containerHeight
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
+  }), /* @__PURE__ */ React36.createElement("div", _extends23({
     ref: innerRef
   }, props)));
 });
-var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
+var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
   var {
     width,
     height
   } = props;
-  var [sizes, setSizes] = (0, import_react46.useState)({
+  var [sizes, setSizes] = (0, import_react48.useState)({
     containerWidth: getNumberOrZero(width),
     containerHeight: getNumberOrZero(height)
   });
-  var setContainerSize = (0, import_react46.useCallback)((newWidth, newHeight) => {
+  var setContainerSize = (0, import_react48.useCallback)((newWidth, newHeight) => {
     setSizes((prevState) => {
       var roundedWidth = Math.round(newWidth);
       var roundedHeight = Math.round(newHeight);
@@ -26469,7 +26582,7 @@ var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
       };
     });
   }, []);
-  var innerRef = (0, import_react46.useCallback)((node) => {
+  var innerRef = (0, import_react48.useCallback)((node) => {
     if (typeof ref === "function") {
       ref(node);
     }
@@ -26481,53 +26594,53 @@ var ReadSizeOnceDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
       setContainerSize(containerWidth, containerHeight);
     }
   }, [ref, setContainerSize]);
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
+  return /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement(ReportChartSize, {
     width: sizes.containerWidth,
     height: sizes.containerHeight
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
+  }), /* @__PURE__ */ React36.createElement("div", _extends23({
     ref: innerRef
   }, props)));
 });
-var StaticDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
+var StaticDiv = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
   var {
     width,
     height
   } = props;
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
+  return /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement(ReportChartSize, {
     width,
     height
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
+  }), /* @__PURE__ */ React36.createElement("div", _extends23({
     ref
   }, props)));
 });
-var NonResponsiveDiv = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
+var NonResponsiveDiv = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
   var {
     width,
     height
   } = props;
   if (typeof width === "string" || typeof height === "string") {
-    return /* @__PURE__ */ React34.createElement(ReadSizeOnceDiv, _extends22({}, props, {
+    return /* @__PURE__ */ React36.createElement(ReadSizeOnceDiv, _extends23({}, props, {
       ref
     }));
   }
   if (typeof width === "number" && typeof height === "number") {
-    return /* @__PURE__ */ React34.createElement(StaticDiv, _extends22({}, props, {
+    return /* @__PURE__ */ React36.createElement(StaticDiv, _extends23({}, props, {
       width,
       height,
       ref
     }));
   }
-  return /* @__PURE__ */ React34.createElement(React34.Fragment, null, /* @__PURE__ */ React34.createElement(ReportChartSize, {
+  return /* @__PURE__ */ React36.createElement(React36.Fragment, null, /* @__PURE__ */ React36.createElement(ReportChartSize, {
     width,
     height
-  }), /* @__PURE__ */ React34.createElement("div", _extends22({
+  }), /* @__PURE__ */ React36.createElement("div", _extends23({
     ref
   }, props)));
 });
 function getWrapperDivComponent(responsive) {
   return responsive ? ResponsiveDiv : NonResponsiveDiv;
 }
-var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref) => {
+var RechartsWrapper = /* @__PURE__ */ (0, import_react48.forwardRef)((props, ref) => {
   var {
     children,
     className,
@@ -26548,15 +26661,15 @@ var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
     responsive,
     dispatchTouchEvents = true
   } = props;
-  var containerRef = (0, import_react46.useRef)(null);
+  var containerRef = (0, import_react48.useRef)(null);
   var dispatch = useAppDispatch();
-  var [tooltipPortal, setTooltipPortal] = (0, import_react46.useState)(null);
-  var [legendPortal, setLegendPortal] = (0, import_react46.useState)(null);
+  var [tooltipPortal, setTooltipPortal] = (0, import_react48.useState)(null);
+  var [legendPortal, setLegendPortal] = (0, import_react48.useState)(null);
   var setScaleRef = useReportScale();
   var responsiveContainerCalculations = useResponsiveContainerContext();
   var width = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.width) > 0 ? responsiveContainerCalculations.width : widthFromProps;
   var height = (responsiveContainerCalculations === null || responsiveContainerCalculations === void 0 ? void 0 : responsiveContainerCalculations.height) > 0 ? responsiveContainerCalculations.height : heightFromProps;
-  var innerRef = (0, import_react46.useCallback)((node) => {
+  var innerRef = (0, import_react48.useCallback)((node) => {
     setScaleRef(node);
     if (typeof ref === "function") {
       ref(node);
@@ -26567,74 +26680,74 @@ var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
       containerRef.current = node;
     }
   }, [setScaleRef, ref, setTooltipPortal, setLegendPortal]);
-  var myOnClick = (0, import_react46.useCallback)((e) => {
+  var myOnClick = (0, import_react48.useCallback)((e) => {
     dispatch(mouseClickAction(e));
     dispatch(externalEventAction({
       handler: onClick,
       reactEvent: e
     }));
   }, [dispatch, onClick]);
-  var myOnMouseEnter = (0, import_react46.useCallback)((e) => {
+  var myOnMouseEnter = (0, import_react48.useCallback)((e) => {
     dispatch(mouseMoveAction(e));
     dispatch(externalEventAction({
       handler: onMouseEnter,
       reactEvent: e
     }));
   }, [dispatch, onMouseEnter]);
-  var myOnMouseLeave = (0, import_react46.useCallback)((e) => {
+  var myOnMouseLeave = (0, import_react48.useCallback)((e) => {
     dispatch(mouseLeaveChart());
     dispatch(externalEventAction({
       handler: onMouseLeave,
       reactEvent: e
     }));
   }, [dispatch, onMouseLeave]);
-  var myOnMouseMove = (0, import_react46.useCallback)((e) => {
+  var myOnMouseMove = (0, import_react48.useCallback)((e) => {
     dispatch(mouseMoveAction(e));
     dispatch(externalEventAction({
       handler: onMouseMove,
       reactEvent: e
     }));
   }, [dispatch, onMouseMove]);
-  var onFocus = (0, import_react46.useCallback)(() => {
+  var onFocus = (0, import_react48.useCallback)(() => {
     dispatch(focusAction());
   }, [dispatch]);
-  var onBlur = (0, import_react46.useCallback)(() => {
+  var onBlur = (0, import_react48.useCallback)(() => {
     dispatch(blurAction());
   }, [dispatch]);
-  var onKeyDown = (0, import_react46.useCallback)((e) => {
+  var onKeyDown = (0, import_react48.useCallback)((e) => {
     dispatch(keyDownAction(e.key));
   }, [dispatch]);
-  var myOnContextMenu = (0, import_react46.useCallback)((e) => {
+  var myOnContextMenu = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onContextMenu,
       reactEvent: e
     }));
   }, [dispatch, onContextMenu]);
-  var myOnDoubleClick = (0, import_react46.useCallback)((e) => {
+  var myOnDoubleClick = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onDoubleClick,
       reactEvent: e
     }));
   }, [dispatch, onDoubleClick]);
-  var myOnMouseDown = (0, import_react46.useCallback)((e) => {
+  var myOnMouseDown = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onMouseDown,
       reactEvent: e
     }));
   }, [dispatch, onMouseDown]);
-  var myOnMouseUp = (0, import_react46.useCallback)((e) => {
+  var myOnMouseUp = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onMouseUp,
       reactEvent: e
     }));
   }, [dispatch, onMouseUp]);
-  var myOnTouchStart = (0, import_react46.useCallback)((e) => {
+  var myOnTouchStart = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onTouchStart,
       reactEvent: e
     }));
   }, [dispatch, onTouchStart]);
-  var myOnTouchMove = (0, import_react46.useCallback)((e) => {
+  var myOnTouchMove = (0, import_react48.useCallback)((e) => {
     if (dispatchTouchEvents) {
       dispatch(touchEventAction(e));
     }
@@ -26643,22 +26756,22 @@ var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
       reactEvent: e
     }));
   }, [dispatch, dispatchTouchEvents, onTouchMove]);
-  var myOnTouchEnd = (0, import_react46.useCallback)((e) => {
+  var myOnTouchEnd = (0, import_react48.useCallback)((e) => {
     dispatch(externalEventAction({
       handler: onTouchEnd,
       reactEvent: e
     }));
   }, [dispatch, onTouchEnd]);
   var WrapperDiv = getWrapperDivComponent(responsive);
-  return /* @__PURE__ */ React34.createElement(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ React36.createElement(TooltipPortalContext.Provider, {
     value: tooltipPortal
-  }, /* @__PURE__ */ React34.createElement(LegendPortalContext.Provider, {
+  }, /* @__PURE__ */ React36.createElement(LegendPortalContext.Provider, {
     value: legendPortal
-  }, /* @__PURE__ */ React34.createElement(WrapperDiv, {
+  }, /* @__PURE__ */ React36.createElement(WrapperDiv, {
     width: width !== null && width !== void 0 ? width : style === null || style === void 0 ? void 0 : style.width,
     height: height !== null && height !== void 0 ? height : style === null || style === void 0 ? void 0 : style.height,
     className: clsx("recharts-wrapper", className),
-    style: _objectSpread36({
+    style: _objectSpread38({
       position: "relative",
       cursor: "default",
       width,
@@ -26679,7 +26792,7 @@ var RechartsWrapper = /* @__PURE__ */ (0, import_react46.forwardRef)((props, ref
     onTouchMove: myOnTouchMove,
     onTouchStart: myOnTouchStart,
     ref: innerRef
-  }, /* @__PURE__ */ React34.createElement(EventSynchronizer, null), children)));
+  }, /* @__PURE__ */ React36.createElement(EventSynchronizer, null), children)));
 });
 
 // node_modules/recharts/es6/chart/CategoricalChart.js
@@ -26702,7 +26815,7 @@ function _objectWithoutPropertiesLoose20(r2, e) {
   }
   return t;
 }
-var CategoricalChart = /* @__PURE__ */ (0, import_react47.forwardRef)((props, ref) => {
+var CategoricalChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) => {
   var {
     width,
     height,
@@ -26716,16 +26829,16 @@ var CategoricalChart = /* @__PURE__ */ (0, import_react47.forwardRef)((props, re
   } = props, others = _objectWithoutProperties20(props, _excluded20);
   var attrs = svgPropertiesNoEvents(others);
   if (compact) {
-    return /* @__PURE__ */ React35.createElement(React35.Fragment, null, /* @__PURE__ */ React35.createElement(ReportChartSize, {
+    return /* @__PURE__ */ React37.createElement(React37.Fragment, null, /* @__PURE__ */ React37.createElement(ReportChartSize, {
       width,
       height
-    }), /* @__PURE__ */ React35.createElement(RootSurface, {
+    }), /* @__PURE__ */ React37.createElement(RootSurface, {
       otherAttributes: attrs,
       title,
       desc
     }, children));
   }
-  return /* @__PURE__ */ React35.createElement(RechartsWrapper, {
+  return /* @__PURE__ */ React37.createElement(RechartsWrapper, {
     className,
     style,
     width,
@@ -26742,25 +26855,25 @@ var CategoricalChart = /* @__PURE__ */ (0, import_react47.forwardRef)((props, re
     onTouchStart: props.onTouchStart,
     onTouchMove: props.onTouchMove,
     onTouchEnd: props.onTouchEnd
-  }, /* @__PURE__ */ React35.createElement(RootSurface, {
+  }, /* @__PURE__ */ React37.createElement(RootSurface, {
     otherAttributes: attrs,
     title,
     desc,
     ref
-  }, /* @__PURE__ */ React35.createElement(ClipPathProvider, null, children)));
+  }, /* @__PURE__ */ React37.createElement(ClipPathProvider, null, children)));
 });
 
 // node_modules/recharts/es6/chart/CartesianChart.js
-function _extends23() {
-  return _extends23 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends24() {
+  return _extends24 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends23.apply(null, arguments);
+  }, _extends24.apply(null, arguments);
 }
-function ownKeys37(e, r2) {
+function ownKeys39(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -26770,25 +26883,25 @@ function ownKeys37(e, r2) {
   }
   return t;
 }
-function _objectSpread37(e) {
+function _objectSpread39(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys37(Object(t), true).forEach(function(r3) {
-      _defineProperty39(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys37(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys39(Object(t), true).forEach(function(r3) {
+      _defineProperty41(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys39(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty39(e, r2, t) {
-  return (r2 = _toPropertyKey39(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty41(e, r2, t) {
+  return (r2 = _toPropertyKey41(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey39(t) {
-  var i = _toPrimitive39(t, "string");
+function _toPropertyKey41(t) {
+  var i = _toPrimitive41(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive39(t, r2) {
+function _toPrimitive41(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -26804,7 +26917,7 @@ var defaultMargin = {
   bottom: 5,
   left: 5
 };
-var defaultCartesianChartProps = _objectSpread37({
+var defaultCartesianChartProps = _objectSpread39({
   accessibilityLayer: true,
   barCategoryGap: "10%",
   barGap: 4,
@@ -26815,7 +26928,7 @@ var defaultCartesianChartProps = _objectSpread37({
   stackOffset: "none",
   syncMethod: "index"
 }, initialEventSettingsState);
-var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function CartesianChart2(props, ref) {
+var CartesianChart = /* @__PURE__ */ (0, import_react50.forwardRef)(function CartesianChart2(props, ref) {
   var _categoricalChartProp;
   var rootChartProps = resolveDefaultProps(props.categoricalChartProps, defaultCartesianChartProps);
   var {
@@ -26832,20 +26945,20 @@ var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function Car
     tooltipPayloadSearcher,
     eventEmitter: void 0
   };
-  return /* @__PURE__ */ React36.createElement(RechartsStoreProvider, {
+  return /* @__PURE__ */ React38.createElement(RechartsStoreProvider, {
     preloadedState: {
       options
     },
     reduxStoreName: (_categoricalChartProp = categoricalChartProps.id) !== null && _categoricalChartProp !== void 0 ? _categoricalChartProp : chartName
-  }, /* @__PURE__ */ React36.createElement(ChartDataContextProvider, {
+  }, /* @__PURE__ */ React38.createElement(ChartDataContextProvider, {
     chartData: categoricalChartProps.data
-  }), /* @__PURE__ */ React36.createElement(ReportMainChartProps, {
+  }), /* @__PURE__ */ React38.createElement(ReportMainChartProps, {
     layout: rootChartProps.layout,
     margin: rootChartProps.margin
-  }), /* @__PURE__ */ React36.createElement(ReportEventSettings, {
+  }), /* @__PURE__ */ React38.createElement(ReportEventSettings, {
     throttleDelay: rootChartProps.throttleDelay,
     throttledEvents: rootChartProps.throttledEvents
-  }), /* @__PURE__ */ React36.createElement(ReportChartProps, {
+  }), /* @__PURE__ */ React38.createElement(ReportChartProps, {
     baseValue: rootChartProps.baseValue,
     accessibilityLayer: rootChartProps.accessibilityLayer,
     barCategoryGap: rootChartProps.barCategoryGap,
@@ -26857,19 +26970,17 @@ var CartesianChart = /* @__PURE__ */ (0, import_react48.forwardRef)(function Car
     syncMethod: rootChartProps.syncMethod,
     className: rootChartProps.className,
     reverseStackOrder: rootChartProps.reverseStackOrder
-  }), /* @__PURE__ */ React36.createElement(CategoricalChart, _extends23({}, rootChartProps, {
+  }), /* @__PURE__ */ React38.createElement(CategoricalChart, _extends24({}, rootChartProps, {
     ref
   })));
 });
 
-// node_modules/recharts/es6/chart/ScatterChart.js
-var React37 = __toESM(require_react());
-var import_react49 = __toESM(require_react());
-var allowedTooltipTypes = ["item"];
-var ScatterChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) => {
-  return /* @__PURE__ */ React37.createElement(CartesianChart, {
-    chartName: "ScatterChart",
-    defaultTooltipEventType: "item",
+// node_modules/recharts/es6/chart/LineChart.js
+var allowedTooltipTypes = ["axis"];
+var LineChart = /* @__PURE__ */ (0, import_react51.forwardRef)((props, ref) => {
+  return /* @__PURE__ */ React39.createElement(CartesianChart, {
+    chartName: "LineChart",
+    defaultTooltipEventType: "axis",
     validateTooltipEventTypes: allowedTooltipTypes,
     tooltipPayloadSearcher: arrayTooltipSearcher,
     categoricalChartProps: props,
@@ -26877,30 +26988,63 @@ var ScatterChart = /* @__PURE__ */ (0, import_react49.forwardRef)((props, ref) =
   });
 });
 
-// app/assets/react/chart.jsx
-var TT = ({ active, payload, label }) => {
-  if (!payload.length) {
-    return;
-  }
-  const item = payload[0].payload;
-  return /* @__PURE__ */ import_react50.default.createElement("div", { className: "TT" }, /* @__PURE__ */ import_react50.default.createElement("ul", null, /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "strike:"), " ", item.strike, " "), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "price:"), " ", item.price), /* @__PURE__ */ import_react50.default.createElement("li", null, /* @__PURE__ */ import_react50.default.createElement("b", null, "implied:"), " ", item.implied)));
+// app/assets/react/stock_chart.jsx
+var Dot2 = (props) => {
+  const { cx, cy, payload } = props;
+  if (!cx || !cy) return null;
+  if (!payload || !payload.isOverflow) return null;
+  return /* @__PURE__ */ import_react52.default.createElement(
+    "circle",
+    {
+      cx,
+      cy,
+      r: 4,
+      fill: "#880000"
+    }
+  );
 };
-function Chart({ data }) {
-  console.log("+++ Chart 2:", data);
-  const min2 = data.min;
-  const max2 = data.max;
-  const interval = 10;
-  const ticks2 = [];
-  for (let v = min2; v < max2; v += interval) {
-    ticks2.push(v);
-  }
-  const filtered = (which) => {
-    return which.filter((w) => w.strike > min2 && w.strike < max2);
-  };
-  return /* @__PURE__ */ import_react50.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react50.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react50.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react50.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react50.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react50.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react50.default.createElement(TT, null) }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react50.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+function StockChart({ data }) {
+  logg(data, "StockChart");
+  const { items, min: min2, max: max2 } = data;
+  const normalized = items.map((d) => {
+    let isOverflow, value;
+    if (d.value > max2) {
+      isOverflow = true;
+      value = Math.min(d.value, max2);
+    } else if (d.value < min2) {
+      isOverflow = true;
+      value = Math.max(d.value, min2);
+    } else {
+      isOverflow = false;
+      value = d.value;
+    }
+    return {
+      ...d,
+      rawValue: d.value,
+      value,
+      isOverflow
+    };
+  });
+  return /* @__PURE__ */ import_react52.default.createElement("div", { style: { width: "400px", height: "400px" } }, /* @__PURE__ */ import_react52.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react52.default.createElement(LineChart, { data: normalized }, /* @__PURE__ */ import_react52.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react52.default.createElement(
+    XAxis,
+    {
+      dataKey: "date",
+      tick: { angle: -45, textAnchor: "end" },
+      height: 100
+    }
+  ), /* @__PURE__ */ import_react52.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react52.default.createElement(Tooltip, null), /* @__PURE__ */ import_react52.default.createElement(
+    Line,
+    {
+      dataKey: "value",
+      dot: /* @__PURE__ */ import_react52.default.createElement(Dot2, null),
+      name: "META",
+      stroke: "#0088FE",
+      type: "linear"
+    }
+  ))));
 }
 export {
-  Chart as default
+  StockChart as default
 };
 /*! Bundled license information:
 
@@ -26961,16 +27105,5 @@ use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js
 
 decimal.js-light/decimal.js:
   (*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE *)
-
-react-is/cjs/react-is.development.js:
-  (**
-   * @license React
-   * react-is.development.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
 */
-//# sourceMappingURL=/assets/chart.js.map
+//# sourceMappingURL=/assets/stock_chart.js.map

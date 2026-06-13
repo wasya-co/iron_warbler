@@ -24,6 +24,17 @@
         %label options price increment
         = f.number_field :options_price_increment, step: 0.5
 
+    .flex-row
+      .field
+        %label min
+        = f.number_field :min, step: 0.5
+      .field
+        %label max
+        = f.number_field :max, step: 0.5
+      .field
+        %label step
+        = f.number_field :step, step: 0.5, default: 1
+
     .row
       .field
         %label descr
