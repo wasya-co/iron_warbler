@@ -7,10 +7,15 @@
   %ul.actions
     %li
       = form_tag stock_get_historic_data_path(@stock) do
-        get historic data:
-        = text_field_tag :date_from
+        get historic data from:
+        = text_field_tag :date_from, nil, placeholder: 'yyyy-mm-dd'
         = submit_tag 'Go'
-    %li= link_to '[expiry-viz]', viz_1_path(@stock, '2026-05-22')
+    %li
+      = form_tag viz_1_path(@stock), method: :get do
+        - nxt = Date.current.next_occurring(:friday).to_date
+        - nxt = Time.previous_business_day(nxt) if !nxt.workday?
+        = text_field_tag :expires_on, nxt, placeholder: 'yyyy-mm-dd'
+        = submit_tag 'expiry-viz'
 
   .row
 
@@ -21,7 +26,6 @@
         %li
           %b 1 yr volatility <br />
           = @stock.volatility_annual
-
         %li
           %b monthly <br />
           = @stock.volatility_monthly
@@ -29,29 +33,9 @@
           %b daily <br />
           = @stock.volatility_daily
 
-
-    -# .col-md-6
-    -#   %h4 Strategies [+]
-    -#   %ul
-    -#     - @stock.strategies.each do |st|
-    -#       %li= link_to st, strategy_path(st)
-
+  %h4.text-center.collapse-expand#datapoints_0 [&lt;>] Review Datapoints
   .row
-    -#
-      .col-md-6
-        %h4 Datapoints
-        %table.bordered
-          %thead
-            %td Date
-            %td Value
-          %tbody
-            - @datapoints.each do |pt|
-              %tr
-                %td= pt.date
-                %td= pt.value
-
     .col-md-6
-      %h4 Datapoints
       - date_oldest = @datapoints.last.date
       - today = Date.today
       - current = date_oldest
@@ -60,8 +44,7 @@
         - if current.next_day.month != current.month || current == today
           %br
         - current = current.next_day
-
-      %h4 Datapoints
+    .col-md-6
       .d-flex
         - start_date = @datapoints.last.date
         - today = Date.today
@@ -80,4 +63,19 @@
                       .red .
                     - else
                       h
+
+  %h4.text-center [&lt;>] Some Plots
+  .row
+
+    .col-4
+
+      .a20260612-stock-vizualization
+        = @stock
+        #stock_1mo{ data: { props: @datapoints_arr.to_json } }
+
+
+    .col-4
+      hm
+    .col-4
+      hm
 

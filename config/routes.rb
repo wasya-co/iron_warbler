@@ -44,7 +44,7 @@ Iro::Engine.routes.draw do
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   match 'stocks/:id/get-historic-data', to: 'stocks#get_historic_data', as: :stock_get_historic_data, via: [ :get, :post ]
   match 'stocks/:id/recompute-volatility', to: 'stocks#recompute_volatility', as: :stock_recompute_volatility, via: [ :get, :post ]
-  get 'stocks/:id/expires_on/:expires_on/viz-1', to: 'stocks#viz_1', as: :viz_1
+  get 'stocks/:id/viz-1', to: 'stocks#viz_1', as: :viz_1
   resources :stocks
 
   resources :strategies

@@ -91,6 +91,8 @@ class Iro::StocksController < Iro::ApplicationController
     @datapoints.each do |dp|
       @datapoints_h[dp.date.to_s] = dp.value
     end
+    @datapoints_arr = @datapoints.map { |dp| { date: dp.date, value: dp.value } }
+
 
     respond_to do |format|
       format.html

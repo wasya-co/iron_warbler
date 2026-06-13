@@ -1,3 +1,4 @@
+
 import React from "react"
 import {
   ScatterChart,
@@ -10,14 +11,12 @@ import {
   LineChart,
 } from "recharts"
 
-/*
- * this was an attempt at option volatility pricing.
-**/
-export default function Chart({ data }) {
-  console.log('+++ Chart 2')
 
-  const min = 100
-  const max = 200
+export default function Stock_1mo({ data }) {
+  console.log('+++ Stock_1mo')
+
+  const min = 300
+  const max = 500
   const interval = 10
 
   const ticks = []
@@ -29,7 +28,7 @@ export default function Chart({ data }) {
     return which.filter( w =>  w.strike > min && w.strike < max )
   }
 
-  console.log(filtered(data.puts), 'filtered')
+  console.log(filtered(data.puts), 'hmm')
 
   return (
     <div style={{ width: "800px", height: '800px' }}>

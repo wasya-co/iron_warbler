@@ -8,5 +8,4 @@
   = link_to '[close]', close_position_path(pos)
   = link_to '[~]',    edit_position_path(pos) if pos.persisted?
   .d-inline-block= button_to 'x', position_path(pos), method: :delete, data: { confirm: 'Are you sure?' }
-  .gray &nbsp;<i>#{pos.status}</i>&nbsp;
-
+  .gray &nbsp;<i>#{pos.status}</i>&nbsp; #{pos.id}
