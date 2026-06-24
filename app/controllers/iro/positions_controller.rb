@@ -75,8 +75,9 @@ class Iro::PositionsController < Iro::ApplicationController
       flash_notice @position
       redirect_to controller: :purses, action: :show, id: @position.purse_id.to_s
     else
+      puts! @position.errors.messages, 'could not create position'
       flash_alert @position
-      redirect_to request.referrer # render action: :new
+      redirect_to request.referrer || root_path
     end
   end
 
@@ -85,7 +86,7 @@ class Iro::PositionsController < Iro::ApplicationController
     authorize! :destroy, @position
     @position.delete
     flash_notice "Probably ok"
-    redirect_to request.referrer
+    redirect_to request.referrer || root_path
   end
 
   def destroy_multi

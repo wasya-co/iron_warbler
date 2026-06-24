@@ -11,15 +11,16 @@ RSpec.describe Iro::PositionsController do
       Iro::Position, Iro::Purse,
       Iro::Stock,    Iro::Strategy,
     );
+    @purse      = create(:purse, )
+
     @stock_meta = create(:stock, ticker: 'META', last: 400, options_price_increment: 5.0 )
     @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
-    @purse      = create(:purse, )
     @inner      = create(:option)
     @outer      = create(:option)
     @position   = create(:position, {
       expires_on: '2026-02-20',
-      inner:    @inner,
-      outer:    @outer,
+      inner:    @inner, inner_strike: @inner.strike,
+      outer:    @outer, outer_strike: @outer.strike,
       put_call: 'PUT',
       strategy: @strategy,
     })
@@ -47,30 +48,11 @@ RSpec.describe Iro::PositionsController do
   end
 
   describe '#create' do
-    it 'covered_call' do
-      n = Iro::Position.all.length
-      strategy = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL )
-      post :create, params: {
-        inner: {
-          strike: 500.0,
-          begin_price: 1.0,
-          begin_delta: 0.5,
-        },
-        position: {
-          expires_on: '2026-03-20',
-          purse_id: @purse.id,
-          quantity: 1,
-          status: 'active',
-          stock_id: @stock_meta.id,
-          strategy_id: strategy.id.to_s,
-        },
-      }
-      Iro::Position.all.length.should eql( n + 1 )
-    end
 
     it 'long_credit_put_spread' do
       n = Iro::Position.all.length
       strategy = create(:strategy, kind: Iro::Strategy::KIND_LONG_CREDIT_PUT_SPREAD )
+      allow_any_instance_of( Iro::Option ).to receive( :sync ) ## .with().and_return(fake_quotes)
       post :create, params: {
         inner: {
           strike: 500.0,
@@ -83,7 +65,9 @@ RSpec.describe Iro::PositionsController do
           begin_delta: 0.5,
         },
         position: {
-          expires_on: '2026-03-20',
+          expires_on: '2026-02-27',
+          inner_strike: 810.0,
+          outer_strike: 500.0,
           purse_id: @purse.id,
           quantity: 1,
           status: 'active',
@@ -92,22 +76,6 @@ RSpec.describe Iro::PositionsController do
         },
       }
       Iro::Position.all.length.should eql( n + 1 )
-    end
-  end
-
-  describe '#edit' do
-    it 'covered_call' do
-      purse = create(:purse)
-      strategy  = create(:strategy, {
-        kind: Iro::Strategy::KIND_COVERED_CALL,
-        stock: @stock_gme,
-      })
-      position = create(:position, {
-        strategy: strategy,
-        inner: create(:option, begin_price: 0.99, begin_delta: 0.2),
-      })
-      get :edit, params: { id: position.id.to_s }
-      response.code.should eql '200'
     end
   end
 
@@ -120,7 +88,7 @@ RSpec.describe Iro::PositionsController do
     it 'strategy long_credit_put_spread' do
       purse = create(:purse)
       strategy  = create(:strategy_long_credit_put_spread, {
-        next_threshold_usd_above_mark: 1.00,
+        next_usd_above_mark: 1.00,
         next_inner_delta: 0.2,
         next_inner_strike: 21,
         next_spread_amount: 5.0,
@@ -135,20 +103,6 @@ RSpec.describe Iro::PositionsController do
       assert_select '.positions--form-spread'
     end
 
-    it 'strategy covered_call' do
-      purse = create(:purse)
-      strategy  = create(:strategy, {
-        kind: Iro::Strategy::KIND_COVERED_CALL,
-        stock: @stock_gme,
-      })
-      get :new, params: { position: {
-        expires_on: '2026-02-20',
-        purse_id: purse.id,
-        strategy_id: strategy.id,
-      } }
-      response.code.should eql '200'
-      assert_select('.positions--form-credit-call')
-    end
   end
 
   describe '#prepare' do
@@ -176,32 +130,20 @@ RSpec.describe Iro::PositionsController do
   describe '#update' do
     it 'updates inner begin_price, begin_delta' do
       pos = create( :position, {
-        inner: create(:option, begin_price: 0.99, begin_delta: 0.2),
-        outer: create(:option),
+        inner: create(:option, begin_price: 0.99, begin_delta: 0.2), inner_strike: 800.0,
+        outer: create(:option), outer_strike: 800.0,
         put_call: 'PUT',
       })
       post :update, params: { id: pos.id, position: { expires_on: pos.expires_on },
-        inner: { begin_price: 2.01, begin_delta: 0.33 },
-        outer: { begin_price: pos.outer.begin_price, end_price: 0.56 } }
+        inner: { begin_price: 2.01, begin_delta: 0.33 }, inner_strike: 800.0,
+        outer: { begin_price: pos.outer.begin_price, end_price: 0.56 }, outer_strike: 800.0,
+      };
       pos.reload
       pos.inner.begin_price.should eql 2.01
       pos.inner.begin_delta.should eql 0.33
       pos.outer.end_price.should eql 0.56
     end
 
-    it 'covered_call' do
-      strategy = create(:strategy, kind: Iro::Strategy::KIND_COVERED_CALL)
-      pos = create( :position, {
-        strategy: strategy,
-        inner: create(:option, begin_price: 0.99, begin_delta: 0.2),
-        put_call: 'CALL',
-      })
-      post :update, params: { id: pos.id, position: { expires_on: pos.expires_on },
-        inner: { begin_price: 2.01, begin_delta: 0.33 },
-      };
-      pos.reload
-      pos.inner.begin_price.should eql 2.01
-    end
   end
 
 end

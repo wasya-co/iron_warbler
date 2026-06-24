@@ -1,7 +1,10 @@
 
 .positions-edit.maxwidth
-  - case @position.strategy.kind
-  - when Iro::Strategy::KIND_COVERED_CALL
-    = render 'form_credit_call', position: @position
-  - else
-    = render 'form_spread', position: @position
+  = render 'form_spread', position: @position
+
+  -# - case @position.strategy.kind
+  -# - when Iro::Strategy::KIND_COVERED_CALL
+  -#   - throw 'covered-calls-no-longer-implemented'
+  -#   = render 'form_credit_call', position: @position
+  -# - else
+  -#   = render 'form_spread', position: @position

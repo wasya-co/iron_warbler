@@ -43,8 +43,8 @@
       = f.number_field :next_inner_strike, placeholder: "20.0", step: 0.01
       .comment Literally the min (max) dollar amount of next strike
     .field
-      %label next_threshold_usd_above_mark
-      = f.number_field :next_threshold_usd_above_mark, placeholder: "80", step: 0.01
+      %label next_usd_above_mark
+      = f.number_field :next_usd_above_mark, placeholder: "80", step: 0.01
 
     .actions
       = f.submit

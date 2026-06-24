@@ -5,6 +5,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 
 require 'rspec/rails'
 
+SCHWAB_EXEC ||= {}
+SCHWAB_DATA ||= {}
+
 RSpec.configure do |config|
 
   config.fixture_path = Rails.root.join('spec/fixtures')

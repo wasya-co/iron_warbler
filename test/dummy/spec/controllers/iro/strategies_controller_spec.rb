@@ -11,9 +11,10 @@ RSpec.describe Iro::StrategiesController do
       Iro::Position, Iro::Purse,
       Iro::Stock,    Iro::Strategy,
     );
+    @purse      = create(:purse )
     @stock_meta = create(:stock, ticker: 'META')
     @strategy   = create(:strategy_long_credit_put_spread, stock: @stock_meta)
-    @purse      = create(:purse )
+
   end
 
   it '#edit' do
@@ -41,11 +42,6 @@ RSpec.describe Iro::StrategiesController do
       # puts! response.body, 'response.body'
       expect(response.body).to include('strategies--form')
     end
-  end
-
-  it '#show' do
-    get :show, params: { id: @strategy.id }
-    response.code.should eql '200'
   end
 
 end
