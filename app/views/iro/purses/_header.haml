@@ -8,13 +8,13 @@
         Purse `#{purse.slug}`
         -# (#{purse.positions.length})
         &nbsp;
-        = link_to '[sync]', sync_purse_path(purse)
+        = link_to '[sync]', sync_purse_path(purse.id)
         &nbsp;
-        = link_to '[~]', edit_purse_path(purse)
+        = link_to '[~]', edit_purse_path(purse.id)
         &nbsp;
-        = link_to '[=]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
+        = link_to '[=]', purse_path(purse.id,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
         &nbsp;
-        = link_to '[oo]', purse_path(purse, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
+        = link_to '[oo]', purse_path(purse.id, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
 
       = render '/iro/positions/new', purse: purse
 

@@ -123,7 +123,7 @@ class Iro::PositionsController < Iro::ApplicationController
     params[:vcfg] ||= {} # "view config"
     template = params[:vcfg][:template] || Iro::Purse::TEMPLATE_TABLE
 
-    @purse = Iro::Purse.find_by( slug: 'all' )
+    @purse = Iro::Purse.new
     @positions = Iro::Position.all().includes( :strategy, :inner, :outer, :stock, :purse
       ).order_by( expires_on: :asc, ticker: :asc, long_or_short: :asc, inner_strike: :asc )
 

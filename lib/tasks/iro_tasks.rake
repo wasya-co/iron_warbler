@@ -27,6 +27,33 @@ namespace :iro do
     end
   end
 
+
+  desc 'collect options data, once'
+  task collect_options_data: :environment do
+    # Iro::Iro.schwab_sync
+    # Iro::Position.sync_all
+
+    options = []
+    Iro::Position.active.each do |pos|
+      options.push pos.inner
+      options.push pos.outer if pos.outer
+    end
+
+    options.each do |opt|
+      pi = Iro::Priceitem.new({
+        putCall: opt.put_call,
+        symbol: opt.symbol,
+        ticker: opt.ticker,
+        quote_at: Time.now,
+        last: opt.end_price,
+      })
+      pi.save
+    end
+
+    puts '#collect_options_data run once.'
+  end
+
+
   desc 'refresh all'
   task refresh_all: :environment do
     while true
