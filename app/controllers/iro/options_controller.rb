@@ -9,6 +9,8 @@ class Iro::OptionsController < Iro::ApplicationController
 
 
   def show
+    @option = Iro::Option.find params[:id]
+    authorize! :show, @option
   end
 
 end

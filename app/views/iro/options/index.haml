@@ -2,4 +2,5 @@
 .options-index.fixed-container
   %ul
     - @options.each do |opt|
-      %li= opt.inspect
+      %li
+        = link_to opt.symbol, option_path(opt)
