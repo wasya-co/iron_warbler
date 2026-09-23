@@ -1,3 +1,11 @@
 
 .options-show.fixed-container
   %h5 show `#{@option.symbol}`
+  %ul
+    - @option.symbol_to_h.sort.each do |k, v|
+      %li <b>#{k}:</b> #{v}
+    -# %li priceitems (#{@option.priceitems.to_chart})
+
+
+  #ChartOption{ data: { props: @option.priceitems.to_chart.to_json } }
+

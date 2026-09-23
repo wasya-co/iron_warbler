@@ -7,11 +7,11 @@ From: https://docs.galpy.org/en/latest/installation.html
 
 == Develop ==
 
-=== recharts ===
+  === recharts ===
 
-run this on every change:
+  run this on every change:
 
-  yarn run build
+    yarn run build
 
 
 = Use =

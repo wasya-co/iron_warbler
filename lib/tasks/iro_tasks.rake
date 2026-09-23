@@ -37,13 +37,16 @@ namespace :iro do
 
     options.each do |opt|
       pi = Iro::Priceitem.new({
+        last:     opt.end_price,
+        option:   opt,
         putCall:  opt.put_call,
         symbol:   opt.symbol,
+        stock:    opt.stock,
         ticker:   opt.ticker,
         quote_at: Time.now,
-        last:     opt.end_price,
       })
       pi.save
+      print '^'
     end
 
     puts '#get_options run once.'

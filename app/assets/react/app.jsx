@@ -1,17 +1,29 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import Chart from "./chart"
+import ChartOption from './ChartOption'
 import ChartPrice from "./chart_price"
 import StockChart from "./stock_chart"
 import StockHistogram from "./stock_histogram"
 
+
 function mount() {
-  let el = document.getElementById("Chart")
+  let el
+
+  el = document.getElementById("ChartOption")
+  if (el) {
+    const data = JSON.parse( el.dataset.props )
+    createRoot(el).render(<ChartOption data={data} />)
+  }
+
+  // 2026-09-23 obsolete?
+  el = document.getElementById("Chart")
   if (el) {
     const data = JSON.parse( el.dataset.props )
     createRoot(el).render(<Chart data={data} />)
   }
 
+  // 2026-09-23 obsolete?
   el = document.getElementById("ChartPrice")
   if (el) {
     const data = JSON.parse( el.dataset.props )
@@ -63,4 +75,3 @@ function mount() {
   }
 }
 document.addEventListener("DOMContentLoaded", mount)
-

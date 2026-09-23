@@ -1,4 +1,6 @@
 
+app/assets/javascript/builds/*
+
 .bundle
 .byebug_history
 

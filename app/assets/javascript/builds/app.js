@@ -1332,7 +1332,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React52 = require_react(), Internals = {
+      var React53 = require_react(), Internals = {
         d: {
           f: noop4,
           r: function() {
@@ -1350,7 +1350,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React52.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React53.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -2885,7 +2885,7 @@ var require_react_dom_client_development = __commonJS({
         "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
       }
       function validateOptionProps(element, props) {
-        null == props.value && ("object" === typeof props.children && null !== props.children ? React52.Children.forEach(props.children, function(child) {
+        null == props.value && ("object" === typeof props.children && null !== props.children ? React53.Children.forEach(props.children, function(child) {
           null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
             "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
           ));
@@ -18517,14 +18517,14 @@ var require_react_dom_client_development = __commonJS({
         ));
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var Scheduler = require_scheduler(), React52 = require_react(), ReactDOM = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE2 = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE2 = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+      var Scheduler = require_scheduler(), React53 = require_react(), ReactDOM = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE2 = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE2 = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
       /* @__PURE__ */ Symbol.for("react.scope");
       var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
       /* @__PURE__ */ Symbol.for("react.legacy_hidden");
       /* @__PURE__ */ Symbol.for("react.tracing_marker");
       var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
       /* @__PURE__ */ Symbol.for("react.view_transition");
-      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React52.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React53.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
         pending: false,
         data: null,
         method: null,
@@ -21312,7 +21312,7 @@ var require_react_dom_client_development = __commonJS({
         }
       };
       (function() {
-        var isomorphicReactPackageVersion = React52.version;
+        var isomorphicReactPackageVersion = React53.version;
         if ("19.2.6" !== isomorphicReactPackageVersion)
           throw Error(
             'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.6\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -22587,7 +22587,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React52.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React53.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -22635,8 +22635,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React52 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState16 = React52.useState, useEffect20 = React52.useEffect, useLayoutEffect9 = React52.useLayoutEffect, useDebugValue2 = React52.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React52.useSyncExternalStore ? React52.useSyncExternalStore : shim;
+      var React53 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useState16 = React53.useState, useEffect20 = React53.useEffect, useLayoutEffect9 = React53.useLayoutEffect, useDebugValue2 = React53.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React53.useSyncExternalStore ? React53.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -22663,7 +22663,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React52 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React52.useRef, useEffect20 = React52.useEffect, useMemo13 = React52.useMemo, useDebugValue2 = React52.useDebugValue;
+      var React53 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React53.useRef, useEffect20 = React53.useEffect, useMemo13 = React53.useMemo, useDebugValue2 = React53.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef21(null);
         if (null === instRef.current) {
@@ -23117,7 +23117,7 @@ var require_use_sync_external_store_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React52 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React52.useSyncExternalStore, useRef21 = React52.useRef, useEffect20 = React52.useEffect, useMemo13 = React52.useMemo, useDebugValue2 = React52.useDebugValue;
+      var React53 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is4, useSyncExternalStore2 = React53.useSyncExternalStore, useRef21 = React53.useRef, useEffect20 = React53.useEffect, useMemo13 = React53.useMemo, useDebugValue2 = React53.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef21(null);
         if (null === instRef.current) {
@@ -24559,7 +24559,7 @@ var require_isPlainObject2 = __commonJS({
 });
 
 // app/assets/react/app.jsx
-var import_react61 = __toESM(require_react());
+var import_react62 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // app/assets/react/chart.jsx
@@ -49403,13 +49403,13 @@ function Chart({ data }) {
   for (let v = min2; v < max2; v += interval) {
     ticks2.push(v);
   }
-  const filtered = (which) => {
+  const filtered2 = (which) => {
     return which.filter((w) => w.strike > min2 && w.strike < max2);
   };
-  return /* @__PURE__ */ import_react57.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react57.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react57.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react57.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react57.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react57.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react57.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react57.default.createElement(TT, null) }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+  return /* @__PURE__ */ import_react57.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react57.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react57.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react57.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react57.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react57.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react57.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react57.default.createElement(TT, null) }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered2(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered2(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered2(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: filtered2(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react57.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
 }
 
-// app/assets/react/chart_price.jsx
+// app/assets/react/ChartOption.jsx
 var import_react58 = __toESM(require_react());
 var TT2 = ({ active, payload, label }) => {
   if (!payload.length) {
@@ -49418,21 +49418,42 @@ var TT2 = ({ active, payload, label }) => {
   const item = payload[0].payload;
   return /* @__PURE__ */ import_react58.default.createElement("div", { className: "TT" }, /* @__PURE__ */ import_react58.default.createElement("ul", null, /* @__PURE__ */ import_react58.default.createElement("li", null, /* @__PURE__ */ import_react58.default.createElement("b", null, "strike:"), " ", item.strike, " "), /* @__PURE__ */ import_react58.default.createElement("li", null, /* @__PURE__ */ import_react58.default.createElement("b", null, "price:"), " ", item.price), /* @__PURE__ */ import_react58.default.createElement("li", null, /* @__PURE__ */ import_react58.default.createElement("b", null, "implied:"), " ", item.implied)));
 };
+function ChartOption({ data }) {
+  console.log("+++ ChartOption:", data);
+  const min2 = data.min;
+  const max2 = data.max;
+  const interval = 10;
+  const ticks2 = [];
+  for (let v = min2; v < max2; v += interval) {
+    ticks2.push(v);
+  }
+  return /* @__PURE__ */ import_react58.default.createElement("div", { style: { width: "800px", height: "800px", border: "1px solid blue" } }, /* @__PURE__ */ import_react58.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react58.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react58.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react58.default.createElement(XAxis, { type: "number", dataKey: "implied", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react58.default.createElement(YAxis, { reversed: true, type: "number", dataKey: "strike", ticks: ticks2, domain: [min2, max2] }), /* @__PURE__ */ import_react58.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react58.default.createElement(TT2, null) }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+}
+
+// app/assets/react/chart_price.jsx
+var import_react59 = __toESM(require_react());
+var TT3 = ({ active, payload, label }) => {
+  if (!payload.length) {
+    return;
+  }
+  const item = payload[0].payload;
+  return /* @__PURE__ */ import_react59.default.createElement("div", { className: "TT" }, /* @__PURE__ */ import_react59.default.createElement("ul", null, /* @__PURE__ */ import_react59.default.createElement("li", null, /* @__PURE__ */ import_react59.default.createElement("b", null, "strike:"), " ", item.strike, " "), /* @__PURE__ */ import_react59.default.createElement("li", null, /* @__PURE__ */ import_react59.default.createElement("b", null, "price:"), " ", item.price), /* @__PURE__ */ import_react59.default.createElement("li", null, /* @__PURE__ */ import_react59.default.createElement("b", null, "implied:"), " ", item.implied)));
+};
 function ChartPrice({ data }) {
   console.log("+++ Chart 2:", data);
   const min2 = data.min;
   const max2 = data.max;
-  const filtered = (which) => {
+  const filtered2 = (which) => {
     return which.filter((w) => w.strike > min2 && w.strike < max2);
   };
-  return /* @__PURE__ */ import_react58.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react58.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react58.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react58.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react58.default.createElement(
+  return /* @__PURE__ */ import_react59.default.createElement("div", { style: { width: "800px", height: "800px" } }, /* @__PURE__ */ import_react59.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react59.default.createElement(ScatterChart, null, /* @__PURE__ */ import_react59.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react59.default.createElement(
     XAxis,
     {
       type: "number",
       dataKey: "price",
       domain: [min2, max2]
     }
-  ), /* @__PURE__ */ import_react58.default.createElement(
+  ), /* @__PURE__ */ import_react59.default.createElement(
     YAxis,
     {
       reversed: true,
@@ -49440,16 +49461,16 @@ function ChartPrice({ data }) {
       dataKey: "strike",
       domain: [min2, max2]
     }
-  ), /* @__PURE__ */ import_react58.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react58.default.createElement(TT2, null) }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: filtered(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react58.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
+  ), /* @__PURE__ */ import_react59.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react59.default.createElement(TT3, null) }), /* @__PURE__ */ import_react59.default.createElement(Scatter, { data: filtered2(data.puts), fill: "#666666" }), /* @__PURE__ */ import_react59.default.createElement(Scatter, { data: filtered2(data.puts_1), fill: "#999999" }), /* @__PURE__ */ import_react59.default.createElement(Scatter, { data: filtered2(data.calls), fill: "#ef4444" }), /* @__PURE__ */ import_react59.default.createElement(Scatter, { data: filtered2(data.calls_1), fill: "#ff0099" }), /* @__PURE__ */ import_react59.default.createElement(Scatter, { data: data.last, fill: "#000000" }))));
 }
 
 // app/assets/react/stock_chart.jsx
-var import_react59 = __toESM(require_react());
+var import_react60 = __toESM(require_react());
 var Dot2 = (props) => {
   const { cx, cy, payload } = props;
   if (!cx || !cy) return null;
   if (!payload || !payload.isOverflow) return null;
-  return /* @__PURE__ */ import_react59.default.createElement(
+  return /* @__PURE__ */ import_react60.default.createElement(
     "circle",
     {
       cx,
@@ -49481,18 +49502,18 @@ function StockChart({ data }) {
       isOverflow
     };
   });
-  return /* @__PURE__ */ import_react59.default.createElement("div", { style: { width: "400px", height: "400px" } }, /* @__PURE__ */ import_react59.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react59.default.createElement(LineChart, { data: normalized }, /* @__PURE__ */ import_react59.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react59.default.createElement(
+  return /* @__PURE__ */ import_react60.default.createElement("div", { style: { width: "400px", height: "400px" } }, /* @__PURE__ */ import_react60.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react60.default.createElement(LineChart, { data: normalized }, /* @__PURE__ */ import_react60.default.createElement(CartesianGrid, null), /* @__PURE__ */ import_react60.default.createElement(
     XAxis,
     {
       dataKey: "date",
       tick: { angle: -45, textAnchor: "end" },
       height: 100
     }
-  ), /* @__PURE__ */ import_react59.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react59.default.createElement(Tooltip, null), /* @__PURE__ */ import_react59.default.createElement(
+  ), /* @__PURE__ */ import_react60.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react60.default.createElement(Tooltip, null), /* @__PURE__ */ import_react60.default.createElement(
     Line,
     {
       dataKey: "value",
-      dot: /* @__PURE__ */ import_react59.default.createElement(Dot2, null),
+      dot: /* @__PURE__ */ import_react60.default.createElement(Dot2, null),
       name: "META",
       stroke: "#0088FE",
       type: "linear"
@@ -49501,24 +49522,24 @@ function StockChart({ data }) {
 }
 
 // app/assets/react/stock_histogram.jsx
-var import_react60 = __toESM(require_react());
+var import_react61 = __toESM(require_react());
 function StockHistogram({ data }) {
   logg(data, "StockHist");
   const { items, min: min2, max: max2 } = data;
-  return /* @__PURE__ */ import_react60.default.createElement("div", { style: { width: "400px", height: "200px" } }, /* @__PURE__ */ import_react60.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react60.default.createElement(BarChart, { data: items }, /* @__PURE__ */ import_react60.default.createElement(
+  return /* @__PURE__ */ import_react61.default.createElement("div", { style: { width: "400px", height: "200px" } }, /* @__PURE__ */ import_react61.default.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ import_react61.default.createElement(BarChart, { data: items }, /* @__PURE__ */ import_react61.default.createElement(
     CartesianGrid,
     null
-  ), /* @__PURE__ */ import_react60.default.createElement(
+  ), /* @__PURE__ */ import_react61.default.createElement(
     XAxis,
     {
       dataKey: "bucket",
       tick: { angle: -45, textAnchor: "end" },
       height: 100
     }
-  ), /* @__PURE__ */ import_react60.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react60.default.createElement(
+  ), /* @__PURE__ */ import_react61.default.createElement(YAxis, { domain: [min2, max2] }), /* @__PURE__ */ import_react61.default.createElement(
     Tooltip,
     null
-  ), /* @__PURE__ */ import_react60.default.createElement(
+  ), /* @__PURE__ */ import_react61.default.createElement(
     Bar,
     {
       dataKey: "count",
@@ -49529,55 +49550,61 @@ function StockHistogram({ data }) {
 
 // app/assets/react/app.jsx
 function mount() {
-  let el = document.getElementById("Chart");
+  let el;
+  el = document.getElementById("ChartOption");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(Chart, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(ChartOption, { data }));
+  }
+  el = document.getElementById("Chart");
+  if (el) {
+    const data = JSON.parse(el.dataset.props);
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(Chart, { data }));
   }
   el = document.getElementById("ChartPrice");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(ChartPrice, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(ChartPrice, { data }));
   }
   el = document.getElementById("Stock_1mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockChart, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockChart, { data }));
   }
   el = document.getElementById("StockHist_1mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockHistogram, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockHistogram, { data }));
   }
   el = document.getElementById("Stock_3mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockChart, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockChart, { data }));
   }
   el = document.getElementById("StockHist_3mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockHistogram, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockHistogram, { data }));
   }
   el = document.getElementById("Stock_6mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockChart, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockChart, { data }));
   }
   el = document.getElementById("StockHist_6mo");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockHistogram, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockHistogram, { data }));
   }
   el = document.getElementById("Stock_1yr");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockChart, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockChart, { data }));
   }
   el = document.getElementById("StockHist_1yr");
   if (el) {
     const data = JSON.parse(el.dataset.props);
-    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react61.default.createElement(StockHistogram, { data }));
+    (0, import_client.createRoot)(el).render(/* @__PURE__ */ import_react62.default.createElement(StockHistogram, { data }));
   }
 }
 document.addEventListener("DOMContentLoaded", mount);
