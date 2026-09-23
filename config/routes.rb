@@ -11,6 +11,7 @@ Iro::Engine.routes.draw do
 
   resources :option_watches
 
+  resources :options
   get 'options/:symbol', to: 'options#show', as: :show_option
 
   match  'positions/:id/close',       to: 'positions#close_prep2', as: :close_position, via: [ :get, :post ]
