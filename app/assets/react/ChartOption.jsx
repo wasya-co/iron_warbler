@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts"
 
+
 const barDataKey = (entry) => [
   Math.min(entry.close, entry.open),
   Math.max(entry.close, entry.open),
@@ -35,10 +36,13 @@ const formatTime = (timestamp) => {
 const formatPrice = (value) =>
   value == null ? "—" : Number(value).toFixed(2)
 
+const MIN_CANDLE_HEIGHT = 3 // px
 const Candlestick = (props) => {
+  // logg(props, 'Candlestick')
+
   const d = props.payload || props
   const color = d.open <= d.close ? "#16a34a" : "#dc2626"
-  return <Rectangle {...props} fill={color} stroke="none" />
+  return <Rectangle {...props} height={Math.max(props.height, MIN_CANDLE_HEIGHT)} fill={color} stroke="none" />
 }
 
 const TT = ({ active, payload }) => {
@@ -58,7 +62,7 @@ const TT = ({ active, payload }) => {
 }
 
 export default function ChartOption({ data }) {
-  logg(data, 'ChartOption')
+  // logg(data, 'ChartOption')
 
   const candles = Array.isArray(data) ? data : []
 
