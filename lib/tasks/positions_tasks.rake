@@ -1,45 +1,59 @@
 
 ##
 ## In this order:
-##   be rake iro:positions_eval
+##   be rake iro:positions_recommend
 ##   be rake iro:positions_place_order
 ##   be rake iro:positions_check_status
 ##
 
 namespace :positions do
 
-  desc 'recommend positions actions'
-  task eval: :environment do
+  ## _TODO: this is a mess. must check for (1) opening a spread, and (2) rolling a spread.
+  ##                        does autoprev exist? if so, should be updated. and there are more legs than 2.
+  ##
+  desc 'position check status'
+  task check_status: :environment do
     while true
 
-      Iro::Position.active.includes( :strategy ).each do |pos|
-        if pos.strategy.intent.present?
-          pos.calc_rollp
-          if pos.rollp > 0.5
+      Iro::Position.where({ status: 'pending', schwab_status: 'WORKING' }).each do |pos|
 
-            case pos.strategy.intent
-            when Iro::Strategy::INTENT_CLOSE
+        throw 'this must be re-written'
 
-              pos.inner.sync
-              pos.outer.sync
-              pos.update({ pending_price: pos.close_price, intent: Iro::Strategy::INTENT_CLOSE })
-              print 'close^'
+        outs = Tda::Order.check_status pos.schwab_order_id
+        puts! outs, 'outs'
 
-            when Iro::Strategy::INTENT_ROLL
-              pos.calc_nxt
-              print 'roll^'
-
-            else
-              puts "+++ no such intent `#{pos.strategy.intent}`- iio"
+        if outs[:errors]
+          pos.update({ status: 'error' })
+        else
+          attrs = { schwab_status: outs[:status] }
+          if 'FILLED' == outs[:status]
+            attrs[:status] = Iro::Position::STATUS_CLOSED ## _TODO: cannot happen if rolling.
+            attrs[:intent] = nil ## _TODO: does this set it to nil?!
+            outs[:orderLegCollection].each do |leg|
+              hash = Iro::Option.symbol_to_h leg[:instrument][:symbol]
+              price = outs[:orderActivityCollection][0][:executionLegs].select { |exec_leg|
+                exec_leg[:instrumentId] == leg[:instrument][:instrumentId]
+              }[0][:price]
+              if pos.inner.matches_h( hash )
+                attrs[:inner_attributes] = { end_price: price }
+              end
+              if pos.outer.matches_h( hash )
+                attrs[:outer_attributes] = { end_price: price }
+              end
             end
           end
+          puts! attrs,' attrs'
+          pos.update!(attrs)
+          pos.autoprev.update({ status: 'closed' })
+          print 'checked^'
         end
       end
 
       print '.'
-      sleep 60
+      sleep 600
     end
   end
+
 
   desc 'position place order'
   task place_order: :environment do
@@ -87,51 +101,40 @@ namespace :positions do
     end
   end
 
-  ## _TODO: this is a mess. must check for (1) opening a spread, and (2) rolling a spread.
-  ##                        does autoprev exist? if so, should be updated. and there are more legs than 2.
-  ##
-  desc 'position check status'
-  task check_status: :environment do
+
+  desc 'recommend positions actions'
+  task recommend: :environment do
     while true
 
-      Iro::Position.where({ status: 'pending', schwab_status: 'WORKING' }).each do |pos|
+      Iro::Position.active.includes( :strategy ).each do |pos|
+        if pos.strategy.intent.present?
+          pos.calc_rollp
+          if pos.rollp > 0.5
 
-        throw 'this must be re-written'
+            case pos.strategy.intent
+            when Iro::Strategy::INTENT_CLOSE
 
-        outs = Tda::Order.check_status pos.schwab_order_id
-        puts! outs, 'outs'
+              pos.inner.sync
+              pos.outer.sync
+              pos.update({ pending_price: pos.close_price, intent: Iro::Strategy::INTENT_CLOSE })
+              print 'close^'
 
-        if outs[:errors]
-          pos.update({ status: 'error' })
-        else
-          attrs = { schwab_status: outs[:status] }
-          if 'FILLED' == outs[:status]
-            attrs[:status] = Iro::Position::STATUS_CLOSED ## _TODO: cannot happen if rolling.
-            attrs[:intent] = nil ## _TODO: does this set it to nil?!
-            outs[:orderLegCollection].each do |leg|
-              hash = Iro::Option.symbol_to_h leg[:instrument][:symbol]
-              price = outs[:orderActivityCollection][0][:executionLegs].select { |exec_leg|
-                exec_leg[:instrumentId] == leg[:instrument][:instrumentId]
-              }[0][:price]
-              if pos.inner.matches_h( hash )
-                attrs[:inner_attributes] = { end_price: price }
-              end
-              if pos.outer.matches_h( hash )
-                attrs[:outer_attributes] = { end_price: price }
-              end
+            when Iro::Strategy::INTENT_ROLL
+              pos.calc_nxt
+              print 'roll^'
+
+            else
+              puts "+++ no such intent `#{pos.strategy.intent}`- iio"
             end
           end
-          puts! attrs,' attrs'
-          pos.update!(attrs)
-          pos.autoprev.update({ status: 'closed' })
-          print 'checked^'
         end
       end
 
       print '.'
-      sleep 600
+      sleep 60
     end
   end
+
 
   desc 'reprice'
   task reprice: :environment do

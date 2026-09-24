@@ -169,6 +169,18 @@ class Iro::Iro
     end
   end
 
+  def self.schwab_data_token
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+    # profile[:schwab_access_token]
+    profile[:schwab_exec_access_token]
+  end
+
+  def self.schwab_exec_token
+    profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
+    profile[:schwab_exec_access_token]
+  end
+
+  ## 2026-09-24 no longer used in favor of schwab_exec_sync()
   def self.schwab_sync
     profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
     out = Schwab.post( "https://api.schwabapi.com/v1/oauth/token", {
@@ -198,7 +210,7 @@ class Iro::Iro
     end
   end
 
-  def self.schwab_sync_exec
+  def self.schwab_exec_sync
     profile = Wco::Profile.find_by email: 'piousbox@gmail.com'
     out = Schwab.post( "https://api.schwabapi.com/v1/oauth/token", {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },

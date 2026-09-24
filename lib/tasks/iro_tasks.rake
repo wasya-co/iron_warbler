@@ -17,8 +17,8 @@ namespace :iro do
   desc 'schwab sync'
   task schwab_sync: :environment do
     while true
-      Iro::Iro.schwab_sync
-      Iro::Iro.schwab_sync_exec
+      # Iro::Iro.schwab_sync
+      Iro::Iro.schwab_exec_sync
       Iro::Stock.sync
       Iro::Position.sync_all
 
@@ -30,8 +30,8 @@ namespace :iro do
 
   desc 'collect options priceitems once'
   task get_options: :environment do
-    # Iro::Iro.schwab_sync
-    # Iro::Position.sync_all
+    # Iro::Iro.schwab_exec_sync
+    Iro::Position.sync_all
 
     options = Iro::Option.active
 
@@ -57,7 +57,7 @@ namespace :iro do
   task refresh_all: :environment do
     while true
       Iro::Iro.schwab_sync
-      Iro::Iro.schwab_sync_exec
+      Iro::Iro.schwab_exec_sync
       Iro::Stock.sync
       Iro::Position.sync_all
 
