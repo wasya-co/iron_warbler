@@ -1,65 +1,101 @@
 import React from "react"
 import {
-  ScatterChart,
-  Scatter,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  DefaultZIndexes,
+  ErrorBar,
+  Rectangle,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
 } from "recharts"
 
-/* tooltip */
-const TT = ({ active, payload, label }) => {
-  if (!payload.length) { return }
-  const item = payload[0].payload
-  return <div className='TT'>
-    <ul>
-      <li><b>strike:</b> { item.strike } </li>
-      <li><b>price:</b> { item.price }</li>
-      <li><b>implied:</b> { item.implied }</li>
-    </ul>
-  </div>
+const barDataKey = (entry) => [
+  Math.min(entry.close, entry.open),
+  Math.max(entry.close, entry.open),
+]
+
+const whiskerDataKey = (entry) => {
+  const highEnd = Math.max(entry.close, entry.open)
+  return [highEnd - entry.low, entry.high - highEnd]
 }
 
-/*
- *
-**/
+const formatTime = (timestamp) => {
+  const date = new Date(timestamp)
+  return date.toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+}
+
+const formatPrice = (value) =>
+  value == null ? "—" : Number(value).toFixed(2)
+
+const Candlestick = (props) => {
+  const d = props.payload || props
+  const color = d.open <= d.close ? "#16a34a" : "#dc2626"
+  return <Rectangle {...props} fill={color} stroke="none" />
+}
+
+const TT = ({ active, payload }) => {
+  if (!active || !payload?.length) return null
+  const item = payload[0].payload
+  return (
+    <div className="TT">
+      <ul>
+        <li><b>time:</b> {formatTime(item.time)}</li>
+        <li><b>open:</b> {formatPrice(item.open)}</li>
+        <li><b>high:</b> {formatPrice(item.high)}</li>
+        <li><b>low:</b> {formatPrice(item.low)}</li>
+        <li><b>close:</b> {formatPrice(item.close)}</li>
+      </ul>
+    </div>
+  )
+}
+
 export default function ChartOption({ data }) {
-  console.log('+++ ChartOption:', data)
+  logg(data, 'ChartOption')
 
-  // const min = data.min
-  // const max = data.max
+  const candles = Array.isArray(data) ? data : []
 
-  // const interval = 10
-  // const ticks = []
-  // for (let v=min; v<max; v+=interval) {
-  //   ticks.push(v)
-  // }
-
-  // const filtered = (which) => {
-  //   return which.filter( w =>  w.strike > min && w.strike < max )
-  // }
-  // console.log(filtered(data.puts), 'filtered')
+  if (!candles.length) {
+    return (
+      <div style={{ width: "800px", height: "200px", border: "1px solid #ccc", padding: 16 }}>
+        No priceitem OHLC data to chart.
+      </div>
+    )
+  }
 
   return (
-    <div style={{ width: "800px", height: '800px', border: '1px solid blue' }}>
-      <ResponsiveContainer width="100%" height="100%" >
-        <ScatterChart >
-          <CartesianGrid />
-
-          <XAxis type='number' dataKey='implied' ticks={ticks} domain={[min,max]} />
-          <YAxis reversed type='number' dataKey="strike" ticks={ticks} domain={[min,max]} />
-
+    <div style={{ width: "800px", height: "480px", border: "1px solid #ccc" }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={candles} margin={{ top: 16, right: 24, bottom: 8, left: 8 }}>
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <XAxis
+            dataKey="time"
+            tickFormatter={formatTime}
+            minTickGap={40}
+          />
+          <YAxis
+            domain={["dataMin - 0.05", "dataMax + 0.05"]}
+            tickFormatter={formatPrice}
+            width={56}
+          />
           <Tooltip content={<TT />} />
-          <Scatter data={filtered( data.puts )} fill='#666666' />
-          <Scatter data={filtered( data.puts_1 )} fill='#999999' />
-          <Scatter data={filtered( data.calls )} fill='#ef4444' />
-          <Scatter data={filtered( data.calls_1 )} fill='#ff0099' />
-
-          <Scatter data={ data.last } fill='#000000' />
-        </ScatterChart>
+          <Bar dataKey={barDataKey} shape={Candlestick} isAnimationActive={false}>
+            <ErrorBar
+              dataKey={whiskerDataKey}
+              width={0}
+              stroke="#111"
+              strokeWidth={1}
+              zIndex={DefaultZIndexes.bar - 1}
+            />
+          </Bar>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   )

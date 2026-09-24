@@ -74,5 +74,28 @@ namespace :iro do
     end
   end
 
+  ## 2026-09-23 this works!
+=begin
+  def seed_meta_priceitems(n: 50, min: 1.0, max: 5.0)
+    stock_id = '66b39693689a518710d4a665' ## META
+    option_id = '6ab44e5b6c0331d0dca4b54a' ## 'META 261002C00750000'
+    symbol = 'META  261002C00750000'
+    t0 = Time.now - n.minutes
+    n.times.map do |i|
+      last = rand(min..max).round(2)
+      Iro::Priceitem.create!(
+        symbol:   symbol,
+        ticker:   'META',
+        putCall:  'CALL',
+        last:     last,
+        quote_at: t0 + i.minutes,
+
+        stock_id: stock_id,
+        option_id: option_id,
+      )
+    end
+  end
+=end
+
 end
 
