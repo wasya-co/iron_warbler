@@ -14,6 +14,32 @@ namespace :iro do
     end
   end
 
+  desc 'backfill quote_at from timestamp'
+  task backfill_quote_at: :environment do
+    scope = Iro::Priceitem.where(quote_at: nil, :timestamp.ne => nil)
+    total = scope.count
+    updated = 0
+    skipped = 0
+    puts "Found #{total} priceitems missing quote_at"
+    scope.no_timeout.each do |pi|
+      ts = pi.timestamp
+      if ts.blank?
+        skipped += 1
+        next
+      end
+      # unix seconds; if you see values like 1_700_000_000_000, use ts / 1000.0 instead
+      pi.quote_at = Time.at(ts).utc.to_datetime
+      if pi.save
+        updated += 1
+        print '.'
+      else
+        skipped += 1
+        puts " failed #{pi.id}: #{pi.errors.full_messages.join(', ')}"
+      end
+    end
+    puts "\nUpdated #{updated}, skipped #{skipped} of #{total}"
+  end
+
 
   desc 'collect options priceitems once'
   task get_options: :environment do

@@ -1,7 +1,16 @@
+
 .priceitems.fixed-container
   %h5 There are (#{@count}) priceitems.
 
   = form_tag priceitems_path, method: :get do
     .field
       = select_tag :ticker, options_for_select(@tickers, selected: params[:ticker])
+      = text_field_tag :date, params[:date], class: 'flex-grow-0'
       = submit_tag 'Filter'
+
+  .a
+    Dates:
+    %ul
+      - @dates.each do |d|
+        %li= d
+
