@@ -1,0 +1,8 @@
+
+.priceitems.fixed-container
+  %h5 There are (#{@count}) priceitems.
+
+= form_for priceitems_path do
+  .field
+    = select_tag :ticker
+      = option_tag 'META', 'META'

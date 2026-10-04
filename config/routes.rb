@@ -34,7 +34,8 @@ Iro::Engine.routes.draw do
   get    'positions/:id/roll-inner', to: 'positions#roll_inner',   as: :position_roll_inner
   post   'positions/:id/roll-inner', to: 'positions#roll_inner_commit'
   resources :positions
-  resources :profiles
+
+  get 'priceitems', to: 'priceitems#index', as: :priceitems
 
   get 'purses/:id/sync', to: 'purses#sync', as: :sync_purse
   get 'purses/:id/gameui', to: 'purses#show', as: :purse_gameui, defaults: { template: 'gameui' }

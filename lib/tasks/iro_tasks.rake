@@ -17,10 +17,11 @@ namespace :iro do
 
   desc 'collect options priceitems once'
   task get_options: :environment do
-    # Iro::Iro.schwab_exec_sync
-    Iro::Position.sync_all
+    Iro::Iro.schwab_exec_sync
+    # Iro::Position.sync_all ## do not use!
 
     options = Iro::Option.active
+    response = Tda::Option.get_chains({ ticker: 'META' })
 
     options.each do |opt|
       pi = Iro::Priceitem.new({
