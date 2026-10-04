@@ -7,12 +7,12 @@
     .W
       .d-flex.flex-wrap
         %ul
-          %li
-            = link_to "Schwab Login", "https://api.schwabapi.com/v1/oauth/authorize?client_id=#{SCHWAB_DATA[:key]}&redirect_uri=#{SCHWAB_DATA[:redirect_url]}"
-            = link_to '[sync]', schwab_sync_path
+          -# %li
+          -#   = link_to "Schwab Login", "https://api.schwabapi.com/v1/oauth/authorize?client_id=#{SCHWAB_DATA[:key]}&redirect_uri=#{SCHWAB_DATA[:redirect_url]}"
+          -#   = link_to '[sync]', schwab_sync_path
           %li
             = link_to "Exec Login", "https://api.schwabapi.com/v1/oauth/authorize?client_id=#{SCHWAB_EXEC[:key]}&redirect_uri=#{SCHWAB_EXEC[:redirect_url]}"
-            = link_to '[sync]', schwab_sync_exec_path
+            = link_to '[sync]', schwab_exec_sync_path
           %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
@@ -37,6 +37,8 @@
                 = link_to '[=]', purse_path(purse,  vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_TABLE }))
                 &nbsp;
                 = link_to '[oo]', purse_path(purse, vcfg: params[:vcfg].merge({ template: Iro::Purse::TEMPLATE_GAMEUI }))
+                &nbsp;
+                = link_to '[~]', edit_purse_path(purse)
 
         -#
           = link_to 'Strategies', strategies_path

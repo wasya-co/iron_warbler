@@ -221,7 +221,7 @@ class Iro::Iro
       },
     })
     out = out.parsed_response
-    puts! out, '#schwab_sync_exec'
+    puts! out, '#schwab_exec_sync'
 
     attrs = {
       schwab_exec_access_token:  out['access_token'],

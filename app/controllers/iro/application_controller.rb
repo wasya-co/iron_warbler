@@ -20,9 +20,9 @@ class Iro::ApplicationController < Wco::ApplicationController
     render json: Iro::Iro.schwab_sync
   end
 
-  def schwab_sync_exec
+  def schwab_exec_sync
     authorize! :schwab_sync_exec, Iro
-    render json: Iro::Iro.schwab_sync_exec
+    render json: Iro::Iro.schwab_exec_sync
   end
 
   ##

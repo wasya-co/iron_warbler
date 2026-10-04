@@ -42,7 +42,7 @@ Iro::Engine.routes.draw do
   resources :purses
 
   get 'schwab/sync',      to: 'application#schwab_sync',      as: :schwab_sync
-  get 'schwab/sync_exec', to: 'application#schwab_sync_exec', as: :schwab_sync_exec
+  get 'schwab/exec_sync', to: 'application#schwab_exec_sync', as: :schwab_exec_sync
 
   get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
   match 'stocks/:id/get-historic-data', to: 'stocks#get_historic_data', as: :stock_get_historic_data, via: [ :get, :post ]
