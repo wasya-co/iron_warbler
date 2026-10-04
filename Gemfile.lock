@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: bd9128d334ed1ce36c5df4bcd4c2427d39785d25
-  branch: 3.3.1
+  revision: fb95826a55d473158718ebf3b853a1a5998457ab
+  branch: 3.4.0
   specs:
-    wco_models (3.1.0.270)
-      ahoy_matey
+    wco_models (3.4.0.3)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
       capybara
+      commonmarker
       devise (~> 4.9.3)
       droplet_kit (~> 3.20.0)
       haml (~> 6.3.0)
@@ -24,6 +24,7 @@ GIT
       net-ssh (~> 7.2.0)
       prawn
       prawn-table
+      public_suffix
       rails (~> 6.1.0)
       sass-rails (~> 6.0)
       selenium-webdriver (~> 4.9.0)
@@ -49,7 +50,7 @@ PATH
       omniauth-keycloak (~> 1.5.1)
       omniauth-rails_csrf_protection (~> 1.0.1)
       rails (~> 6.1.0)
-      wco_models (~> 3.1.0)
+      wco_models (~> 3.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -123,8 +124,8 @@ GEM
     auth-sanitizer (0.2.1)
       version_gem (~> 1.1, >= 1.1.10)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1262.0)
-    aws-sdk-core (3.252.0)
+    aws-partitions (1.1292.0)
+    aws-sdk-core (3.257.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -132,11 +133,12 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.129.0)
-      aws-sdk-core (~> 3, >= 3.248.0)
+      rexml (~> 3.4, >= 3.4.2)
+    aws-sdk-kms (1.132.0)
+      aws-sdk-core (~> 3, >= 3.256.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.226.0)
-      aws-sdk-core (~> 3, >= 3.248.0)
+    aws-sdk-s3 (1.233.1)
+      aws-sdk-core (~> 3, >= 3.256.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
@@ -147,7 +149,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.22)
-    bigdecimal (3.1.9)
+    bigdecimal (4.1.3)
     bindata (2.5.1)
     bson (5.2.0)
     builder (3.2.4)
@@ -168,6 +170,7 @@ GEM
     climate_control (1.2.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    commonmarker (0.23.12)
     concurrent-ruby (1.2.2)
     connection_pool (2.5.5)
     crass (1.0.6)
@@ -248,12 +251,12 @@ GEM
       kaminari-core (~> 1.0)
       mongoid
     kartograph (0.2.8)
-    kt-paperclip (7.3.0)
+    kt-paperclip (8.0.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
-      marcel (~> 1.0.1)
+      marcel (>= 1.0.1)
       mime-types
-      terrapin (>= 0.6.0, < 2.0)
+      terrapin (>= 0.6.0)
     logger (1.7.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -269,7 +272,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0414)
+    mime-types-data (3.2026.0929)
     mini_mime (1.1.5)
     minitest (5.20.0)
     mocha (2.1.0)
@@ -330,11 +333,10 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    pdf-core (0.10.0)
-    prawn (2.5.0)
-      matrix (~> 0.4)
-      pdf-core (~> 0.10.0)
-      ttfunk (~> 1.8)
+    pdf-core (0.9.0)
+    prawn (2.4.0)
+      pdf-core (~> 0.9.0)
+      ttfunk (~> 1.7)
     prawn-table (0.2.2)
       prawn (>= 1.3.0, < 3.0.0)
     psych (5.1.2)
@@ -384,9 +386,9 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.30.0)
+    redis-client (0.30.1)
       connection_pool
-    regexp_parser (2.12.0)
+    regexp_parser (2.13.1)
     reline (0.4.1)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -457,8 +459,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.7.0)
     timeout (0.4.1)
-    ttfunk (1.8.0)
-      bigdecimal (~> 3.1)
+    ttfunk (1.7.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     version_gem (1.1.11)

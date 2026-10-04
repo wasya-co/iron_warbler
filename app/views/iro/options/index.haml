@@ -3,6 +3,8 @@
   %ul
     - @options.each do |opt|
       %li
-        = link_to opt.symbol, option_path(opt)
+        = link_to opt.id, option_path(opt)
+        %pre
+          = opt.to_s
 
 

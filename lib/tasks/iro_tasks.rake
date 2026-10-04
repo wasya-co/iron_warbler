@@ -14,19 +14,6 @@ namespace :iro do
     end
   end
 
-  desc 'schwab sync'
-  task schwab_sync: :environment do
-    while true
-      # Iro::Iro.schwab_sync
-      Iro::Iro.schwab_exec_sync
-      Iro::Stock.sync
-      Iro::Position.sync_all
-
-      print '.'
-      sleep 3.minutes
-    end
-  end
-
 
   desc 'collect options priceitems once'
   task get_options: :environment do
@@ -74,28 +61,47 @@ namespace :iro do
     end
   end
 
+
   ## 2026-09-23 this works!
-=begin
-  def seed_meta_priceitems(n: 50, min: 1.0, max: 5.0)
-    stock_id = '66b39693689a518710d4a665' ## META
-    option_id = '6ab44e5b6c0331d0dca4b54a' ## 'META 261002C00750000'
-    symbol = 'META  261002C00750000'
+  desc 'seed_priceitems'
+  task seed_priceitems: :environment do
+    n = 50
+    min = 1.0
+    max = 5.0
+
+    option_id = '6ac2b61baad128408215fe05'
+    stock  = Iro::Stock.find_by ticker: 'META' ## '66b39693689a518710d4a665'
+
+    option = Iro::Option.find option_id
     t0 = Time.now - n.minutes
     n.times.map do |i|
       last = rand(min..max).round(2)
       Iro::Priceitem.create!(
-        symbol:   symbol,
-        ticker:   'META',
-        putCall:  'CALL',
+        symbol:   option.symbol,
+        ticker:   stock.ticker,
+        putCall:  option.put_call,
         last:     last,
         quote_at: t0 + i.minutes,
 
-        stock_id: stock_id,
-        option_id: option_id,
+        stock_id: stock.id,
+        option_id: option.id,
       )
     end
   end
-=end
+
+
+  desc 'schwab sync'
+  task schwab_sync: :environment do
+    while true
+      # Iro::Iro.schwab_sync
+      Iro::Iro.schwab_exec_sync
+      Iro::Stock.sync
+      Iro::Position.sync_all
+
+      print '.'
+      sleep 3.minutes
+    end
+  end
 
 end
 

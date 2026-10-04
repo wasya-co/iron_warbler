@@ -14,16 +14,18 @@
             = link_to "Exec Login", "https://api.schwabapi.com/v1/oauth/authorize?client_id=#{SCHWAB_EXEC[:key]}&redirect_uri=#{SCHWAB_EXEC[:redirect_url]}"
             = link_to '[sync]', schwab_exec_sync_path
           %li
+            = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
+          %li
+            = link_to "options->active", active_options_path
+          %li
             = link_to "Stocks (#{Iro::Stock.all.length})", stocks_path
             = link_to '[sync]', sync_stocks_path
-          %li
-            = link_to "Alerts (#{Iro::Alert.all.length})", alerts_path
           -# %li
           -#   = link_to "Purses (#{Iro::Purse.all.length})", purses_path
           %li
-            = render '/iro/strategies/header'
-          %li
             = link_to 'Positions', iro.positions_path
+          %li
+            = render '/iro/strategies/header'
 
 
         .ml-3
