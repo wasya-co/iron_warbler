@@ -43,9 +43,9 @@ namespace :iro do
   ## 2026-10-04 continue
   desc 'collect options priceitems once'
   task get_options: :environment do
-    # Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
+    Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
 
-    stocks = Iro::Stock.all
+    stocks = Iro::Stock.active
     fridays = 3.times.map { |i| ( Date.current.next_occurring(:friday) + i.weeks ).to_s }
 
     stocks.each do |stock|
