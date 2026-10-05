@@ -45,43 +45,54 @@ namespace :iro do
   task get_options: :environment do
     # Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
 
+    stocks = Iro::Stock.all
     fridays = 3.times.map { |i| ( Date.current.next_occurring(:friday) + i.weeks ).to_s }
-    stock = Iro::Stock.find_by ticker: 'META'
-    response = Tda::Option.get_chains({
-      ticker: stock.ticker,
-      fromDate: fridays[0],
-      toDate: fridays.last,
-      strikeCount: 5,
-    })
 
-    ['callExpDateMap', 'putExpDateMap'].each do |which_map|
+    stocks.each do |stock|
+      puts "+++ Getting #{stock.ticker}..."
+      response = Tda::Option.get_chains({
+        ticker: stock.ticker,
+        fromDate: fridays[0],
+        toDate: fridays.last,
+        strikeCount: 10,
+      })
 
-      response[which_map].each do |_date, strikes|
-        if fridays.include?( _date.split(':')[0] )
-          strikes.each do |_strike, vals|
-            vals.each do |val|
+      first_val = nil
+      ['callExpDateMap', 'putExpDateMap'].each do |which_map|
 
-              option = Iro::Option.find_or_create_by_symbol( val['symbol'] )
+        response[which_map].each do |_date, strikes|
+          if fridays.include?( _date.split(':')[0] )
+            strikes.each do |_strike, vals|
+              vals.each do |val|
+                if !first_val
+                  first_val = val
+                  puts! val.keys, 'val keys'
+                end
 
-              # opt = OpenStruct.new val
-              pi = Iro::Priceitem.new( val.slice( 'putCall', 'symbol', 'exchangeName', 'bid', 'ask',
-                'last', 'mark', 'bidSize', 'askSize', 'totalVolume', 'quoteTimeInLong', 'volatility',
-                'delta', 'gamma', 'theta', 'openInterest', 'strikePrice' ) )
-              pi.stock = stock
-              pi.option = option
-              pi.quote_at = Time.at( val['quoteTimeInLong'] / 1000 )
-              pi.save
+                option = Iro::Option.find_or_create_by_symbol( val['symbol'] )
 
-              puts! pi
-              print '.'
+                # opt = OpenStruct.new val
+                pi = Iro::Priceitem.new( val.slice( 'expirationDate',
+                  'putCall', 'symbol', 'exchangeName', 'bid', 'ask',
+                  'last', 'mark', 'bidSize', 'askSize', 'totalVolume', 'quoteTimeInLong', 'volatility',
+                  'delta', 'gamma', 'theta', 'openInterest', 'strikePrice' ) )
+                pi.stock    = stock
+                pi.option   = option
+                pi.quote_at = Time.at( val['quoteTimeInLong'] / 1000 )
+                pi.ticker   = stock.ticker
+                pi.save!
+
+                # puts! pi
+                print '.'
 
 
+              end
             end
-          end
-        end ## end fridays.include?
-      end
+          end ## end fridays.include?
+        end
 
-    end ## which_map
+      end ## which_map
+    end
 
 
     puts '#get_options run once.'

@@ -10,7 +10,7 @@ class Iro::OptionsController < Iro::ApplicationController
 
   def show
     @option = Iro::Option.find params[:id] if params[:id]
-    @option = Iro::Option.find_by_symbol params[:symbol] if params[:symbol]
+    @option = Iro::Option.find_by symbol: params[:symbol] if params[:symbol]
     authorize! :show, @option
   end
 

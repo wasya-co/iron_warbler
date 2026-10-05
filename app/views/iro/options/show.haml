@@ -6,7 +6,8 @@
     -# - @option.to_h.sort.each do |k, v|
     -#   %li <b>#{k}:</b> #{v}
     %li priceitems (#{@option.priceitems.length})
-
+    %li= @option.priceitems.last.inspect
+    %li= @option.inspect
 
   #ChartOption{ data: { props: @option.priceitems.to_chart.to_json } }
 

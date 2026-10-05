@@ -12,10 +12,13 @@ class Iro::PriceitemsController < Iro::ApplicationController
     @stock = Iro::Stock.find_by ticker: params[:ticker]
 
     priceitems = Iro::Priceitem.all
-    priceitems = priceitems.where(ticker: @stock.ticker)
+    priceitems = priceitems.where(stock: @stock)
     if params[:date].present?
-      quote_at = Date.strptime(params[:date], '%Y-%m-%d')
-      priceitems = priceitems.where(quote_at: quote_at)
+      day_start = Date.strptime(params[:date], '%Y-%m-%d').in_time_zone('UTC').beginning_of_day
+      priceitems = priceitems.where(
+        :quote_at.gte => day_start,
+        :quote_at.lt  => day_start + 1.day,
+      )
     end
 
     @dates = Iro::Priceitem.collection.aggregate([
