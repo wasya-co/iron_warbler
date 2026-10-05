@@ -12,7 +12,7 @@ Iro::Engine.routes.draw do
   resources :option_watches
 
   get 'options/active',            to: 'options#index', as: :active_options
-  get 'options/by-symbol/:symbol', to: 'options#show',  as: :show_option
+  get 'options/by-symbol/:symbol', to: 'options#show',  as: :option_by_symbol
   resources :options
 
   match  'positions/:id/close',       to: 'positions#close_prep2', as: :close_position, via: [ :get, :post ]

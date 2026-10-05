@@ -3,15 +3,16 @@
 class Iro::PriceitemsController < Iro::ApplicationController
 
   def index
+    if !params[:ticker]
+      params[:ticker] = 'META'
+    end
+
     authorize! :show, Iro::Priceitem
     @tickers = Iro::Stock.tickers_list
+    @stock = Iro::Stock.find_by ticker: params[:ticker]
+
     priceitems = Iro::Priceitem.all
-    if params[:ticker]
-      @stock = Iro::Stock.find_by ticker: params[:ticker]
-    else
-      @stock = Iro::Stock.new
-    end
-    priceitems = priceitems.where(ticker: params[:ticker]) if params[:ticker].present?
+    priceitems = priceitems.where(ticker: @stock.ticker)
     if params[:date].present?
       quote_at = Date.strptime(params[:date], '%Y-%m-%d')
       priceitems = priceitems.where(quote_at: quote_at)

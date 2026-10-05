@@ -1,4 +1,14 @@
 
 .priceitems--on-date.fixed-container
-  .text-center On date...
-  = @priceitems.length
+  .text-center
+    Stock `#{params[:ticker]}` on date `#{params[:date]}`
+  .text-center
+    Priceitems (#{@priceitems.length})
+
+  %ul
+    - @priceitems.each do |pi|
+      %li
+        = link_to pi.symbol.gsub(' ', '+'), option_by_symbol_path( symbol: pi.symbol )
+        = pi.inspect
+
+

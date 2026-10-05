@@ -40,28 +40,49 @@ namespace :iro do
     puts "\nUpdated #{updated}, skipped #{skipped} of #{total}"
   end
 
-
+  ## 2026-10-04 continue
   desc 'collect options priceitems once'
   task get_options: :environment do
-    Iro::Iro.schwab_exec_sync
-    # Iro::Position.sync_all ## do not use!
+    # Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
 
-    options = Iro::Option.active
-    response = Tda::Option.get_chains({ ticker: 'META' })
+    fridays = 3.times.map { |i| ( Date.current.next_occurring(:friday) + i.weeks ).to_s }
+    stock = Iro::Stock.find_by ticker: 'META'
+    response = Tda::Option.get_chains({
+      ticker: stock.ticker,
+      fromDate: fridays[0],
+      toDate: fridays.last,
+      strikeCount: 5,
+    })
 
-    options.each do |opt|
-      pi = Iro::Priceitem.new({
-        last:     opt.end_price,
-        option:   opt,
-        putCall:  opt.put_call,
-        symbol:   opt.symbol,
-        stock:    opt.stock,
-        ticker:   opt.ticker,
-        quote_at: Time.now,
-      })
-      pi.save
-      print '^'
-    end
+    ['callExpDateMap', 'putExpDateMap'].each do |which_map|
+
+      response[which_map].each do |_date, strikes|
+        if fridays.include?( _date.split(':')[0] )
+          strikes.each do |_strike, vals|
+            vals.each do |val|
+
+              option = Iro::Option.find_or_create_by_symbol( val['symbol'] )
+
+              # opt = OpenStruct.new val
+              pi = Iro::Priceitem.new( val.slice( 'putCall', 'symbol', 'exchangeName', 'bid', 'ask',
+                'last', 'mark', 'bidSize', 'askSize', 'totalVolume', 'quoteTimeInLong', 'volatility',
+                'delta', 'gamma', 'theta', 'openInterest', 'strikePrice' ) )
+              pi.stock = stock
+              pi.option = option
+              pi.quote_at = Time.at( val['quoteTimeInLong'] / 1000 )
+              pi.save
+
+              puts! pi
+              print '.'
+
+
+            end
+          end
+        end ## end fridays.include?
+      end
+
+    end ## which_map
+
 
     puts '#get_options run once.'
   end
