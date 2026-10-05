@@ -12,5 +12,5 @@
     Dates:
     %ul
       - @dates.each do |d|
-        %li= d
+        %li= link_to d, stock_date_priceitems_path(@stock.ticker, d)
 

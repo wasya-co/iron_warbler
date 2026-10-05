@@ -46,10 +46,11 @@ Iro::Engine.routes.draw do
   get 'schwab/sync',      to: 'application#schwab_sync',      as: :schwab_sync
   get 'schwab/exec_sync', to: 'application#schwab_exec_sync', as: :schwab_exec_sync
 
-  get 'stocks/sync', to: 'stocks#sync', as: :sync_stocks
-  match 'stocks/:id/get-historic-data', to: 'stocks#get_historic_data', as: :stock_get_historic_data, via: [ :get, :post ]
+  get   'stocks/sync',                     to: 'stocks#sync',                 as: :sync_stocks
+  match 'stocks/:id/get-historic-data',    to: 'stocks#get_historic_data',    as: :stock_get_historic_data, via: [ :get, :post ]
   match 'stocks/:id/recompute-volatility', to: 'stocks#recompute_volatility', as: :stock_recompute_volatility, via: [ :get, :post ]
-  get 'stocks/:id/viz-1', to: 'stocks#viz_1', as: :viz_1
+  get   'stocks/:id/viz-1',                to: 'stocks#viz_1',                as: :viz_1
+  get   'stocks/:ticker/on-date/:date',    to: 'priceitems#on_date',          as: :stock_date_priceitems
   resources :stocks
 
   resources :strategies
