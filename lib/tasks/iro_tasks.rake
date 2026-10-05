@@ -40,7 +40,18 @@ namespace :iro do
     puts "\nUpdated #{updated}, skipped #{skipped} of #{total}"
   end
 
-  ## 2026-10-04 continue
+  desc 'get_options_cont, every 15 minutes'
+  task get_options_cont: :environment do
+    print 'iro:get_options_cont'
+    while true
+      Iro::Priceitem.create_from_chains!
+
+      puts '#get_options_cont looped once.'
+      sleep Rails.env.production? ? 60 * 15 : 20 ## seconds
+    end
+  end
+
+  ## 2026-10-04 continue. this is copy-pasted into Iro::Priceitem.create_from_chains!
   desc 'collect options priceitems once'
   task get_options: :environment do
     Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
@@ -56,6 +67,9 @@ namespace :iro do
         toDate: fridays.last,
         strikeCount: 10,
       })
+      # puts! response.keys, 'response.keys'
+      # puts! response['symbol'], 'response symbol'
+      # sleep 10
 
       first_val = nil
       ['callExpDateMap', 'putExpDateMap'].each do |which_map|
