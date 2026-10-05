@@ -30,7 +30,12 @@ class Iro::PriceitemsController < Iro::ApplicationController
   def on_date
     authorize! :show, Iro::Priceitem
     @stock = Iro::Stock.find_by ticker: params[:ticker]
-    @priceitems = Iro::Priceitem.where( ticker: @stock.ticker, quote_at: params[:date] )
+    day_start = params[:date].to_date.in_time_zone('UTC').beginning_of_day
+    @priceitems = Iro::Priceitem.where(
+      ticker: @stock.ticker,
+      :quote_at.gte => day_start,
+      :quote_at.lt  => day_start + 1.day,
+    )
   end
 
 end
