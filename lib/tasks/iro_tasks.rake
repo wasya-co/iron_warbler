@@ -44,10 +44,11 @@ namespace :iro do
   task get_options_cont: :environment do
     print 'iro:get_options_cont'
     while true
+      Iro::Iro.schwab_exec_sync ## should be schwab_data_sync()
       Iro::Priceitem.create_from_chains!
 
       puts '#get_options_cont looped once.'
-      sleep Rails.env.production? ? 60 * 15 : 20 ## seconds
+      sleep Rails.env.production? ? 60*15 : 60*15 ## seconds
     end
   end
 

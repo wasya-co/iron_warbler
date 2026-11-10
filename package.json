@@ -6,9 +6,13 @@
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "vitepress": "^1.6.4"
   },
   "scripts": {
-    "build": "esbuild app/assets/react/*.* --bundle --sourcemap --format=esm --outdir=app/assets/javascript/builds --public-path=/assets"
+    "build": "esbuild app/assets/react/*.* --bundle --sourcemap --format=esm --outdir=app/assets/javascript/builds --public-path=/assets",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   }
 }
