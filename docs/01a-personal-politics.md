@@ -1,0 +1,6 @@
+
+I don't look at the price action. It's super addictive and doesn't help at all. I just look at the current price. And I have my own platform that does a lot of things. But I definitely avoid looking at the price action.
+
+Heck, I am inclined to stop reading news completely. It doesn't help! But also news is addictive. I've quit youtube, I was never into facebook or instagram, but I still waste my time reading news, several news sources. But after 2026 midterm elections, when the whole market dumped, and then pumped - you know what? I think if I didn't know the reason for dump-and-pump, I would have performed better. The reason doesn't matter. They give you a wrong reason, anyway. The market dumped not because of midterms, but because it was overbought. And thereafter, the market pumped because it was oversold. That it coincided vaguely with an election cycle didn't help me make better decisions. And that I know of the alleged reason, doesn't help me to move forward. So I'll try to not read the news at all, and see how it goes. The only problem is that news are addictive, what else will I do for an hour in the morning, how will I start my day? But, I have a lot of experience overcoming addiction, I guess, so I must figure it out.
+
+
