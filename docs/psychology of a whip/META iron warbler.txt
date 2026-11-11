@@ -1,0 +1,11 @@
+
+
+Case in point on the volatility swings. Unfortunately I am trading META, which just reported earnings. So check this out:
+
+<>
+<>
+
+Options prices don't adjust after market, so my plot is obsolete by 30 minutes and does not reflect the underlying move--except the "last price" of the underlying, which has adjusted.
+
+In this particular case, my most-losing position (fat red is loss) aligns with the current price precisely. If all risk disappeared as if the positions were closed yesterday and will never move again - the value of my most-losing position, minus locked-in premium (bottom green on each bar), minus "implied" loss before the swing (fat red) due to earnings - is **exactly** equal to the price after earnings. Talk about psychology: it is not true about every position, but it is true about my most-losing position. How crazy is that? My plot again:
+

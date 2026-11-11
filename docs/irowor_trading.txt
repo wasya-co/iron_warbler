@@ -1,0 +1,39 @@
+
+= App: Irowor Trading =
+
+Welcome to Irowor. (You can call me Iro.)
+
+Core proposition: we provide another way of looking at market data.
+
+- (We also have a proprietary way of entering a position.)
+ - constructing
+ - monetization: future commisions
+ - we have a very graphical trading interface. Every significant number is represented visually somehow.
+   - You can easily turn on and off visuals of the number that interests you. For examlpe, if you don't have about volatility of a specific position, you can hide it.
+
+ - we turn the axes, and instead of time -> forward pointing to the right, we have time ^ forward pointing to the top. Price movement is on the < - > x axis, smaller price on the left, higher price on the right.
+   - advantages:
+   - a different way of looking at the market data.
+
+   - but victor, you can't copyright an idea. If this really is a good way of looking at data, every trading platform will implement it in-house, and you still won't be in business. You will never have a competitive advantage.
+     Answer: I'd still have a number of valuable advantages.
+     First to market is important.
+     Because, I have a very specific idea. And you can't copy what I haven't implemented.
+     And this is actually a positive, a selling point. If this platform looks cool, one of the bigger players would just buy it. So it's not competing in a market, it's discovering a market.
+
+  - even if it doesn't make much sense... some people spent all of the business hours staring at data, staring at charts. Maybe they would be interested to add this as a widget. Irowor positions to not clutter. It's all graphical, no need to look at distracting nubmers. But also for example when it flashes - maybe you would notice and take action. So this representation is still useful.
+
+  - I teach very specific strategies in the academy. It's not just do whatever you want. I encode & represent specific strategies.
+    * Right now I'm developing another strategy - and i'm thinking about how to visualize it. I have an idea.
+
+  - another selling point. It's a gamification idea. I can represent this in 3d - and I should!
+
+  names: gopher-a, gopher-b, ..., Bullman, Horseman, Bearman. With excellent avatars?
+  - and I can make it 3d... with trash dump trucks...
+    * or with rick and morty's hair (even increase/decrease)
+    * and a black hole, and a vacuum cleaner. as attracting negatives. We don't have a plot where attraction or increase is negative, we usually flip it so that the negative is down. For me, in my graphs, negativeness is sucking in, or blowing out/increasing/exploding.
+    * that's why there is no automatic scaling. People are used to it, or something? I never asked for it.
+    * i have some unimplemented ideas: an inkdrop on the top, for last 1-wk, 1-mo, 6-mo, 1-yr. This is again, to look at data in a different way. A histogram of last 1-wk, 1-mo, ... People don't look at data like that? And let's say that's on the -y axis. and on the +y axis, can I plot s.d. and mean? for each time horizon? Would that give me what I want?
+
+
+

@@ -1,0 +1,16 @@
+
+-=----- 1d writing: Trading
+  * the wheel and covered calls
+    * moving to cash puts is not recommended
+  * put credit spreads
+  * a note on margin, and how annoying it is
+  * delta hedging: need to play both ways
+  * all the market conditions and how to profit on each (with caveats)
+    * markets go up: the wheel and credit put spreads
+    * markets go down: credit call spreads, and the wheel a little
+    * markets are flat: the wheel and credit put spreads, and also credit call spreads
+    * the necessity of credit call spreads in a "balanced" portfolio
+      By "balanced" I actually mean, completely psychotic. But the psychotic portfolio needs to make money in all events, in all market conditions.
+      So what's the catch, you ask? You had a portfolio that used to make money only if markets go up or are flat. You now have a portfolio that (allegedly) makes money if markets are up, flat, or down. What is the cost of that?
+      The answer: the cost is the opportunity lost. As a reminder, when I trade and "lose", I am thinking of it two-ways: Am I losing money? Or am I losing opportunity? So, in the defended portfolio, I continuously lose opportunity, by mis-allocating funds to a branch that I know will be losing (non-making) money. The cost of this strategy is the opportunity cost of this branch of the position.
+
