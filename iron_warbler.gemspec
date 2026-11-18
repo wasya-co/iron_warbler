@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'iron_warbler'
-  spec.version     = '2.0.7.53'
+  spec.version     = '2.0.7.54'
   spec.authors     = [ 'Victor Pudeyev' ]
   spec.email       = 'victor@wasya.co'
   spec.homepage    = 'https://wasya.co'
@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'mongoid',                '~> 7.3.0'
   spec.add_dependency 'rails',                  '~> 6.1.0'
 
-  spec.add_dependency 'wco_models', '~> 3.4.0'
+  spec.add_dependency 'wco_models', '~> 3.5.0'
 
   spec.add_dependency 'omniauth',                       '~> 2.1.1'
   spec.add_dependency "omniauth-keycloak",              "~> 1.5.1"
